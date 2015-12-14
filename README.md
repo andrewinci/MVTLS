@@ -12,7 +12,7 @@
 + la comunicazione deve andare avanti finchè non si genera una master secret (la chiave condivisa)
 + per la generazione della master secret usare hash, md5, generatori random
 + si possono usare librerie già fatte -.-
-
++ devono essere due programmi: Client and Server
 + il protocollo è diviso in 4 fasi, arrivare fino alla 4° fase
 + CI FERMIAMO AL SEGRETO COMUNE
 
