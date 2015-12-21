@@ -1,7 +1,7 @@
 # Progetto di Advanced Programming of Cryptographic methods
 ## ToDo list
 + SSL/TLS 
-+ In particolare, loschema di comunicazione client<->server
++ In particolare, lo schema di comunicazione client<->server
 + In particolare, l'handshaking
 + [hello client]
 + Tutta la comunicazione client<->server (senza socket)
