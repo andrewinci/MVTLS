@@ -9,10 +9,11 @@
 //
 //  PROTOCOL:
 //  The protocol is very basic
-//  1° line : the message
-//  last line -1: from
-//  last line : to
-//  The order is usefull for understand if the other side have finished
+//  8 byte for source
+//  8 byte for receiver
+//  4 byte for packet length
+//  message
+//  
 //
 //  both server and client after read a message they blank the file
 //
@@ -39,8 +40,9 @@ enum mode{
 
 // basic packet
 typedef struct packet{
-    char *from;
-    char *to;
+    char *from; //8 byte
+    char *to;   //8 byte
+    //char *packetLen; //4 byte used only in de/serialize
     char *message;
     uint32_t messageLen;
 }packet;
@@ -107,6 +109,17 @@ void waitChannel(channel *ch);
  */
 void stopChannel(channel *ch);
 
+/*
+ * Create a packet
+ * from : packet source
+ * to   : packet receiver
+ * message : the message to be sent
+ * messageLen : message lenght (only message)
+ */
 packet *createPacket(char *from, char *to, char *message, uint32_t messageLen);
 
+/*
+ * Delete and free memory
+ * p : packet to remove
+ */
 void freePacket(packet *p);
