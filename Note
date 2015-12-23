@@ -135,7 +135,23 @@ senza length o altro(come per la ciphersuite)
 nel test di una connessione con google il sessionID (sia nel ClientHello sia nel serverHello) è dato da 53455353494f4e2d5449434b4554 = (ASCII)SESSION-TICKET
 + Il random NON è uguale al random precedente (ovviamente nemmeno il timestamp)
 
+##Server Key Exchange
+Non deve essere inviato da:
++ RSA
++ DH_DSS
++ DH_RSA
 
+Per i seguenti casi
++ DHE_DSS
++ DHE_RSA
++ DH_anon
+
+devo mandarlo SOLO se il certificato non contiene abbastanza informazioni per scambiare
+la premaster key.
+
+- **Header del record** (5 Byte)
+- **Header del handshake layer** (4 Byte) (no Version) 
+- Server Params
 
 #Errors
 unexpected_message
@@ -272,11 +288,19 @@ unsupported_extension
 
 #Pensieri sparsi
 non appendiamo zeri perché tanto ci pensa chi sta sotto (TCP/IP)
-#da vedere:
+##da vedere:
 + (se c'è tempo)extension : http://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml
 poiché il protocollo non supporta alcuni dettagli (come il nome del server ed altro (vedi link)) abbiamo le estensioni.
 Nel link alcune(??) estensioni supportate, il primo numero è l'identificatore che è posto all'inizio dell'estensione
 
 general with packet spec : http://blog.fourthbit.com/2014/12/23/traffic-analysis-of-an-ssl-slash-tls-session
 + usare il multithread non il fork (ptread())
-+ openssl s_client -connect google.com:443 -debug 
++ openssl s_client -msg -connect google.com:443 -debug 
+
+#Note implementazione
+Per ogni "tipo" di pacchetto, quindi struct, occorre definire le funzioni:
++ tipoSerialize : da stringa alla struct
++ tipoDeserialize : dalla struct alla stringa
++ tipoGetSize : data la struttura ritorna la dimensione in Byte della stringa generata da Serialize
+
+Il Serve
