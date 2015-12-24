@@ -1,6 +1,6 @@
 //
+//  SSL/TLS Project
 //  ServerClientFileSocket.h
-//  SSLTLSFile
 //
 //  Created by Darka on 16/12/15.
 //  Copyright © 2015 Darka. All rights reserved.
@@ -43,15 +43,17 @@ typedef struct packet{
     char *from; //8 byte
     char *to;   //8 byte
     //char *packetLen; //4 byte used only in de/serialize
-    char *message;
+    unsigned char *message;
     uint32_t messageLen;
 }packet;
 
 typedef struct channel{
     // server client mode
     enum mode mod;
-    // channel name
-    char *channelName;
+    // channel from
+    char *channelFrom;
+    // channel to
+    char *channelTo;
     // file to use for exchange messages
     char *fileName;
     // file descriptor
@@ -66,14 +68,17 @@ typedef struct channel{
 
 
 /*
- * Create a server/clinet using the fileName as comunication channel
+ * Create a server/client using the fileName as comunication channel
+ *
  * fileName : file name of the channel
  * serverName : name of the server/client
+ * return the created channel
  */
-channel *createChannel(char *fileName,char *channelName, enum mode channelMode);
+channel *createChannel(char *fileName, char *channelFrom, char *channelTo, enum mode channelMode);
 
 /*
  * Set the function to be called when a message is received
+ *
  * ch : channel interested
  * onPacketReceive : pointer to the function
  * return : 1 if the function was setted, 0 otherwise
@@ -82,6 +87,7 @@ int setOnReceive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p));
 
 /*
  * Send a message trough the channel ch
+ *
  * ch : channel to be used
  * p : pointer to packet to be sent
  * return : 1 if the message was sent, 0 otherwise
@@ -91,8 +97,10 @@ int sendPacket(channel *ch, packet *p);
 /*
  * Start the channel. We open another thread for the reading
  * and the current thread for writing. From now on (if the operation
- * is succesfull) the clinet/server read continously from chanell.
+ * is succesfull) the client/server read continously from channel.
  * (for STOP use stop())
+ *
+ * ch : channel to start
  * return : 1 if the thread was started, 0 otherwise
  */
 int startChannel(channel *ch);
@@ -104,22 +112,24 @@ void waitChannel(channel *ch);
 
 /*
  * Stop the reading thread and the channel
- * Doesn't free the channel, this operation 
+ * It doesn't free the channel, this operation
  * has to be done manually with free()
  */
 void stopChannel(channel *ch);
 
 /*
  * Create a packet
+ *
  * from : packet source
  * to   : packet receiver
  * message : the message to be sent
  * messageLen : message lenght (only message)
  */
-packet *createPacket(char *from, char *to, char *message, uint32_t messageLen);
+packet *createPacket(char *from, char *to, unsigned char *message, uint32_t messageLen);
 
 /*
- * Delete and free memory
+ * Delete and free memory allocated by packet
+ *
  * p : packet to remove
  */
 void freePacket(packet *p);

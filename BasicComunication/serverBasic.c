@@ -1,6 +1,6 @@
 //
-//  main.c
-//  SSLTLSFile
+//  SSL/TLS Project
+//  serverBasic.c
 //
 //  Created by Darka on 16/12/15.
 //  Copyright © 2015 Darka. All rights reserved.
@@ -19,9 +19,8 @@ int main(int argc, char **argv){
     char *fileName= "channel.txt";
     char *serverName = "Server";
 
-    
     //create channel
-    channel *server = createChannel(fileName, serverName, SERVER);
+    channel *server = createChannel(fileName, serverName, NULL, SERVER);
     //set function to be called when a message is received
     setOnReceive(server, &onPacketReceive);
     //star channel and listener to new message
@@ -41,7 +40,7 @@ void onPacketReceive(channel *ch, packet *p){
     
 
     //prepare new packet to be send
-    //i,f the from field is NULL it will be autofill
+    //if the 'from' field is NULL it will be autofill
     
     if(*(p->message)<'8'){
         (*(p->message))++;

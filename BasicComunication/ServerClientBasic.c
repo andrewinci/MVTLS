@@ -1,6 +1,6 @@
 //
+//  SSL/TLS Project
 //  ServerClientFileSocket.c
-//  SSLTLSFile
 //
 //  Created by Darka on 16/12/15.
 //  Copyright © 2015 Darka. All rights reserved.
@@ -8,19 +8,18 @@
 
 #include "ServerClientBasic.h"
 
-//32 bit byte swipe
-#define REV(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
 
 void freePacket(packet *p);
-uint32_t readAllFille(FILE *f, char **p);
-packet *deserializePacket(char *str, uint32_t fileLen);
-void serializePacket(packet *p, char **str, uint32_t *strLen);
+uint32_t readAllFille(FILE *f, unsigned char **p);
+packet *deserializePacket(unsigned char *str, uint32_t fileLen);
+void serializePacket(packet *p, unsigned char **str, uint32_t *strLen);
 
 
-channel *createChannel(char *fileName, char *channelName, enum mode channelMode){
+channel *createChannel(char *fileName, char *channelFrom, char *channelTo, enum mode channelMode){
     channel *ch = malloc(sizeof(channel));
     ch->mod = channelMode;
-    ch->channelName = channelName;
+    ch->channelFrom = channelFrom;
+    ch->channelTo = channelTo;
     if(channelMode == SERVER)
         ch->file = fopen(fileName, "w+");
     else ch->file = fopen(fileName, "a+");
@@ -40,14 +39,22 @@ int setOnReceive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p)){
 }
 
 int sendPacket(channel *ch, packet *p){
-    if(ch->file==NULL || p->to == NULL)
+    if(ch->file==NULL)
         return 0;
-    char *message = NULL;
+    
+    unsigned char *message = NULL;
     uint32_t strLen;
+
     if(p->from == NULL){
-        p->from = malloc(strlen(ch->channelName));
-        memccpy(p->from, ch->channelName, 1, strlen(ch->channelName));
+        p->from = calloc(8,1);
+        memccpy(p->from, ch->channelFrom, 1, strlen(ch->channelFrom));
     }
+    
+    if(p->to == NULL){
+        p->to = calloc(8,1);
+        memccpy(p->to, ch->channelTo, 1, strlen(ch->channelTo));
+    }
+    
     serializePacket(p, &message, &strLen);
     if(message == NULL)
         return 0;
@@ -63,12 +70,12 @@ void reader(void *data){
     channel *ch;
     ch = (channel*)data;
     while (ch->isEnabled) {
-        char *str = NULL;
+        unsigned char *str = NULL;
         uint32_t fileLen = readAllFille(ch->file, &str);
         if(fileLen>3){
             //the file is not empty
             packet *received = deserializePacket(str, fileLen);
-            if(received!=NULL && strcmp(received->to, ch->channelName)==0){
+            if(received!=NULL && strcmp(received->to, ch->channelFrom)==0){
                 //blank the file
                 fclose(ch->file);
                 ch->file = fopen(ch->fileName, "w+");
@@ -107,7 +114,7 @@ void waitChannel(channel *ch){
     pthread_join(ch->thread, NULL);
 }
 
-packet *createPacket(char *from, char *to, char *message, uint32_t messageLen){
+packet *createPacket(char *from, char *to, unsigned char *message, uint32_t messageLen){
     packet *result = malloc(sizeof(packet));
     
     result->from = NULL;
@@ -162,14 +169,14 @@ long getFileSize(FILE *f){
  * p : return pointer
  * return : the file size
  */
-uint32_t readAllFille(FILE *f, char **p){
+uint32_t readAllFille(FILE *f, unsigned char **p){
     long fileSize = getFileSize(f);
     if(fileSize>UINT32_MAX)
     {
         printf("\nThe message is too long, something went wrong\n");
         exit(-1);
     }
-    char *temp=malloc(fileSize*sizeof(char));
+    unsigned char *temp=malloc(fileSize*sizeof(char));
     fread(temp,fileSize,1,f);
     //printf("\n%.*s\n",fileSize,temp);
     *p=temp;
@@ -184,12 +191,12 @@ uint32_t readAllFille(FILE *f, char **p){
  * str : string received
  * fileLen : received string length
  */
-packet *deserializePacket(char *str, uint32_t fileLen){
+packet *deserializePacket(unsigned char *str, uint32_t fileLen){
     
     char *from = calloc(8, 1);
     char *to = calloc(8, 1);
     uint32_t packLen;
-    char *message;
+    unsigned char *message;
     
     memcpy(from, str, 8);
     memcpy(to, str+8, 8);
@@ -211,7 +218,7 @@ packet *deserializePacket(char *str, uint32_t fileLen){
  * str : pointer to a null string (used for return the stream)
  * strlen : pointer to stream length (used for return the stream length)
  */
-void serializePacket(packet *p, char **str, uint32_t *strLen){
+void serializePacket(packet *p, unsigned char **str, uint32_t *strLen){
     if(p->from == NULL || p->to == NULL || p->message == NULL)
     {
         *str = NULL;

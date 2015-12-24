@@ -1,8 +1,8 @@
 //
-//  testClient.c
-//  SSLTLSFile
+//  SSL/TLS Project
+//  clientBasic.c
 //
-//  Created by Darka on 22/12/15.
+//  Created by Darka on 16/12/15.
 //  Copyright © 2015 Darka. All rights reserved.
 //
 
@@ -18,13 +18,14 @@ void onPacketReceive(channel *ch, packet *p);
 int main(int argc, char **argv){
     char *fileName = "channel.txt";
     char *clientName = "Client";
-    channel *client = createChannel(fileName, clientName, CLIENT);
+    channel *client = createChannel(fileName, clientName, NULL, CLIENT);
     setOnReceive(client, &onPacketReceive);
     startChannel(client);
     printf("*** Client is start ***\n");
     
     //sending packet
-    char *message = "1";
+    unsigned char *message = malloc(1);
+    *message = '\x01';
     char *to = "Server\0";
     printf("Client send: %s\n",message);
     
@@ -42,17 +43,16 @@ void onPacketReceive(channel *ch, packet *p){
     printf("message len: %d\n", p->messageLen);
     printf("message:\n%.*s\n\n",p->messageLen, p->message);
     
-    
     //prepare new packet to be send
-    //i,f the from field is NULL it will be autofill
+    //if the 'from' field is NULL it will be autofill
     
     if(*(p->message)<'8'){
         (*(p->message))++;
         packet *packet = createPacket(NULL, p->from, p->message, 1);
         
         if(sendPacket(ch, packet))
-            printf("\nPacket sent correctly\n");
-        else printf("\nError in sendPacket\n");
+            printf("\nPacket sent correctly\n\n");
+        else printf("\nError in sendPacket\n\n");
         freePacket(packet);
     }
     else stopChannel(ch);
