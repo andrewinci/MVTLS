@@ -2,8 +2,8 @@
 //  SSL/TLS Project
 //  ServerClientFileSocket.c
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 22/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
 #include "ServerClientBasic.h"
@@ -15,7 +15,7 @@ packet *deserializePacket(unsigned char *str, uint32_t fileLen);
 void serializePacket(packet *p, unsigned char **str, uint32_t *strLen);
 
 
-channel *createChannel(char *fileName, char *channelFrom, char *channelTo, enum mode channelMode){
+channel *createChannel(char *fileName, char *channelFrom, char *channelTo, mode channelMode){
     channel *ch = malloc(sizeof(channel));
     ch->mod = channelMode;
     ch->channelFrom = channelFrom;
@@ -83,7 +83,7 @@ void reader(void *data){
             }  else freePacket(received);
         }
         free(str);
-        usleep(500);
+        usleep(DELAY_TIME);
     }
 }
 
@@ -149,7 +149,7 @@ void freePacket(packet *p){
     free(p);
 }
 
-/********* Utility function for file *********/
+/********* Utility function for file managing *********/
 
 /*
  * Compute the byte size of a file

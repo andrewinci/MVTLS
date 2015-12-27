@@ -2,8 +2,8 @@
 //  SSL/TLS Project
 //  ServerClientFileSocket.h
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 22/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 //  Basic client server comunication through file
 //
@@ -33,11 +33,18 @@
 
 #endif /* ServerClientFileSocket_h */
 
-// operation mode (not pratically use)
-enum mode{
-    SERVER,CLIENT
-};
+#define DELAY_TIME 600
 
+// operation mode
+#ifndef enum_mode
+#define enum_mode
+typedef enum{
+    SERVER,CLIENT
+}mode;
+#endif
+
+#ifndef struct_packet
+#define struct_packet
 // basic packet
 typedef struct packet{
     char *from; //8 byte
@@ -46,10 +53,13 @@ typedef struct packet{
     unsigned char *message;
     uint32_t messageLen;
 }packet;
+#endif
 
+#ifndef struct_channel
+#define struct_channel
 typedef struct channel{
     // server client mode
-    enum mode mod;
+    mode mod;
     // channel from
     char *channelFrom;
     // channel to
@@ -65,7 +75,7 @@ typedef struct channel{
     // reading thread
     pthread_t thread;
 }channel;
-
+#endif
 
 /*
  * Create a server/client using the fileName as comunication channel
@@ -74,7 +84,7 @@ typedef struct channel{
  * serverName : name of the server/client
  * return the created channel
  */
-channel *createChannel(char *fileName, char *channelFrom, char *channelTo, enum mode channelMode);
+channel *createChannel(char *fileName, char *channelFrom, char *channelTo, mode channelMode);
 
 /*
  * Set the function to be called when a message is received

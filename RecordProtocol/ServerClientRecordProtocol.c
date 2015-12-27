@@ -2,8 +2,9 @@
 //  SSL/TLS Project
 //  ServerClientRecordProtocol.c
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 23/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
+//
 
 #include "ServerClientRecordProtocol.h"
 
@@ -42,3 +43,13 @@ int sendRecord(channel *ch, record *r){
     return result;
 }
 
+void print_record(record r){
+    printf("\n***RECORD***\n");
+    printf("Type : %d\n",r.type);
+    printf("Version : %d\n",r.version);
+    printf("Length : %d\n", r.lenght);
+    printf("Message : \n");
+    for(int i = 0;i<r.lenght;i++)
+        printf("%02x ", *(r.message+i));
+    
+}

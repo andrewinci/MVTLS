@@ -2,10 +2,12 @@
 //  SSL/TLS Project
 //  serverRecord.C
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 23/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
+//
 
 #include <stdio.h>
+
 #include "ServerClientRecordProtocol.h"
 
 void onPacketReceive(channel *ch, packet *p);

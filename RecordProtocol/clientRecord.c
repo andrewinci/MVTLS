@@ -2,11 +2,12 @@
 //  SSL/TLS Project
 //  clientRecord.c
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 23/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
 #include <stdio.h>
+
 #include "ServerClientRecordProtocol.h"
 
 void onPacketReceive(channel *ch, packet *p);
@@ -22,12 +23,14 @@ int main(int argc, const char * argv[]) {
     //star channel and listener to new message
     startChannel(client);
     printf("*** Record client is start ***\n\n");
+    
     record *r = malloc(sizeof(record));
-    r->type = 0x01;
-    r->version = 0x0303;
+    r->type = HANDSHAKE;
+    r->version = SSL3_0;
     r->lenght = 0x01;
     r->message = malloc(1);
     *(r->message)='\x31';
+    
     sendRecord(client, r);
     free(r->message);
     free(r);

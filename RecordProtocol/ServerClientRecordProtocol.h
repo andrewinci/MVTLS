@@ -2,8 +2,9 @@
 //  SSL/TLS Project
 //  ServerClientRecordProtocol.h
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 23/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
+//
 
 #ifndef ServerClientRecordProtocol_h
 #define ServerClientRecordProtocol_h
@@ -16,15 +17,45 @@
 
 #endif
 
+
+/*
+ * Record types
+ */
+#ifndef enum_recordtype
+#define enum_recordtype
+typedef enum{
+    HANDSHAKE           = 0x16,
+    CHANGE_CIPHER_SPEC  = 0x14,
+    ALERT               = 0x15,
+    APPLICATION_DATA    = 0x17
+}recordType;
+#endif
+
+/*
+ * Record Version
+ */
+#ifndef enum_record_version
+#define enum_record_version
+typedef enum{
+    SSL3_0 = 0x0300,
+    TLS1_0 = 0x0301,
+    TLS1_1 = 0x0302,
+    TLS1_2 = 0x0303
+}recordVersion;
+#endif
+
 /*
  * Record protocol
  */
+#ifndef struct_record
+#define struct_record
 typedef struct record{
     uint8_t type;
     uint16_t version;
     uint16_t lenght;
     unsigned char *message;
 }record;
+#endif
 
 /*
  * Send record through the channel
@@ -53,3 +84,8 @@ record *deserializeRecord(unsigned char *message, uint32_t messageLen);
  * messageLen : pointer to integer (will contains the message length)
  */
 void serializeRecord(record *r, unsigned char **message, uint16_t *messageLen);
+
+/*
+ * Print a description of the record
+ */
+void print_record(record r);

@@ -2,8 +2,8 @@
 //  SSL/TLS Project
 //  clientBasic.c
 //
-//  Created by Darka on 16/12/15.
-//  Copyright © 2015 Darka. All rights reserved.
+//  Created on 22/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
 #include <stdio.h>
