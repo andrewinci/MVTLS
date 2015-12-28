@@ -11,8 +11,6 @@
 
 #include "ServerClientBasic.h"
 
-
-#include<stdio.h>
 void onPacketReceive(channel *ch, packet *p);
 
 int main(int argc, char **argv){
@@ -34,23 +32,23 @@ int main(int argc, char **argv){
 void onPacketReceive(channel *ch, packet *p){
     
     //print received message
-    printf("message from: %s\n", p->from);
+    printf("message from: %.8s\n",p->from);
     printf("message len: %d\n", p->messageLen);
     printf("message:\n%.*s\n\n",p->messageLen, p->message);
     
-
     //prepare new packet to be send
     //if the 'from' field is NULL it will be autofill
     
     if(*(p->message)<'8'){
         (*(p->message))++;
-        packet *packet = create_packet(NULL, p->from, p->message, 2);
+        packet *packet = create_packet(NULL, p->from, p->message, 1);
 
         if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n");
         else printf("\nError in sendPacket\n");
-        free_packet(packet);
+        if(*(p->message)=='8'){
+            stop_channel(ch);
+        }
     }
-    else stop_channel(ch);
     free_packet(p); 
 }

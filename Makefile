@@ -7,7 +7,7 @@ TARGET := test/clientBasic
 SRCEXT := c
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -Wall -std=c99 -lpthread
+CFLAGS := -g -Wall -lpthread -std=gnu99 -pthread -O3
 INC := -I include
 
 GREEN=\033[0;32m

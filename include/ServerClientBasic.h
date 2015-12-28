@@ -19,8 +19,8 @@
 //
 //
 
-#ifndef ServerClientFileSocket_h
-#define ServerClientFileSocket_h
+#ifndef ServerClientBasic_h
+#define ServerClientBasic_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,9 +31,9 @@
 #include <pthread.h>
 #include <time.h>
 
-#endif /* ServerClientFileSocket_h */
+#endif
 
-#define DELAY_TIME 600
+#define DELAY_TIME 100
 
 // operation mode
 #ifndef enum_mode
