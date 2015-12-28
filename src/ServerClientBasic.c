@@ -47,12 +47,12 @@ int send_packet(channel *ch, packet *p){
 
     if(p->from == NULL){
         p->from = calloc(8,1);
-        memccpy(p->from, ch->channelFrom, 1, strlen(ch->channelFrom));
+        memcpy(p->from, ch->channelFrom, strlen(ch->channelFrom));
     }
     
     if(p->to == NULL){
         p->to = calloc(8,1);
-        memccpy(p->to, ch->channelTo, 1, strlen(ch->channelTo));
+        memcpy(p->to, ch->channelTo, strlen(ch->channelTo));
     }
     
     serialize_packet(p, &message, &strLen);
