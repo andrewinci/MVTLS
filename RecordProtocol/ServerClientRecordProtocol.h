@@ -65,7 +65,7 @@ typedef struct record{
  * r  : record to be sent
  * return 1 if the message was successfully sent, 0 otherwise
  */
-int sendRecord(channel *ch, record *r);
+int send_record(channel *ch, record *r);
 
 /*
  * Build a record from the received messsage
@@ -74,7 +74,7 @@ int sendRecord(channel *ch, record *r);
  * messageLen : message length
  * return the built record
  */
-record *deserializeRecord(unsigned char *message, uint32_t messageLen);
+record *deserialize_record(unsigned char *message, uint32_t messageLen);
 
 /*
  * Serialize record in a byte stream
@@ -83,7 +83,7 @@ record *deserializeRecord(unsigned char *message, uint32_t messageLen);
  * message : pointer to null (the function allocate space for you)
  * messageLen : pointer to integer (will contains the message length)
  */
-void serializeRecord(record *r, unsigned char **message, uint16_t *messageLen);
+void serialize_record(record *r, unsigned char **message, uint16_t *messageLen);
 
 /*
  * Print a description of the record

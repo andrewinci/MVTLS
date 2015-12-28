@@ -8,7 +8,7 @@
 
 #include "ServerClientRecordProtocol.h"
 
-void serializeRecord(record *r, unsigned char **message, uint16_t *messageLen){
+void serialize_record(record *r, unsigned char **message, uint16_t *messageLen){
     *messageLen = r->lenght;
     uint16_t lenghtRev = REV16(*messageLen);
     *message = calloc(*messageLen+5,1);
@@ -18,7 +18,7 @@ void serializeRecord(record *r, unsigned char **message, uint16_t *messageLen){
     memcpy(*message+5, r->message, r->lenght);
 }
 
-record *deserializeRecord(unsigned char *message, uint32_t messageLen){
+record *deserialize_record(unsigned char *message, uint32_t messageLen){
     record *result = malloc(sizeof(record));
 
     result->type = *message;
@@ -32,14 +32,14 @@ record *deserializeRecord(unsigned char *message, uint32_t messageLen){
     return result;
 }
 
-int sendRecord(channel *ch, record *r){
+int send_record(channel *ch, record *r){
     unsigned char *message = NULL;
     uint16_t messageLen;
-    serializeRecord(r, &message, &messageLen);
-    packet *tosend = createPacket(NULL, NULL, message, messageLen+5); //the basic layer puts automatically 'from' and 'to'
+    serialize_record(r, &message, &messageLen);
+    packet *tosend = create_packet(NULL, NULL, message, messageLen+5); //the basic layer puts automatically 'from' and 'to'
                                                                     //if they are NULL
-    int result = sendPacket(ch, tosend);
-    freePacket(tosend);
+    int result = send_packet(ch, tosend);
+    free_packet(tosend);
     return result;
 }
 

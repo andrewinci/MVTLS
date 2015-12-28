@@ -18,9 +18,9 @@ void onPacketReceive(channel *ch, packet *p);
 int main(int argc, char **argv){
     char *fileName = "channel.txt";
     char *clientName = "Client";
-    channel *client = createChannel(fileName, clientName, NULL, CLIENT);
-    setOnReceive(client, &onPacketReceive);
-    startChannel(client);
+    channel *client = create_channel(fileName, clientName, NULL, CLIENT);
+    set_on_receive(client, &onPacketReceive);
+    start_channel(client);
     printf("*** Client is start ***\n");
     
     //sending packet
@@ -29,10 +29,10 @@ int main(int argc, char **argv){
     char *to = "Server\0";
     printf("Client send: %s\n",message);
     
-    packet *p = createPacket(NULL, to, message, 1);
-    sendPacket(client, p);
-    freePacket(p);
-    waitChannel(client);
+    packet *p = create_packet(NULL, to, message, 1);
+    send_packet(client, p);
+    free_packet(p);
+    wait_channel(client);
 
 }
 
@@ -48,13 +48,13 @@ void onPacketReceive(channel *ch, packet *p){
     
     if(*(p->message)<'8'){
         (*(p->message))++;
-        packet *packet = createPacket(NULL, p->from, p->message, 1);
+        packet *packet = create_packet(NULL, p->from, p->message, 1);
         
-        if(sendPacket(ch, packet))
+        if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n\n");
-        freePacket(packet);
+        free_packet(packet);
     }
-    else stopChannel(ch);
-    freePacket(p);
+    else stop_channel(ch);
+    free_packet(p);
 }

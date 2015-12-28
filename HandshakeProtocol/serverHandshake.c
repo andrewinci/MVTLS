@@ -20,27 +20,28 @@ int main() {
     char *fileName = "channelHandshake.txt";
     char *channelFrom = "Server";
     char *channelTo = "Client";
-    channel *server = createChannel(fileName, channelFrom, channelTo, CLIENT);
+    channel *server = create_channel(fileName, channelFrom, channelTo, CLIENT);
     
-    setOnReceive(server, &onPacketReceive);
+    set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
-    startChannel(server);
+    start_channel(server);
     printf("*** Handshake server is start ***\n\n");
     
-    waitChannel(server);
+    wait_channel(server);
     free(server);
 }
 
 void onPacketReceive(channel *ch, packet *p){
     //get record
-    record *r = deserializeRecord(p->message, p->messageLen);
+    record *r = deserialize_record(p->message, p->messageLen);
     if(r->type == HANDSHAKE){
         handshake *h = deserialize_handshake(r->message, r->lenght);
-        print_handshake(*h);
+        print_handshake(h);
         if(h->type == CLIENT_HELLO){
             handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
-            print_hello(*hello);
-            stopChannel(ch);
+            print_hello(hello);
+            free_packet(p);
+            stop_channel(ch);
         }
     }
     
@@ -77,6 +78,6 @@ void onPacketReceive(channel *ch, packet *p){
 //        free(r);
 //    }
 //    else
-    stopChannel(ch);
-    freePacket(p);
+    stop_channel(ch);
+    free_packet(p);
 }

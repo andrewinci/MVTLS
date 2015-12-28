@@ -50,8 +50,8 @@ typedef struct{
 
 int send_handshake(channel *ch, handshake *h);
 
-void serialize_handshake(handshake a, unsigned char **stream, uint32_t *streamLen);
+void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamLen);
 
 handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
-void print_handshake(handshake h);
+void print_handshake(handshake *h);

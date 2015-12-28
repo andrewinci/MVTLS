@@ -17,11 +17,11 @@ int main(int argc, const char * argv[]) {
     char *fileName = "channelRecord.txt";
     char *channelFrom = "Client";
     char *channelTo = "Server";
-    channel *client = createChannel(fileName, channelFrom, channelTo, CLIENT);
+    channel *client = create_channel(fileName, channelFrom, channelTo, CLIENT);
     
-    setOnReceive(client, &onPacketReceive);
+    set_on_receive(client, &onPacketReceive);
     //star channel and listener to new message
-    startChannel(client);
+    start_channel(client);
     printf("*** Record client is start ***\n\n");
     
     record *r = malloc(sizeof(record));
@@ -31,18 +31,17 @@ int main(int argc, const char * argv[]) {
     r->message = malloc(1);
     *(r->message)='\x31';
     
-    sendRecord(client, r);
+    send_record(client, r);
     free(r->message);
     free(r);
-    waitChannel(client);
+    wait_channel(client);
     free(client);
 }
-
 
 void onPacketReceive(channel *ch, packet *p){
     
     //get record
-    record *r = deserializeRecord(p->message, p->messageLen);
+    record *r = deserialize_record(p->message, p->messageLen);
     
     //print received message
     printf("**Basic**\n");
@@ -65,17 +64,17 @@ void onPacketReceive(channel *ch, packet *p){
         printf("Sending record:\n");
         unsigned char *message = NULL;
         uint16_t len;
-        serializeRecord(r, &message, &len);
+        serialize_record(r, &message, &len);
         for(int i=0;i<len+5;i++)
             printf("%02x ",*(message+i));
         printf("\n");
         
-        if(sendRecord(ch, r))
+        if(send_record(ch, r))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n");
         free(r->message);
         free(r);
     }
-    else stopChannel(ch);
-    freePacket(p);
+    else stop_channel(ch);
+    free_packet(p);
 }

@@ -61,12 +61,12 @@ typedef struct{
  * session : session id to recover
  * return the handshake, it has to be deallocated
  */
-handshake_hello *makeClientHello(session_id session);
+handshake_hello *make_client_hello(session_id session);
 
 /*
  * Convert a ClientHello/ServerHello into a stream of streamLen byte
  */
-void serialize_client_server_hello(handshake_hello a, unsigned char **stream, uint32_t *streamLen, channel_mode mode);
+void serialize_client_server_hello(handshake_hello *hello, unsigned char **stream, uint32_t *streamLen, channel_mode mode);
 
 /*
  * Build an handshake type from a byte stream
@@ -76,4 +76,6 @@ void serialize_client_server_hello(handshake_hello a, unsigned char **stream, ui
  */
 handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode);
 
-void print_hello(handshake_hello h);
+void free_hello(handshake_hello *h);
+
+void print_hello(handshake_hello *h);

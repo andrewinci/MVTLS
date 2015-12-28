@@ -84,7 +84,7 @@ typedef struct channel{
  * serverName : name of the server/client
  * return the created channel
  */
-channel *createChannel(char *fileName, char *channelFrom, char *channelTo, mode channelMode);
+channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode channelMode);
 
 /*
  * Set the function to be called when a message is received
@@ -93,7 +93,7 @@ channel *createChannel(char *fileName, char *channelFrom, char *channelTo, mode 
  * onPacketReceive : pointer to the function
  * return : 1 if the function was setted, 0 otherwise
  */
-int setOnReceive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p));
+int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p));
 
 /*
  * Send a message trough the channel ch
@@ -102,7 +102,7 @@ int setOnReceive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p));
  * p : pointer to packet to be sent
  * return : 1 if the message was sent, 0 otherwise
  */
-int sendPacket(channel *ch, packet *p);
+int send_packet(channel *ch, packet *p);
 
 /*
  * Start the channel. We open another thread for the reading
@@ -113,19 +113,19 @@ int sendPacket(channel *ch, packet *p);
  * ch : channel to start
  * return : 1 if the thread was started, 0 otherwise
  */
-int startChannel(channel *ch);
+int start_channel(channel *ch);
 
 /*
  * Stop the main and wait untill stop is called
  */
-void waitChannel(channel *ch);
+void wait_channel(channel *ch);
 
 /*
  * Stop the reading thread and the channel
  * It doesn't free the channel, this operation
  * has to be done manually with free()
  */
-void stopChannel(channel *ch);
+void stop_channel(channel *ch);
 
 /*
  * Create a packet
@@ -135,11 +135,11 @@ void stopChannel(channel *ch);
  * message : the message to be sent
  * messageLen : message lenght (only message)
  */
-packet *createPacket(char *from, char *to, unsigned char *message, uint32_t messageLen);
+packet *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen);
 
 /*
  * Delete and free memory allocated by packet
  *
  * p : packet to remove
  */
-void freePacket(packet *p);
+void free_packet(packet *p);

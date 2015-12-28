@@ -1,8 +1,10 @@
-CC=gcc
-CFLAGS=-Wall -Werror -g
+IDIR = ../include
+LDIRD = ../lib
+CC=gcc 
+CFLAGS=-Wall -Werror -std=c99
 
 
-all:
+all: 
 	#CHE SCHIFO DI Make FILE da fare BENE!
 	make testServerClientBase
 	

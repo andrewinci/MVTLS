@@ -19,21 +19,21 @@ int main(int argc, const char * argv[]) {
     char *channelTo = "Client";
 
     //starting the channel between client and server
-    channel *server = createChannel(fileName, channelFrom, channelTo, SERVER);
+    channel *server = create_channel(fileName, channelFrom, channelTo, SERVER);
     
-    setOnReceive(server, &onPacketReceive);
+    set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
-    startChannel(server);
+    start_channel(server);
     
     printf("*** Record server is start ***\n\n");
-    waitChannel(server);
+    wait_channel(server);
     free(server);
 }
 
 void onPacketReceive(channel *ch, packet *p){
     
     //get record
-    record *r = deserializeRecord(p->message, p->messageLen);
+    record *r = deserialize_record(p->message, p->messageLen);
     
     //print received message
     printf("**Basic**\n");
@@ -56,17 +56,17 @@ void onPacketReceive(channel *ch, packet *p){
         printf("Sending record:\n");
         unsigned char *message = NULL;
         uint16_t len;
-        serializeRecord(r, &message, &len);
+        serialize_record(r, &message, &len);
         for(int i=0;i<len+5;i++)
             printf("%02x ",*(message+i));
         printf("\n");
         
-        if(sendRecord(ch, r))
+        if(send_record(ch, r))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n");
         free(r->message);
         free(r);
     }
-    else stopChannel(ch);
-    freePacket(p);
+    else stop_channel(ch);
+    free_packet(p);
 }

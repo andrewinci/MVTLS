@@ -20,14 +20,14 @@ int main(int argc, char **argv){
     char *serverName = "Server";
 
     //create channel
-    channel *server = createChannel(fileName, serverName, NULL, SERVER);
+    channel *server = create_channel(fileName, serverName, NULL, SERVER);
     //set function to be called when a message is received
-    setOnReceive(server, &onPacketReceive);
+    set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
-    startChannel(server);
+    start_channel(server);
     
     printf("*** Server is start ***\n");
-    waitChannel(server);
+    wait_channel(server);
     free(server);
 }
 
@@ -44,13 +44,13 @@ void onPacketReceive(channel *ch, packet *p){
     
     if(*(p->message)<'8'){
         (*(p->message))++;
-        packet *packet = createPacket(NULL, p->from, p->message, 2);
+        packet *packet = create_packet(NULL, p->from, p->message, 2);
 
-        if(sendPacket(ch, packet))
+        if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n");
         else printf("\nError in sendPacket\n");
-        freePacket(packet);
+        free_packet(packet);
     }
-    else stopChannel(ch);
-    freePacket(p); 
+    else stop_channel(ch);
+    free_packet(p); 
 }
