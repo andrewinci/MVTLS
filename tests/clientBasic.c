@@ -11,8 +11,6 @@
 
 #include "ServerClientBasic.h"
 
-
-#include<stdio.h>
 void onPacketReceive(channel *ch, packet *p);
 
 int main(int argc, char **argv){

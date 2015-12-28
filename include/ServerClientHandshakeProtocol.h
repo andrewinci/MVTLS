@@ -17,8 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../RecordProtocol/ServerClientRecordProtocol.h"
-#include "ServerClientHello.h"
+#include "ServerClientRecordProtocol.h"
+#include "HandshakeMessages/ServerClientHello.h"
 
 #define DEFAULT_TLS_VERSION 0x0303
 #endif

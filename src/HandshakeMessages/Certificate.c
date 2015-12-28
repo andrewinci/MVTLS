@@ -6,4 +6,4 @@
 //  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
-#include "Certificate.h"
+#include "HandshakeMessages/Certificate.h"

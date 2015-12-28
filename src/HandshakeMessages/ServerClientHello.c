@@ -6,7 +6,7 @@
 //  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
-#include "ServerClientHello.h"
+#include "HandshakeMessages/ServerClientHello.h"
 
 cipher_suites get_supported_cipher_suites(){
     int nSupported = 1;

@@ -1,35 +1,52 @@
-IDIR = ../include
-LDIRD = ../lib
-CC=gcc 
-CFLAGS=-Wall -Werror -std=c99
+CC := gcc # This is the main compiler
+#CC := clang --analyze # and comment out the linker last line for sanity
+SRCDIR := src
+BUILDDIR := build
+TARGET := test/clientBasic
+
+SRCEXT := c
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+CFLAGS := -Wall -std=c99 -lpthread
+INC := -I include
+
+GREEN=\033[0;32m
+RED=\033[0;31m
+NC=\033[0m # No Color
 
 
-all: 
-	#CHE SCHIFO DI Make FILE da fare BENE!
-	make testServerClientBase
-	
-	make testServerClientRegister
+all: testBasic testRecord testHandshake
+.PHONY : all
 
-	make testHanshake
+# Tests
+testHandshake: TEST_NAME=Handshake
+testHandshake: $(OBJECTS)
+	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
+	@mkdir -p bin/test$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
 
-testHanshake:
-	mkdir -p test
-	$(CC) $(CFLAGS) -o test/clientHandshakeTest HandshakeProtocol/clientHandshake.c HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
-	$(CC) $(CFLAGS) -o test/serverHandshakeTest HandshakeProtocol/serverHandshake.c HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
+testRecord: TEST_NAME=Record
+testRecord: $(OBJECTS)
+	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
+	@mkdir -p bin/test$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
 
-testServerClientBase:
-	#export LD_LIBRARY_PATH=./lib/
-	#make test folder if doesn't exist
-	mkdir -p test
-	#make server (do better with a library)
-	$(CC) $(CFLAGS) -o test/serverBasicTest BasicComunication/serverBasic.c HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
-	#make client (do better with a library)
-	$(CC) $(CFLAGS) -o test/clientBasicTest BasicComunication/clientBasic.c HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
+testBasic: TEST_NAME=Basic
+testBasic: $(OBJECTS)
+	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
+	@mkdir -p bin/test$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
+	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
 
-testServerClientRegister:
-	#make test folder if doesn't exist
-	mkdir -p test
-	#make server (do better with a library)
-	$(CC) $(CFLAGS) -o test/serverRecordTest RecordProtocol/serverRecord.c  HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
-	#make client (do better with a library)
-	$(CC) $(CFLAGS) -o test/clientRecordTest RecordProtocol/clientRecord.c  HandshakeProtocol/ServerClientHandshakeProtocol.c HandshakeProtocol/ServerClientHello.c RecordProtocol/ServerClientRecordProtocol.c BasicComunication/ServerClientBasic.c
+#Objects files
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@printf "${GREEN}** Make object code **${NC}\n"
+	@mkdir -p $(BUILDDIR)/HandshakeMessages
+	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+clean:
+	@printf "${RED}** Clean **${NC}\n"
+	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	@echo " $(RM) -r bin"; $(RM) -r bin

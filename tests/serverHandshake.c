@@ -10,7 +10,7 @@
 #include <time.h>
 
 #include "ServerClientHandshakeProtocol.h"
-#include "../RecordProtocol/ServerClientRecordProtocol.h"
+#include "ServerClientRecordProtocol.h"
 
 
 void onPacketReceive(channel *ch, packet *p);
