@@ -16,7 +16,7 @@
 //  
 //
 //  both server and client after read a message they blank the file
-//
+//  both server and client cannot write if the file is not blank, they wait
 //
 
 #ifndef ServerClientBasic_h
@@ -46,13 +46,13 @@ typedef enum{
 #ifndef struct_packet
 #define struct_packet
 // basic packet
-typedef struct packet{
-    char *from; //8 byte
-    char *to;   //8 byte
-    //char *packetLen; //4 byte used only in de/serialize
-    unsigned char *message;
+typedef struct{
+    char *source; //8 byte
+    char *destination;   //8 byte
     uint32_t messageLen;
-}packet;
+    unsigned char *message;
+
+}packet_basic;
 #endif
 
 #ifndef struct_channel
@@ -61,15 +61,15 @@ typedef struct channel{
     // server client mode
     mode mod;
     // channel from
-    char *channelFrom;
+    char *channel_source;
     // channel to
-    char *channelTo;
+    char *channel_destination;
     // file to use for exchange messages
     char *fileName;
     // file descriptor
     FILE *file;
     // function to be called when a packet is received
-    void (*onPacketReceive)(struct channel *ch, packet *p);
+    void (*onPacketReceive)(struct channel *ch, packet_basic *p);
     // value to establish if reading thread is enabled
     int isEnabled;
     // reading thread
@@ -93,7 +93,7 @@ channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode
  * onPacketReceive : pointer to the function
  * return : 1 if the function was setted, 0 otherwise
  */
-int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p));
+int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basic *p));
 
 /*
  * Send a message trough the channel ch
@@ -102,7 +102,7 @@ int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet *p))
  * p : pointer to packet to be sent
  * return : 1 if the message was sent, 0 otherwise
  */
-int send_packet(channel *ch, packet *p);
+int send_packet(channel *ch, packet_basic *p);
 
 /*
  * Start the channel. We open another thread for the reading
@@ -135,11 +135,11 @@ void stop_channel(channel *ch);
  * message : the message to be sent
  * messageLen : message lenght (only message)
  */
-packet *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen);
+packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen);
 
 /*
  * Delete and free memory allocated by packet
  *
  * p : packet to remove
  */
-void free_packet(packet *p);
+void free_packet(packet_basic *p);
