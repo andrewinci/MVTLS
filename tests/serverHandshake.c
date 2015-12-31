@@ -13,7 +13,7 @@
 #include "ServerClientRecordProtocol.h"
 
 
-void onPacketReceive(channel *ch, packet *p);
+void onPacketReceive(channel *ch, packet_basic *p);
 
 int main() {
     //setting up the channel
@@ -31,7 +31,8 @@ int main() {
     free(server);
 }
 
-void onPacketReceive(channel *ch, packet *p){
+void onPacketReceive(channel *ch, packet_basic *p){
+
     //get record
     record *r = deserialize_record(p->message, p->messageLen);
     if(r->type == HANDSHAKE){

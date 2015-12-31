@@ -36,9 +36,9 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
     memcpy(buff, &len, 3);
     buff+=3;
     
-    h->TLS_version = REV16(h->TLS_version);
-    memcpy(buff, &(h->TLS_version),2);
-    buff+=2;
+//    h->TLS_version = REV16(h->TLS_version);
+//    memcpy(buff, &(h->TLS_version),2);
+//    buff+=2;
     
     memcpy(buff, h->message, h->length);
     
@@ -57,9 +57,10 @@ handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){
     h->length = len;
     message+=3;
     
-    memcpy(&(h->TLS_version) , message, 2);
-    h->TLS_version = REV16(h->TLS_version);
-    message+=2;
+//    memcpy(&(h->TLS_version) , message, 2);
+//    h->TLS_version = REV16(h->TLS_version);
+//    message+=2;
+
     h->message = message;
     return h;
 }
@@ -67,7 +68,6 @@ handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 void print_handshake(handshake *h){
     printf("\n***Handshake***\n");
     printf("Type : %d\n", h->type);
-    printf("Version : %d\n",h->TLS_version);
     printf("Length : %d\n", h->length);
     printf("Message : \n");
     for(int i =0 ; i<h->length;i++){

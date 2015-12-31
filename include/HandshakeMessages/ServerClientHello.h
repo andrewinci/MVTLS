@@ -50,6 +50,7 @@ typedef struct compression_methods_t {
 
 // Handshake hello packet
 typedef struct{
+    uint16_t TLS_version; 
     random_data random;							// 32 bytes
     session_id session_id;					// 1+session_id.session_lenght bytes
     cipher_suites cipher_suites;			// 1+2*cipher_suites.lenght bytes
@@ -61,7 +62,7 @@ typedef struct{
  * session : session id to recover
  * return the handshake, it has to be deallocated
  */
-handshake_hello *make_client_hello(session_id session);
+handshake_hello *make_hello(session_id session);
 
 /*
  * Convert a ClientHello/ServerHello into a stream of streamLen byte

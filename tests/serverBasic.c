@@ -11,7 +11,7 @@
 
 #include "ServerClientBasic.h"
 
-void onPacketReceive(channel *ch, packet *p);
+void onPacketReceive(channel *ch, packet_basic *p);
 
 int main(int argc, char **argv){
     char *fileName= "channel.txt";
@@ -29,19 +29,18 @@ int main(int argc, char **argv){
     free(server);
 }
 
-void onPacketReceive(channel *ch, packet *p){
+void onPacketReceive(channel *ch, packet_basic *p){
     
     //print received message
-    printf("message from: %.8s\n",p->from);
+    printf("message from: %.8s\n",p->source);
     printf("message len: %d\n", p->messageLen);
     printf("message:\n%.*s\n\n",p->messageLen, p->message);
     
     //prepare new packet to be send
     //if the 'from' field is NULL it will be autofill
-    
     if(*(p->message)<'8'){
         (*(p->message))++;
-        packet *packet = create_packet(NULL, p->from, p->message, 1);
+        packet_basic *packet = create_packet(NULL, p->source, p->message, 1);
 
         if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n");

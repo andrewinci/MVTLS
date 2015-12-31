@@ -6,14 +6,19 @@
 //  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
+#ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
+#else
+#include "ServerClientHello.h"
+#endif
 
 cipher_suites get_supported_cipher_suites(){
-    int nSupported = 1;
+    int nSupported = 2;
     cipher_suites defaultCipherSuites;
     defaultCipherSuites.length = nSupported*2;
     defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
-    defaultCipherSuites.cipher_id[0] = TLS_RSA_WITH_AES_256_CBC_SHA256;
+    defaultCipherSuites.cipher_id[0] = TLS_DH_anon_WITH_AES_256_CBC_SHA;
+    defaultCipherSuites.cipher_id[1] = TLS_RSA_WITH_AES_256_CBC_SHA256;
     return defaultCipherSuites;
 }
 
@@ -29,38 +34,43 @@ uint8_t *getRandomByteStream(int streamLen){
     return result;
 }
 
-handshake_hello *make_client_hello(session_id session){
+handshake_hello *make_hello(session_id session){
     
-    handshake_hello *clientHello = malloc(sizeof(handshake_hello));
+    handshake_hello *hello = malloc(sizeof(handshake_hello));
     
     //compression method by default is setted to null
-    clientHello->compression_methods.length = 0x01;
-    clientHello->compression_methods.compression_id = 0x00;
+    hello->compression_methods.length = 0x01;
+    hello->compression_methods.compression_id = 0x00;
     
     //add random
-    clientHello->random.UNIX_time = (uint32_t)time(NULL);
+    hello->random.UNIX_time = (uint32_t)time(NULL);
     
     uint8_t *random_stream =getRandomByteStream(28);
     for(int i=0;i<28;i++)
-        clientHello->random.random_bytes[i] = *(random_stream+i);
+        hello->random.random_bytes[i] = *(random_stream+i);
     
-    clientHello->session_id = session;
+    hello->session_id = session;
     
-    clientHello->cipher_suites = get_supported_cipher_suites();
+    hello->cipher_suites = get_supported_cipher_suites();
     
-    return clientHello;
+    return hello;
 }
 
 void serialize_client_server_hello(handshake_hello *hello, unsigned char **stream, uint32_t *streamLen, channel_mode mode){
     
     //compute the lenght
     if(mode == CLIENT_MODE)
-        *streamLen = hello->cipher_suites.length + 2 + hello->compression_methods.length + 1 + 32 + hello->session_id.session_lenght + 1;
+        *streamLen = 2 + hello->cipher_suites.length + 2 + hello->compression_methods.length + 1 + 32 + hello->session_id.session_lenght + 1;
     else
-        *streamLen = 2 + 1 + 32 + hello->session_id.session_lenght + 1;
+        *streamLen = 2 + 2 + 1 + 32 + hello->session_id.session_lenght + 1;
 
     *stream = malloc(*streamLen);
     unsigned char *buff = *stream;
+    
+    //serialize TLS Version
+    uint16_t TLS_version = REV16(hello->TLS_version);
+    memcpy(buff, &TLS_version,2);
+    buff+=2;
     
     //serialize random
     random_data rdata = hello->random;
@@ -117,6 +127,13 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
 handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode){
     
     handshake_hello *result = malloc(sizeof(handshake_hello));
+    
+    //deserialize TLSversion
+    uint16_t TLS_version;
+    memcpy(&TLS_version, stream,2);
+    result->TLS_version = REV16(TLS_version);
+    stream+=2;
+    
     
     //deserialize random
     random_data rdata;
@@ -181,6 +198,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
 
 void print_hello(handshake_hello *h){
     printf("\n****Client/Server hello***\n");
+    printf("Version : %d\n",h->TLS_version);
     printf("**Random**\n");
     printf("UNIX time stamp : %d\n", h->random.UNIX_time);
     printf("Random bytes (28): ");

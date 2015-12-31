@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "ServerClientHandshakeProtocol.h"
 
-void onPacketReceive(channel *ch, packet *p);
+void onPacketReceive(channel *ch, packet_basic *p);
 
 int main() {
     //setting up the channel
@@ -27,12 +27,12 @@ int main() {
     session_id session;
     session.session_lenght =0x00;
     session.session_id = NULL;
-    handshake_hello *client_hello = make_client_hello(session);
-    
+    handshake_hello *client_hello = make_hello(session);
+    client_hello->TLS_version = TLS1_2;
+
     //make handshake
     handshake h;
     h.type = CLIENT_HELLO;
-    h.TLS_version = SSL3_0;
     serialize_client_server_hello(client_hello, &h.message, &h.length, CLIENT_MODE);
     
     printf("\n***Sending message***\n");
@@ -47,6 +47,5 @@ int main() {
     free(client);
 }
 
-void onPacketReceive(channel *ch, packet *p){
-    
+void onPacketReceive(channel *ch, packet_basic *p){
 }

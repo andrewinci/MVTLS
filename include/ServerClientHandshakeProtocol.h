@@ -18,7 +18,14 @@
 #include <string.h>
 
 #include "ServerClientRecordProtocol.h"
+
+#ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
+#include "HandshakeMessages/Certificate.h"
+#else
+#include "ServerClientHello.h"
+#include "Certificate.h"
+#endif
 
 #define DEFAULT_TLS_VERSION 0x0303
 #endif
@@ -42,8 +49,7 @@ enum {
 // Header
 typedef struct{
 	uint8_t type;
-	uint32_t length;
-	uint16_t TLS_version;
+	uint32_t length;  
     unsigned char *message;
 } handshake;
 

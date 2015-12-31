@@ -10,7 +10,7 @@
 
 #include "ServerClientRecordProtocol.h"
 
-void onPacketReceive(channel *ch, packet *p);
+void onPacketReceive(channel *ch, packet_basic *p);
 
 int main(int argc, const char * argv[]) {
     //setting up the channel
@@ -30,14 +30,14 @@ int main(int argc, const char * argv[]) {
     free(server);
 }
 
-void onPacketReceive(channel *ch, packet *p){
+void onPacketReceive(channel *ch, packet_basic *p){
     
     //get record
     record *r = deserialize_record(p->message, p->messageLen);
     
     //print received message
     printf("**Basic**\n");
-    printf("message from: %s\n", p->from);
+    printf("message from: %s\n", p->source);
     printf("message len: %d\n", p->messageLen);
     printf("****Record****\n");
     printf("type : %02x\n",r->type);
