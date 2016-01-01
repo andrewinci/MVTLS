@@ -22,16 +22,17 @@ int main(int argc, char **argv){
     printf("*** Client is start ***\n");
     
     //sending packet
-    unsigned char *message = malloc(1);
+    unsigned char *message = malloc(2);
     *message = '1';
     char *to = "Server\0";
-    printf("Client send: %s\n",message);
+    printf("Client send: %c \n",*message);
     
     packet_basic *p = create_packet(NULL, to, message, 1);
+    free(message);
     send_packet(client, p);
     free_packet(p);
     wait_channel(client);
-
+    free(client);
 }
 
 void onPacketReceive(channel *ch, packet_basic *p){

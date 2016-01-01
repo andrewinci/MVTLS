@@ -66,8 +66,8 @@ int send_packet(channel *ch, packet_basic *p){
         usleep(100);
     
     unsigned long writeResult = fwrite(message, 1, strLen, ch->file);
-
-    //free(message);
+    fflush(ch->file);
+    free(message);
     if(writeResult)
         return 1;
     return 0;
@@ -76,8 +76,8 @@ int send_packet(channel *ch, packet_basic *p){
 void reader(void *data){
     channel *ch;
     ch = (channel*)data;
+    unsigned char *str = NULL;
     while (ch->isEnabled) {
-        unsigned char *str = NULL;
         uint32_t fileLen = read_all_file(ch->file, &str);
         if(fileLen>=16){
             //the file is not empty
@@ -87,10 +87,11 @@ void reader(void *data){
                 fclose(ch->file);
                 ch->file = fopen(ch->fileName, "w+");
                 ch->onPacketReceive(ch,received);
-                
-            }  else free_packet(received);
+            }else
+                free_packet(received);
         }
         free(str);
+        str = NULL;
         usleep(DELAY_TIME);
     }
 }
@@ -115,6 +116,7 @@ int start_channel(channel *ch){
 
 void stop_channel(channel *ch){
     ch->isEnabled = 0;
+    fclose(ch->file);
     pthread_exit(NULL);
 }
 
@@ -204,14 +206,16 @@ packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen){
     
     char *from = calloc(8, 1);
     char *to = calloc(8, 1);
-    uint32_t packLen;
+    uint32_t packLen = 0;
     unsigned char *message=NULL;
     
     memcpy(from, str, 8);
     memcpy(to, str+8, 8);
     memcpy(&packLen, str+16, 4);
-    if(packLen>20)
-        message = str+20;
+    if(packLen>20){
+        message = malloc(fileLen-20);
+        memcpy(message, str+20, fileLen-20);
+    }
     
     if(packLen!=fileLen){//the packet is malformed
         free(from);
