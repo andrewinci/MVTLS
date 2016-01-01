@@ -23,7 +23,7 @@ cipher_suites get_supported_cipher_suites(){
 }
 
 uint8_t *getRandomByteStream(int streamLen){
-    FILE *randomSource = fopen("/dev/random","r");
+    FILE *randomSource = fopen("/dev/urandom","r");
     uint8_t *result=malloc(streamLen);
     if(!fread(result, streamLen, 1, randomSource)){
         printf("\nError occurs during random generation\n");
