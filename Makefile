@@ -2,49 +2,64 @@ CC := gcc # This is the main compiler
 #CC := clang --analyze # and comment out the linker last line for sanity
 SRCDIR := src
 BUILDDIR := build
-TARGET := test/clientBasic
-
-SRCEXT := c
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall -lpthread -std=gnu99 -pthread -O3
-INC := -I include
-
+CFLAGS := -g -Wall -std=gnu99 -O0 -D MAKEFILE 
+OPENSSLFLAGS :=-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+LFLAGS := -pthread
+INC :=  -I include
 GREEN=\033[0;32m
 RED=\033[0;31m
 NC=\033[0m # No Color
 
+clientServer: handshakeProtocol
+	@mkdir -p bin/
+	@printf "${GREEN}** Make server **${NC}\n"
+	$(CC) $(CFLAGS) $(SRCDIR)/SSLServer.c $(INC) -o bin/SSLServer $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
+	@printf "${GREEN}** Make client **${NC}\n"
+	$(CC) $(CFLAGS) $(SRCDIR)/SSLClient.c $(INC) -o bin/SSLClient $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
 
-all: testBasic testRecord testHandshake
-.PHONY : all
+
+allTest: testBasic testRecord testHandshake
 
 # Tests
 testHandshake: TEST_NAME=Handshake
-testHandshake: $(OBJECTS)
+testHandshake: handshakeProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSLFLAGS)
 
 testRecord: TEST_NAME=Record
-testRecord: $(OBJECTS)
+testRecord: recordProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
 
 testBasic: TEST_NAME=Basic
-testBasic: $(OBJECTS)
+testBasic: basicProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME)
-	$(CC) $(CFLAGS) $^ tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME)
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o -pthread
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o -pthread
 
-#Objects files
-$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	@printf "${GREEN}** Make object code **${NC}\n"
+handshakeProtocol: recordProtocol handshakeMessages
+	@printf "${GREEN}** Make object code for handshake protocol**${NC}\n"
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientHandshakeProtocol.o $(SRCDIR)/ServerClientHandshakeProtocol.c
+
+handshakeMessages:
+	@printf "${GREEN}** Make object code for handshake messages**${NC}\n"
 	@mkdir -p $(BUILDDIR)/HandshakeMessages
-	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/Certificate.o $(SRCDIR)/HandshakeMessages/Certificate.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientHello.o $(SRCDIR)/HandshakeMessages/ServerClientHello.c
+
+recordProtocol: basicProtocol
+	@printf "${GREEN}** Make object code for record protocol**${NC}\n"
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientRecordProtocol.o $(SRCDIR)/ServerClientRecordProtocol.c
+
+basicProtocol:
+	@printf "${GREEN}** Make object code for basic protocol**${NC}\n"
+	@mkdir -p $(BUILDDIR)/
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientBasic.o $(SRCDIR)/ServerClientBasic.c
 
 clean:
 	@printf "${RED}** Clean **${NC}\n"
