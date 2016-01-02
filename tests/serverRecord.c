@@ -66,6 +66,8 @@ void onPacketReceive(channel *ch, packet_basic *p){
         else printf("\nError in sendPacket\n");
         free(r->message);
         free(r);
+		if(*(r->message)=='8')
+			stop_channel(ch);
     }
     else stop_channel(ch);
     free_packet(p);

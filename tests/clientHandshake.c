@@ -48,4 +48,5 @@ int main() {
 }
 
 void onPacketReceive(channel *ch, packet_basic *p){
+	free_packet(p);
 }

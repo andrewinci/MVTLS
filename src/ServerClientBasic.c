@@ -46,7 +46,7 @@ int send_packet(channel *ch, packet_basic *p){
     unsigned char *message = NULL;
     uint32_t strLen;
 
-    if(p->source == NULL){
+    if(p->source == NULL ){
         p->source = calloc(8,1);
         memcpy(p->source, ch->channel_source, strlen(ch->channel_source));
     }
@@ -66,7 +66,7 @@ int send_packet(channel *ch, packet_basic *p){
         usleep(100);
     
     unsigned long writeResult = fwrite(message, 1, strLen, ch->file);
-    fflush(ch->file);
+    fflush(ch->file); //for update
     free(message);
     if(writeResult)
         return 1;
@@ -81,16 +81,18 @@ void reader(void *data){
         uint32_t fileLen = read_all_file(ch->file, &str);
         if(fileLen>=16){
             //the file is not empty
-            packet_basic *received = deserialize_packet(str, fileLen);
+            packet_basic *received = deserialize_packet(str, fileLen); 
+			free(str);
             if(received!=NULL && strcmp(received->destination, ch->channel_source)==0){
                 //blank the file
                 fclose(ch->file);
                 ch->file = fopen(ch->fileName, "w+");
-                ch->onPacketReceive(ch,received);
+				//fire event
+				ch->onPacketReceive(ch,received);
             }else
                 free_packet(received);
-        }
-        free(str);
+        }else
+			free(str);
         str = NULL;
         usleep(DELAY_TIME);
     }
@@ -125,24 +127,21 @@ void wait_channel(channel *ch){
 }
 
 packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen){
-    packet_basic *result = malloc(sizeof(packet_basic));
+    packet_basic *result = malloc(sizeof(packet_basic));    
     
-    result->source = NULL;
-    result->destination = NULL;
-    result->message = NULL;
-    
-    if(from!=NULL){
+	if(from!=NULL){
         result->source = calloc(8,1);
-        memcpy(result->source, from, strlen(from));
-    }
+        memcpy(result->source, from, 8);
+    }else result->source = NULL;
+	
     if(to!=NULL){
         result->destination = calloc(8,1);
-        memcpy(result->destination, to, strlen(to));
-    }
+        memcpy(result->destination, to, 8);
+    }else result->destination = NULL;
     if(message!=NULL){
         result->message = malloc(messageLen);
         memcpy(result->message, message, messageLen);
-    }
+    }else result->message = NULL;
     
     result->messageLen = messageLen;
     return result;
@@ -151,12 +150,10 @@ packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32
 void free_packet(packet_basic *p){
     if(p==NULL)
         return;
-    if(p->source!=NULL)
-        free(p->source);
-    if(p->destination!=NULL)
-        free(p->destination);
-    if(p->message!=NULL)
-        free(p->message);
+
+	free(p->source);
+	free(p->destination);
+	free(p->message);
     free(p);
 }
 
@@ -220,12 +217,14 @@ packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen){
     if(packLen!=fileLen){//the packet is malformed
         free(from);
         free(to);
+		free(message);
         return NULL;
     }
     
     packet_basic *result = create_packet(from, to, message, packLen-20);
     free(from);
     free(to);
+	free(message);
     return result;
 }
 
@@ -253,7 +252,7 @@ void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen){
             memcpy(*str+20,p->message,p->messageLen);
     }else
     {
-        printf("\nMalloc fail in serialize\n");
+        printf("\nMalloc fail in serialize_packet\n");
         exit(-1);
     }
 }

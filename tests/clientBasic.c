@@ -24,7 +24,7 @@ int main(int argc, char **argv){
     //sending packet
     unsigned char *message = malloc(2);
     *message = '1';
-    char *to = "Server\0";
+    char to[] = "Server\0";
     printf("Client send: %c \n",*message);
     
     packet_basic *p = create_packet(NULL, to, message, 1);
@@ -52,9 +52,11 @@ void onPacketReceive(channel *ch, packet_basic *p){
         if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n\n");
+		free_packet(packet);
         if(*(p->message)=='7'){
+			free_packet(p);
         	stop_channel(ch);
         }
     }
-    free_packet(p);
+	free_packet(p);
 }

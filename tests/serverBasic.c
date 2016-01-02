@@ -45,9 +45,14 @@ void onPacketReceive(channel *ch, packet_basic *p){
         if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n");
         else printf("\nError in sendPacket\n");
-        if(*(p->message)=='8'){
+		
+		free_packet(packet);
+        
+		if(*(p->message)=='8'){
+			free_packet(p);
             stop_channel(ch);
         }
+		
     }
     free_packet(p); 
 }
