@@ -34,7 +34,6 @@ void onPacketReceive(channel *ch, packet_basic *p){
     
     //get record
     record *r = deserialize_record(p->message, p->messageLen);
-    
     //print received message
     printf("**Basic**\n");
     printf("message from: %s\n", p->source);
@@ -64,11 +63,24 @@ void onPacketReceive(channel *ch, packet_basic *p){
         if(send_record(ch, r))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n");
-        free(r->message);
-        free(r);
-		if(*(r->message)=='8')
+		
+		free(message);
+		if(*(r->message)=='6'){
+			free(r->message);
+			free(r);
+			free_packet(p);
 			stop_channel(ch);
+		}
+		free(r->message);
+        free(r);
+		free_packet(p);
     }
-    else stop_channel(ch);
-    free_packet(p);
+    else 
+		{
+			free(r->message);
+			free(r);
+			free_packet(p);
+			stop_channel(ch);
+		}
+
 }

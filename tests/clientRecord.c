@@ -68,13 +68,26 @@ void onPacketReceive(channel *ch, packet_basic *p){
         for(int i=0;i<len+5;i++)
             printf("%02x ",*(message+i));
         printf("\n");
-        
         if(send_record(ch, r))
             printf("\nPacket sent correctly\n\n");
         else printf("\nError in sendPacket\n");
-        free(r->message);
+
+		free(message);
+		if(*(r->message)=='7'){
+			free(r->message);
+			free(r);
+			free_packet(p);
+        	stop_channel(ch);
+        }        
+		free(r->message);
         free(r);
+		free_packet(p);
     }
-    else stop_channel(ch);
-    free_packet(p);
+    else {
+		free(r->message);
+        free(r);
+		free_packet(p);
+		stop_channel(ch);
+	}
+
 }

@@ -11,7 +11,7 @@
 void serialize_record(record *r, unsigned char **message, uint16_t *messageLen){
     *messageLen = r->lenght;
     uint16_t lenghtRev = REV16(*messageLen);
-    *message = calloc(*messageLen+5,1);
+    *message = calloc((*messageLen)+5,1);
     memcpy(*message, &(r->type), 1);
     memcpy(*message+1, &(r->version), 2);
     memcpy(*message+3, &lenghtRev, 2);
@@ -39,6 +39,7 @@ int send_record(channel *ch, record *r){
     packet_basic *tosend = create_packet(NULL, NULL, message, messageLen+5); //the basic layer puts automatically 'from' and 'to'
                                                                     //if they are NULL
     int result = send_packet(ch, tosend);
+	free(message);
     free_packet(tosend);
     return result;
 }
