@@ -21,6 +21,12 @@ clientServer: handshakeProtocol
 allTest: testBasic testRecord testHandshake
 
 # Tests
+tests: testCertificate testBasic testRecord testHandshake
+
+testCertificate:
+	$(CC) $(CFLAGS) tests/testCertificate.c $(INC) -o bin/testCertificate $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSLFLAGS)
+
+
 testHandshake: TEST_NAME=Handshake
 testHandshake: handshakeProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
