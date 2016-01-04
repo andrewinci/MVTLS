@@ -54,3 +54,10 @@ void print_record(record r){
         printf("%02x ", *(r.message+i));
     
 }
+
+void free_record(record *r){
+	if(r==NULL)
+		return;
+	free(r->message);
+	free(r);
+}

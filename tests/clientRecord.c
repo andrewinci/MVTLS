@@ -32,8 +32,7 @@ int main(int argc, const char * argv[]) {
     *(r->message)='\x31';
     
     send_record(client, r);
-    free(r->message);
-    free(r);
+	free_record(r);
     wait_channel(client);
     free(client);
 }
@@ -74,18 +73,15 @@ void onPacketReceive(channel *ch, packet_basic *p){
 
 		free(message);
 		if(*(r->message)=='7'){
-			free(r->message);
-			free(r);
+			free_record(r);
 			free_packet(p);
         	stop_channel(ch);
         }        
-		free(r->message);
-        free(r);
+		free_record(r);
 		free_packet(p);
     }
     else {
-		free(r->message);
-        free(r);
+		free_record(r);	
 		free_packet(p);
 		stop_channel(ch);
 	}

@@ -20,7 +20,7 @@ int main() {
     char *fileName = "channelHandshake.txt";
     char *channelFrom = "Server";
     char *channelTo = "Client";
-    channel *server = create_channel(fileName, channelFrom, channelTo, CLIENT);
+    channel *server = create_channel(fileName, channelFrom, channelTo, SERVER);
     
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
@@ -41,12 +41,16 @@ void onPacketReceive(channel *ch, packet_basic *p){
         if(h->type == CLIENT_HELLO){
             handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
             print_hello(hello);
-            free_packet(p);
-            stop_channel(ch);
+			free_hello(hello);
+			
+			free_record(r);
+            free_handshake(h);
+			free_packet(p);
+            
+			stop_channel(ch);
         }
-		free(h->message);
-		free(h);
     }
-    stop_channel(ch);
+	free_record(r);
     free_packet(p);
+	stop_channel(ch);
 }

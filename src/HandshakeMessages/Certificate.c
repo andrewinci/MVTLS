@@ -34,7 +34,7 @@ certificate_message *make_certificate_message(char **cert_files_name, int list_s
             fclose(fp);
             exit(-1);
         }
-        //free with X509_free(*)
+        //free x 		with X509_free(*)
         fclose(fp);
         
         //create DER_certificate node
@@ -74,19 +74,30 @@ void serialize_certificate_message(certificate_message *cert, unsigned char **st
     
     while (node!=NULL) {
         //get certificate
-        unsigned char *raw_cert=NULL;
-        int raw_certificate_len = i2d_X509(node->X509_certificate, &raw_cert);
-        if(raw_certificate_len>0){
-            
-            //copy length
-            len_t = REV32(raw_certificate_len)>>8;
-            memcpy(buff, &len_t, 3);
-            buff+=3;
-            
-            //copy the certificate
-            memcpy(buff, raw_cert, raw_certificate_len);
-            buff+=raw_certificate_len;
-        }
+		int raw_certificate_len;
+		unsigned char *raw_cert, *p;
+
+		raw_certificate_len = i2d_X509(node->X509_certificate, NULL);
+
+		raw_cert =malloc(raw_certificate_len);
+
+		if (raw_cert == NULL){
+			printf("errror in serialize certificate");
+			exit(-1);
+		}
+
+		p = raw_cert;
+		i2d_X509(node->X509_certificate, &p);
+		//copy length
+		len_t = REV32(raw_certificate_len)>>8;
+		memcpy(buff, &len_t, 3);
+		buff+=3;
+		
+		//copy the certificate
+		memcpy(buff, raw_cert, raw_certificate_len);
+		buff+=raw_certificate_len;
+		
+		OPENSSL_free(raw_cert);
         node = node->next;
     }
 }
@@ -101,14 +112,16 @@ certificate_message *deserialize_certificate_message(unsigned char *stream, uint
     while (buff<(stream+len-3)) {
         DER_certificate *certificate = malloc(sizeof(DER_certificate));
         certificate->next = NULL;
-        
+        certificate->X509_certificate = NULL;
+		
         //certficate length
         memcpy(&len_t,buff, 3);
         len_t = REV32(len_t)>>8;
         buff+=3;
-        
+        unsigned char *p;
+		p=buff;
         //build X509
-        if(!d2i_X509(&certificate->X509_certificate, (const unsigned char **)&buff, len_t)){
+        if(!d2i_X509(&certificate->X509_certificate, (const unsigned char **)&p, len_t)){
             fprintf(stderr, "\nError in deserialize certificate\n");
             exit(-1);
         }
@@ -120,6 +133,7 @@ certificate_message *deserialize_certificate_message(unsigned char *stream, uint
                 last = last->next;
             last->next = certificate;
         }
+		buff+=len_t;
     }
     return result;
 }

@@ -48,7 +48,8 @@ handshake_hello *make_hello(session_id session){
     uint8_t *random_stream =getRandomByteStream(28);
     for(int i=0;i<28;i++)
         hello->random.random_bytes[i] = *(random_stream+i);
-    
+    free(random_stream);
+	
     hello->session_id = session;
     
     hello->cipher_suites = get_supported_cipher_suites();

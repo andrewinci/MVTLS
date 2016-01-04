@@ -10,7 +10,7 @@
 
 int send_handshake(channel *ch, handshake *h){
     unsigned char *message = NULL;
-    uint32_t messageLen;
+    uint32_t messageLen = 0;
     serialize_handshake(h, &message, &messageLen);
     
     //make record
@@ -21,8 +21,8 @@ int send_handshake(channel *ch, handshake *h){
     to_send->message = message;
     
     int result = send_record(ch, to_send);
-    free(message);
-    free(to_send);
+    //free(message);
+    free_record(to_send);
     return result;
 }
 
@@ -42,7 +42,6 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
     
     memcpy(buff, h->message, h->length);
     
-
     *streamLen = h->length+6;
 }
 
@@ -60,9 +59,16 @@ handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 //    memcpy(&(h->TLS_version) , message, 2);
 //    h->TLS_version = REV16(h->TLS_version);
 //    message+=2;
-
-    h->message = message;
+	h->message = malloc(h->length);
+	memcpy(h->message,message,h->length);
     return h;
+}
+
+void free_handshake(handshake *h){
+	if(h==NULL)
+		return;
+	free(h->message);
+	free(h);
 }
 
 void print_handshake(handshake *h){

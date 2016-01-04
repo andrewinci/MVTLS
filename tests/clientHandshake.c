@@ -9,18 +9,13 @@
 #include <stdio.h>
 #include "ServerClientHandshakeProtocol.h"
 
-void onPacketReceive(channel *ch, packet_basic *p);
-
 int main() {
     //setting up the channel
     char *fileName = "channelHandshake.txt";
     char *channelFrom = "Client";
     char *channelTo = "Server";
     channel *client = create_channel(fileName, channelFrom, channelTo, CLIENT);
-    
-    set_on_receive(client, &onPacketReceive);
-    //star channel and listener for new message
-    start_channel(client);
+
     printf("*** Handshake client is start ***\n\n");
     
     //make client hello without session
@@ -39,14 +34,13 @@ int main() {
     print_handshake(&h);
     print_hello(client_hello);
     send_handshake(client, &h);
-    stop_channel(client);
-    //waitChannel(client);
     
+    
+		
     free_hello(client_hello);
     free(h.message);
-    free(client);
-}
 
-void onPacketReceive(channel *ch, packet_basic *p){
-	free_packet(p);
+	//wait_channel(client);
+	fclose(client->file);
+	free(client);
 }
