@@ -61,3 +61,5 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
 handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
 void print_handshake(handshake *h);
+
+void free_handshake(handshake *h);

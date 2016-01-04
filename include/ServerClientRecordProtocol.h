@@ -89,3 +89,5 @@ void serialize_record(record *r, unsigned char **message, uint16_t *messageLen);
  * Print a description of the record
  */
 void print_record(record r);
+
+void free_record(record *r);
