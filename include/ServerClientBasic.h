@@ -33,7 +33,7 @@
 
 #endif
 
-#define DELAY_TIME 100
+#define DELAY_TIME 500000
 
 // operation mode
 #ifndef enum_mode

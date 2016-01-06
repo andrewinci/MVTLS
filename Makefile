@@ -57,6 +57,7 @@ handshakeMessages:
 	@mkdir -p $(BUILDDIR)/HandshakeMessages
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/Certificate.o $(SRCDIR)/HandshakeMessages/Certificate.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientHello.o $(SRCDIR)/HandshakeMessages/ServerClientHello.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ClientKeyExchange.c
 
 recordProtocol: basicProtocol
 	@printf "${GREEN}** Make object code for record protocol**${NC}\n"

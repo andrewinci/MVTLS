@@ -14,13 +14,16 @@
 
 void onPacketReceive(channel *ch, packet_basic *p);
 
+uint16_t previous_state = 0x00; //TODO
+uint16_t cipher_suite =0x00;
+
 int main() {
     
     //setting up the channel
     char *fileName = "SSLchannel.txt";
     char *channelFrom = "Server";
     char *channelTo = "Client";
-    channel *server = create_channel(fileName, channelFrom, channelTo, CLIENT);
+    channel *server = create_channel(fileName, channelFrom, channelTo, SERVER);
     
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
@@ -31,50 +34,126 @@ int main() {
     free(server);
 }
 
+void onHandshakeReceived(channel *ch, handshake *h){
+    if(h->type == CLIENT_HELLO){
+        handshake_hello *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
+        
+        printf("<<< Client Hello\n");
+        print_hello(client_hello);
+        //choose a cipher suite
+        client_hello->cipher_suites.length = 0x01;
+        uint16_t *available_cipher_suites = client_hello->cipher_suites.cipher_id;
+        client_hello->cipher_suites.cipher_id = malloc(2);
+        //TODO : choice a cipher suite
+        *(client_hello->cipher_suites.cipher_id) = available_cipher_suites[1];
+        cipher_suite = *(client_hello->cipher_suites.cipher_id);
+        //clear previous cipher_id
+        free(available_cipher_suites);
+        
+        //make Server hello
+        handshake *server_hello = malloc(sizeof(handshake));
+        server_hello->type = SERVER_HELLO;
+        server_hello->message = NULL;
+        server_hello->length = 0;
+        serialize_client_server_hello(client_hello, &(server_hello->message), &(server_hello->length), SERVER_MODE);
+         free_hello(client_hello);
+
+        printf(">>> Server Hello\n");
+        send_handshake(ch, server_hello);
+        free_handshake(server_hello);
+       
+        
+        //make certificate packet
+        char cert_names[] = "../certificates/serverRSA.pem";
+        char **cert_list= malloc(1*sizeof(char *));
+        cert_list[0] = cert_names;
+        
+        certificate_message *cert_message = make_certificate_message(cert_list, 1);
+        free(cert_list);
+        handshake *certificate_h = malloc(sizeof(handshake));
+        certificate_h->type = CERTIFICATE;
+        serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
+        free_certificate_message(cert_message);
+        
+        printf(">>> Certificate\n");
+        send_handshake(ch, certificate_h);
+        free_handshake(certificate_h);
+        
+        /*
+         if the key exchange method is one of these:
+         DHE_DSS DHE_RSA DH_anon
+         send: Server Key Exchange Message
+         */
+        /*for these key method exchange :
+         RSA DH_DSS DH_RSA
+         don't send Server Key Exchange
+         but server hello done
+         */
+        key_exchange_algorithm kx = get_kx_algorithm(cipher_suite);
+        if(kx==RSA_KX || kx==DH_DSS_KX || kx == DH_RSA_KX){
+            //make Server Hello Done
+            handshake *server_hello_done = malloc(sizeof(handshake));
+            server_hello_done->type = SERVER_DONE;
+            server_hello_done->length =0x04;
+            server_hello_done->message = calloc(4,1);
+            *(server_hello_done->message) = 0x0e;
+            printf(">>> Server hello done\n");
+            send_handshake(ch, server_hello_done);
+        }
+        else{
+            //TODO : implement server key exchange message
+        }
+    }
+    else if (h->type == CLIENT_KEY_EXCHANGE){
+        if(get_kx_algorithm(cipher_suite)==RSA_KX){
+            printf("<<< Client Key Exchange\n");
+            //RSA key exchange
+            
+            //extract private key from file
+            RSA *privateKey = NULL;
+            FILE *fp;
+            
+            if(NULL != (fp= fopen("../certificates/serverRSA.key", "r")) )
+            {
+                OpenSSL_add_all_algorithms();
+                OpenSSL_add_all_ciphers();
+                privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL); 
+                if(privateKey==NULL)
+                {
+                    printf("\nerror in retrieve private key");
+                    exit(-1);
+                }
+            }
+            fclose(fp);
+            
+            //extract pre master key encrypted from message
+            unsigned char *pre_master_key_enc = NULL;
+            uint32_t key_en_len = 0;
+            deserialize_key_exchange(h->length, h->message, &pre_master_key_enc, &key_en_len, RSA_KX);
+            
+            unsigned char pre_master_key[48];
+            RSA_private_decrypt(key_en_len, pre_master_key_enc, pre_master_key, privateKey, RSA_PKCS1_PADDING);
+            printf("\nPremaster secret:\n");
+            for(int i=0;i<46;i++)
+                printf("%02x ",pre_master_key[i]);
+            fflush(stdout);
+            printf("\n");
+            free(pre_master_key_enc);
+            stop_channel(ch);
+        }
+    }
+}
+
+
 void onPacketReceive(channel *ch, packet_basic *p){
     //get record and print
     record *r = deserialize_record(p->message, p->messageLen);
     if(r->type == HANDSHAKE){
         handshake *h = deserialize_handshake(r->message, r->lenght);
-        //print_handshake(h);
-        if(h->type == CLIENT_HELLO){
-            handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
-            print_hello(hello);
-            printf("Received Client Hello\n");
-            //choose a cipher suite
-            hello->cipher_suites.length = 0x01;
-            
-            hello->cipher_suites.cipher_id = malloc(2);
-            //select the first for testing
-            //*(hello->cipher_suites.cipher_id) = hello->cipher_suites.cipher_id[1];
-            //session and compression not implemented yet
-            //we don't modify them
-            
-            //make handshake
-            handshake server_hello;
-            server_hello.type = SERVER_HELLO;
-            unsigned char *server_hello_stream =NULL;
-            uint32_t server_hello_stream_len = 0;
-            serialize_client_server_hello(hello, &server_hello_stream, &server_hello_stream_len, SERVER_MODE);
-            
-            server_hello.message = server_hello_stream;
-            server_hello.length = server_hello_stream_len;
-            printf("Sending Server Hello\n");
-            send_handshake(ch, &server_hello);
-            free_hello(hello);
-            
-            char cert_names[] = "../certificates/server.pem";
-            char **cert_list= malloc(1*sizeof(char *));
-            cert_list[0] = cert_names;
-            certificate_message *cert_message = make_certificate_message(cert_list, 1);
-            handshake certificate_h;
-            certificate_h.type = CERTIFICATE;
-            serialize_certificate_message(cert_message, &certificate_h.message, &certificate_h.length);
-            send_handshake(ch, &certificate_h);
-            free_certificate_message(cert_message);
-
-        }
+		free_record(r);
+		free_packet(p);
+        onHandshakeReceived(ch, h);
+		free_handshake(h);
     }
-    stop_channel(ch);
-    free_packet(p);
+    //stop_channel(ch);
 }

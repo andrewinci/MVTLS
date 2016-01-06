@@ -22,9 +22,11 @@
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
 #include "HandshakeMessages/Certificate.h"
+#include "HandshakeMessages/ClientKeyExchange.h"
 #else
 #include "ServerClientHello.h"
 #include "Certificate.h"
+#include "ClientKeyExchange.h"
 #endif
 
 #define DEFAULT_TLS_VERSION 0x0303
@@ -61,5 +63,7 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
 handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
 void print_handshake(handshake *h);
+
+key_exchange_algorithm get_kx_algorithm(uint16_t cipher_suite_Id);
 
 void free_handshake(handshake *h);

@@ -13,54 +13,98 @@
 #define handshakeConstants_h
 #endif
 
+extern const int RSA_IDS_NUM;
+extern const uint16_t RSA_IDS[];
+
+extern const int DH_DSS_IDS_NUM ;
+extern const uint16_t DH_DSS_IDS[];
+
+extern const int DH_RSA_IDS_NUM ;
+extern const uint16_t DH_RSA_IDS[];
+
+#ifndef channel_mode_enum
+#define channel_mode_enum
 typedef enum{
     SERVER_MODE,
     CLIENT_MODE
 }channel_mode;
+#endif
 
 /*
  * Cipher suite ids
  */
+#ifndef cipher_suite_ids_enum
+#define cipher_suite_ids_enum
 enum {
-    TLS_NULL_WITH_NULL_NULL               = 0x00,
-    //The following definitions require that the server provide
-    //an RSA certificate that can be used for key exchange
-    TLS_RSA_WITH_NULL_MD5                 = 0x01,
-    TLS_RSA_WITH_NULL_SHA                 = 0x02,
-    TLS_RSA_WITH_NULL_SHA256              = 0x3B,
-    TLS_RSA_WITH_RC4_128_MD5              = 0x04,
-    TLS_RSA_WITH_RC4_128_SHA              = 0x05,
-    TLS_RSA_WITH_3DES_EDE_CBC_SHA         = 0x0A,
-    TLS_RSA_WITH_AES_128_CBC_SHA          = 0x2F,
-    TLS_RSA_WITH_AES_256_CBC_SHA          = 0x35,
-    TLS_RSA_WITH_AES_128_CBC_SHA256       = 0x3C,
-    TLS_RSA_WITH_AES_256_CBC_SHA256       = 0x3D,
+    TLS_NULL_WITH_NULL_NULL                 = 0x00,
+    //RSA
+    TLS_RSA_WITH_NULL_MD5					= 0x0001,
+    TLS_RSA_WITH_NULL_SHA					= 0x0002,
+    TLS_RSA_WITH_RC4_128_MD5				= 0x0004,
+    TLS_RSA_WITH_RC4_128_SHA				= 0x0005,
+    TLS_RSA_WITH_IDEA_CBC_SHA				= 0x0007,
+    TLS_RSA_WITH_DES_CBC_SHA				= 0x0009,
+    TLS_RSA_WITH_3DES_EDE_CBC_SHA			= 0x000A,
+    TLS_RSA_PSK_WITH_NULL_SHA				= 0x002E,
+    TLS_RSA_WITH_AES_128_CBC_SHA			= 0x002F,
+    TLS_RSA_WITH_AES_256_CBC_SHA			= 0x0035,
+    TLS_RSA_WITH_NULL_SHA256				= 0x003B,
+    TLS_RSA_WITH_AES_128_CBC_SHA256         = 0x003C,
+    TLS_RSA_WITH_AES_256_CBC_SHA256         = 0x003D,
+    TLS_RSA_WITH_CAMELLIA_128_CBC_SHA		= 0x0041,
+    TLS_RSA_WITH_CAMELLIA_256_CBC_SHA		= 0x0084,
+    TLS_RSA_PSK_WITH_RC4_128_SHA			= 0x0092,
+    TLS_RSA_PSK_WITH_3DES_EDE_CBC_SHA		= 0x0093,
+    TLS_RSA_PSK_WITH_AES_128_CBC_SHA		= 0x0094,
+    TLS_RSA_PSK_WITH_AES_256_CBC_SHA		= 0x0095,
+    TLS_RSA_WITH_SEED_CBC_SHA				= 0x0096,
+    TLS_RSA_WITH_AES_128_GCM_SHA256         = 0x009C,
+    TLS_RSA_WITH_AES_256_GCM_SHA384         = 0x009D,
+    TLS_RSA_PSK_WITH_AES_128_GCM_SHA256     = 0x00AC,
+    TLS_RSA_PSK_WITH_AES_256_GCM_SHA384     = 0x00AD,
+    TLS_RSA_PSK_WITH_AES_128_CBC_SHA256     = 0x00B6,
+    TLS_RSA_PSK_WITH_AES_256_CBC_SHA384     = 0x00B7,
+    TLS_RSA_PSK_WITH_NULL_SHA256			= 0x00B8,
+    TLS_RSA_PSK_WITH_NULL_SHA384			= 0x00B9,
     
-    TLS_DH_DSS_WITH_3DES_EDE_CBC_SHA      = 0x0D,
-    TLS_DH_RSA_WITH_3DES_EDE_CBC_SHA      = 0x10,
-    TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA     = 0x13,
-    TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA     = 0x16,
-    TLS_DH_DSS_WITH_AES_128_CBC_SHA       = 0x30,
-    TLS_DH_RSA_WITH_AES_128_CBC_SHA       = 0x31,
-    TLS_DHE_DSS_WITH_AES_128_CBC_SHA      = 0x32,
-    TLS_DHE_RSA_WITH_AES_128_CBC_SHA      = 0x33,
-    TLS_DH_DSS_WITH_AES_256_CBC_SHA       = 0x36,
-    TLS_DH_RSA_WITH_AES_256_CBC_SHA       = 0x37,
-    TLS_DHE_DSS_WITH_AES_256_CBC_SHA      = 0x38,
-    TLS_DHE_RSA_WITH_AES_256_CBC_SHA      = 0x39,
-    TLS_DH_DSS_WITH_AES_128_CBC_SHA256    = 0x3E,
-    TLS_DH_RSA_WITH_AES_128_CBC_SHA256    = 0x3F,
-    TLS_DHE_DSS_WITH_AES_128_CBC_SHA256   = 0x40,
-    TLS_DHE_RSA_WITH_AES_128_CBC_SHA256   = 0x67,
-    TLS_DH_DSS_WITH_AES_256_CBC_SHA256    = 0x68,
-    TLS_DH_RSA_WITH_AES_256_CBC_SHA256    = 0x69,
-    TLS_DHE_DSS_WITH_AES_256_CBC_SHA256   = 0x6A,
-    TLS_DHE_RSA_WITH_AES_256_CBC_SHA256   = 0x6B,
-
-    TLS_DH_anon_WITH_RC4_128_MD5          = 0x18,
-    TLS_DH_anon_WITH_3DES_EDE_CBC_SHA     = 0x1B,
-	TLS_DH_anon_WITH_AES_128_CBC_SHA      = 0x34,
-	TLS_DH_anon_WITH_AES_256_CBC_SHA      = 0x3A,
-	TLS_DH_anon_WITH_AES_128_CBC_SHA256   = 0x6C,
-	TLS_DH_anon_WITH_AES_256_CBC_SHA256   = 0x6D
+    //DH DSS
+    TLS_DH_DSS_EXPORT_WITH_DES40_CBC_SHA	= 0x000B,
+    TLS_DH_DSS_WITH_DES_CBC_SHA             = 0x000C,
+    TLS_DH_DSS_WITH_3DES_EDE_CBC_SHA		= 0x000D,
+    TLS_DH_DSS_WITH_AES_128_CBC_SHA         = 0x0030,
+    TLS_DH_DSS_WITH_AES_256_CBC_SHA         = 0x0036,
+    TLS_DH_DSS_WITH_AES_128_CBC_SHA256		= 0x003E,
+    TLS_DH_DSS_WITH_CAMELLIA_128_CBC_SHA	= 0x0042,
+    TLS_DH_DSS_WITH_AES_256_CBC_SHA256		= 0x0068,
+    TLS_DH_DSS_WITH_CAMELLIA_256_CBC_SHA	= 0x0085,
+    TLS_DH_DSS_WITH_SEED_CBC_SHA			= 0x0097,
+    TLS_DH_DSS_WITH_AES_128_GCM_SHA256		= 0x00A4,
+    TLS_DH_DSS_WITH_AES_256_GCM_SHA384		= 0x00A5,
+    
+    //DH RSA
+    TLS_DH_RSA_EXPORT_WITH_DES40_CBC_SHA	= 0x000E,
+    TLS_DH_RSA_WITH_DES_CBC_SHA             = 0x000F,
+    TLS_DH_RSA_WITH_3DES_EDE_CBC_SHA		= 0x0010,
+    TLS_DH_RSA_WITH_AES_128_CBC_SHA         = 0x0031,
+    TLS_DH_RSA_WITH_AES_256_CBC_SHA         = 0x0037,
+    TLS_DH_RSA_WITH_AES_128_CBC_SHA256		= 0x003F,
+    TLS_DH_RSA_WITH_CAMELLIA_128_CBC_SHA	= 0x0043,
+    TLS_DH_RSA_WITH_AES_256_CBC_SHA256		= 0x0069,
+    TLS_DH_RSA_WITH_CAMELLIA_256_CBC_SHA	= 0x0086,
+    TLS_DH_RSA_WITH_SEED_CBC_SHA			= 0x0098,
+    TLS_DH_RSA_WITH_AES_128_GCM_SHA256		= 0x00A0,
+    TLS_DH_RSA_WITH_AES_256_GCM_SHA384		= 0x00A1
+    
 };
+#endif
+
+/*
+ * Key exchange algoritm
+ */
+#ifndef key_exchange_algorithm_enum
+#define key_exchange_algorithm_enum
+typedef enum{
+    RSA_KX, DH_RSA_KX, DH_DSS_KX
+}key_exchange_algorithm;
+#endif
+
