@@ -139,6 +139,9 @@ certificate_message *deserialize_certificate_message(unsigned char *stream, uint
 }
 
 void free_certificate_message(certificate_message *cert){
+    if(cert==NULL)
+        return;
+        
     DER_certificate *node = cert->certificate_list;
     
     //clean the certificate list

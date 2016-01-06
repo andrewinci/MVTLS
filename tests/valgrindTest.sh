@@ -16,6 +16,18 @@ echo "**** MAKE SURE TO HAVE valgrind ( love it <3 ) INSTALLED ****"$NC
 pause
 
 echo ""
+echo $GREEN"-----TESTING MAIN SSL SERVER/CLIENT-------"$NC
+echo $RED"NOTE: this test use OpenSSL hence there is some suppressed "
+echo "warning due to the OpenSSL implementation. DON'T WORRY ABOUT THAT"$NC
+echo ""
+pause
+cd ../bin
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./SSLServer &
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./SSLClient
+pause
+exit
+
+echo ""
 echo $GREEN"-----TESTING CERTIFICATE SERIALIZE/DESERIALIZE-------"$NC
 echo $RED"NOTE: this test use OpenSSL hence there is some suppressed "
 echo "warning due to the OpenSSL implementation. DON'T WORRY ABOUT THAT"$NC

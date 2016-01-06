@@ -57,14 +57,19 @@ int send_packet(channel *ch, packet_basic *p){
     }
     
     serialize_packet(p, &message, &strLen);
-    if(message == NULL)
-        return 0;
+    if(message == NULL){
+		printf("\nerror in send packet\n");
+		exit(-1);
+	}
+
     //printf("Packet to send:\n%.*s\n",strLen,message);
     //TODO : do better
     //waiting untill the file is blank
     while (get_file_size(ch->file)!=0)
         usleep(100);
-    
+	//at this point the file is empty
+    fclose(ch->file);
+	ch->file = fopen(ch->fileName, "w+");
     unsigned long writeResult = fwrite(message, 1, strLen, ch->file);
     fflush(ch->file); //for update
     free(message);

@@ -13,12 +13,13 @@
 #endif
 
 cipher_suites get_supported_cipher_suites(){
-    int nSupported = 2;
+    int nSupported = 3;
     cipher_suites defaultCipherSuites;
     defaultCipherSuites.length = nSupported*2;
     defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
-    defaultCipherSuites.cipher_id[0] = TLS_DH_anon_WITH_AES_256_CBC_SHA;
+    defaultCipherSuites.cipher_id[0] = TLS_RSA_WITH_DES_CBC_SHA;
     defaultCipherSuites.cipher_id[1] = TLS_RSA_WITH_AES_256_CBC_SHA256;
+    defaultCipherSuites.cipher_id[2] = TLS_RSA_WITH_AES_256_CBC_SHA256;
     return defaultCipherSuites;
 }
 
