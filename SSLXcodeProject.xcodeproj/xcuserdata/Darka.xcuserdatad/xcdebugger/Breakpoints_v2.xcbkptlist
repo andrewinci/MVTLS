@@ -38,16 +38,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "src/SSLClient.c"
-            timestampString = "473255511.32789"
+            filePath = "src/SSLServer.c"
+            timestampString = "473767152.022546"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "onPacketReceive()"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "onHandshakeReceived()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "src/SSLClient.c"
-            timestampString = "473256278.894691"
+            filePath = "src/ServerClientBasic.c"
+            timestampString = "473769975.157038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "onPacketReceive()"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "send_packet()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/SSLServer.c"
+            timestampString = "473770747.987196"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "onHandshakeReceived()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

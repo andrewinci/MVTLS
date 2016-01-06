@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4232A4361C3D09D800A284BB /* ClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ClientKeyExchange.c */; };
+		4232A4371C3D1BDD00A284BB /* ClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ClientKeyExchange.c */; };
 		42420B321C31A7DB002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
 		42420B351C31A7E2002C0585 /* clientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B1D1C31A7C5002C0585 /* clientBasic.c */; };
 		42420B5C1C31ABBA002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
@@ -52,7 +54,25 @@
 		42AEDAA01C350CC0009DF6FD /* ServerClientRecordProtocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B1B1C31A7C5002C0585 /* ServerClientRecordProtocol.c */; };
 		42AEDAAE1C3543CA009DF6FD /* SSLClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AEDAAD1C3543CA009DF6FD /* SSLClient.c */; };
 		42AEDAB01C3543D1009DF6FD /* SSLServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 42AEDAAF1C3543D1009DF6FD /* SSLServer.c */; };
+		42D5D7C01C3B0A8D007E67E7 /* testCertificate.c in Sources */ = {isa = PBXBuildFile; fileRef = 42D5D7BF1C3B0A8D007E67E7 /* testCertificate.c */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		42FE81C11C3D246A00198C1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F9F8081C2AE4AB00270B8C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42AEDA7D1C3455F2009DF6FD;
+			remoteInfo = SSLClient;
+		};
+		42FE81C31C3D247800198C1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F9F8081C2AE4AB00270B8C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42AEDA881C3455FC009DF6FD;
+			remoteInfo = SSLServer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4211400B1C3050B800122E20 /* CopyFiles */ = {
@@ -140,6 +160,8 @@
 
 /* Begin PBXFileReference section */
 		4211400D1C3050B800122E20 /* clientHandshake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = clientHandshake; sourceTree = BUILT_PRODUCTS_DIR; };
+		4232A4341C3D09CB00A284BB /* ClientKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientKeyExchange.h; sourceTree = "<group>"; };
+		4232A4351C3D09D800A284BB /* ClientKeyExchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ClientKeyExchange.c; sourceTree = "<group>"; };
 		42420B111C31A7C5002C0585 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../Project/LICENSE; sourceTree = "<group>"; };
 		42420B121C31A7C5002C0585 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Project/Makefile; sourceTree = "<group>"; };
 		42420B131C31A7C5002C0585 /* Note */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Note; path = ../Project/Note; sourceTree = "<group>"; };
@@ -168,6 +190,7 @@
 		42C5DF551C2B11620038A3D9 /* serverRecord */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = serverRecord; sourceTree = BUILT_PRODUCTS_DIR; };
 		42C5DF601C2B11870038A3D9 /* clientRecord */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = clientRecord; sourceTree = BUILT_PRODUCTS_DIR; };
 		42C5DF801C2BEE7A0038A3D9 /* serverHandshake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = serverHandshake; sourceTree = BUILT_PRODUCTS_DIR; };
+		42D5D7BF1C3B0A8D007E67E7 /* testCertificate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testCertificate.c; sourceTree = "<group>"; };
 		42DF50131C32946E00DD7E20 /* certificateTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = certificateTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F9F82E1C2AEA8600270B8C /* clientBasic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = clientBasic; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F9F8391C2AEAA100270B8C /* serverBasic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = serverBasic; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +278,7 @@
 		42420B161C31A7C5002C0585 /* HandshakeMessages */ = {
 			isa = PBXGroup;
 			children = (
+				4232A4351C3D09D800A284BB /* ClientKeyExchange.c */,
 				42420B171C31A7C5002C0585 /* Certificate.c */,
 				42420B181C31A7C5002C0585 /* ServerClientHello.c */,
 			);
@@ -264,6 +288,7 @@
 		42420B1C1C31A7C5002C0585 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				42D5D7BF1C3B0A8D007E67E7 /* testCertificate.c */,
 				42420B1D1C31A7C5002C0585 /* clientBasic.c */,
 				42420B1E1C31A7C5002C0585 /* clientHandshake.c */,
 				42420B1F1C31A7C5002C0585 /* clientRecord.c */,
@@ -290,6 +315,7 @@
 		42AEDAA71C3543BA009DF6FD /* HandshakeMessages */ = {
 			isa = PBXGroup;
 			children = (
+				4232A4341C3D09CB00A284BB /* ClientKeyExchange.h */,
 				42AEDAA81C3543BA009DF6FD /* Certificate.h */,
 				42AEDAA91C3543BA009DF6FD /* ServerClientHello.h */,
 			);
@@ -359,6 +385,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				42FE81C41C3D247800198C1C /* PBXTargetDependency */,
 			);
 			name = SSLClient;
 			productName = SSLClient;
@@ -376,6 +403,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				42FE81C21C3D246A00198C1C /* PBXTargetDependency */,
 			);
 			name = SSLServer;
 			productName = SSLServer;
@@ -568,6 +596,7 @@
 				42AEDA9C1C350CC0009DF6FD /* Certificate.c in Sources */,
 				42AEDAAE1C3543CA009DF6FD /* SSLClient.c in Sources */,
 				42AEDA9D1C350CC0009DF6FD /* ServerClientHello.c in Sources */,
+				4232A4361C3D09D800A284BB /* ClientKeyExchange.c in Sources */,
 				42AEDA9E1C350CC0009DF6FD /* ServerClientBasic.c in Sources */,
 				42AEDA9F1C350CC0009DF6FD /* ServerClientHandshakeProtocol.c in Sources */,
 				42AEDAA01C350CC0009DF6FD /* ServerClientRecordProtocol.c in Sources */,
@@ -578,6 +607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4232A4371C3D1BDD00A284BB /* ClientKeyExchange.c in Sources */,
 				42AEDA971C34561E009DF6FD /* Certificate.c in Sources */,
 				42AEDA981C34561E009DF6FD /* ServerClientHello.c in Sources */,
 				42AEDA991C34561E009DF6FD /* ServerClientBasic.c in Sources */,
@@ -630,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D5D7C01C3B0A8D007E67E7 /* testCertificate.c in Sources */,
 				427681A81C32AE7100B075EB /* Certificate.c in Sources */,
 				427681A91C32AE7100B075EB /* ServerClientHello.c in Sources */,
 				427681AA1C32AE7100B075EB /* ServerClientBasic.c in Sources */,
@@ -657,6 +688,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		42FE81C21C3D246A00198C1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42AEDA7D1C3455F2009DF6FD /* SSLClient */;
+			targetProxy = 42FE81C11C3D246A00198C1C /* PBXContainerItemProxy */;
+		};
+		42FE81C41C3D247800198C1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42AEDA881C3455FC009DF6FD /* SSLServer */;
+			targetProxy = 42FE81C31C3D247800198C1C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		421140121C3050B800122E20 /* Debug */ = {
@@ -933,6 +977,7 @@
 				42AEDA841C3455F2009DF6FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		42AEDA8D1C3455FC009DF6FD /* Build configuration list for PBXNativeTarget "SSLServer" */ = {
 			isa = XCConfigurationList;
@@ -941,6 +986,7 @@
 				42AEDA8F1C3455FC009DF6FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		42C5DF5B1C2B11630038A3D9 /* Build configuration list for PBXNativeTarget "serverRecord" */ = {
 			isa = XCConfigurationList;
