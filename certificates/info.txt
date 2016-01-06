@@ -1,1 +1,24 @@
-serverkey : testkey
+#Create RSA key
+	openssl genrsa -out serverRSA.key 2048
+#Create RSA certificate request
+	openssl req -new -key serverRSA.key -out serverRSA.csr
+
+#Self sign certificate starting from private key and certification request
+	openssl x509 -signkey serverRSA.key -in serverRSA.csr -req -days 365 -out serverRSA.crt
+
+#convert from crt to pem
+	simply change extension
+
+#encrypt the key 
+	openssl rsa -des3 -in serverNoEnc.key -out server.key
+
+#View certficate
+	openssl x509 -in serverRSA.pem -text
+
+#Testing openssl connection
+##run RSA server
+sudo openssl s_server -accept 443 -www -msg -state -cipher RSA 
+
+##run client
+openssl s_client -connect localhost:443 -msg -state
+
