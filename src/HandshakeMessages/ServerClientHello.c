@@ -96,7 +96,8 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     //serialize cipher suite
     if(mode == SERVER_MODE){
         //ServerHello
-        memcpy(buff, hello->cipher_suites.cipher_id, 2); // only one cipher suite has to be in the message
+        uint16_t cipher_id =REV16(*(hello->cipher_suites.cipher_id));
+        memcpy(buff, &cipher_id, 2); // only one cipher suite has to be in the message
         buff+=2;
     }
     else{

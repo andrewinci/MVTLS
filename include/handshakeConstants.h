@@ -11,16 +11,11 @@
 
 #ifndef handshakeConstants_h
 #define handshakeConstants_h
+#include <stdio.h>
+#include <stdint.h>
+#include <openssl/hmac.h>
 #endif
 
-extern const int RSA_IDS_NUM;
-extern const uint16_t RSA_IDS[];
-
-extern const int DH_DSS_IDS_NUM ;
-extern const uint16_t DH_DSS_IDS[];
-
-extern const int DH_RSA_IDS_NUM ;
-extern const uint16_t DH_RSA_IDS[];
 
 #ifndef channel_mode_enum
 #define channel_mode_enum
@@ -29,6 +24,27 @@ typedef enum{
     CLIENT_MODE
 }channel_mode;
 #endif
+
+/*
+ * Key exchange algoritm
+ */
+#ifndef key_exchange_algorithm_enum
+#define key_exchange_algorithm_enum
+typedef enum{
+    RSA_KX, DH_RSA_KX, DH_DSS_KX
+}key_exchange_algorithm;
+#endif
+
+/*
+ * Starting from cipher suite id retrieve the hash function
+ * to be used in PRF
+ */
+const EVP_MD *get_hash_function(uint16_t cipher_suite_Id);
+
+/*
+ * Starting form cipher suite id retrieve the key excahnge alghoritm
+ */
+key_exchange_algorithm get_kx_algorithm(uint16_t cipher_suite_Id);
 
 /*
  * Cipher suite ids
@@ -98,13 +114,5 @@ enum {
 };
 #endif
 
-/*
- * Key exchange algoritm
- */
-#ifndef key_exchange_algorithm_enum
-#define key_exchange_algorithm_enum
-typedef enum{
-    RSA_KX, DH_RSA_KX, DH_DSS_KX
-}key_exchange_algorithm;
-#endif
+
 

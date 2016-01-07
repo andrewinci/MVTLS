@@ -169,7 +169,8 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     memcpy(seed+32, server_random, 32);
     
     unsigned char *master_key = NULL;
-    PRF(EVP_sha256(), pre_master_key, PRE_MASTER_KEY_LEN, "master secret", 13, seed, 64, 48, &master_key);
+    const EVP_MD *hash_function = get_hash_function(cipher_suite);
+    PRF(hash_function, pre_master_key, PRE_MASTER_KEY_LEN, "master secret", 13, seed, 64, 48, &master_key);
     
     printf("\nMaster secret:\n");
     for(int i=0;i<48;i++)

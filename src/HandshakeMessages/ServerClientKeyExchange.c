@@ -7,7 +7,7 @@
 //
 
 #ifdef MAKEFILE
-#include "HandshakeMessages/ClientKeyExchange.h"
+#include "HandshakeMessages/ServerClientKeyExchange.h"
 #else
 #include "ServerClientKeyExchange.h"
 #endif
