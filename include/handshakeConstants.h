@@ -16,6 +16,7 @@
 #include <openssl/hmac.h>
 #endif
 
+#define PRE_MASTER_KEY_LEN 48
 
 #ifndef channel_mode_enum
 #define channel_mode_enum

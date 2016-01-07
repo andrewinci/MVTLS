@@ -40,7 +40,7 @@ void deserialize_key_exchange(uint32_t message_len, unsigned char *message, unsi
 }
 
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, int label_len, unsigned char *seed, int seed_len, int result_len, unsigned char **result){
-    unsigned char *buff = malloc(result_len);
+    unsigned char *buff = malloc(result_len+result_len%hash->md_size);
     *result = buff;
     
     //compute p_hash(secret,seed)
@@ -54,7 +54,6 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
     int tot_len = 0;
     unsigned int a_len = label_len+seed_len;
     unsigned char *a = seed_p;
-    
     while (tot_len<result_len) {
         unsigned char *temp = NULL;
         temp = HMAC(hash, secret, secret_len, a, a_len, NULL, &a_len);

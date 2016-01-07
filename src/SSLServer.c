@@ -16,6 +16,8 @@ void onPacketReceive(channel *ch, packet_basic *p);
 
 uint16_t previous_state = 0x00; //TODO
 uint16_t cipher_suite =0x00;
+unsigned char client_random[32] = {0};
+unsigned char server_random[32] = {0};
 
 int main() {
     
@@ -39,28 +41,50 @@ void onHandshakeReceived(channel *ch, handshake *h){
         handshake_hello *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
         
         printf("<<< Client Hello\n");
-        print_hello(client_hello);
-        //choose a cipher suite
-        client_hello->cipher_suites.length = 0x01;
-        uint16_t *available_cipher_suites = client_hello->cipher_suites.cipher_id;
-        client_hello->cipher_suites.cipher_id = malloc(2);
-        //TODO : choice a cipher suite
-        *(client_hello->cipher_suites.cipher_id) = available_cipher_suites[1];
-        cipher_suite = *(client_hello->cipher_suites.cipher_id);
-        //clear previous cipher_id
-        free(available_cipher_suites);
+        //print_hello(client_hello);
+        //copy client random
+        memcpy(client_random,&(client_hello->random.UNIX_time),4);
+        memcpy(client_random+4,client_hello->random.random_bytes,28);
         
-        //make Server hello
-        handshake *server_hello = malloc(sizeof(handshake));
-        server_hello->type = SERVER_HELLO;
-        server_hello->message = NULL;
-        server_hello->length = 0;
-        serialize_client_server_hello(client_hello, &(server_hello->message), &(server_hello->length), SERVER_MODE);
-         free_hello(client_hello);
+        //Make server hello without session
+        session_id *session= malloc(sizeof(session_id));
+        session->session_lenght =0x00;
+        session->session_id = NULL;
+        handshake_hello *server_hello = make_hello(*session);
+        
+        //choose a cipher suite
+        server_hello->cipher_suites.length = 0x02;
 
-        printf(">>> Server Hello\n");
-        send_handshake(ch, server_hello);
-        free_handshake(server_hello);
+        server_hello->cipher_suites.cipher_id = malloc(2);
+        //TODO : choice a cipher suite
+        *(server_hello->cipher_suites.cipher_id) = client_hello->cipher_suites.cipher_id[1];
+        cipher_suite = *(server_hello->cipher_suites.cipher_id);
+        printf("\nCipher suite :%04x\n",cipher_suite);
+        
+        //copy server random
+        memcpy(server_random,&(server_hello->random.UNIX_time), 4);
+        memcpy(server_random+4, server_hello->random.random_bytes, 28);
+        
+        printf("Server random :\n");
+        for(int i=0;i<32;i++)
+            printf("%02x ",server_random[i]);
+        printf("\nClient random :\n");
+        for(int i=0;i<32;i++)
+            printf("%02x ",client_random[i]);
+        //clear received packet
+        free_hello(client_hello);
+        
+        
+        //make Server hello handshake
+        handshake *server_hello_h = malloc(sizeof(handshake));
+        server_hello_h->type = SERVER_HELLO;
+        server_hello_h->message = NULL;
+        server_hello_h->length = 0;
+        serialize_client_server_hello(server_hello, &(server_hello_h->message), &(server_hello_h->length), SERVER_MODE);
+        //print_hello(server_hello);
+        printf("\n>>> Server Hello\n");
+        send_handshake(ch, server_hello_h);
+        free_handshake(server_hello_h);
        
         
         //make certificate packet
@@ -68,7 +92,7 @@ void onHandshakeReceived(channel *ch, handshake *h){
         char **cert_list= malloc(1*sizeof(char *));
         cert_list[0] = cert_names;
         
-        certificate_message *cert_message = make_certificate_message(cert_list, 1);
+        certificate_message *cert_message = make_certificate_message("../certificates/serverRSA.pem");
         free(cert_list);
         handshake *certificate_h = malloc(sizeof(handshake));
         certificate_h->type = CERTIFICATE;
@@ -141,6 +165,21 @@ void onHandshakeReceived(channel *ch, handshake *h){
                 printf("%02x ",pre_master_key[i]);
             fflush(stdout);
             printf("\n");
+            
+            //make master key
+            unsigned char seed[64];
+            memcpy(seed, client_random, 32);
+            memcpy(seed+32, server_random, 32);
+            printf("\nSeed:\n");
+            for(int i=0;i<64;i++)
+                printf("%02x ",seed[i]);
+            unsigned char *master_key = NULL;
+            const EVP_MD *hash_function = get_hash_function(cipher_suite);
+            PRF(hash_function, pre_master_key, PRE_MASTER_KEY_LEN, "master secret", 13, seed, 64, 48, &master_key);
+            
+            printf("\nMaster secret:\n");
+            for(int i=0;i<48;i++)
+                printf("%02x ",master_key[i]);
             
             free(pre_master_key_enc);
             RSA_free(privateKey);

@@ -10,9 +10,6 @@
 #include "ServerClientRecordProtocol.h"
 #include <openssl/rand.h>
 
-
-#define PRE_MASTER_KEY_LEN 48
-
 void onPacketReceive(channel *ch, packet_basic *p);
 void RSA_key_exchange(handshake *h, channel *ch);
 
@@ -73,29 +70,38 @@ void onHandshakeReceived(channel *ch, handshake *h){
         
         //extract data for next steps
         cipher_suite = *(hello->cipher_suites.cipher_id);
+
+        printf("\nCipher suite :%04x\n",cipher_suite);
+        
         tls_version = hello->TLS_version;
         
-        print_handshake(h);
+        //print_handshake(h);
         
         //save server random
         memcpy(server_random,&(hello->random.UNIX_time), 4);
         memcpy(server_random+4, hello->random.random_bytes, 28);
+        printf("Server random :\n");
+        for(int i=0;i<32;i++)
+            printf("%02x ",server_random[i]);
+        printf("\nClient random :\n");
+        for(int i=0;i<32;i++)
+            printf("%02x ",client_random[i]);
         
         free_hello(hello);
         previous_state = SERVER_HELLO;
     }
     else if(h->type == CERTIFICATE && previous_state == SERVER_HELLO){
         printf("\n<<< Certificate\n");
-        print_handshake(h);
+        //print_handshake(h);
         certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
         server_certificate = certificate_m;
-        printf("\nCertificate name: %s\n",certificate_m->certificate_list->X509_certificate->name);
+        printf("\nCertificate name: %s\n",certificate_m->X509_certificate->name);
         previous_state = CERTIFICATE;
         
     }
     else if(h->type == SERVER_DONE && previous_state == CERTIFICATE){
         printf("<<< Server Hello Done\n");
-        print_handshake(h);
+        //print_handshake(h);
         free_handshake(h);
         
         //make Client Key Exchange Message
@@ -126,7 +132,7 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     EVP_PKEY *pubkey = NULL;
     RSA *rsa = NULL;
     
-    pubkey = X509_get_pubkey(server_certificate->certificate_list->X509_certificate);
+    pubkey = X509_get_pubkey(server_certificate->X509_certificate);
     rsa = EVP_PKEY_get1_RSA(pubkey);
 
     EVP_PKEY_free(pubkey);
@@ -146,7 +152,7 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     
     //encrypt pre_master_key
     uint32_t key_len = RSA_public_encrypt(PRE_MASTER_KEY_LEN, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
-    free(pre_master_key);
+
     
     //serialize and send
     unsigned char *message = NULL;
@@ -176,4 +182,5 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     for(int i=0;i<48;i++)
         printf("%02x ",master_key[i]);
     RSA_free(rsa);
+    free(pre_master_key);
 }
