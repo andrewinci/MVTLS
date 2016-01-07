@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4232A4361C3D09D800A284BB /* ClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ClientKeyExchange.c */; };
-		4232A4371C3D1BDD00A284BB /* ClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ClientKeyExchange.c */; };
+		4232A4361C3D09D800A284BB /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */; };
+		4232A4371C3D1BDD00A284BB /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */; };
 		42420B321C31A7DB002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
 		42420B351C31A7E2002C0585 /* clientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B1D1C31A7C5002C0585 /* clientBasic.c */; };
 		42420B5C1C31ABBA002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
@@ -160,8 +160,8 @@
 
 /* Begin PBXFileReference section */
 		4211400D1C3050B800122E20 /* clientHandshake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = clientHandshake; sourceTree = BUILT_PRODUCTS_DIR; };
-		4232A4341C3D09CB00A284BB /* ClientKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientKeyExchange.h; sourceTree = "<group>"; };
-		4232A4351C3D09D800A284BB /* ClientKeyExchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ClientKeyExchange.c; sourceTree = "<group>"; };
+		4232A4341C3D09CB00A284BB /* ServerClientKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientKeyExchange.h; sourceTree = "<group>"; };
+		4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientKeyExchange.c; sourceTree = "<group>"; };
 		42420B111C31A7C5002C0585 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../Project/LICENSE; sourceTree = "<group>"; };
 		42420B121C31A7C5002C0585 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Project/Makefile; sourceTree = "<group>"; };
 		42420B131C31A7C5002C0585 /* Note */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Note; path = ../Project/Note; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 		42420B161C31A7C5002C0585 /* HandshakeMessages */ = {
 			isa = PBXGroup;
 			children = (
-				4232A4351C3D09D800A284BB /* ClientKeyExchange.c */,
+				4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */,
 				42420B171C31A7C5002C0585 /* Certificate.c */,
 				42420B181C31A7C5002C0585 /* ServerClientHello.c */,
 			);
@@ -315,7 +315,7 @@
 		42AEDAA71C3543BA009DF6FD /* HandshakeMessages */ = {
 			isa = PBXGroup;
 			children = (
-				4232A4341C3D09CB00A284BB /* ClientKeyExchange.h */,
+				4232A4341C3D09CB00A284BB /* ServerClientKeyExchange.h */,
 				42AEDAA81C3543BA009DF6FD /* Certificate.h */,
 				42AEDAA91C3543BA009DF6FD /* ServerClientHello.h */,
 			);
@@ -596,7 +596,7 @@
 				42AEDA9C1C350CC0009DF6FD /* Certificate.c in Sources */,
 				42AEDAAE1C3543CA009DF6FD /* SSLClient.c in Sources */,
 				42AEDA9D1C350CC0009DF6FD /* ServerClientHello.c in Sources */,
-				4232A4361C3D09D800A284BB /* ClientKeyExchange.c in Sources */,
+				4232A4361C3D09D800A284BB /* ServerClientKeyExchange.c in Sources */,
 				42AEDA9E1C350CC0009DF6FD /* ServerClientBasic.c in Sources */,
 				42AEDA9F1C350CC0009DF6FD /* ServerClientHandshakeProtocol.c in Sources */,
 				42AEDAA01C350CC0009DF6FD /* ServerClientRecordProtocol.c in Sources */,
@@ -607,7 +607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4232A4371C3D1BDD00A284BB /* ClientKeyExchange.c in Sources */,
+				4232A4371C3D1BDD00A284BB /* ServerClientKeyExchange.c in Sources */,
 				42AEDA971C34561E009DF6FD /* Certificate.c in Sources */,
 				42AEDA981C34561E009DF6FD /* ServerClientHello.c in Sources */,
 				42AEDA991C34561E009DF6FD /* ServerClientBasic.c in Sources */,

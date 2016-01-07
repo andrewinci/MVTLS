@@ -2,7 +2,7 @@ CC := gcc # This is the main compiler
 #CC := clang --analyze # and comment out the linker last line for sanity
 SRCDIR := src
 BUILDDIR := build
-CFLAGS := -g -Wall -std=gnu99 -O0 -D MAKEFILE 
+CFLAGS := -Wall -std=gnu99 -O3 -D MAKEFILE 
 OPENSSLFLAGS :=-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
 LFLAGS := -pthread
 INC :=  -I include

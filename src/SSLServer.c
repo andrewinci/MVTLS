@@ -10,7 +10,7 @@
 
 #include "ServerClientHandshakeProtocol.h"
 #include "ServerClientRecordProtocol.h"
-
+#include <openssl/err.h>
 
 void onPacketReceive(channel *ch, packet_basic *p);
 
@@ -28,7 +28,7 @@ int main() {
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
     start_channel(server);
-    printf("*** Handshake server is start ***\n\n");
+    printf("*** TLS server is start ***\n\n");
     
     wait_channel(server);
     free(server);
@@ -99,6 +99,7 @@ void onHandshakeReceived(channel *ch, handshake *h){
             *(server_hello_done->message) = 0x0e;
             printf(">>> Server hello done\n");
             send_handshake(ch, server_hello_done);
+            free_handshake(server_hello_done);
         }
         else{
             //TODO : implement server key exchange message
@@ -115,8 +116,6 @@ void onHandshakeReceived(channel *ch, handshake *h){
             
             if(NULL != (fp= fopen("../certificates/serverRSA.key", "r")) )
             {
-                OpenSSL_add_all_algorithms();
-                OpenSSL_add_all_ciphers();
                 privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL); 
                 if(privateKey==NULL)
                 {
@@ -131,14 +130,21 @@ void onHandshakeReceived(channel *ch, handshake *h){
             uint32_t key_en_len = 0;
             deserialize_key_exchange(h->length, h->message, &pre_master_key_enc, &key_en_len, RSA_KX);
             
-            unsigned char pre_master_key[48];
-            RSA_private_decrypt(key_en_len, pre_master_key_enc, pre_master_key, privateKey, RSA_PKCS1_PADDING);
+            unsigned char pre_master_key[48]={0};
+            if(!RSA_private_decrypt(key_en_len, pre_master_key_enc, pre_master_key, privateKey, RSA_PKCS1_PADDING)) //TODO : check
+            {
+                printf("Error decrypt\n");
+                exit(-1);
+            }
             printf("\nPremaster secret:\n");
-            for(int i=0;i<46;i++)
+            for(int i=0;i<48;i++)
                 printf("%02x ",pre_master_key[i]);
             fflush(stdout);
             printf("\n");
+            
             free(pre_master_key_enc);
+            RSA_free(privateKey);
+            free_handshake(h);
             stop_channel(ch);
         }
     }

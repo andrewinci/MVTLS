@@ -9,14 +9,19 @@
 #include "ServerClientHandshakeProtocol.h"
 #include "ServerClientRecordProtocol.h"
 #include <openssl/rand.h>
-#include <openssl/err.h>
+
+
+#define PRE_MASTER_KEY_LEN 48
 
 void onPacketReceive(channel *ch, packet_basic *p);
 void RSA_key_exchange(handshake *h, channel *ch);
 
 uint16_t cipher_suite =0x0000;
-X509 *server_certificate = NULL;
+certificate_message *server_certificate;
 uint16_t tls_version = 0x0000;
+uint16_t previous_state = 0x0000;
+unsigned char client_random[32] = {0};
+unsigned char server_random[32] = {0};
 
 int main() {
     //setting up the channel
@@ -28,7 +33,7 @@ int main() {
     set_on_receive(client, &onPacketReceive);
     //star channel and listener for new message
     start_channel(client);
-    printf("*** Handshake client is start ***\n\n");
+    printf("*** TLS client is start ***\n\n");
     
     //make client hello without session
     session_id *session= malloc(sizeof(session_id));
@@ -45,17 +50,22 @@ int main() {
     
     printf(">>> Client hello\n");
     send_handshake(client, client_hello_h);
-    wait_channel(client);
+    
+    //save the generated random
+    memcpy(client_random,&(client_hello->random.UNIX_time),4);
+    memcpy(client_random+4,client_hello->random.random_bytes,28);
     
 	free(session);
     free_hello(client_hello);
     free_handshake(client_hello_h);
+    
+    wait_channel(client);
     free(client);
 }
 
 void onHandshakeReceived(channel *ch, handshake *h){
-    certificate_message *certificate_m = NULL;
-    if(h->type == SERVER_HELLO){
+
+    if(h->type == SERVER_HELLO && previous_state==0x0000){
         //received server hello
         handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
         //print_hello(hello);
@@ -66,17 +76,24 @@ void onHandshakeReceived(channel *ch, handshake *h){
         tls_version = hello->TLS_version;
         
         print_handshake(h);
+        
+        //save server random
+        memcpy(server_random,&(hello->random.UNIX_time), 4);
+        memcpy(server_random+4, hello->random.random_bytes, 28);
+        
         free_hello(hello);
+        previous_state = SERVER_HELLO;
     }
-    else if(h->type == CERTIFICATE){
+    else if(h->type == CERTIFICATE && previous_state == SERVER_HELLO){
         printf("\n<<< Certificate\n");
         print_handshake(h);
-        certificate_m = deserialize_certificate_message(h->message, h->length);
-        server_certificate = certificate_m->certificate_list->X509_certificate;
+        certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
+        server_certificate = certificate_m;
         printf("\nCertificate name: %s\n",certificate_m->certificate_list->X509_certificate->name);
+        previous_state = CERTIFICATE;
         
     }
-    else if(h->type == SERVER_DONE){
+    else if(h->type == SERVER_DONE && previous_state == CERTIFICATE){
         printf("<<< Server Hello Done\n");
         print_handshake(h);
         free_handshake(h);
@@ -86,7 +103,7 @@ void onHandshakeReceived(channel *ch, handshake *h){
         if(kx == RSA_KX){
             RSA_key_exchange(h, ch);
         }
-        free_certificate_message(certificate_m);
+        free_certificate_message(server_certificate);
         stop_channel(ch);
     }
 }
@@ -109,12 +126,12 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     EVP_PKEY *pubkey = NULL;
     RSA *rsa = NULL;
     
-    pubkey = X509_get_pubkey(server_certificate);
+    pubkey = X509_get_pubkey(server_certificate->certificate_list->X509_certificate);
     rsa = EVP_PKEY_get1_RSA(pubkey);
 
     EVP_PKEY_free(pubkey);
     //generate pre master secret key
-    unsigned char *pre_master_key = calloc(48,1);
+    unsigned char *pre_master_key = calloc(PRE_MASTER_KEY_LEN,1);
     //the first 2 byte coincide with the tls version
     uint16_t temp = REV16(tls_version);
     memcpy(pre_master_key,&temp , 2);
@@ -124,10 +141,12 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     unsigned char pre_master_key_enc[256];
     
     printf("\nPremaster secret:\n");
-    for(int i=0;i<46;i++)
+    for(int i=0;i<48;i++)
         printf("%02x ",pre_master_key[i]);
+    
     //encrypt pre_master_key
-    uint32_t key_len = RSA_public_encrypt(48, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
+    uint32_t key_len = RSA_public_encrypt(PRE_MASTER_KEY_LEN, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
+    free(pre_master_key);
     
     //serialize and send
     unsigned char *message = NULL;
@@ -142,7 +161,18 @@ void RSA_key_exchange(handshake *h, channel *ch) {
 
     printf("\n>>> Client Key Exchange\n");
     send_handshake(ch, client_key_exchange);
+    free_handshake(client_key_exchange);
     
-    //TODO : make master key
-    free(message);
+    //make master key
+    unsigned char seed[64];
+    memcpy(seed, client_random, 32);
+    memcpy(seed+32, server_random, 32);
+    
+    unsigned char *master_key = NULL;
+    PRF(EVP_sha256(), pre_master_key, PRE_MASTER_KEY_LEN, "master secret", 13, seed, 64, 48, &master_key);
+    
+    printf("\nMaster secret:\n");
+    for(int i=0;i<48;i++)
+        printf("%02x ",master_key[i]);
+    RSA_free(rsa);
 }

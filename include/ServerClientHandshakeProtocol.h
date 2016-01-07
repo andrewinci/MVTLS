@@ -22,11 +22,11 @@
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
 #include "HandshakeMessages/Certificate.h"
-#include "HandshakeMessages/ClientKeyExchange.h"
+#include "HandshakeMessages/ServerClientKeyExchange.h"
 #else
 #include "ServerClientHello.h"
 #include "Certificate.h"
-#include "ClientKeyExchange.h"
+#include "ServerClientKeyExchange.h"
 #endif
 
 #define DEFAULT_TLS_VERSION 0x0303
