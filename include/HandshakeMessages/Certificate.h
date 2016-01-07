@@ -27,14 +27,9 @@
 #define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
 #endif /* Certificate_h */
 
-typedef struct DER_certificate_t{
-    X509 *X509_certificate;
-    struct DER_certificate_t *next;
-}DER_certificate;
-
 typedef struct {
     uint32_t cert_length; //only 3 byte are used
-    DER_certificate *certificate_list;
+    X509 *X509_certificate;
 }certificate_message;
 
 /*
@@ -43,7 +38,7 @@ typedef struct {
  * list_size        : the number of path in cert_files_name
  *  return a certificate_message ready for serialize and send
  */
-certificate_message *make_certificate_message(char **cert_files_name, int list_size);
+certificate_message *make_certificate_message(char *cert_file_name);
 
 /*
  * Serialization of the packet like always
