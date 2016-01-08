@@ -16,12 +16,10 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <openssl/rand.h>
 
 #include "handshakeConstants.h"
 #endif /* ServerClientHello_h */
-
-#define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
-#define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
 
 // 32-bit of random
 typedef struct {

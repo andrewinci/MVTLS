@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
     
     record *r = malloc(sizeof(record));
     r->type = HANDSHAKE;
-    r->version = SSL3_0;
+    r->version = TLS1_2;
     r->lenght = 0x01;
     r->message = malloc(1);
     *(r->message)='\x31';

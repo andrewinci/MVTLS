@@ -303,4 +303,10 @@ Per ogni "tipo" di pacchetto, quindi struct, occorre definire le funzioni:
 + tipoDeserialize : dalla struct alla stringa
 + tipoGetSize : data la struttura ritorna la dimensione in Byte della stringa generata da Serialize
 
-Il Serve
+#Assumptions
++ RFC 5246 TLS 1.2
++ Il server invia un solo certificato
++ La versione è TLS1.2 sia per il client che per il server 
++ no extension
++ no session
++ no elliptic curve

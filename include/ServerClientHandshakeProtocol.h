@@ -18,6 +18,7 @@
 #include <string.h>
 
 #include "ServerClientRecordProtocol.h"
+#include "handshakeConstants.h"
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
@@ -29,24 +30,7 @@
 #include "ServerClientKeyExchange.h"
 #endif
 
-#define DEFAULT_TLS_VERSION 0x0303
 #endif
-
-/*
- * Types of handshake packet
- */
-enum {
-    HELLO_REQUEST           = 0x00,
-    CLIENT_HELLO            = 0x01,
-    SERVER_HELLO            = 0x02,
-    CERTIFICATE             = 0x0B,
-    SERVER_KEY_EXCHANGE     = 0x0C,
-    CERTIFICATE_REQUEST     = 0x0D,
-    SERVER_DONE             = 0x0E,
-    CERTIFICATE_VERIFY      = 0x0F,
-    CLIENT_KEY_EXCHANGE     = 0x10,
-    FINISHED                = 0x14
-};
 
 // Header
 typedef struct{

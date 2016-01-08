@@ -11,9 +11,7 @@
 
 #include <stdio.h>
 #include "ServerClientBasic.h"
-
-#define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
-#define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
+#include "handshakeConstants.h"
 
 #endif
 
@@ -29,19 +27,6 @@ typedef enum{
     ALERT               = 0x15,
     APPLICATION_DATA    = 0x17
 }recordType;
-#endif
-
-/*
- * Record Version
- */
-#ifndef enum_record_version
-#define enum_record_version
-typedef enum{
-    SSL3_0 = 0x0300,
-    TLS1_0 = 0x0301,
-    TLS1_1 = 0x0302,
-    TLS1_2 = 0x0303
-}recordVersion;
 #endif
 
 /*

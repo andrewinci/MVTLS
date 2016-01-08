@@ -8,7 +8,7 @@
 
 #include "ServerClientHandshakeProtocol.h"
 
-int send_handshake(channel *ch, handshake *h){
+record *make_record(handshake *h) {
     unsigned char *message = NULL;
     uint32_t messageLen = 0;
     serialize_handshake(h, &message, &messageLen);
@@ -16,9 +16,15 @@ int send_handshake(channel *ch, handshake *h){
     //make record
     record *to_send = malloc(sizeof(record));
     to_send->type = HANDSHAKE;
-    to_send->version = SSL3_0;
+    to_send->version = TLS1_2;
     to_send->lenght = messageLen;
     to_send->message = message;
+    return to_send;
+}
+
+int send_handshake(channel *ch, handshake *h){
+    record *to_send;
+    to_send = make_record(h);
     
     int result = send_record(ch, to_send);
     //free(message);
@@ -65,12 +71,26 @@ void free_handshake(handshake *h){
 }
 
 void print_handshake(handshake *h){
-    printf("\n***Handshake***\n");
-    printf("Type : %d\n", h->type);
-    printf("Length : %d\n", h->length);
-    printf("Message : \n");
-    for(int i =0 ; i<h->length;i++){
-        printf("%02x ",*(h->message+i));
+//    printf("\n***Handshake***\n");
+//    printf("Type : %d\n", h->type);
+//    printf("Length : %d\n", h->length);
+//    printf("Message : \n");
+//    for(int i =0 ; i<h->length;i++){
+//        printf("%02x ",*(h->message+i));
+//    }
+    record *to_send = make_record(h);
+    unsigned char *message = NULL;
+    uint16_t messageLen = 0;
+    serialize_record(to_send, &message, &messageLen);
+    free_record(to_send);
+    for (int i=0; i<messageLen; i++) {
+        if(i%9 == 0)
+            printf("\n");
+        printf("%02x ",message[i]);
+
     }
+    printf("\n");
+    free(message);
+    
 }
 

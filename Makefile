@@ -3,7 +3,9 @@ CC := gcc # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
 CFLAGS := -Wall -std=gnu99 -O3 -D MAKEFILE 
-OPENSSLFLAGS :=-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+#OPENSSLINCLUDE ?= -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib ??NEED IT??
+OPENSSLFLAGS := -lssl -lcrypto
+OPENSSL := $(OPENSSLFLAGS) #$(OPENSSLINCLUDE)
 LFLAGS := -pthread
 INC :=  -I include
 GREEN=\033[0;32m
@@ -13,9 +15,9 @@ NC=\033[0m # No Color
 clientServer: handshakeProtocol
 	@mkdir -p bin/
 	@printf "${GREEN}** Make server **${NC}\n"
-	$(CC) $(CFLAGS) $(SRCDIR)/SSLServer.c $(INC) -o bin/SSLServer $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
+	$(CC) $(CFLAGS) $(SRCDIR)/SSLServer.c $(INC) -o bin/SSLServer $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
 	@printf "${GREEN}** Make client **${NC}\n"
-	$(CC) $(CFLAGS) $(SRCDIR)/SSLClient.c $(INC) -o bin/SSLClient $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
+	$(CC) $(CFLAGS) $(SRCDIR)/SSLClient.c $(INC) -o bin/SSLClient $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
 
 
 allTest: testBasic testRecord testHandshake
@@ -24,15 +26,15 @@ allTest: testBasic testRecord testHandshake
 tests: testCertificate testBasic testRecord testHandshake
 
 testCertificate:
-	$(CC) $(CFLAGS) tests/testCertificate.c $(INC) -o bin/testCertificate $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSLFLAGS)
+	$(CC) $(CFLAGS) tests/testCertificate.c $(INC) -o bin/testCertificate $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSL)
 
 
 testHandshake: TEST_NAME=Handshake
 testHandshake: handshakeProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSLFLAGS)
-	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSLFLAGS)
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSL)
 
 testRecord: TEST_NAME=Record
 testRecord: recordProtocol

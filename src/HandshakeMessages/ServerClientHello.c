@@ -13,26 +13,27 @@
 #endif
 
 cipher_suites get_supported_cipher_suites(){
-    int nSupported = 3;
+    int nSupported = 10;
     cipher_suites defaultCipherSuites;
     defaultCipherSuites.length = nSupported*2;
     defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
-    defaultCipherSuites.cipher_id[0] = TLS_RSA_WITH_DES_CBC_SHA;
-    defaultCipherSuites.cipher_id[1] = TLS_RSA_WITH_AES_256_CBC_SHA256;
-    defaultCipherSuites.cipher_id[2] = TLS_RSA_PSK_WITH_NULL_SHA;
+    uint16_t supported[] = {
+        //RSA
+        TLS_RSA_WITH_NULL_MD5,
+        TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+        TLS_RSA_WITH_AES_128_GCM_SHA256,
+        TLS_RSA_WITH_AES_256_GCM_SHA384,
+        //DH_DSS
+        TLS_DH_DSS_EXPORT_WITH_DES40_CBC_SHA,
+        TLS_DH_DSS_WITH_AES_128_CBC_SHA256,
+        TLS_DH_DSS_WITH_AES_256_GCM_SHA384,
+        //DH_RSA
+        TLS_DH_RSA_EXPORT_WITH_DES40_CBC_SHA,
+        TLS_DH_RSA_WITH_AES_128_GCM_SHA256,
+        TLS_DH_RSA_WITH_AES_256_GCM_SHA384
+    };
+    memcpy(defaultCipherSuites.cipher_id,supported,nSupported*2);
     return defaultCipherSuites;
-}
-
-uint8_t *getRandomByteStream(int streamLen){
-    FILE *randomSource = fopen("/dev/urandom","r");
-    uint8_t *result=malloc(streamLen);
-    if(!fread(result, streamLen, 1, randomSource)){
-        printf("\nError occurs during random generation\n");
-        fclose(randomSource);
-        exit(-1);
-    }
-    fclose(randomSource);
-    return result;
 }
 
 handshake_hello *make_hello(session_id session){
@@ -45,8 +46,9 @@ handshake_hello *make_hello(session_id session){
     
     //add random
     hello->random.UNIX_time = (uint32_t)time(NULL);
+    uint8_t *random_stream = malloc(28);
+    RAND_pseudo_bytes(random_stream, 28);
     
-    uint8_t *random_stream =getRandomByteStream(28);
     for(int i=0;i<28;i++)
         hello->random.random_bytes[i] = *(random_stream+i);
     free(random_stream);

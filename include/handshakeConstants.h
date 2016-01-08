@@ -6,7 +6,7 @@
 //  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 // This file contains a set of constants used in 
-// the handshake protocol
+// the handshake protocol and some function 
 //
 
 #ifndef handshakeConstants_h
@@ -14,6 +14,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <openssl/hmac.h>
+
+#define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
+#define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
+
 #endif
 
 #define PRE_MASTER_KEY_LEN 48
@@ -48,12 +52,43 @@ const EVP_MD *get_hash_function(uint16_t cipher_suite_Id);
 key_exchange_algorithm get_kx_algorithm(uint16_t cipher_suite_Id);
 
 /*
+ * Record Version
+ */
+#ifndef enum_record_version
+#define enum_record_version
+typedef enum{
+    SSL3_0 = 0x0300,
+    TLS1_0 = 0x0301,
+    TLS1_1 = 0x0302,
+    TLS1_2 = 0x0303
+}TLS_version;
+#endif
+
+/*
+ * Types of handshake packet
+ */
+#ifndef enum_handshake_type
+#define enum_handshake_type
+enum {
+    HELLO_REQUEST           = 0x00,
+    CLIENT_HELLO            = 0x01,
+    SERVER_HELLO            = 0x02,
+    CERTIFICATE             = 0x0B,
+    SERVER_KEY_EXCHANGE     = 0x0C,
+    CERTIFICATE_REQUEST     = 0x0D,
+    SERVER_DONE             = 0x0E,
+    CERTIFICATE_VERIFY      = 0x0F,
+    CLIENT_KEY_EXCHANGE     = 0x10,
+    FINISHED                = 0x14
+};
+#endif
+
+/*
  * Cipher suite ids
  */
 #ifndef cipher_suite_ids_enum
 #define cipher_suite_ids_enum
 enum {
-    TLS_NULL_WITH_NULL_NULL                 = 0x00,
     //RSA
     TLS_RSA_WITH_NULL_MD5					= 0x0001,
     TLS_RSA_WITH_NULL_SHA					= 0x0002,
