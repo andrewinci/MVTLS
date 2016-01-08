@@ -11,7 +11,9 @@
 #include <openssl/rand.h>
 
 void onPacketReceive(channel *ch, packet_basic *p);
-void RSA_key_exchange(handshake *h, channel *ch);
+void RSA_client_key_exchange(handshake *h, channel *ch);
+void certificate_received(handshake *h);
+void server_hello_received(handshake *h);
 
 uint16_t cipher_suite =0x0000;
 certificate_message *server_certificate;
@@ -46,6 +48,7 @@ int main() {
     serialize_client_server_hello(client_hello, &(client_hello_h->message), &(client_hello_h->length), CLIENT_MODE);
     
     printf(">>> Client hello\n");
+    print_handshake(client_hello_h);
     send_handshake(client, client_hello_h);
     
     //save the generated random
@@ -60,60 +63,10 @@ int main() {
     free(client);
 }
 
-void onHandshakeReceived(channel *ch, handshake *h){
-
-    if(h->type == SERVER_HELLO && previous_state==0x0000){
-        //received server hello
-        handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
-        //print_hello(hello);
-        printf("\n<<< Server Hello\n");
-        
-        //extract data for next steps
-        cipher_suite = *(hello->cipher_suites.cipher_id);
-
-        printf("\nCipher suite :%04x\n",cipher_suite);
-        
-        tls_version = hello->TLS_version;
-        
-        //print_handshake(h);
-        
-        //save server random
-        memcpy(server_random,&(hello->random.UNIX_time), 4);
-        memcpy(server_random+4, hello->random.random_bytes, 28);
-        printf("Server random :\n");
-        for(int i=0;i<32;i++)
-            printf("%02x ",server_random[i]);
-        printf("\nClient random :\n");
-        for(int i=0;i<32;i++)
-            printf("%02x ",client_random[i]);
-        
-        free_hello(hello);
-        previous_state = SERVER_HELLO;
-    }
-    else if(h->type == CERTIFICATE && previous_state == SERVER_HELLO){
-        printf("\n<<< Certificate\n");
-        //print_handshake(h);
-        certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
-        server_certificate = certificate_m;
-        printf("\nCertificate name: %s\n",certificate_m->X509_certificate->name);
-        previous_state = CERTIFICATE;
-        
-    }
-    else if(h->type == SERVER_DONE && previous_state == CERTIFICATE){
-        printf("<<< Server Hello Done\n");
-        //print_handshake(h);
-        free_handshake(h);
-        
-        //make Client Key Exchange Message
-        key_exchange_algorithm kx = get_kx_algorithm(cipher_suite);
-        if(kx == RSA_KX){
-            RSA_key_exchange(h, ch);
-        }
-        free_certificate_message(server_certificate);
-        stop_channel(ch);
-    }
-}
-
+/*
+ * Function is automatically called from
+ * basic protocol when a message is received
+ */
 void onPacketReceive(channel *ch, packet_basic *p){
     //get record and print
     record *r = deserialize_record(p->message, p->messageLen);
@@ -121,13 +74,81 @@ void onPacketReceive(channel *ch, packet_basic *p){
         handshake *h = deserialize_handshake(r->message, r->lenght);    
 		free_record(r);
 		free_packet(p);
-        onHandshakeReceived(ch,h);
+        if(h->type == SERVER_HELLO && previous_state==0x0000){
+            server_hello_received(h);
+        }
+        else if(h->type == CERTIFICATE && previous_state == SERVER_HELLO){
+            certificate_received(h);
+        }
+        else if(h->type == SERVER_DONE && previous_state == CERTIFICATE){
+            printf("<<< Server Hello Done\n");
+            print_handshake(h);
+            free_handshake(h);
+            
+            //make Client Key Exchange Message
+            key_exchange_algorithm kx = get_kx_algorithm(cipher_suite);
+            if(kx == RSA_KX){
+                RSA_client_key_exchange(h, ch);
+            }else{
+                printf("\nExchange method not implemented yet\n");
+            }
+            free_certificate_message(server_certificate);
+            stop_channel(ch);
+        }
 		free_handshake(h);
     }
 }
 
+/*
+ * Extract data from server_hello 
+ * h : handshake with server_hello message
+ */
+void server_hello_received(handshake *h) {
+    //received server hello
+    handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
+    //print_hello(hello);
+    printf("\n<<< Server Hello\n");
+    print_handshake(h);
+    //extract data for next steps
+    cipher_suite = *(hello->cipher_suites.cipher_id);
+    
+    printf("\nCipher suite :%04x\n",cipher_suite);
+    
+    tls_version = hello->TLS_version;
+    
+    //print_handshake(h);
+    
+    //save server random
+    memcpy(server_random,&(hello->random.UNIX_time), 4);
+    memcpy(server_random+4, hello->random.random_bytes, 28);
+    printf("Server random :\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",server_random[i]);
+    printf("\nClient random :\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",client_random[i]);
+    
+    free_hello(hello);
+    previous_state = SERVER_HELLO;
+}
 
-void RSA_key_exchange(handshake *h, channel *ch) {
+/*
+ * Extract data from certificate message
+ * h : handshake with certificate
+ */
+void certificate_received(handshake *h) {
+    printf("\n<<< Certificate\n");
+    print_handshake(h);
+    certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
+    server_certificate = certificate_m;
+    printf("\nCertificate dettails: %s\n",certificate_m->X509_certificate->name);
+    previous_state = CERTIFICATE;
+}
+
+/*
+ * Manage RSA key exchange
+ */
+void RSA_client_key_exchange(handshake *h, channel *ch) {
     //get RSA struct
     EVP_PKEY *pubkey = NULL;
     RSA *rsa = NULL;
@@ -149,11 +170,11 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     printf("\nPremaster secret:\n");
     for(int i=0;i<48;i++)
         printf("%02x ",pre_master_key[i]);
+    printf("\n");
     
     //encrypt pre_master_key
     uint32_t key_len = RSA_public_encrypt(PRE_MASTER_KEY_LEN, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
 
-    
     //serialize and send
     unsigned char *message = NULL;
     uint32_t len = 0;
@@ -166,6 +187,7 @@ void RSA_key_exchange(handshake *h, channel *ch) {
     client_key_exchange->length = len;
 
     printf("\n>>> Client Key Exchange\n");
+    print_handshake(client_key_exchange);
     send_handshake(ch, client_key_exchange);
     free_handshake(client_key_exchange);
     
