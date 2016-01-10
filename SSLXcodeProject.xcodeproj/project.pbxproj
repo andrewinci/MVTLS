@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4232A4361C3D09D800A284BB /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */; };
 		4232A4371C3D1BDD00A284BB /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */; };
+		423D47271C42A02200925698 /* handshakeConstants.c in Sources */ = {isa = PBXBuildFile; fileRef = 423D47261C42A02200925698 /* handshakeConstants.c */; };
+		423D47281C42A02200925698 /* handshakeConstants.c in Sources */ = {isa = PBXBuildFile; fileRef = 423D47261C42A02200925698 /* handshakeConstants.c */; };
 		42420B321C31A7DB002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
 		42420B351C31A7E2002C0585 /* clientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B1D1C31A7C5002C0585 /* clientBasic.c */; };
 		42420B5C1C31ABBA002C0585 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42420B191C31A7C5002C0585 /* ServerClientBasic.c */; };
@@ -162,6 +164,7 @@
 		4211400D1C3050B800122E20 /* clientHandshake */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = clientHandshake; sourceTree = BUILT_PRODUCTS_DIR; };
 		4232A4341C3D09CB00A284BB /* ServerClientKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientKeyExchange.h; sourceTree = "<group>"; };
 		4232A4351C3D09D800A284BB /* ServerClientKeyExchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientKeyExchange.c; sourceTree = "<group>"; };
+		423D47261C42A02200925698 /* handshakeConstants.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = handshakeConstants.c; sourceTree = "<group>"; };
 		42420B111C31A7C5002C0585 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../Project/LICENSE; sourceTree = "<group>"; };
 		42420B121C31A7C5002C0585 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Project/Makefile; sourceTree = "<group>"; };
 		42420B131C31A7C5002C0585 /* Note */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Note; path = ../Project/Note; sourceTree = "<group>"; };
@@ -266,6 +269,7 @@
 		42420B151C31A7C5002C0585 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				423D47261C42A02200925698 /* handshakeConstants.c */,
 				42420B161C31A7C5002C0585 /* HandshakeMessages */,
 				42420B191C31A7C5002C0585 /* ServerClientBasic.c */,
 				42420B1A1C31A7C5002C0585 /* ServerClientHandshakeProtocol.c */,
@@ -594,6 +598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AEDA9C1C350CC0009DF6FD /* Certificate.c in Sources */,
+				423D47271C42A02200925698 /* handshakeConstants.c in Sources */,
 				42AEDAAE1C3543CA009DF6FD /* SSLClient.c in Sources */,
 				42AEDA9D1C350CC0009DF6FD /* ServerClientHello.c in Sources */,
 				4232A4361C3D09D800A284BB /* ServerClientKeyExchange.c in Sources */,
@@ -608,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4232A4371C3D1BDD00A284BB /* ServerClientKeyExchange.c in Sources */,
+				423D47281C42A02200925698 /* handshakeConstants.c in Sources */,
 				42AEDA971C34561E009DF6FD /* Certificate.c in Sources */,
 				42AEDA981C34561E009DF6FD /* ServerClientHello.c in Sources */,
 				42AEDA991C34561E009DF6FD /* ServerClientBasic.c in Sources */,
