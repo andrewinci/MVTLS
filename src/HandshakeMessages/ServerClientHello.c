@@ -32,7 +32,7 @@ cipher_suites get_supported_cipher_suites(){
         TLS_DH_RSA_WITH_AES_128_GCM_SHA256,
         TLS_DH_RSA_WITH_AES_256_GCM_SHA384
     };
-    memcpy(defaultCipherSuites.cipher_id,supported,nSupported*2);
+    memcpy(defaultCipherSuites.cipher_id, supported, nSupported*2);
     return defaultCipherSuites;
 }
 

@@ -24,4 +24,4 @@ void serialize_key_exchange(uint32_t key_length, unsigned char *encrypted_premas
 
 void deserialize_key_exchange(uint32_t message_len, unsigned char *message, unsigned char **encrypted_premaster_key, uint32_t *key_len, key_exchange_algorithm kx);
 
-void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, int label_len, unsigned char *seed, int seed_len, int result_len, unsigned char **result);
+void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result);

@@ -33,7 +33,7 @@ int send_handshake(channel *ch, handshake *h){
 }
 
 void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamLen){
-    unsigned char *buff = malloc(h->length+6);
+    unsigned char *buff = malloc(h->length+4);
     *stream = buff;
     *buff = h->type;
     buff++;
@@ -44,7 +44,7 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
     
     memcpy(buff, h->message, h->length);
     
-    *streamLen = h->length+6;
+    *streamLen = h->length+4;
 }
 
 handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){

@@ -40,6 +40,8 @@ int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basi
 }
 
 int send_packet(channel *ch, packet_basic *p){
+	if(ch == NULL)
+		printf("Error ch is null");
     if(ch->file==NULL)
         return 0;
     
