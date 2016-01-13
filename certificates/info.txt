@@ -22,3 +22,14 @@ sudo openssl s_server -accept 443 -www -msg -state -cipher RSA
 ##run client
 openssl s_client -connect localhost:443 -msg -state
 
+
+#generate DSA key pair
+	openssl dsaparam -genkey 1024 -out dsakey.pem
+
+#generate ECDSA key pair
+	openssl ecparam -genkey -out eckey.pem -name prime256v1
+
+(for curve list openssl ecparam -list_curves)
+
+#generate certificate
+openssl req -x509 -new -key dsakey.pem -out cert.pem
