@@ -53,13 +53,16 @@ void onPacketReceive(channel *client2server, packet_basic *p){
     if(r->type == CHANGE_CIPHER_SPEC){
         printf("\n<<< Change cipher spec\n");
         print_record(r);
+        
         free_record(r);
         free_packet(p);
     }
     else if(r->type == HANDSHAKE){
         handshake *h = deserialize_handshake(r->message, r->lenght);
+        
         free_record(r);
         free_packet(p);
+        
         switch (h->type) {
                 
             case SERVER_HELLO:
@@ -67,10 +70,24 @@ void onPacketReceive(channel *client2server, packet_basic *p){
                 if(TLS_param.previous_state==0x0000){
                     TLS_param.previous_state = SERVER_HELLO;
                     printf("\n<<< Server Hello\n");
-                    process_server_hello(&TLS_param,h);
+                    //process_server_hello(&TLS_param,h);
+                    backup_handshake(&TLS_param,h);
+                    
+                    handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
+                    print_handshake(h);
+                    
+                    //extract data for next steps
+                    TLS_param.cipher_suite = *(hello->cipher_suites.cipher_id);
+                    TLS_param.tls_version = hello->TLS_version;
+                    
+                    //save server random
+                    memcpy(TLS_param.server_random,&(hello->random.UNIX_time), 4);
+                    memcpy(TLS_param.server_random+4, hello->random.random_bytes, 28);
+                    
                     printf("\nCipher suite :%04x\n",TLS_param.cipher_suite);
                     print_random();
                     
+                    free_hello(hello);
                     free_handshake(h);
                 }
                 break;
@@ -78,10 +95,16 @@ void onPacketReceive(channel *client2server, packet_basic *p){
             case CERTIFICATE:
                 
                 if(TLS_param.previous_state == SERVER_HELLO){
+                    
                     TLS_param.previous_state = CERTIFICATE;
+                    
                     backup_handshake(&TLS_param, h);
                     printf("\n<<< Certificate\n");
-                    process_certificate(&TLS_param, h);
+                    print_handshake(h);
+                    
+                    certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
+                    TLS_param.server_certificate = certificate_m->X509_certificate;
+                    
                     printf("\nCertificate dettails: %s\n", TLS_param.server_certificate->name);
                     
                     free_handshake(h);

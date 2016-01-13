@@ -30,13 +30,6 @@ record * make_change_cipher_spec();
 
 handshake * make_finished_message(TLS_parameters *TLS_param ) ;
 
-/* Functions for process received handshake (saving data for next steps)*/
-
-void process_server_hello(TLS_parameters *TLS_param, handshake *h);
-
-void process_certificate(TLS_parameters *TLS_param, handshake *h);
-
-
 
                 /**** SERVER ****/
 

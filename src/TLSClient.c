@@ -26,7 +26,6 @@ void backup_handshake(TLS_parameters *TLS_param, handshake *h){
     free(temp_message);
 }
 
-
 /* Functions for send message */
 
 handshake * make_client_hello(unsigned char *client_random){
@@ -181,30 +180,4 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) {
     finished_h->length = finished_message_len;
     finished_h->message = finished_message;
     return finished_h;
-}
-
-/* Functions for process received handshake */
-
-void process_server_hello(TLS_parameters *TLS_param, handshake *h) {
-    backup_handshake(TLS_param,h);
-    
-    handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
-    print_handshake(h);
-    
-    //extract data for next steps
-    TLS_param->cipher_suite = *(hello->cipher_suites.cipher_id);
-    
-    TLS_param->tls_version = hello->TLS_version;
-    
-    //save server random
-    memcpy(TLS_param->server_random,&(hello->random.UNIX_time), 4);
-    memcpy(TLS_param->server_random+4, hello->random.random_bytes, 28);
-    
-    free_hello(hello);
-}
-
-void process_certificate(TLS_parameters *TLS_param, handshake *h) {
-    print_handshake(h);
-    certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
-    TLS_param->server_certificate = certificate_m->X509_certificate;
 }
