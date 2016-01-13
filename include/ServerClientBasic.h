@@ -33,7 +33,7 @@
 
 #endif
 
-#define DELAY_TIME 500000
+#define DELAY_TIME 5000
 
 // operation mode
 #ifndef enum_mode
@@ -113,7 +113,7 @@ int send_packet(channel *ch, packet_basic *p);
  * ch : channel to start
  * return : 1 if the thread was started, 0 otherwise
  */
-int start_channel(channel *ch);
+int start_listener(channel *ch);
 
 /*
  * Stop the main and wait untill stop is called

@@ -45,15 +45,24 @@ int send_record(channel *ch, record *r){
     return result;
 }
 
-void print_record(record r){
-    printf("\n***RECORD***\n");
-    printf("Type : %d\n",r.type);
-    printf("Version : %d\n",r.version);
-    printf("Length : %d\n", r.lenght);
-    printf("Message : \n");
-    for(int i = 0;i<r.lenght;i++)
-        printf("%02x ", *(r.message+i));
-    
+void print_record(record *r){
+//    printf("\n***RECORD***\n");
+//    printf("Type : %d\n",r.type);
+//    printf("Version : %d\n",r.version);
+//    printf("Length : %d\n", r.lenght);
+//    printf("Message : \n");
+//    for(int i = 0;i<r.lenght;i++)
+//        printf("%02x ", *(r.message+i));
+    unsigned char *message;
+    uint16_t len;
+    serialize_record(r, &message, &len);
+    for (int i=0; i<len; i++) {
+        if(i%9==0)
+            printf("\n");
+        printf("%02x ",message[i]);
+    }
+    printf("\n");
+    free(message);
 }
 
 void free_record(record *r){

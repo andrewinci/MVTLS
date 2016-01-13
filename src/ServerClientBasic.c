@@ -105,7 +105,7 @@ void reader(void *data){
     }
 }
 
-int start_channel(channel *ch){
+int start_listener(channel *ch){
     if(ch->onPacketReceive==NULL)
         return 0;
     
