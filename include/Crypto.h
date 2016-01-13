@@ -18,7 +18,13 @@
 #include <openssl/rsa.h>
 
 #include "handshakeConstants.h"
+
+#ifndef MAKEFILE
 #include "ServerClientKeyExchange.h"
+#else
+#include "HandshakeMessages/ServerClientKeyExchange.h"
+#endif
+
 #endif /* Crypto_h */
 
 /*
