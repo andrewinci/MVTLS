@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
     
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
-    start_channel(server);
+    start_listener(server);
     
     printf("*** Record server is start ***\n\n");
     wait_channel(server);

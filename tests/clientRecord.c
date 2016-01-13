@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     
     set_on_receive(client, &onPacketReceive);
     //star channel and listener to new message
-    start_channel(client);
+    start_listener(client);
     printf("*** Record client is start ***\n\n");
     
     record *r = malloc(sizeof(record));

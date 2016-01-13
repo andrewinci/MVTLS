@@ -22,7 +22,7 @@ int main(int argc, char **argv){
     //set function to be called when a message is received
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
-    start_channel(server);
+    start_listener(server);
     
     printf("*** Server is start ***\n");
     wait_channel(server);

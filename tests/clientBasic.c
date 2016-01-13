@@ -18,7 +18,7 @@ int main(int argc, char **argv){
     char *clientName = "Client";
     channel *client = create_channel(fileName, clientName, NULL, CLIENT);
     set_on_receive(client, &onPacketReceive);
-    start_channel(client);
+    start_listener(client);
     printf("*** Client is start ***\n");
     
     //sending packet
