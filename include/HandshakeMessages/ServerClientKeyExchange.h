@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/hmac.h>
-#include <openssl/X509.h>
 #endif
 
 #ifdef MAKEFILE

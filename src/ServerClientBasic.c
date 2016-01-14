@@ -23,7 +23,8 @@ channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode
     ch->channel_destination = channelTo;
     if(channelMode == SERVER)
         ch->file = fopen(fileName, "w+");
-    else ch->file = fopen(fileName, "a+");
+    else
+    	ch->file = fopen(fileName, "a+");
     ch->fileName = fileName;
     ch->onPacketReceive = NULL;
     ch->isEnabled = 0;
@@ -85,6 +86,7 @@ void reader(void *data){
     ch = (channel*)data;
     unsigned char *str = NULL;
     while (ch->isEnabled) {
+        ch->file = fopen(ch->fileName, "r");
         uint32_t fileLen = read_all_file(ch->file, &str);
         if(fileLen>=16){
             //the file is not empty
@@ -101,6 +103,7 @@ void reader(void *data){
         }else
 			free(str);
         str = NULL;
+        fclose(ch->file);
         usleep(DELAY_TIME);
     }
 }
