@@ -100,7 +100,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					free_handshake(server_hello);
 					free_hello(client_hello);
-					free_handshake(h);
 						
 					// Retrieve and send Certificate
 					printf("\n>>> Certificate\n");
@@ -184,6 +183,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 			default:
 				break;
 		}
-		free_handshake(h);
+		free_handshake(h);	
 	}
 }
