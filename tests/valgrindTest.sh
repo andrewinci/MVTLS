@@ -22,8 +22,8 @@ echo "warning due to the OpenSSL implementation. DON'T WORRY ABOUT THAT"$NC
 echo ""
 pause
 cd ../bin
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./SSLServer &
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./SSLClient
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./TLSServer &
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./TLSClient
 pause
 exit
 
