@@ -43,9 +43,9 @@ typedef struct{
     
     uint16_t key_length;
     
-    unsigned char *encrypted_premaster_key;
+    unsigned char *key;
     
-}RSA_client_key_exchange;
+}client_key_exchange;
 #endif
 
 //void serialize_client_key_exchange(uint32_t key_length, unsigned char *encrypted_premaster_key, unsigned char **stream, uint32_t *len, key_exchange_algorithm kx);

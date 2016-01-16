@@ -11,7 +11,7 @@
 
 void print_random();
 void print_master_secret();
-void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange);
+void compute_set_master_key_RSA(client_key_exchange *client_key_exchange);
 
 void onPacketReceive(channel *server2client, packet_basic *p);
 
@@ -133,11 +133,36 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                         print_handshake(h);
                         
                         // Extract PreMasterKey encrypted from message
-                        RSA_client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
-                        compute_ser_master_key_RSA(client_key_exchange);
+                        client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
+                        compute_set_master_key_RSA(client_key_exchange);
                     }
-					else if(kx == DHE_RSA_KX || kx == DHE_DSS_KX)
-						manage_DHE_server_key_exchange(h);
+                    else if(kx == DHE_RSA_KX){
+                        client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
+                        DH *privkey = DH_new();
+                        DH_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
+                        privkey->g = server_key_exchange->g;
+                        privkey->p = server_key_exchange->p;
+                        privkey->priv_key = TLS_param.private_key;
+                        privkey->pub_key = NULL;
+                        privkey->pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
+                        
+                        //make pre master key
+                        unsigned char *pre_master_key = malloc(DH_size(privkey));
+                        int pre_master_key_len = 0;
+                        pre_master_key_len = DH_compute_key(pre_master_key, privkey->pub_key, privkey);
+                        
+                        //compute master key
+                        unsigned char seed[64];
+                        memcpy(seed, TLS_param.client_random, 32);
+                        memcpy(seed+32, TLS_param.server_random, 32);
+                        
+                        const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
+                        TLS_param.master_secret_len = 48;
+                        PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
+                        
+                        free_DH_server_key_exchange(TLS_param.server_key_ex);
+                    }
+						
 					print_master_secret();
 				}
 				break;
@@ -198,7 +223,7 @@ void print_master_secret() {
     printf("\n");
 }
 
-void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange) {
+void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     //get private key from file
     RSA *privateKey = NULL;
     FILE *fp;
@@ -214,7 +239,7 @@ void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange) {
     }
     fclose(fp);
     unsigned char *pre_master_key=malloc(100);
-    if(!RSA_private_decrypt(client_key_exchange->key_length, client_key_exchange->encrypted_premaster_key, pre_master_key, privateKey, RSA_PKCS1_PADDING))
+    if(!RSA_private_decrypt(client_key_exchange->key_length, client_key_exchange->key, pre_master_key, privateKey, RSA_PKCS1_PADDING))
     {
         printf("Error decrypt\n");
         exit(-1);
@@ -230,6 +255,6 @@ void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange) {
     PRF(hash_function, pre_master_key, 48, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     RSA_free(privateKey);
     
-    free(client_key_exchange->encrypted_premaster_key);
+    free(client_key_exchange->key);
     free(client_key_exchange);
 }

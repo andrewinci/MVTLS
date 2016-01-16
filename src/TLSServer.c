@@ -69,7 +69,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	if(NULL == (privkey = DH_new())){
 		printf("error in DH new\n");
 	}
-	if(1 != DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL)){
+	if(1 != DH_generate_parameters_ex(privkey, 100, DH_GENERATOR_2 , NULL)){
 		printf("error in parameter generate\n");
 	}
 	
@@ -106,6 +106,9 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	public_key_char = BN_bn2hex(privkey->pub_key);
 	printf("\n Public DH key : %s\n",public_key_char);
 	
+
+    //make server_key_ex packet
+    
 	DH_server_key_exchange *server_key_ex = malloc(sizeof(DH_server_key_exchange));
 	server_key_ex->g = BN_new();
 	server_key_ex->p = BN_new();
@@ -117,15 +120,24 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 		printf("\nError in copy DH parameters\n");
 	if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
 		printf("\nError in copy DH parameters\n");
-	//sign_DH_server_key_ex(TLS_param, server_key_ex);
+
+    server_key_ex->sign_hash_alg = 0x0106; //already rot
+    
+    //add signature
+    sign_DH_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
 	
 	//serialize and make handshake
 	handshake *server_key_ex_h = malloc(sizeof(handshake));
 	
 	server_key_ex_h->type = SERVER_KEY_EXCHANGE;
 	serialize_client_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_RSA_KX);
+    
+    //save parameters for second step
+    TLS_param->server_key_ex = server_key_ex;
+    //save private DH key
+    TLS_param->private_key = BN_new();
+    BN_copy(TLS_param->private_key, privkey->priv_key);
 
-	free_DH_server_key_exchange(server_key_ex);
 	return server_key_ex_h;
 }
 

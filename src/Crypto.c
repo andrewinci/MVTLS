@@ -87,7 +87,7 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
 //    
 //}
 
-int sign_DH_server_key_ex(uint16_t kx_alg, unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
+int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
     
     //extract p g pubkey
     int p_len;
@@ -136,27 +136,33 @@ int sign_DH_server_key_ex(uint16_t kx_alg, unsigned char *client_random, unsigne
     memcpy(to_enc, sha1_digest, sha1->md_size);
     memcpy(to_enc+sha1->md_size, md5_digest, md5->md_size);
     
-    if(/* DISABLES CODE */ (1)){
-        
-        //sign with RSA
-        EVP_PKEY *prvkey = NULL;
-        RSA *rsa = NULL;
-        //TODO get private key
-        //prvkey = X509_get_pubkey(parameters->server_certificate);
-        rsa = EVP_PKEY_get1_RSA(prvkey);
-        
-        //alocate memory for signature
-        server_key_ex->signature = malloc(RSA_size(rsa));
-        server_key_ex->signature_length = RSA_private_encrypt(sha1->md_size+md5->md_size, to_enc, server_key_ex->signature, rsa, RSA_PKCS1_PADDING);
-    }else if (kx_alg == DHE_DSS_KX){
-        //sign with dsa
+    //get private key from file
+    RSA *privateKey = NULL;
+    FILE *fp;
+    
+    if(NULL != (fp= fopen("../certificates/server.key", "r")) )
+    {
+        privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
+        if(privateKey==NULL)
+        {
+            printf("\nerror in retrieve private key");
+            exit(-1);
+        }
     }
+    fclose(fp);
+    
+    //ToDo : distinguish between rsa and dsa signature
+    
+    //alocate memory for signature
+    server_key_ex->signature = malloc(RSA_size(privateKey));
+    server_key_ex->signature_length = RSA_private_encrypt(sha1->md_size+md5->md_size, to_enc, server_key_ex->signature, privateKey, RSA_PKCS1_PADDING);
     
     //free and return
     free(p);
     free(g);
     free(pubkey);
     free(to_enc);
+    RSA_free(privateKey);
     return 1;
 }
 

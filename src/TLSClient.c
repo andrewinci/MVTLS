@@ -90,14 +90,14 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         pre_master_key_enc_len = RSA_public_encrypt(pre_master_key_len, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
         RSA_free(rsa);
         
-        RSA_client_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_client_key_exchange));
-        rsa_server_key_ex->encrypted_premaster_key = pre_master_key_enc;
+        client_key_exchange *rsa_server_key_ex = malloc(sizeof(client_key_exchange));
+        rsa_server_key_ex->key = pre_master_key_enc;
         rsa_server_key_ex->key_length = pre_master_key_enc_len;
         unsigned char *message = NULL;
         uint32_t len = 0;
         serialize_client_key_exchange(rsa_server_key_ex, &message, &len, RSA_KX);
         
-        free(rsa_server_key_ex->encrypted_premaster_key);
+        free(rsa_server_key_ex->key);
         free(rsa_server_key_ex);
         
         handshake *client_key_exchange = malloc(sizeof(handshake));
@@ -106,6 +106,47 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         client_key_exchange->length = len;
 
         return client_key_exchange;
+    }
+    else if (key_ex_alg == DHE_RSA_KX){
+        DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
+        // ToDo verify sign
+        DH *privkey = DH_new();
+        privkey->g = server_key_exchange->g;
+        privkey->p = server_key_exchange->p;
+        if(1 != DH_generate_key(privkey)){
+            printf("Error in DH_generate_key\n");
+        }
+        
+        //make pre master key
+        unsigned char *pre_master_key = malloc(DH_size(privkey));
+        int pre_master_key_len = 0;
+        pre_master_key_len = DH_compute_key(pre_master_key, server_key_exchange->pubKey, privkey);
+        
+        //make master key
+        unsigned char seed[64];
+        memcpy(seed, TLS_param->client_random, 32);
+        memcpy(seed+32, TLS_param->server_random, 32);
+        
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        TLS_param->master_secret_len = 48;
+        
+        //compute and set pre master key
+        PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+        
+        //make client key ex packet
+        client_key_exchange *client_key_exchange = malloc(sizeof(client_key_exchange));
+        client_key_exchange->key_length = BN_num_bytes(privkey->pub_key);
+        client_key_exchange->key = malloc(client_key_exchange->key_length);
+        BN_bn2bin(privkey->pub_key, client_key_exchange->key);
+
+        //make handshake
+        handshake *client_key_exchange_h = malloc(sizeof(client_key_exchange));
+        client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
+        
+        serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length, RSA_KX);
+        
+        free(client_key_exchange);
+        return client_key_exchange_h;
     }
     return NULL;
 }

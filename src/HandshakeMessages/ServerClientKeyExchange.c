@@ -15,7 +15,7 @@
 void serialize_client_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
     if(kx == RSA_KX){
         
-        RSA_client_key_exchange *rsa_server_key_ex =(RSA_client_key_exchange*)server_key_exchange;
+        client_key_exchange *rsa_server_key_ex =(client_key_exchange*)server_key_exchange;
         //the first 2 message byte are the key length
         unsigned char *buff = malloc(rsa_server_key_ex->key_length+2);
         *stream = buff;
@@ -24,7 +24,7 @@ void serialize_client_key_exchange(void *server_key_exchange, unsigned char **st
         memcpy(buff, &temp, 2);
         buff+=2;
         //add key
-        memcpy(buff, rsa_server_key_ex->encrypted_premaster_key, rsa_server_key_ex->key_length);
+        memcpy(buff, rsa_server_key_ex->key, rsa_server_key_ex->key_length);
         *streamLen=rsa_server_key_ex->key_length+3;
         
     }else if(kx == DHE_RSA_KX){
@@ -72,44 +72,49 @@ void serialize_client_key_exchange(void *server_key_exchange, unsigned char **st
 
 void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
     if(kx == RSA_KX){
-        RSA_client_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_client_key_exchange));
+        client_key_exchange *rsa_server_key_ex = malloc(sizeof(client_key_exchange));
         memcpy(&(rsa_server_key_ex->key_length), message, 2);
         message+=2;
         
         rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
         
         unsigned char *buff = malloc(rsa_server_key_ex->key_length);
-        rsa_server_key_ex->encrypted_premaster_key = buff;
+        rsa_server_key_ex->key = buff;
         memcpy(buff, message, rsa_server_key_ex->key_length);
         
         return rsa_server_key_ex;
+        //ToDo : under is server key ex not client,
+        // move in other spot
     }else if(kx == DHE_RSA_KX){
         DH_server_key_exchange *dh_server_key_ex = malloc(sizeof(DH_server_key_exchange));
         uint16_t len;
         memcpy(&len, message, 2);
         message+=2;
         len = REV16(len);
-        if (BN_bin2bn(message, len, dh_server_key_ex->p)==NULL)
-            printf("Error in deserialize dh_server_key_ex server params (binary to big number, p)");
+        dh_server_key_ex->p = BN_bin2bn(message, len, NULL);
+        
         message+=len;
         memcpy(&len, message, 2);
         message+=2;
         len = REV16(len);
-        if (BN_bin2bn(message, len, dh_server_key_ex->g)==NULL)
-            printf("Error in deserialize dh_server_key_ex server params (binary to big number, g)");
+        dh_server_key_ex->g = BN_bin2bn(message, len, NULL);
+        
         message+=len;
         memcpy(&len, message, 2);
         message+=2;
         len = REV16(len);
-        if (BN_bin2bn(message, len, dh_server_key_ex->pubKey)==NULL)
-            printf("Error in deserialize dh_server_key_ex server params (binary to big number, pubKey)");
+        dh_server_key_ex->pubKey = BN_bin2bn(message, len, NULL);
+        
         message+=len;
         memcpy(&(dh_server_key_ex->sign_hash_alg), message, 2);
         message+=2;
         memcpy(&(dh_server_key_ex->signature_length), message, 2);
         message+=2;
+        dh_server_key_ex->signature = malloc(dh_server_key_ex->signature_length);
         memcpy(dh_server_key_ex->signature, message, dh_server_key_ex->signature_length);
         message+=2;
+        
+        return dh_server_key_ex;
     }
     return NULL;
 }

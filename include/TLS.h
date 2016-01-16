@@ -34,6 +34,8 @@ typedef struct{
     unsigned char *handshake_messages;
     
     X509 *server_certificate;
+    
+    BIGNUM *private_key;
 }TLS_parameters;
 #endif
 
@@ -58,7 +60,7 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) ;
 
 /* Functions for manage key exchange */
 
-void manage_DHE_server_key_exchange(handshake *h);
+//void manage_DHE_server_key_exchange(handshake *h);
 
 /* Functions for send handshake packet */
 handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client_hello);
