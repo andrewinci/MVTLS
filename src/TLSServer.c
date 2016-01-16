@@ -47,16 +47,12 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 
 handshake * make_certificate(TLS_parameters *TLS_param){
 	// Make and send Certificate
-	char cert_names[] = "../certificates/server.pem";
-	char **cert_list= malloc(1*sizeof(char *));
-	cert_list[0] = cert_names;
 	certificate_message *cert_message = make_certificate_message("../certificates/server.pem");
 	
 	handshake *certificate_h = malloc(sizeof(handshake));
 	certificate_h->type = CERTIFICATE;
 	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
 	
-	free(cert_list);
 	free_certificate_message(cert_message);
 	
 	return certificate_h;
