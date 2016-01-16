@@ -71,26 +71,14 @@ void free_handshake(handshake *h){
 }
 
 void print_handshake(handshake *h){
-//    printf("\n***Handshake***\n");
-//    printf("Type : %d\n", h->type);
-//    printf("Length : %d\n", h->length);
-//    printf("Message : \n");
-//    for(int i =0 ; i<h->length;i++){
-//        printf("%02x ",*(h->message+i));
-//    }
-    record *to_send = make_record(h);
     unsigned char *message = NULL;
-    uint16_t messageLen = 0;
-    serialize_record(to_send, &message, &messageLen);
-    free_record(to_send);
-    for (int i=0; i<messageLen; i++) {
+    uint32_t messageLen = 0;
+    serialize_handshake(h, &message, &messageLen);
+    for(int i=0; i<messageLen; i++){
         if(i%9 == 0)
             printf("\n");
-        printf("%02x ",message[i]);
-
+        printf("%02x ", message[i]);
     }
     printf("\n");
     free(message);
-    
 }
-
