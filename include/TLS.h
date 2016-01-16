@@ -48,19 +48,12 @@ handshake * make_client_hello(unsigned char *client_random);
 
 handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg);
 
-void send_DH_client_key_exchange(channel *client2server, TLS_parameters *TLS_param);
-
 record * make_change_cipher_spec();
 
 handshake * make_finished_message(TLS_parameters *TLS_param ) ;
 
 
                 /**** SERVER ****/
-
-
-/* Functions for manage key exchange */
-
-//void manage_DHE_server_key_exchange(handshake *h);
 
 /* Functions for send handshake packet */
 handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client_hello);

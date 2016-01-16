@@ -12,7 +12,7 @@
 void print_random();
 void print_master_secret();
 void compute_set_master_key_RSA(client_key_exchange *client_key_exchange);
-
+void compute_set_master_key_DH(client_key_exchange *cliet_public);
 void onPacketReceive(channel *server2client, packet_basic *p);
 
 TLS_parameters TLS_param;
@@ -124,43 +124,19 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 			case CLIENT_KEY_EXCHANGE:
 				if (TLS_param.previous_state == CLIENT_HELLO){
 					TLS_param.previous_state = CLIENT_KEY_EXCHANGE;
-
+                    
+                    backup_handshake(&TLS_param, h);
 					// ToDo FIX THIS TOO
 					printf("\n<<< Client Key Exchange\n");
 					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
                     if(kx == RSA_KX){
-                        backup_handshake(&TLS_param, h);
                         print_handshake(h);
-                        
-                        // Extract PreMasterKey encrypted from message
-                        client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
+                        client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_RSA(client_key_exchange);
                     }
                     else if(kx == DHE_RSA_KX){
-                        client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
-                        DH *privkey = DH_new();
-                        DH_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
-                        privkey->g = server_key_exchange->g;
-                        privkey->p = server_key_exchange->p;
-                        privkey->priv_key = TLS_param.private_key;
-                        privkey->pub_key = NULL;
-                        privkey->pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
-                        
-                        //make pre master key
-                        unsigned char *pre_master_key = malloc(DH_size(privkey));
-                        int pre_master_key_len = 0;
-                        pre_master_key_len = DH_compute_key(pre_master_key, privkey->pub_key, privkey);
-                        
-                        //compute master key
-                        unsigned char seed[64];
-                        memcpy(seed, TLS_param.client_random, 32);
-                        memcpy(seed+32, TLS_param.server_random, 32);
-                        
-                        const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
-                        TLS_param.master_secret_len = 48;
-                        PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
-                        
-                        free_DH_server_key_exchange(TLS_param.server_key_ex);
+                        client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
+                        compute_set_master_key_DH(cliet_public);
                     }
 						
 					print_master_secret();
@@ -257,4 +233,30 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     
     free(client_key_exchange->key);
     free(client_key_exchange);
+}
+
+void compute_set_master_key_DH(client_key_exchange *cliet_public){
+    DH *privkey = DH_new();
+    DH_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
+    privkey->g = server_key_exchange->g;
+    privkey->p = server_key_exchange->p;
+    privkey->priv_key = TLS_param.private_key;
+    privkey->pub_key = NULL;
+    privkey->pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
+    
+    //make pre master key
+    unsigned char *pre_master_key = malloc(DH_size(privkey));
+    int pre_master_key_len = 0;
+    pre_master_key_len = DH_compute_key(pre_master_key, privkey->pub_key, privkey);
+    
+    //compute master key
+    unsigned char seed[64];
+    memcpy(seed, TLS_param.client_random, 32);
+    memcpy(seed+32, TLS_param.server_random, 32);
+    
+    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
+    TLS_param.master_secret_len = 48;
+    PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
+    
+    free_DH_server_key_exchange(TLS_param.server_key_ex);
 }

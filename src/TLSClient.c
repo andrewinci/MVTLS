@@ -95,7 +95,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         rsa_server_key_ex->key_length = pre_master_key_enc_len;
         unsigned char *message = NULL;
         uint32_t len = 0;
-        serialize_client_key_exchange(rsa_server_key_ex, &message, &len, RSA_KX);
+        serialize_client_key_exchange(rsa_server_key_ex, &message, &len);
         
         free(rsa_server_key_ex->key);
         free(rsa_server_key_ex);
@@ -143,76 +143,12 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         handshake *client_key_exchange_h = malloc(sizeof(client_key_exchange));
         client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
         
-        serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length, RSA_KX);
+        serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length);
         
         free(client_key_exchange);
         return client_key_exchange_h;
     }
     return NULL;
-}
-
-
-void send_DH_client_key_exchange(channel *client2server, TLS_parameters *TLS_param){
-	//generate ephemeral diffie helman parameters
-	DH *privkey;
-	int codes;
-	
-	/* Generate the parameters to be used */
-	if(NULL == (privkey = DH_new())){
-		printf("error in DH new\n");
-	}
-	if(1 != DH_generate_parameters_ex(privkey, 2048, DH_GENERATOR_2 , NULL)){
-		printf("error in parameter generate\n");
-	}
-	
-	if(1 != DH_check(privkey, &codes)){
-		printf("error in DH check\n");
-	}
-	if(codes != 0)
-	{
-		/* Problems have been found with the generated parameters */
-		/* Handle these here - we'll just abort for this example */
-		printf("DH_check failed\n");
-		abort();
-	}
-	
-	/* Generate the public and private key pair */
-	if(1 != DH_generate_key(privkey)){
-		printf("Error in DH_generate_key\n");
-	}
-	
-	// get and print private key
-	char *private_key_char;
-	private_key_char = BN_bn2hex(privkey->p);
-	printf("\n Private DH key : %s\n",private_key_char);
-	
-	//get and print public key
-	char *public_key_char;
-	public_key_char = BN_bn2hex(privkey->pub_key);
-	printf("\n Public DH key : %s\n",public_key_char);
-	
-	DH_server_key_exchange *server_key_ex = malloc(sizeof(DH_server_key_exchange));
-	
-	//copy DH params in the message struct
-	if(BN_copy(server_key_ex->g, privkey->g)==NULL)
-		printf("\nError in copy DH parameters\n");
-	if(BN_copy(server_key_ex->p, privkey->p)==NULL)
-		printf("\nError in copy DH parameters\n");
-	if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
-		printf("\nError in copy DH parameters\n");
-	//sign_DH_server_key_ex(TLS_param, server_key_ex);
-	
-	//serialize and make handshake
-	handshake *server_key_ex_h = malloc(sizeof(handshake));
-	
-	server_key_ex_h->type = TLS_param->tls_version;
-	serialize_client_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_RSA_KX);
-	send_handshake(client2server, server_key_ex_h);
-	backup_handshake(TLS_param, server_key_ex_h);
-	
-	free_handshake(server_key_ex_h);
-	free_DH_server_key_exchange(server_key_ex);
-	
 }
 
 record * make_change_cipher_spec() {

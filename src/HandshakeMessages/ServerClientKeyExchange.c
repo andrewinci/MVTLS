@@ -12,30 +12,17 @@
 #include "ServerClientKeyExchange.h"
 #endif
 
-void serialize_client_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
-    if(kx == RSA_KX){
-        
-        client_key_exchange *rsa_server_key_ex =(client_key_exchange*)server_key_exchange;
-        //the first 2 message byte are the key length
-        unsigned char *buff = malloc(rsa_server_key_ex->key_length+2);
-        *stream = buff;
-        //add lenght
-        uint16_t temp = REV16(rsa_server_key_ex->key_length);
-        memcpy(buff, &temp, 2);
-        buff+=2;
-        //add key
-        memcpy(buff, rsa_server_key_ex->key, rsa_server_key_ex->key_length);
-        *streamLen=rsa_server_key_ex->key_length+3;
-        
-    }else if(kx == DHE_RSA_KX){
-        
+void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
+    
+    if(kx == DHE_RSA_KX){
+    
         DH_server_key_exchange *dh_server_key_ex = (DH_server_key_exchange*)server_key_exchange;
         unsigned char *buf;
         uint16_t len;
         int pLen = BN_num_bytes(dh_server_key_ex->p), gLen = BN_num_bytes(dh_server_key_ex->g), pubKeyLen = BN_num_bytes(dh_server_key_ex->pubKey);
         
         *streamLen = 2+pLen+2+gLen+2+pubKeyLen+2+2+dh_server_key_ex->signature_length;
-       
+        
         buf = malloc(*streamLen);
         *stream = buf;
         pLen = REV16(pLen);
@@ -68,24 +55,11 @@ void serialize_client_key_exchange(void *server_key_exchange, unsigned char **st
         
         memcpy(buf, dh_server_key_ex->signature, dh_server_key_ex->signature_length);
     }
+
 }
 
-void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
-    if(kx == RSA_KX){
-        client_key_exchange *rsa_server_key_ex = malloc(sizeof(client_key_exchange));
-        memcpy(&(rsa_server_key_ex->key_length), message, 2);
-        message+=2;
-        
-        rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
-        
-        unsigned char *buff = malloc(rsa_server_key_ex->key_length);
-        rsa_server_key_ex->key = buff;
-        memcpy(buff, message, rsa_server_key_ex->key_length);
-        
-        return rsa_server_key_ex;
-        //ToDo : under is server key ex not client,
-        // move in other spot
-    }else if(kx == DHE_RSA_KX){
+void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
+    if(kx == DHE_RSA_KX){
         DH_server_key_exchange *dh_server_key_ex = malloc(sizeof(DH_server_key_exchange));
         uint16_t len;
         memcpy(&len, message, 2);
@@ -117,6 +91,34 @@ void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *messa
         return dh_server_key_ex;
     }
     return NULL;
+}
+
+void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
+    
+        //the first 2 message byte are the key length
+        unsigned char *buff = malloc(client_key_exchange->key_length+2);
+        *stream = buff;
+        //add lenght
+        uint16_t temp = REV16(client_key_exchange->key_length);
+        memcpy(buff, &temp, 2);
+        buff+=2;
+        //add key
+        memcpy(buff, client_key_exchange->key, client_key_exchange->key_length);
+        *streamLen=client_key_exchange->key_length+3;
+}
+
+void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message){
+        client_key_exchange *rsa_server_key_ex = malloc(sizeof(client_key_exchange));
+        memcpy(&(rsa_server_key_ex->key_length), message, 2);
+        message+=2;
+        
+        rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
+        
+        unsigned char *buff = malloc(rsa_server_key_ex->key_length);
+        rsa_server_key_ex->key = buff;
+        memcpy(buff, message, rsa_server_key_ex->key_length);
+        
+        return rsa_server_key_ex;
 }
 
 void free_DH_server_key_exchange(DH_server_key_exchange *params){

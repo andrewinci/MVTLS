@@ -48,9 +48,12 @@ typedef struct{
 }client_key_exchange;
 #endif
 
-//void serialize_client_key_exchange(uint32_t key_length, unsigned char *encrypted_premaster_key, unsigned char **stream, uint32_t *len, key_exchange_algorithm kx);
-void serialize_client_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
+void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
 
-void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx);
+void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx);
+
+void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
+
+void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message);
 
 void free_DH_server_key_exchange(DH_server_key_exchange *params);

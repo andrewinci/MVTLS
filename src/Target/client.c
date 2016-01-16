@@ -114,7 +114,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					TLS_param.previous_state = SERVER_KEY_EXCHANGE;
 					
 					//save the server key exchange parameters
-					TLS_param.server_key_ex = deserialize_client_key_exchange(h->length, h->message, get_kx_algorithm(TLS_param.cipher_suite));
+					TLS_param.server_key_ex = deserialize_server_key_exchange(h->length, h->message, get_kx_algorithm(TLS_param.cipher_suite));
 				}
 				break;
 				
