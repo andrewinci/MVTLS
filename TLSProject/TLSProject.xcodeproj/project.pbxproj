@@ -1,0 +1,545 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		428927AA1C4991DA00EA1C78 /* Crypto.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07C1C498ECF005BB888 /* Crypto.c */; };
+		428927AB1C4991DA00EA1C78 /* handshakeConstants.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07D1C498ECF005BB888 /* handshakeConstants.c */; };
+		428927AC1C4991DA00EA1C78 /* Certificate.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07F1C498ECF005BB888 /* Certificate.c */; };
+		428927AD1C4991DA00EA1C78 /* ServerClientHello.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0801C498ECF005BB888 /* ServerClientHello.c */; };
+		428927AE1C4991DA00EA1C78 /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0811C498ECF005BB888 /* ServerClientKeyExchange.c */; };
+		428927AF1C4991DA00EA1C78 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0821C498ECF005BB888 /* ServerClientBasic.c */; };
+		428927B01C4991DA00EA1C78 /* ServerClientHandshakeProtocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0831C498ECF005BB888 /* ServerClientHandshakeProtocol.c */; };
+		428927B11C4991DA00EA1C78 /* ServerClientRecordProtocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0841C498ECF005BB888 /* ServerClientRecordProtocol.c */; };
+		428927B21C4991DA00EA1C78 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0871C498ECF005BB888 /* server.c */; };
+		428927B31C4991DA00EA1C78 /* TLSClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0881C498ECF005BB888 /* TLSClient.c */; };
+		428927B41C4991DA00EA1C78 /* TLSServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0891C498ECF005BB888 /* TLSServer.c */; };
+		42ABF0B51C498F62005BB888 /* Crypto.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07C1C498ECF005BB888 /* Crypto.c */; };
+		42ABF0B61C498F62005BB888 /* handshakeConstants.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07D1C498ECF005BB888 /* handshakeConstants.c */; };
+		42ABF0B71C498F62005BB888 /* Certificate.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF07F1C498ECF005BB888 /* Certificate.c */; };
+		42ABF0B81C498F62005BB888 /* ServerClientHello.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0801C498ECF005BB888 /* ServerClientHello.c */; };
+		42ABF0B91C498F62005BB888 /* ServerClientKeyExchange.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0811C498ECF005BB888 /* ServerClientKeyExchange.c */; };
+		42ABF0BA1C498F62005BB888 /* ServerClientBasic.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0821C498ECF005BB888 /* ServerClientBasic.c */; };
+		42ABF0BB1C498F62005BB888 /* ServerClientHandshakeProtocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0831C498ECF005BB888 /* ServerClientHandshakeProtocol.c */; };
+		42ABF0BC1C498F62005BB888 /* ServerClientRecordProtocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0841C498ECF005BB888 /* ServerClientRecordProtocol.c */; };
+		42ABF0BD1C498F6A005BB888 /* TLSClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0881C498ECF005BB888 /* TLSClient.c */; };
+		42ABF0BE1C498F6A005BB888 /* TLSServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0891C498ECF005BB888 /* TLSServer.c */; };
+		42ABF0BF1C498F6E005BB888 /* client.c in Sources */ = {isa = PBXBuildFile; fileRef = 42ABF0861C498ECF005BB888 /* client.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		428927B51C49964100EA1C78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42ABF0531C498EBA005BB888 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42ABF0AD1C498F32005BB888;
+			remoteInfo = TLSServer;
+		};
+		428927B71C49964500EA1C78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42ABF0531C498EBA005BB888 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42ABF05A1C498EBA005BB888;
+			remoteInfo = TLSClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		42ABF0591C498EBA005BB888 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		42ABF0AC1C498F32005BB888 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		42ABF05B1C498EBA005BB888 /* TLSClient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TLSClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		42ABF0661C498ECF005BB888 /* info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = info.txt; sourceTree = "<group>"; };
+		42ABF0671C498ECF005BB888 /* server.csr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.csr; sourceTree = "<group>"; };
+		42ABF0681C498ECF005BB888 /* server.key */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.key; sourceTree = "<group>"; };
+		42ABF0691C498ECF005BB888 /* server.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.pem; sourceTree = "<group>"; };
+		42ABF06B1C498ECF005BB888 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		42ABF06D1C498ECF005BB888 /* Crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crypto.h; sourceTree = "<group>"; };
+		42ABF06E1C498ECF005BB888 /* handshakeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handshakeConstants.h; sourceTree = "<group>"; };
+		42ABF0701C498ECF005BB888 /* Certificate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Certificate.h; sourceTree = "<group>"; };
+		42ABF0711C498ECF005BB888 /* ServerClientHello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientHello.h; sourceTree = "<group>"; };
+		42ABF0721C498ECF005BB888 /* ServerClientKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientKeyExchange.h; sourceTree = "<group>"; };
+		42ABF0731C498ECF005BB888 /* ServerClientBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientBasic.h; sourceTree = "<group>"; };
+		42ABF0741C498ECF005BB888 /* ServerClientHandshakeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientHandshakeProtocol.h; sourceTree = "<group>"; };
+		42ABF0751C498ECF005BB888 /* ServerClientRecordProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerClientRecordProtocol.h; sourceTree = "<group>"; };
+		42ABF0761C498ECF005BB888 /* TLS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLS.h; path = ../include/TLS.h; sourceTree = "<group>"; };
+		42ABF0771C498ECF005BB888 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		42ABF0781C498ECF005BB888 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
+		42ABF0791C498ECF005BB888 /* Note.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Note.txt; path = ../Note.txt; sourceTree = "<group>"; };
+		42ABF07A1C498ECF005BB888 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		42ABF07C1C498ECF005BB888 /* Crypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Crypto.c; sourceTree = "<group>"; };
+		42ABF07D1C498ECF005BB888 /* handshakeConstants.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = handshakeConstants.c; sourceTree = "<group>"; };
+		42ABF07F1C498ECF005BB888 /* Certificate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Certificate.c; sourceTree = "<group>"; };
+		42ABF0801C498ECF005BB888 /* ServerClientHello.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientHello.c; sourceTree = "<group>"; };
+		42ABF0811C498ECF005BB888 /* ServerClientKeyExchange.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientKeyExchange.c; sourceTree = "<group>"; };
+		42ABF0821C498ECF005BB888 /* ServerClientBasic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientBasic.c; sourceTree = "<group>"; };
+		42ABF0831C498ECF005BB888 /* ServerClientHandshakeProtocol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientHandshakeProtocol.c; sourceTree = "<group>"; };
+		42ABF0841C498ECF005BB888 /* ServerClientRecordProtocol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ServerClientRecordProtocol.c; sourceTree = "<group>"; };
+		42ABF0861C498ECF005BB888 /* client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = client.c; path = ../src/Target/client.c; sourceTree = "<group>"; };
+		42ABF0871C498ECF005BB888 /* server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = server.c; path = ../src/Target/server.c; sourceTree = "<group>"; };
+		42ABF0881C498ECF005BB888 /* TLSClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TLSClient.c; path = ../src/TLSClient.c; sourceTree = "<group>"; };
+		42ABF0891C498ECF005BB888 /* TLSServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TLSServer.c; path = ../src/TLSServer.c; sourceTree = "<group>"; };
+		42ABF08B1C498ECF005BB888 /* clientBasic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clientBasic.c; sourceTree = "<group>"; };
+		42ABF08C1C498ECF005BB888 /* clientHandshake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clientHandshake.c; sourceTree = "<group>"; };
+		42ABF08D1C498ECF005BB888 /* clientRecord.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clientRecord.c; sourceTree = "<group>"; };
+		42ABF08E1C498ECF005BB888 /* serverBasic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = serverBasic.c; sourceTree = "<group>"; };
+		42ABF08F1C498ECF005BB888 /* serverHandshake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = serverHandshake.c; sourceTree = "<group>"; };
+		42ABF0901C498ECF005BB888 /* serverRecord.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = serverRecord.c; sourceTree = "<group>"; };
+		42ABF0911C498ECF005BB888 /* testCertificate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testCertificate.c; sourceTree = "<group>"; };
+		42ABF0921C498ECF005BB888 /* valgrindSuppression.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valgrindSuppression.txt; sourceTree = "<group>"; };
+		42ABF0931C498ECF005BB888 /* valgrindTest.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = valgrindTest.sh; sourceTree = "<group>"; };
+		42ABF0AE1C498F32005BB888 /* TLSServer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TLSServer; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42ABF0581C498EBA005BB888 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42ABF0AB1C498F32005BB888 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		42ABF0521C498EBA005BB888 = {
+			isa = PBXGroup;
+			children = (
+				42ABF0761C498ECF005BB888 /* TLS.h */,
+				42ABF0861C498ECF005BB888 /* client.c */,
+				42ABF0881C498ECF005BB888 /* TLSClient.c */,
+				42ABF0871C498ECF005BB888 /* server.c */,
+				42ABF0891C498ECF005BB888 /* TLSServer.c */,
+				42ABF06C1C498ECF005BB888 /* include */,
+				42ABF07B1C498ECF005BB888 /* src */,
+				42ABF08A1C498ECF005BB888 /* tests */,
+				42ABF0651C498ECF005BB888 /* certificates */,
+				42ABF06A1C498ECF005BB888 /* DHtest */,
+				42ABF0771C498ECF005BB888 /* LICENSE */,
+				42ABF0781C498ECF005BB888 /* Makefile */,
+				42ABF0791C498ECF005BB888 /* Note.txt */,
+				42ABF07A1C498ECF005BB888 /* README.md */,
+				42ABF05C1C498EBA005BB888 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		42ABF05C1C498EBA005BB888 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF05B1C498EBA005BB888 /* TLSClient */,
+				42ABF0AE1C498F32005BB888 /* TLSServer */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42ABF0651C498ECF005BB888 /* certificates */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF0661C498ECF005BB888 /* info.txt */,
+				42ABF0671C498ECF005BB888 /* server.csr */,
+				42ABF0681C498ECF005BB888 /* server.key */,
+				42ABF0691C498ECF005BB888 /* server.pem */,
+			);
+			name = certificates;
+			path = ../certificates;
+			sourceTree = "<group>";
+		};
+		42ABF06A1C498ECF005BB888 /* DHtest */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF06B1C498ECF005BB888 /* main.c */,
+			);
+			name = DHtest;
+			path = ../DHtest;
+			sourceTree = "<group>";
+		};
+		42ABF06C1C498ECF005BB888 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF06D1C498ECF005BB888 /* Crypto.h */,
+				42ABF06E1C498ECF005BB888 /* handshakeConstants.h */,
+				42ABF06F1C498ECF005BB888 /* HandshakeMessages */,
+				42ABF0731C498ECF005BB888 /* ServerClientBasic.h */,
+				42ABF0741C498ECF005BB888 /* ServerClientHandshakeProtocol.h */,
+				42ABF0751C498ECF005BB888 /* ServerClientRecordProtocol.h */,
+			);
+			name = include;
+			path = ../include;
+			sourceTree = "<group>";
+		};
+		42ABF06F1C498ECF005BB888 /* HandshakeMessages */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF0701C498ECF005BB888 /* Certificate.h */,
+				42ABF0711C498ECF005BB888 /* ServerClientHello.h */,
+				42ABF0721C498ECF005BB888 /* ServerClientKeyExchange.h */,
+			);
+			path = HandshakeMessages;
+			sourceTree = "<group>";
+		};
+		42ABF07B1C498ECF005BB888 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF07C1C498ECF005BB888 /* Crypto.c */,
+				42ABF07D1C498ECF005BB888 /* handshakeConstants.c */,
+				42ABF07E1C498ECF005BB888 /* HandshakeMessages */,
+				42ABF0821C498ECF005BB888 /* ServerClientBasic.c */,
+				42ABF0831C498ECF005BB888 /* ServerClientHandshakeProtocol.c */,
+				42ABF0841C498ECF005BB888 /* ServerClientRecordProtocol.c */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		42ABF07E1C498ECF005BB888 /* HandshakeMessages */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF07F1C498ECF005BB888 /* Certificate.c */,
+				42ABF0801C498ECF005BB888 /* ServerClientHello.c */,
+				42ABF0811C498ECF005BB888 /* ServerClientKeyExchange.c */,
+			);
+			path = HandshakeMessages;
+			sourceTree = "<group>";
+		};
+		42ABF08A1C498ECF005BB888 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				42ABF08B1C498ECF005BB888 /* clientBasic.c */,
+				42ABF08C1C498ECF005BB888 /* clientHandshake.c */,
+				42ABF08D1C498ECF005BB888 /* clientRecord.c */,
+				42ABF08E1C498ECF005BB888 /* serverBasic.c */,
+				42ABF08F1C498ECF005BB888 /* serverHandshake.c */,
+				42ABF0901C498ECF005BB888 /* serverRecord.c */,
+				42ABF0911C498ECF005BB888 /* testCertificate.c */,
+				42ABF0921C498ECF005BB888 /* valgrindSuppression.txt */,
+				42ABF0931C498ECF005BB888 /* valgrindTest.sh */,
+			);
+			name = tests;
+			path = ../tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42ABF05A1C498EBA005BB888 /* TLSClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42ABF0621C498EBA005BB888 /* Build configuration list for PBXNativeTarget "TLSClient" */;
+			buildPhases = (
+				42ABF0571C498EBA005BB888 /* Sources */,
+				42ABF0581C498EBA005BB888 /* Frameworks */,
+				42ABF0591C498EBA005BB888 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				428927B61C49964100EA1C78 /* PBXTargetDependency */,
+			);
+			name = TLSClient;
+			productName = TLSProject;
+			productReference = 42ABF05B1C498EBA005BB888 /* TLSClient */;
+			productType = "com.apple.product-type.tool";
+		};
+		42ABF0AD1C498F32005BB888 /* TLSServer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42ABF0B21C498F32005BB888 /* Build configuration list for PBXNativeTarget "TLSServer" */;
+			buildPhases = (
+				42ABF0AA1C498F32005BB888 /* Sources */,
+				42ABF0AB1C498F32005BB888 /* Frameworks */,
+				42ABF0AC1C498F32005BB888 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				428927B81C49964500EA1C78 /* PBXTargetDependency */,
+			);
+			name = TLSServer;
+			productName = cads;
+			productReference = 42ABF0AE1C498F32005BB888 /* TLSServer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		42ABF0531C498EBA005BB888 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Darka;
+				TargetAttributes = {
+					42ABF05A1C498EBA005BB888 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					42ABF0AD1C498F32005BB888 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 42ABF0561C498EBA005BB888 /* Build configuration list for PBXProject "TLSProject" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 42ABF0521C498EBA005BB888;
+			productRefGroup = 42ABF05C1C498EBA005BB888 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42ABF05A1C498EBA005BB888 /* TLSClient */,
+				42ABF0AD1C498F32005BB888 /* TLSServer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42ABF0571C498EBA005BB888 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42ABF0BF1C498F6E005BB888 /* client.c in Sources */,
+				42ABF0BD1C498F6A005BB888 /* TLSClient.c in Sources */,
+				42ABF0BE1C498F6A005BB888 /* TLSServer.c in Sources */,
+				42ABF0B51C498F62005BB888 /* Crypto.c in Sources */,
+				42ABF0B61C498F62005BB888 /* handshakeConstants.c in Sources */,
+				42ABF0B71C498F62005BB888 /* Certificate.c in Sources */,
+				42ABF0B81C498F62005BB888 /* ServerClientHello.c in Sources */,
+				42ABF0B91C498F62005BB888 /* ServerClientKeyExchange.c in Sources */,
+				42ABF0BA1C498F62005BB888 /* ServerClientBasic.c in Sources */,
+				42ABF0BB1C498F62005BB888 /* ServerClientHandshakeProtocol.c in Sources */,
+				42ABF0BC1C498F62005BB888 /* ServerClientRecordProtocol.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42ABF0AA1C498F32005BB888 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				428927AA1C4991DA00EA1C78 /* Crypto.c in Sources */,
+				428927AB1C4991DA00EA1C78 /* handshakeConstants.c in Sources */,
+				428927AC1C4991DA00EA1C78 /* Certificate.c in Sources */,
+				428927AD1C4991DA00EA1C78 /* ServerClientHello.c in Sources */,
+				428927AE1C4991DA00EA1C78 /* ServerClientKeyExchange.c in Sources */,
+				428927AF1C4991DA00EA1C78 /* ServerClientBasic.c in Sources */,
+				428927B01C4991DA00EA1C78 /* ServerClientHandshakeProtocol.c in Sources */,
+				428927B11C4991DA00EA1C78 /* ServerClientRecordProtocol.c in Sources */,
+				428927B21C4991DA00EA1C78 /* server.c in Sources */,
+				428927B31C4991DA00EA1C78 /* TLSClient.c in Sources */,
+				428927B41C4991DA00EA1C78 /* TLSServer.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		428927B61C49964100EA1C78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42ABF0AD1C498F32005BB888 /* TLSServer */;
+			targetProxy = 428927B51C49964100EA1C78 /* PBXContainerItemProxy */;
+		};
+		428927B81C49964500EA1C78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42ABF05A1C498EBA005BB888 /* TLSClient */;
+			targetProxy = 428927B71C49964500EA1C78 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		42ABF0601C498EBA005BB888 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/opt/openssl/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/openssl/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lssl",
+					"-lcrypto",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		42ABF0611C498EBA005BB888 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/opt/openssl/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/openssl/lib/;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lssl",
+					"-lcrypto",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		42ABF0631C498EBA005BB888 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/opt/openssl/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/openssl/lib;
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-lssl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		42ABF0641C498EBA005BB888 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = /usr/local/opt/openssl/include/;
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/openssl/lib;
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-lssl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		42ABF0B31C498F32005BB888 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		42ABF0B41C498F32005BB888 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		42ABF0561C498EBA005BB888 /* Build configuration list for PBXProject "TLSProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42ABF0601C498EBA005BB888 /* Debug */,
+				42ABF0611C498EBA005BB888 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42ABF0621C498EBA005BB888 /* Build configuration list for PBXNativeTarget "TLSClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42ABF0631C498EBA005BB888 /* Debug */,
+				42ABF0641C498EBA005BB888 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42ABF0B21C498F32005BB888 /* Build configuration list for PBXNativeTarget "TLSServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42ABF0B31C498F32005BB888 /* Debug */,
+				42ABF0B41C498F32005BB888 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 42ABF0531C498EBA005BB888 /* Project object */;
+}

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "42AEDA7D1C3455F2009DF6FD"
-               BuildableName = "SSLClient"
-               BlueprintName = "SSLClient"
-               ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+               BlueprintIdentifier = "42ABF0AD1C498F32005BB888"
+               BuildableName = "TLSServer"
+               BlueprintName = "TLSServer"
+               ReferencedContainer = "container:TLSProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42AEDA7D1C3455F2009DF6FD"
-            BuildableName = "SSLClient"
-            BlueprintName = "SSLClient"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF0AD1C498F32005BB888"
+            BuildableName = "TLSServer"
+            BlueprintName = "TLSServer"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42AEDA7D1C3455F2009DF6FD"
-            BuildableName = "SSLClient"
-            BlueprintName = "SSLClient"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF0AD1C498F32005BB888"
+            BuildableName = "TLSServer"
+            BlueprintName = "TLSServer"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42AEDA7D1C3455F2009DF6FD"
-            BuildableName = "SSLClient"
-            BlueprintName = "SSLClient"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF0AD1C498F32005BB888"
+            BuildableName = "TLSServer"
+            BlueprintName = "TLSServer"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

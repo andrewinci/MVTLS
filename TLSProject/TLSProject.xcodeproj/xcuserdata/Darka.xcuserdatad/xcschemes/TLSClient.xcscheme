@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "42C5DF5F1C2B11870038A3D9"
-               BuildableName = "clientRecord"
-               BlueprintName = "clientRecord"
-               ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+               BlueprintIdentifier = "42ABF05A1C498EBA005BB888"
+               BuildableName = "TLSClient"
+               BlueprintName = "TLSClient"
+               ReferencedContainer = "container:TLSProject.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42C5DF5F1C2B11870038A3D9"
-            BuildableName = "clientRecord"
-            BlueprintName = "clientRecord"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF05A1C498EBA005BB888"
+            BuildableName = "TLSClient"
+            BlueprintName = "TLSClient"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,13 +55,33 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42C5DF5F1C2B11870038A3D9"
-            BuildableName = "clientRecord"
-            BlueprintName = "clientRecord"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF05A1C498EBA005BB888"
+            BuildableName = "TLSClient"
+            BlueprintName = "TLSClient"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
+         <AdditionalOption
+            key = "DYLD_INSERT_LIBRARIES"
+            value = "/usr/lib/libgmalloc.dylib"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocGuardEdges"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocScribble"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -74,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "42C5DF5F1C2B11870038A3D9"
-            BuildableName = "clientRecord"
-            BlueprintName = "clientRecord"
-            ReferencedContainer = "container:SSLXcodeProject.xcodeproj">
+            BlueprintIdentifier = "42ABF05A1C498EBA005BB888"
+            BuildableName = "TLSClient"
+            BlueprintName = "TLSClient"
+            ReferencedContainer = "container:TLSProject.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
