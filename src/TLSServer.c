@@ -24,7 +24,7 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	free(server_hello->cipher_suites.cipher_id);
 	server_hello->cipher_suites.length = 0x02;
 	server_hello->cipher_suites.cipher_id = malloc(2);
-	int choosen_suite = rand()%4;
+	int choosen_suite = rand()%8; //specify the number of supported cipher suite
 	*(server_hello->cipher_suites.cipher_id) = client_hello->cipher_suites.cipher_id[choosen_suite];
 	TLS_param->cipher_suite = *(server_hello->cipher_suites.cipher_id);
 
@@ -88,24 +88,6 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	if(1 != DH_generate_key(privkey)){
 		printf("Error in DH_generate_key\n");
 	}
-	//get and print parameters
-	char *temp;
-	temp = BN_bn2hex(privkey->g);
-	printf("\n g : %s\n",temp);
-	free(temp);
-	temp = BN_bn2hex(privkey->p);
-	printf("\n p : %s\n",temp);
-	
-	// get and print private key
-	char *private_key_char;
-	private_key_char = BN_bn2hex(privkey->priv_key);
-	printf("\n Private DH key : %s\n",private_key_char);
-	
-	//get and print public key
-	char *public_key_char;
-	public_key_char = BN_bn2hex(privkey->pub_key);
-	printf("\n Public DH key : %s\n",public_key_char);
-	
 
     //make server_key_ex packet
     

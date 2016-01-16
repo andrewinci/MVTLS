@@ -33,7 +33,7 @@
 
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result);
 
-//int verify_signature( unsigned char *message, int message_len, unsigned char *signature, int signature_len, TLS_parameters *parameters);
+int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex);
 
 int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) ;
 

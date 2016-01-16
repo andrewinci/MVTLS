@@ -109,7 +109,15 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
     }
     else if (key_ex_alg == DHE_RSA_KX){
         DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
-        // ToDo verify sign
+        
+        //verify sign
+        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange))
+        {
+            printf("\nError in server key eschange, signature not valid\n");
+            exit(-1);
+        }
+        printf("Signature is valid");
+        
         DH *privkey = DH_new();
         privkey->g = server_key_exchange->g;
         privkey->p = server_key_exchange->p;

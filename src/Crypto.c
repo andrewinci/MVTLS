@@ -35,57 +35,77 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
     free(seed_p);
 }
 
-//int verify_signature( unsigned char *message, int message_len, unsigned char *signature, int signature_len ) {
-//    unsigned char *decrypted_signature = NULL;
-//    int decrypted_signature_length;
-//    
-//    const EVP_MD *sha1 = EVP_sha1();
-//    //compute sha1
-//    unsigned char sha1_digest[EVP_MAX_MD_SIZE];
-//    unsigned int sha1_len;
-//    EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
-//    EVP_DigestInit_ex(mdctx, sha1, NULL);
-//    EVP_DigestUpdate(mdctx, parameters->client_random, 32);
-//    EVP_DigestUpdate(mdctx, parameters->server_random, 32);
-//    EVP_DigestUpdate(mdctx, message, message_len);
-//    EVP_DigestFinal_ex(mdctx, sha1_digest, &sha1_len);
-//    EVP_MD_CTX_destroy(mdctx);
-//    
-//    const EVP_MD *md5 = EVP_md5();
-//    //compute sha1
-//    unsigned char md5_digest[EVP_MAX_MD_SIZE];
-//    unsigned int md5_len;
-//    mdctx = EVP_MD_CTX_create();
-//    EVP_DigestInit_ex(mdctx, md5, NULL);
-//    EVP_DigestUpdate(mdctx, parameters->client_random, 32);
-//    EVP_DigestUpdate(mdctx, parameters->server_random, 32);
-//    EVP_DigestUpdate(mdctx, message, message_len);
-//    EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
-//    EVP_MD_CTX_destroy(mdctx);
-//    
-//    uint16_t kx_alg = get_kx_algorithm(parameters->cipher_suite);
-//    if(kx_alg == DHE_RSA_KX){
-//        //verify RSA sign
-//        EVP_PKEY *pubkey = NULL;
-//        RSA *rsa = NULL;
-//        
-//        pubkey = X509_get_pubkey(parameters->server_certificate);
-//        rsa = EVP_PKEY_get1_RSA(pubkey);
-//        
-//        decrypted_signature_length = RSA_public_decrypt(signature_len, signature, decrypted_signature, rsa, RSA_PKCS1_PADDING);
-//        
-//        //verify with memcmp
-//        if ( memcmp( sha1_digest, decrypted_signature, sha1->md_size ) || memcmp( md5_digest, decrypted_signature + sha1->md_size, md5->md_size ) ) {
-//            
-//            return 0;
-//        }
-//    }else if (kx_alg == DHE_DSS_KX){
-//        //verify DSA sign
-//    }
-//    free(decrypted_signature);
-//    return 1;
-//    
-//}
+int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
+    
+    //extract p g pubkey
+    int p_len;
+    unsigned char *p = malloc(BN_num_bytes(server_key_ex->p));
+    p_len = BN_bn2bin(server_key_ex->p, p);
+    
+    int g_len;
+    unsigned char *g = malloc(BN_num_bytes(server_key_ex->g));
+    g_len = BN_bn2bin(server_key_ex->g, g);
+    
+    int pubkey_len;
+    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pubKey));
+    pubkey_len = BN_bn2bin(server_key_ex->pubKey, pubkey_char);
+    
+    
+    const EVP_MD *sha1 = EVP_sha1();
+    //compute sha1
+    unsigned char sha1_digest[EVP_MAX_MD_SIZE];
+    unsigned int sha1_len;
+    EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
+    EVP_DigestInit_ex(mdctx, sha1, NULL);
+    EVP_DigestUpdate(mdctx, client_random, 32);
+    EVP_DigestUpdate(mdctx, server_random, 32);
+    EVP_DigestUpdate(mdctx, p, p_len);
+    EVP_DigestUpdate(mdctx, g, g_len);
+    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
+    EVP_DigestFinal_ex(mdctx, sha1_digest, &sha1_len);
+    EVP_MD_CTX_destroy(mdctx);
+    
+    const EVP_MD *md5 = EVP_md5();
+    //compute md5
+    unsigned char md5_digest[EVP_MAX_MD_SIZE];
+    unsigned int md5_len;
+    mdctx = EVP_MD_CTX_create();
+    EVP_DigestInit_ex(mdctx, md5, NULL);
+    EVP_DigestUpdate(mdctx, client_random, 32);
+    EVP_DigestUpdate(mdctx, server_random, 32);
+    EVP_DigestUpdate(mdctx, p, p_len);
+    EVP_DigestUpdate(mdctx, g, g_len);
+    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
+    EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
+    EVP_MD_CTX_destroy(mdctx);
+    
+    
+    
+    //ToDo : distinguish between rsa and dsa signature
+    EVP_PKEY *pubkey = NULL;
+    RSA *rsa = NULL;
+    
+    pubkey = X509_get_pubkey(certificate);
+    rsa = EVP_PKEY_get1_RSA(pubkey);
+    
+    EVP_PKEY_free(pubkey);
+    
+    //encrypt pre_master_key
+    unsigned char *decrypted_signature = malloc(RSA_size(rsa));
+    RSA_public_decrypt(server_key_ex->signature_length, server_key_ex->signature, decrypted_signature, rsa, RSA_PKCS1_PADDING);
+    RSA_free(rsa);
+    
+    //verify
+    int result = 1;
+    if ( memcmp( sha1_digest, decrypted_signature, sha1->md_size ) || memcmp( md5_digest, decrypted_signature + sha1->md_size, md5->md_size ) )
+        result = 0;
+    
+    free(p);
+    free(g);
+    free(pubkey_char);
+
+    return result;
+}
 
 int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
     
@@ -157,7 +177,6 @@ int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_ra
     server_key_ex->signature = malloc(RSA_size(privateKey));
     server_key_ex->signature_length = RSA_private_encrypt(sha1->md_size+md5->md_size, to_enc, server_key_ex->signature, privateKey, RSA_PKCS1_PADDING);
     
-    //free and return
     free(p);
     free(g);
     free(pubkey);
