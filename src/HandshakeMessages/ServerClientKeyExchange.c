@@ -14,18 +14,21 @@
 
 void serialize_client_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
     if(kx == RSA_KX){
-        RSA_server_key_exchange *rsa_server_key_ex =(RSA_server_key_exchange*)server_key_exchange;
-        //the first 3 message byte are the key length
+        
+        RSA_client_key_exchange *rsa_server_key_ex =(RSA_client_key_exchange*)server_key_exchange;
+        //the first 2 message byte are the key length
         unsigned char *buff = malloc(rsa_server_key_ex->key_length+2);
         *stream = buff;
         //add lenght
-        uint32_t temp = REV32(rsa_server_key_ex->key_length)>>8;
-        memcpy(buff, &temp, 3);
-        buff+=3;
+        uint16_t temp = REV16(rsa_server_key_ex->key_length);
+        memcpy(buff, &temp, 2);
+        buff+=2;
         //add key
         memcpy(buff, rsa_server_key_ex->encrypted_premaster_key, rsa_server_key_ex->key_length);
         *streamLen=rsa_server_key_ex->key_length+3;
+        
     }else if(kx == DHE_RSA_KX){
+        
         DH_server_key_exchange *dh_server_key_ex = (DH_server_key_exchange*)server_key_exchange;
         unsigned char *buf;
         uint16_t len;
@@ -69,11 +72,12 @@ void serialize_client_key_exchange(void *server_key_exchange, unsigned char **st
 
 void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
     if(kx == RSA_KX){
-        RSA_server_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_server_key_exchange));
-        memcpy(&(rsa_server_key_ex->key_length), message, 3);
-        message+=3;
+        RSA_client_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_client_key_exchange));
+        memcpy(&(rsa_server_key_ex->key_length), message, 2);
+        message+=2;
         
-        rsa_server_key_ex->key_length = REV32(rsa_server_key_ex->key_length)>>8;
+        rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
+        
         unsigned char *buff = malloc(rsa_server_key_ex->key_length);
         rsa_server_key_ex->encrypted_premaster_key = buff;
         memcpy(buff, message, rsa_server_key_ex->key_length);
