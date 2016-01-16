@@ -111,16 +111,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// ToDo FIX THIS MESS
 					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-					if(kx==RSA_KX || kx==DH_DSS_KX || kx == DH_RSA_KX){
-						//RSA DH_DSS DH_RSA
-						printf("\n>>> Server hello done\n");
-						handshake * server_hello_done = make_server_hello_done();
-						print_handshake(server_hello_done);
-						send_handshake(server2client, server_hello_done);
-						backup_handshake(&TLS_param, server_hello_done);
-						free_handshake(server_hello_done);
-					}
-					else if(kx == DHE_RSA_KX){
+					if(kx == DHE_RSA_KX){
 						//DHE_DSS DHE_RSA DH_anon
 						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
 						printf("\n>>> Server key exchange\n");
@@ -129,9 +120,15 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 						backup_handshake(&TLS_param, server_key_exchange);
 					
 						free_handshake(server_key_exchange);
-
-						make_server_hello_done(server2client, &TLS_param);
 					}
+
+					// Make and send ServerHelloDone
+					printf("\n>>> Server hello done\n");
+					handshake * server_hello_done = make_server_hello_done();
+					print_handshake(server_hello_done);
+					send_handshake(server2client, server_hello_done);
+					backup_handshake(&TLS_param, server_hello_done);
+					free_handshake(server_hello_done);
 				}
 			break;
 				
@@ -183,6 +180,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 			default:
 				break;
 		}
-		free_handshake(h);	
+		free_handshake(h);
 	}
 }
