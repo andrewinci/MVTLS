@@ -52,36 +52,64 @@ handshake * make_client_hello(unsigned char *client_random){
 	return client_hello_h;
 }
 
-void send_RSA_client_key_exchange(channel *client2server, TLS_parameters *TLS_param) {
-	//rsa server key exchange struct
-	RSA_server_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_server_key_exchange));
-	
-	//generate premaster and master secret
-	make_RSA_keys(TLS_param, &(rsa_server_key_ex->encrypted_premaster_key), &(rsa_server_key_ex->key_length));
-	X509_free(TLS_param->server_certificate);
-	
-	//serialize and send
-	unsigned char *message = NULL;
-	uint32_t len = 0;
-	
-	serialize_client_key_exchange(rsa_server_key_ex, &message, &len, RSA_KX);
-	
-	free(rsa_server_key_ex->encrypted_premaster_key);
-	free(rsa_server_key_ex);
-	
-	//make handshake packet
-	handshake *client_key_exchange = malloc(sizeof(handshake));
-	client_key_exchange->type = CLIENT_KEY_EXCHANGE;
-	client_key_exchange->message = message;
-	client_key_exchange->length = len;
+handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg){
+    if(key_ex_alg == RSA_KX){
 
-	print_handshake(client_key_exchange);
-	
-	send_handshake(client2server, client_key_exchange);
-	backup_handshake(TLS_param, client_key_exchange);
-	
-	free_handshake(client_key_exchange);
+        //make pre master key
+        int pre_master_key_len = 58;
+        unsigned char *pre_master_key = calloc(pre_master_key_len,1);
+
+        uint16_t temp = REV16(TLS_param->tls_version);
+        memcpy(pre_master_key,&temp , 2);
+
+        RAND_pseudo_bytes(pre_master_key+2, 46);
+        
+        //make master key
+        unsigned char seed[64];
+        memcpy(seed, TLS_param->client_random, 32);
+        memcpy(seed+32, TLS_param->server_random, 32);
+        
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        TLS_param->master_secret_len = 48;
+        
+        //compute and set pre master key
+        PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+        
+        //encrypt with certificate RSA key
+        EVP_PKEY *pubkey = NULL;
+        RSA *rsa = NULL;
+        
+        pubkey = X509_get_pubkey(TLS_param->server_certificate);
+        rsa = EVP_PKEY_get1_RSA(pubkey);
+        
+        EVP_PKEY_free(pubkey);
+        
+        //encrypt pre_master_key
+        unsigned char *pre_master_key_enc = malloc(256);
+        int pre_master_key_enc_len = 0;
+        pre_master_key_enc_len = RSA_public_encrypt(pre_master_key_len, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
+        RSA_free(rsa);
+        
+        RSA_client_key_exchange *rsa_server_key_ex = malloc(sizeof(RSA_client_key_exchange));
+        rsa_server_key_ex->encrypted_premaster_key = pre_master_key_enc;
+        rsa_server_key_ex->key_length = pre_master_key_enc_len;
+        unsigned char *message = NULL;
+        uint32_t len = 0;
+        serialize_client_key_exchange(rsa_server_key_ex, &message, &len, RSA_KX);
+        
+        free(rsa_server_key_ex->encrypted_premaster_key);
+        free(rsa_server_key_ex);
+        
+        handshake *client_key_exchange = malloc(sizeof(handshake));
+        client_key_exchange->type = CLIENT_KEY_EXCHANGE;
+        client_key_exchange->message = message;
+        client_key_exchange->length = len;
+
+        return client_key_exchange;
+    }
+    return NULL;
 }
+
 
 void send_DH_client_key_exchange(channel *client2server, TLS_parameters *TLS_param){
 	//generate ephemeral diffie helman parameters
@@ -131,7 +159,7 @@ void send_DH_client_key_exchange(channel *client2server, TLS_parameters *TLS_par
 		printf("\nError in copy DH parameters\n");
 	if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
 		printf("\nError in copy DH parameters\n");
-	sign_DH_server_key_ex(TLS_param, server_key_ex);
+	//sign_DH_server_key_ex(TLS_param, server_key_ex);
 	
 	//serialize and make handshake
 	handshake *server_key_ex_h = malloc(sizeof(handshake));

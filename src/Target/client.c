@@ -129,7 +129,13 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
 					if(kx == RSA_KX && TLS_param.previous_state == CERTIFICATE){
 						printf("\n>>> Client Key Exchange\n");
-						send_RSA_client_key_exchange(client2server, &TLS_param);
+                        handshake * client_key_exchange = make_client_key_exchange(&TLS_param, kx);
+                        backup_handshake(&TLS_param, client_key_exchange);
+                        send_handshake(client2server, client_key_exchange);
+                        print_handshake(client_key_exchange);
+                        free_handshake(client_key_exchange);
+						
+                        //send_RSA_client_key_exchange(client2server, &TLS_param);
 						print_master_secret();
 					}
 					else if(TLS_param.previous_state == SERVER_KEY_EXCHANGE && (kx == DHE_DSS_KX || kx == DHE_RSA_KX))

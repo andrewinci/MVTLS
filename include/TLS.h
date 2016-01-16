@@ -15,6 +15,28 @@
 
 #endif /* TLS_h */
 
+#ifndef TLS_parameter_enum
+#define TLS_parameter_enum
+typedef struct{
+    uint16_t tls_version;
+    uint16_t previous_state;
+    uint16_t cipher_suite;
+    
+    unsigned char client_random[32];
+    unsigned char server_random[32];
+    
+    void *server_key_ex;
+    
+    unsigned char *master_secret;
+    int master_secret_len;
+    
+    int handshake_messages_len;
+    unsigned char *handshake_messages;
+    
+    X509 *server_certificate;
+}TLS_parameters;
+#endif
+
                 /*** CLIENT ***/
 
 
@@ -22,7 +44,7 @@
 
 handshake * make_client_hello(unsigned char *client_random);
 
-void send_RSA_client_key_exchange(channel *client2server, TLS_parameters *TLS_param);
+handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg);
 
 void send_DH_client_key_exchange(channel *client2server, TLS_parameters *TLS_param);
 
@@ -35,7 +57,6 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) ;
 
 
 /* Functions for manage key exchange */
-void manage_RSA_client_key_exchange(TLS_parameters *TLS_param, handshake *h);
 
 void manage_DHE_server_key_exchange(handshake *h);
 

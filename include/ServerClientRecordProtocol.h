@@ -11,8 +11,7 @@
 
 #include <stdio.h>
 #include "ServerClientBasic.h"
-#include "handshakeConstants.h"
-
+#define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
 #endif
 
 

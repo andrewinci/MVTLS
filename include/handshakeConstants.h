@@ -20,28 +20,6 @@
 
 #endif
 
-#ifndef TLS_parameter_enum
-#define TLS_parameter_enum
-typedef struct{
-    uint16_t tls_version;
-    uint16_t previous_state;
-    uint16_t cipher_suite;
-    
-    unsigned char client_random[32];
-    unsigned char server_random[32];
-    
-    void *server_key_ex;
-    
-    unsigned char *master_secret;
-    int master_secret_len;
-    
-    int handshake_messages_len;
-    unsigned char *handshake_messages;
-    
-    X509 *server_certificate;
-}TLS_parameters;
-#endif
-
 #ifndef channel_mode_enum
 #define channel_mode_enum
 typedef enum{
@@ -59,6 +37,7 @@ typedef enum{
     RSA_KX, DH_RSA_KX, DH_DSS_KX, DHE_DSS_KX, DHE_RSA_KX
 }key_exchange_algorithm;
 #endif
+
 //typedef enum
 //{
 //    none = 0,
@@ -79,6 +58,7 @@ typedef enum{
 //    sig_ecdsa = 3
 //}
 //SignatureAlgorithm;
+
 /*
  * Starting from cipher suite id retrieve the hash function
  * to be used in PRF

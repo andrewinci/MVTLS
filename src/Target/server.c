@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include "TLS.h"
 
+void print_random();
+void print_master_secret();
+void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange);
+
 void onPacketReceive(channel *server2client, packet_basic *p);
 
 TLS_parameters TLS_param;
@@ -22,6 +26,7 @@ int main() {
 	set_on_receive(server2client, &onPacketReceive);
 	
 	TLS_param.previous_state = 0x00;
+    //ToDo: load certificate
 	printf("*** TLS server is started ***\n");
 
 	// Start channel and listener for new messages
@@ -29,25 +34,6 @@ int main() {
 	wait_channel(server2client);
 
 	free(server2client);
-}
-
-void print_random(void) {
-	// Print randoms of server and client
-	printf("\nServer random:\n");
-	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.server_random[i]);
-	printf("\nClient random:\n");
-	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.client_random[i]);
-	printf("\n");
-}
-
-void print_master_secret(void) {
-	// Print MasterSecret
-	printf("\nMaster secret:\n");
-	for(int i=0;i<TLS_param.master_secret_len;i++)
-		printf("%02x ",TLS_param.master_secret[i]);
-	printf("\n");
 }
 
 /*
@@ -111,7 +97,9 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// ToDo FIX THIS MESS
 					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-					if(kx == DHE_RSA_KX){
+					
+                    if(kx == DHE_RSA_KX){
+
 						//DHE_DSS DHE_RSA DH_anon
 						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
 						printf("\n>>> Server key exchange\n");
@@ -129,6 +117,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					send_handshake(server2client, server_hello_done);
 					backup_handshake(&TLS_param, server_hello_done);
 					free_handshake(server_hello_done);
+                    
 				}
 			break;
 				
@@ -139,8 +128,14 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					// ToDo FIX THIS TOO
 					printf("\n<<< Client Key Exchange\n");
 					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-					if(kx == RSA_KX)
-						manage_RSA_client_key_exchange(&TLS_param, h);
+                    if(kx == RSA_KX){
+                        backup_handshake(&TLS_param, h);
+                        print_handshake(h);
+                        
+                        // Extract PreMasterKey encrypted from message
+                        RSA_client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
+                        compute_ser_master_key_RSA(client_key_exchange);
+                    }
 					else if(kx == DHE_RSA_KX || kx == DHE_DSS_KX)
 						manage_DHE_server_key_exchange(h);
 					print_master_secret();
@@ -182,4 +177,59 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 		}
 		free_handshake(h);
 	}
+}
+
+void print_random() {
+    // Print randoms of server and client
+    printf("\nServer random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.server_random[i]);
+    printf("\nClient random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.client_random[i]);
+    printf("\n");
+}
+
+void print_master_secret() {
+    // Print MasterSecret
+    printf("\nMaster secret:\n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02x ",TLS_param.master_secret[i]);
+    printf("\n");
+}
+
+void compute_ser_master_key_RSA(RSA_client_key_exchange *client_key_exchange) {
+    //get private key from file
+    RSA *privateKey = NULL;
+    FILE *fp;
+    
+    if(NULL != (fp= fopen("../certificates/server.key", "r")) )
+    {
+        privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
+        if(privateKey==NULL)
+        {
+            printf("\nerror in retrieve private key");
+            exit(-1);
+        }
+    }
+    fclose(fp);
+    unsigned char *pre_master_key=malloc(100);
+    if(!RSA_private_decrypt(client_key_exchange->key_length, client_key_exchange->encrypted_premaster_key, pre_master_key, privateKey, RSA_PKCS1_PADDING))
+    {
+        printf("Error decrypt\n");
+        exit(-1);
+    }
+    
+    //make master key
+    unsigned char seed[64];
+    memcpy(seed, TLS_param.client_random, 32);
+    memcpy(seed+32, TLS_param.server_random, 32);
+    
+    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
+    TLS_param.master_secret_len = 48;
+    PRF(hash_function, pre_master_key, 48, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
+    RSA_free(privateKey);
+    
+    free(client_key_exchange->encrypted_premaster_key);
+    free(client_key_exchange);
 }

@@ -60,8 +60,7 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 
 handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	
-	/****DH serverkey exchange******/
-	
+	//DH serverkey exchange
 	//generate ephemeral diffie helman parameters
 	DH *privkey;
 	int codes;
@@ -70,7 +69,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	if(NULL == (privkey = DH_new())){
 		printf("error in DH new\n");
 	}
-	if(1 != DH_generate_parameters_ex(privkey, 2048, DH_GENERATOR_2 , NULL)){
+	if(1 != DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL)){
 		printf("error in parameter generate\n");
 	}
 	
@@ -99,7 +98,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	
 	// get and print private key
 	char *private_key_char;
-	private_key_char = BN_bn2hex(privkey->p);
+	private_key_char = BN_bn2hex(privkey->priv_key);
 	printf("\n Private DH key : %s\n",private_key_char);
 	
 	//get and print public key
@@ -118,7 +117,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 		printf("\nError in copy DH parameters\n");
 	if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
 		printf("\nError in copy DH parameters\n");
-	sign_DH_server_key_ex(TLS_param, server_key_ex);
+	//sign_DH_server_key_ex(TLS_param, server_key_ex);
 	
 	//serialize and make handshake
 	handshake *server_key_ex_h = malloc(sizeof(handshake));
@@ -137,21 +136,4 @@ handshake * make_server_hello_done() {
 	server_hello_done->length =0x00;
 	server_hello_done->message = NULL;
 	return server_hello_done;
-}
-
-void manage_RSA_client_key_exchange(TLS_parameters *TLS_param, handshake *h) {
-	backup_handshake(TLS_param, h);
-	print_handshake(h);
-	
-	// Extract PreMasterKey encrypted from message
-	RSA_server_key_exchange *rsa_server_key_ex = deserialize_client_key_exchange(h->length, h->message, RSA_KX);
-	set_RSA_master(TLS_param, rsa_server_key_ex->encrypted_premaster_key, rsa_server_key_ex->key_length);
-	
-	free(rsa_server_key_ex->encrypted_premaster_key);
-	free(rsa_server_key_ex);
-}
-
-void manage_DHE_server_key_exchange(handshake *h){
-	// ToDo Generate master secret
-	free_handshake(h);
 }
