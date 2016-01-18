@@ -68,3 +68,8 @@ const EVP_MD *get_hash_function(uint16_t cipher_suite_Id){
             return EVP_md5();
     return NULL;
 }
+
+
+char * readable_cipher_suite(uint16_t cipher_suite){
+    return NULL;
+}

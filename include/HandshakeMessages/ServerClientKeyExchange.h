@@ -22,6 +22,9 @@
 
 #ifndef server_key_exchange_structs
 #define server_key_exchange_structs
+
+
+
 typedef struct{
     
     BIGNUM *p;
@@ -46,6 +49,7 @@ typedef struct{
     unsigned char *key;
     
 }client_key_exchange;
+
 #endif
 
 void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);

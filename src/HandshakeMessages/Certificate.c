@@ -106,6 +106,6 @@ void free_certificate_message(certificate_message *cert){
     if(cert == NULL)
         return;
     
-    //X509_free(cert->X509_certificate);
+    X509_free(cert->X509_certificate);
     free(cert);
 }

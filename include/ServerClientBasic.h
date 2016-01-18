@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/file.h>
+#include <sys/stat.h>
 #include <pthread.h>
 #include <time.h>
 
@@ -68,7 +69,7 @@ typedef struct channel{
     // file to use for exchange messages
     char *fileName;
     // file descriptor
-    FILE *file;
+    int fd;
     // function to be called when a packet is received
     void (*onPacketReceive)(struct channel *ch, packet_basic *p);
     // value to establish if reading thread is enabled

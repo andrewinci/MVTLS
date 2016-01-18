@@ -10,8 +10,8 @@
 
 
 void free_packet(packet_basic *p);
-long get_file_size(FILE *f);
-uint32_t read_all_file(FILE *f, unsigned char **p);
+long long get_file_size(int fd);
+uint32_t read_all_file(int fd, unsigned char **p);
 packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen);
 void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen);
 
@@ -21,20 +21,18 @@ channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode
     ch->mod = channelMode;
     ch->channel_source = channelFrom;
     ch->channel_destination = channelTo;
-    if(channelMode == SERVER)
-        ch->file = fopen(fileName, "w+");
-    else
-    	ch->file = fopen(fileName, "a+");
     ch->fileName = fileName;
     ch->onPacketReceive = NULL;
     ch->isEnabled = 0;
+    ch->fd = open(fileName, O_RDWR | O_CREAT | O_TRUNC, 0666);
+
     return ch;
 }
 
 int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basic *p)){
     if(ch->onPacketReceive == NULL){
         //check if the packet is for the channel owner
-        ch->onPacketReceive = onPacketReceive; //channel and struct channel_t are the same TODO: cast
+        ch->onPacketReceive = onPacketReceive; //channel and struct channel_t are the same
         return 1;
     }
     return 0;
@@ -43,7 +41,7 @@ int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basi
 int send_packet(channel *ch, packet_basic *p){
 	if(ch == NULL)
 		printf("Error ch is null");
-    if(ch->file==NULL)
+    if(ch->fd == -1)
         return 0;
     
     unsigned char *message = NULL;
@@ -64,17 +62,12 @@ int send_packet(channel *ch, packet_basic *p){
 		printf("\nerror in send packet\n");
 		exit(-1);
 	}
-
-    //printf("Packet to send:\n%.*s\n",strLen,message);
-    //TODO : do better
+    
     //waiting untill the file is blank
-    while (get_file_size(ch->file)!=0)
+    while (get_file_size(ch->fd)!=0)
         usleep(100);
 	//at this point the file is empty
-    fclose(ch->file);
-	ch->file = fopen(ch->fileName, "w+");
-    unsigned long writeResult = fwrite(message, 1, strLen, ch->file);
-    fflush(ch->file); //for update
+    unsigned long writeResult = write(ch->fd, message, strLen);
     free(message);
     if(writeResult)
         return 1;
@@ -86,24 +79,23 @@ void reader(void *data){
     ch = (channel*)data;
     unsigned char *str = NULL;
     while (ch->isEnabled) {
-        ch->file = fopen(ch->fileName, "r");
-        uint32_t fileLen = read_all_file(ch->file, &str);
+        uint32_t fileLen = read_all_file(ch->fd, &str);
         if(fileLen>=16){
             //the file is not empty
             packet_basic *received = deserialize_packet(str, fileLen); 
 			free(str);
-            if(received!=NULL && strcmp(received->destination, ch->channel_source)==0){
+            if(received!=NULL && strcmp(received->destination, ch->channel_source) == 0){
                 //blank the file
-                fclose(ch->file);
-                ch->file = fopen(ch->fileName, "w+");
+                truncate(ch->fileName, 0);
 				//fire event
-				ch->onPacketReceive(ch,received);
-            }else
+				ch->onPacketReceive(ch, received);
+            }
+            else
                 free_packet(received);
-        }else
+        }
+        else
 			free(str);
         str = NULL;
-        fclose(ch->file);
         usleep(DELAY_TIME);
     }
 }
@@ -128,7 +120,7 @@ int start_listener(channel *ch){
 
 void stop_channel(channel *ch){
     ch->isEnabled = 0;
-    fclose(ch->file);
+    close(ch->fd);
     pthread_exit(NULL);
 }
 
@@ -174,11 +166,13 @@ void free_packet(packet_basic *p){
  * f : file indentificator
  * return : the lenght of the file in byte
  */
-long get_file_size(FILE *f){
-    fseek(f, 0, SEEK_END);
-    long fsize = ftell(f);
-    fseek(f,0,SEEK_SET);
-    return fsize;
+long long get_file_size(int fd){
+    struct stat *info;
+    info = malloc(sizeof(struct stat));
+    fstat(fd, info);
+    long long res = info->st_size;
+    free(info);
+    return res;
 }
 
 /*
@@ -187,17 +181,16 @@ long get_file_size(FILE *f){
  * p : return pointer
  * return : the file size
  */
-uint32_t read_all_file(FILE *f, unsigned char **p){
-    long fileSize = get_file_size(f);
+uint32_t read_all_file(int fd, unsigned char **p){
+    long long fileSize = get_file_size(fd);
     if(fileSize>UINT32_MAX)
     {
         printf("\nThe message is too long, something went wrong\n");
         exit(-1);
     }
-    unsigned char *temp=malloc(fileSize*sizeof(unsigned char));
-    fread(temp,fileSize,1,f);
-    //printf("\n%.*s\n",fileSize,temp);
-    *p=temp;
+    unsigned char *temp = malloc(fileSize*sizeof(unsigned char));
+    read(fd, temp, fileSize);
+    *p = temp;
     return (uint32_t)fileSize;
 }
 
@@ -224,10 +217,11 @@ packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen){
         memcpy(message, str+20, fileLen-20);
     }
     
-    if(packLen!=fileLen){//the packet is malformed
+    if(packLen>fileLen){//the packet is malformed
         free(from);
         free(to);
 		free(message);
+        //printf("\nPacket malformed\n");
         return NULL;
     }
     
@@ -260,14 +254,10 @@ void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen){
         memcpy(*str+16, strLen, 4);
         if(p->messageLen>0)
             memcpy(*str+20,p->message,p->messageLen);
-    }else
+    }
+    else
     {
         printf("\nMalloc fail in serialize_packet\n");
         exit(-1);
     }
 }
-
-
-
-
-

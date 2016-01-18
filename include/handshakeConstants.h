@@ -35,7 +35,8 @@ typedef enum{
 #define key_exchange_algorithm_enum
 typedef enum{
     RSA_KX = 1,
-    DHE_RSA_KX = 2
+    DHE_RSA_KX = 2,
+    ECDHE_RSA_KX = 3
 }key_exchange_algorithm;
 #endif
 

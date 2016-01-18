@@ -40,6 +40,15 @@ int main() {
 	wait_channel(client2server);
 	
 	free(client2server);
+    
+    //print details about the connection
+    printf("\nCipher suite: %04X",TLS_param.cipher_suite);
+    printf("\nMaster key: \n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02X ",TLS_param.master_secret[i]);
+    free(TLS_param.handshake_messages);
+    free(TLS_param.master_secret);
+    
 }
 
 /*
@@ -100,8 +109,9 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					print_handshake(h);
 					
 					certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
-					TLS_param.server_certificate = certificate_m->X509_certificate;
-					
+                    TLS_param.server_certificate = certificate_m->X509_certificate;
+                    TLS_param.server_certificate->references+=1;
+
 					printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
 
 					free_certificate_message(certificate_m);
@@ -158,9 +168,6 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 				print_handshake(h);
 				free_handshake(h);
 				
-				//free and close
-				free(TLS_param.handshake_messages);
-				free(TLS_param.master_secret);
 				stop_channel(client2server);
 				break;
 				
