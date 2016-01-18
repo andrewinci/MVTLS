@@ -32,8 +32,10 @@ int main() {
 	// Start channel and listener for new messages
 	start_listener(server2client);
 	wait_channel(server2client);
-
+	free(TLS_param.server_certificate);
 	free(server2client);
+	//free openssl resources
+	CRYPTO_cleanup_all_ex_data();
 }
 
 /*
@@ -231,6 +233,7 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     PRF(hash_function, pre_master_key, 48, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     RSA_free(privateKey);
     
+    free(pre_master_key);
     free(client_key_exchange->key);
     free(client_key_exchange);
 }

@@ -97,6 +97,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         uint32_t len = 0;
         serialize_client_key_exchange(rsa_server_key_ex, &message, &len);
         
+        free(pre_master_key);
         free(rsa_server_key_ex->key);
         free(rsa_server_key_ex);
         

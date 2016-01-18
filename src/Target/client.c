@@ -46,9 +46,12 @@ int main() {
     printf("\nMaster key: \n");
     for(int i=0;i<TLS_param.master_secret_len;i++)
         printf("%02X ",TLS_param.master_secret[i]);
+    
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
-    
+    X509_free(TLS_param.server_certificate);
+    //free openssl resources
+    CRYPTO_cleanup_all_ex_data();
 }
 
 /*
@@ -167,7 +170,6 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 				printf("\n<<< Finished\n");
 				print_handshake(h);
 				free_handshake(h);
-				
 				stop_channel(client2server);
 				break;
 				
