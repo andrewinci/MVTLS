@@ -212,8 +212,8 @@
 				42ABF07C1C498ECF005BB888 /* Crypto.c */,
 				42ABF07D1C498ECF005BB888 /* handshakeConstants.c */,
 				42ABF07E1C498ECF005BB888 /* HandshakeMessages */,
-				42ABF0821C498ECF005BB888 /* ServerClientBasic.c */,
 				42ABF0831C498ECF005BB888 /* ServerClientHandshakeProtocol.c */,
+				42ABF0821C498ECF005BB888 /* ServerClientBasic.c */,
 				42ABF0841C498ECF005BB888 /* ServerClientRecordProtocol.c */,
 			);
 			name = src;

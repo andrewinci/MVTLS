@@ -3,11 +3,11 @@ CC := gcc # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
 CFLAGS := -g -Wall -std=gnu99 -D MAKEFILE 
-#OPENSSLINCLUDE ?= -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib ??NEED IT??
+OPENSSLINCLUDE ?= -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib
 OPENSSLFLAGS := -lssl -lcrypto
-OPENSSL := $(OPENSSLFLAGS) #$(OPENSSLINCLUDE)
+OPENSSL := $(OPENSSLFLAGS) $(OPENSSLINCLUDE)
 LFLAGS := -pthread
-INC :=  -I include
+INC :=  -I include $(OPENSSL)
 GREEN=\033[0;32m
 RED=\033[0;31m
 NC=\033[0m # No Color
