@@ -109,7 +109,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         return client_key_exchange;
     }
     else if (key_ex_alg == DHE_RSA_KX){
-        DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
+        DHE_server_key *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
         if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange))
