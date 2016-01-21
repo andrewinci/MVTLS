@@ -43,10 +43,7 @@ int main() {
     
     //print details about the connection
     printf("\nCipher suite: %04X",TLS_param.cipher_suite);
-    printf("\nMaster key: \n");
-    for(int i=0;i<TLS_param.master_secret_len;i++)
-        printf("%02X ",TLS_param.master_secret[i]);
-    
+	print_master_secret() ;
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
@@ -182,7 +179,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 
 void print_master_secret() {
 	printf("\nMaster secret:\n");
-	for(int i=0;i<48;i++)
+	for(int i=0;i<TLS_param.master_secret_len;i++)
 		printf("%02x ",TLS_param.master_secret[i]);
 	printf("\n");
 }
