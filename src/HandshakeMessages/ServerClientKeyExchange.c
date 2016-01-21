@@ -16,7 +16,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
     
     if(kx == DHE_RSA_KX){
     
-        DH_server_key_exchange *dh_server_key_ex = (DH_server_key_exchange*)server_key_exchange;
+        DHE_server_key *dh_server_key_ex = (DHE_server_key*)server_key_exchange;
         unsigned char *buf;
         uint16_t len;
         int pLen = BN_num_bytes(dh_server_key_ex->p), gLen = BN_num_bytes(dh_server_key_ex->g), pubKeyLen = BN_num_bytes(dh_server_key_ex->pubKey);
@@ -60,7 +60,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
 
 void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
     if(kx == DHE_RSA_KX){
-        DH_server_key_exchange *dh_server_key_ex = malloc(sizeof(DH_server_key_exchange));
+        DHE_server_key *dh_server_key_ex = malloc(sizeof(DHE_server_key));
         uint16_t len;
         memcpy(&len, message, 2);
         message+=2;
@@ -121,7 +121,7 @@ void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *messa
         return rsa_server_key_ex;
 }
 
-void free_DH_server_key_exchange(DH_server_key_exchange *params){
+void free_DH_server_key_exchange(DHE_server_key *params){
     BN_free(params->g);
     BN_free(params->p);
     BN_free(params->pubKey);
