@@ -40,7 +40,11 @@ typedef struct{
     
     unsigned char *signature;
     
-}DH_server_key_exchange;
+}DHE_server_key;
+
+typedef struct{
+	void *ToDo; // temporary struct, must implement ECDHE parameters
+}ECDHE_server_key;
 
 typedef struct{
     
@@ -60,4 +64,4 @@ void serialize_client_key_exchange(client_key_exchange *client_key_exchange, uns
 
 void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message);
 
-void free_DH_server_key_exchange(DH_server_key_exchange *params);
+void free_DH_server_key_exchange(DHE_server_key *params);
