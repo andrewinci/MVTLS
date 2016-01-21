@@ -144,7 +144,6 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
         //ServerHello
         //extract cipher suite
         uint16_t cipher_id = 0;
-        result->cipher_suites = malloc(sizeof(cipher_suite_t));
         memcpy(&cipher_id, stream, 2); // only one cipher suite has to be in the message
         cipher_id = REV16(cipher_id);
 

@@ -51,7 +51,8 @@ handshake * make_certificate(TLS_parameters *TLS_param){
     
 	// Make and send Certificate
 	certificate_message *cert_message = make_certificate_message("../certificates/server.pem");
-	
+	TLS_param->server_certificate = cert_message->X509_certificate;
+    TLS_param->server_certificate->references+=1;
 	handshake *certificate_h = malloc(sizeof(handshake));
 	certificate_h->type = CERTIFICATE;
 	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
@@ -124,7 +125,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         //save private DH key
         TLS_param->private_key = BN_new();
         BN_copy(TLS_param->private_key, privkey->priv_key);
-        
+        DH_free(privkey);
         return server_key_ex_h;
     }
     else if( kx == ECDHE_RSA_KX){
