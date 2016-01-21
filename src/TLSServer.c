@@ -21,12 +21,14 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	server_hello->TLS_version = TLS1_2;
 	
 	// Choose a cipher suite
-	free(server_hello->cipher_suites.cipher_id);
-	server_hello->cipher_suites.length = 0x02;
-	server_hello->cipher_suites.cipher_id = malloc(2);
-	int choosen_suite = rand()%4; //specify the number of supported cipher suite
-	*(server_hello->cipher_suites.cipher_id) = client_hello->cipher_suites.cipher_id[choosen_suite];
-	TLS_param->cipher_suite = *(server_hello->cipher_suites.cipher_id);
+    server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
+    srand(time(NULL));
+	int choosen_suite = rand()%(client_hello->cipher_suite_len/2); //specify the number of supported cipher suite
+    
+    memcpy(server_hello->cipher_suites, &(client_hello->cipher_suites[choosen_suite]), sizeof(cipher_suite_t));
+    
+    // Set cipher suite in global param
+    TLS_param->cipher_suite = client_hello->cipher_suites[choosen_suite];
 
 	// Copy server's random
 	memcpy(TLS_param->server_random,&(server_hello->random.UNIX_time), 4);
@@ -61,7 +63,7 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 
 handshake * make_server_key_exchange(TLS_parameters *TLS_param){
     
-    uint16_t kx = get_kx_algorithm(TLS_param->cipher_suite);
+    uint16_t kx = TLS_param->cipher_suite.kx;
     if(kx == DHE_RSA_KX){
         //DH servervkey exchange
         //generate ephemeral diffie helman parameters

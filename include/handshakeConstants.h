@@ -62,19 +62,13 @@ typedef enum{
 }channel_mode;
 #endif
 
+cipher_suite_t get_cipher_suite(uint16_t id);
 
-extern cipher_suite_t cipher_suite_list[];
-extern int cipher_suite_len;
 /*
  * Starting from cipher suite id retrieve the hash function
  * to be used in PRF
  */
-const EVP_MD *get_hash_function(uint16_t cipher_suite_Id);
-
-/*
- * Starting form cipher suite id retrieve the key excahnge alghoritm
- */
-key_exchange_algorithm get_kx_algorithm(uint16_t cipher_suite_Id);
+const EVP_MD *get_hash_function(hash_algorithm h);
 
 /*
  * Record Version

@@ -30,12 +30,50 @@ void backup_handshake(TLS_parameters *TLS_param, handshake *h){
 
 handshake * make_client_hello(unsigned char *client_random){
 	//make client hello without session
-	session_id *session= malloc(sizeof(session_id));
+	session_id *session= malloc(sizeof(session_id));    
 	session->session_lenght =0x00;
 	session->session_id = NULL;
 	handshake_hello *client_hello = make_hello(*session);
 	client_hello->TLS_version = TLS1_2;
-	
+    
+    //add ciphersuites
+    int supported = 29;
+    client_hello->cipher_suite_len = supported*2;
+    client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
+    uint16_t supported_id[] = {
+        0x0014,
+        0x0015,
+        0x0016,
+        0x0033,
+        0x0039,
+        0x0045,
+        0x0067,
+        0x006B,
+        0x0088,
+        0x009A,
+        0x009E,
+        0x009F,
+        0x0001,
+        0x0002,
+        0x0004,
+        0x0005,
+        0x0007,
+        0x0009,
+        0x000A,
+        0x002F,
+        0x0035,
+        0x003B,
+        0x003C,
+        0x003D,
+        0x0041,
+        0x0084,
+        0x0096,
+        0x009C,
+        0x009D
+    };
+    for(int i=0;i<supported;i++)
+        client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
+
 	//make handshake
 	handshake *client_hello_h = malloc(sizeof(handshake));
 	client_hello_h->type = CLIENT_HELLO;
@@ -69,7 +107,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         memcpy(seed, TLS_param->client_random, 32);
         memcpy(seed+32, TLS_param->server_random, 32);
         
-        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
         TLS_param->master_secret_len = 48;
         
         //compute and set pre master key
@@ -136,7 +174,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         memcpy(seed, TLS_param->client_random, 32);
         memcpy(seed+32, TLS_param->server_random, 32);
         
-        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
         TLS_param->master_secret_len = 48;
         
         //compute and set pre master key
@@ -177,7 +215,7 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) {
 	//make finished handshake
 	handshake *finished_h = malloc(sizeof(handshake));
 	finished_h->type = FINISHED;
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
 	
 	//compute hash of handshake messages
 	unsigned char md_value[EVP_MAX_MD_SIZE];
@@ -194,25 +232,4 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) {
 	finished_h->length = finished_message_len;
 	finished_h->message = finished_message;
 	return finished_h;
-}
-
-cipher_suite_t * get_supported_cipher_suites(){
-    int nSupported = 10;
-    cipher_suite_t defaultCipherSuites;
-    defaultCipherSuites.length = nSupported*2;
-    defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
-    uint16_t supported[] = {
-        //DHE
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        //RSA
-        TLS_RSA_WITH_NULL_MD5,
-        TLS_RSA_WITH_3DES_EDE_CBC_SHA,
-        TLS_RSA_WITH_AES_128_GCM_SHA256,
-        TLS_RSA_WITH_AES_256_GCM_SHA384
-    };
-    memcpy(defaultCipherSuites.cipher_id, supported, nSupported*2);
-    return defaultCipherSuites;
 }

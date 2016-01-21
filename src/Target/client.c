@@ -41,11 +41,6 @@ int main() {
 	
 	free(client2server);
     
-    //print details about the connection
-    printf("\nCipher suite: %04X",TLS_param.cipher_suite);
-    printf("\nMaster key: \n");
-    for(int i=0;i<TLS_param.master_secret_len;i++)
-        printf("%02X ",TLS_param.master_secret[i]);
     
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
@@ -87,14 +82,14 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					print_handshake(h);
 					
 					// Extract data for next steps
-					TLS_param.cipher_suite = *(server_hello->cipher_suites.cipher_id);
+                    TLS_param.cipher_suite = *server_hello->cipher_suites;
 					TLS_param.tls_version = server_hello->TLS_version;
 					
 					// Backup server random
 					memcpy(TLS_param.server_random,&(server_hello->random.UNIX_time), 4);
 					memcpy(TLS_param.server_random+4, server_hello->random.random_bytes, 28);
 					
-					printf("\nCipher suite :%04x\n",TLS_param.cipher_suite);
+					printf("\nCipher suite :%s\n",TLS_param.cipher_suite.name);
 					print_random();
 					
 					free_hello(server_hello);
@@ -114,8 +109,8 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
                     TLS_param.server_certificate = certificate_m->X509_certificate;
                     TLS_param.server_certificate->references+=1;
-
-					printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
+                    
+                    printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
 
 					free_certificate_message(certificate_m);
 				}
@@ -127,7 +122,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					TLS_param.previous_state = SERVER_KEY_EXCHANGE;
 					
 					//save the server key exchange parameters
-					TLS_param.server_key_ex = deserialize_server_key_exchange(h->length, h->message, get_kx_algorithm(TLS_param.cipher_suite));
+					TLS_param.server_key_ex = deserialize_server_key_exchange(h->length, h->message, TLS_param.cipher_suite.kx);
 				}
 				break;
 				
@@ -139,8 +134,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					print_handshake(h);
 					
 					//make Client Key Exchange Message
-					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-                    handshake * client_key_exchange = make_client_key_exchange(&TLS_param, kx);
+                    handshake * client_key_exchange = make_client_key_exchange(&TLS_param, TLS_param.cipher_suite.kx);
                     backup_handshake(&TLS_param, client_key_exchange);
                     send_handshake(client2server, client_key_exchange);
                     printf("\n>>> Client Key Exchange\n");

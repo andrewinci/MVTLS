@@ -32,6 +32,14 @@ int main() {
 	// Start channel and listener for new messages
 	start_listener(server2client);
 	wait_channel(server2client);
+    
+    //print details about the connection
+    printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
+    printf("\nMaster key: \n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02X ",TLS_param.master_secret[i]);
+
+    
 	free(TLS_param.server_certificate);
 	free(server2client);
 	//free openssl resources
@@ -83,7 +91,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					// Backup ServerHello
 					backup_handshake(&TLS_param, server_hello);
 					
-					printf("\nCipher suite: %04x\n",TLS_param.cipher_suite);
+					printf("\nCipher suite: %s\n",TLS_param.cipher_suite.name);
 					print_random();
 
 					free_handshake(server_hello);
@@ -98,9 +106,8 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					free_handshake(certificate);
 
 					// ToDo FIX THIS MESS
-					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-					
-                    if(kx == DHE_RSA_KX){
+
+                    if(TLS_param.cipher_suite.kx == DHE_RSA_KX){
 
 						//DHE_DSS DHE_RSA DH_anon
 						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
@@ -130,13 +137,12 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                     backup_handshake(&TLS_param, h);
 					// ToDo FIX THIS TOO
 					printf("\n<<< Client Key Exchange\n");
-					key_exchange_algorithm kx = get_kx_algorithm(TLS_param.cipher_suite);
-                    if(kx == RSA_KX){
+                    if(TLS_param.cipher_suite.kx == RSA_KX){
                         print_handshake(h);
                         client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_RSA(client_key_exchange);
                     }
-                    else if(kx == DHE_RSA_KX){
+                    else if(TLS_param.cipher_suite.kx == DHE_RSA_KX){
                         client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_DH(cliet_public);
                     }
@@ -199,7 +205,7 @@ void print_master_secret() {
     for(int i=0;i<TLS_param.master_secret_len;i++)
         printf("%02x ",TLS_param.master_secret[i]);
     printf("\n");
-}
+    }
 
 void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     //get private key from file
@@ -228,7 +234,7 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     memcpy(seed, TLS_param.client_random, 32);
     memcpy(seed+32, TLS_param.server_random, 32);
     
-    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
+    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite.hash);
     TLS_param.master_secret_len = 48;
     PRF(hash_function, pre_master_key, 48, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     RSA_free(privateKey);
@@ -257,7 +263,7 @@ void compute_set_master_key_DH(client_key_exchange *cliet_public){
     memcpy(seed, TLS_param.client_random, 32);
     memcpy(seed+32, TLS_param.server_random, 32);
     
-    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite);
+    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite.hash);
     TLS_param.master_secret_len = 48;
     PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     

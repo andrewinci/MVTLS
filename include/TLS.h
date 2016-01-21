@@ -9,6 +9,7 @@
 #ifndef TLS_h
 #define TLS_h
 #include <stdio.h>
+#include <time.h>
 #include "ServerClientHandshakeProtocol.h"
 #include "ServerClientRecordProtocol.h"
 #include "Crypto.h"

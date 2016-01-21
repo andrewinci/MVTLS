@@ -81,8 +81,8 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     else{
         //ClientHello
         uint16_t cipher_suite_len = REV16(hello->cipher_suite_len);
-        memcpy(buff, &cipher_suite_len, 1);
-        buff++;
+        memcpy(buff, &cipher_suite_len, 2);
+        buff+=2;
         uint16_t temp;
         for(int i=0;i<hello->cipher_suite_len/2;i++){
             temp = REV16(hello->cipher_suites[i].cipher_id);
@@ -147,32 +147,30 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
         result->cipher_suites = malloc(sizeof(cipher_suite_t));
         memcpy(&cipher_id, stream, 2); // only one cipher suite has to be in the message
         cipher_id = REV16(cipher_id);
-        //search cipher suite
-        int i = 0;
-        for(;cipher_suite_list[i].cipher_id == cipher_id && i<cipher_suite_len;i++);
+
         result->cipher_suites = malloc(sizeof(cipher_suite_t));
-        memcpy(result->cipher_suites, cipher_suite_list+i, sizeof(cipher_suite_t));
+        cipher_suite_t temp = get_cipher_suite(cipher_id);
+        memcpy(result->cipher_suites, &temp, sizeof(cipher_suite_t));
         *stream+=2;
         result->cipher_suite_len = 2;
     }
     else{
         //ClientHello
-        int len = 0;
-        memcpy(&len, stream, 2);
-        len = REV16(len);
-        result->cipher_suite_len = len;
+        uint16_t ciphers_len = 0;
+        memcpy(&ciphers_len, stream, 2);
+        ciphers_len = REV16(ciphers_len);
+        result->cipher_suite_len = ciphers_len;
         stream+=2;
-        result->cipher_suites = malloc((len/2)*sizeof(cipher_suite_t));
+        result->cipher_suites = malloc((ciphers_len/2)*sizeof(cipher_suite_t));
         
-        for(int i=0;i<len/2;i++){
+        for(int i=0;i<ciphers_len/2;i++){
             uint16_t cipher_id = 0;
             memcpy(&cipher_id, stream, 2);
             cipher_id = REV16(cipher_id);
+            
             //getting cipher_suite for each id
-            int j = 0;
-            for(;cipher_suite_list[j].cipher_id == cipher_id && j<cipher_suite_len;j++);
-
-            memcpy(result->cipher_suites+i, cipher_suite_list+j, sizeof(cipher_suite_t));
+            cipher_suite_t temp = get_cipher_suite(cipher_id);
+            memcpy(result->cipher_suites+i, &temp, sizeof(cipher_suite_t));
             stream+=2;
         }
     }

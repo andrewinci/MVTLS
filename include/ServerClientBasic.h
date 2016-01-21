@@ -35,7 +35,7 @@
 
 #endif
 
-#define DELAY_TIME 5000
+#define DELAY_TIME 50
 
 // operation mode
 #ifndef enum_mode
