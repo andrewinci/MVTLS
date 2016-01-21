@@ -35,7 +35,7 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
     free(seed_p);
 }
 
-int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
+int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key *server_key_ex) {
     
     //extract p g pubkey
     int p_len;
@@ -107,7 +107,7 @@ int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random
     return result;
 }
 
-int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_random, DH_server_key_exchange *server_key_ex) {
+int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, DHE_server_key *server_key_ex) {
     
     //extract p g pubkey
     int p_len;
