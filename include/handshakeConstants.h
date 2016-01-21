@@ -18,6 +18,40 @@
 #define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
 #define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
 
+//Cipher ID 	 Name 	 Kx 	 Au 	 Bits 	 Mac
+typedef enum{
+    RSA_KX = 1,
+    DHE_RSA_KX = 2,
+    ECDHE_RSA_KX = 3
+}key_exchange_algorithm;
+
+typedef enum{
+    RSA_AU = 1,
+    DSS_AU = 2,
+    ECDSA_AU = 3
+}authentication_algorithm;
+
+typedef enum
+{
+    none = 0,
+    md5 = 1,
+    sha1 = 2,
+    sha224 = 3,
+    sha256 = 4,
+    sha384 = 5,
+    sha512 = 6
+}hash_algorithm;
+
+typedef struct{
+    uint16_t cipher_id;
+    char *name;
+    key_exchange_algorithm kx;
+    authentication_algorithm au;
+    uint16_t key_size;
+    hash_algorithm hash;
+    
+}cipher_suite_t;
+
 #endif
 
 #ifndef channel_mode_enum
@@ -28,39 +62,9 @@ typedef enum{
 }channel_mode;
 #endif
 
-/*
- * Key exchange algoritm
- */
-#ifndef key_exchange_algorithm_enum
-#define key_exchange_algorithm_enum
-typedef enum{
-    RSA_KX = 1,
-    DHE_RSA_KX = 2,
-    ECDHE_RSA_KX = 3
-}key_exchange_algorithm;
-#endif
 
-//typedef enum
-//{
-//    none = 0,
-//    md5 = 1,
-//    sha1 = 2,
-//    sha224 = 3,
-//    sha256 = 4,
-//    sha384 = 5,
-//    sha512 = 6
-//}
-//HashAlgorithm;
-//
-//typedef enum
-//{
-//    anonymous = 0,
-//    sig_rsa = 1,
-//    sig_dsa = 2,
-//    sig_ecdsa = 3
-//}
-//SignatureAlgorithm;
-
+extern cipher_suite_t cipher_suite_list[];
+extern int cipher_suite_len;
 /*
  * Starting from cipher suite id retrieve the hash function
  * to be used in PRF
@@ -156,6 +160,3 @@ enum {
     
 };
 #endif
-
-
-

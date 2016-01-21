@@ -195,3 +195,24 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) {
 	finished_h->message = finished_message;
 	return finished_h;
 }
+
+cipher_suite_t * get_supported_cipher_suites(){
+    int nSupported = 10;
+    cipher_suite_t defaultCipherSuites;
+    defaultCipherSuites.length = nSupported*2;
+    defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
+    uint16_t supported[] = {
+        //DHE
+        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
+        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
+        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
+        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
+        //RSA
+        TLS_RSA_WITH_NULL_MD5,
+        TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+        TLS_RSA_WITH_AES_128_GCM_SHA256,
+        TLS_RSA_WITH_AES_256_GCM_SHA384
+    };
+    memcpy(defaultCipherSuites.cipher_id, supported, nSupported*2);
+    return defaultCipherSuites;
+}

@@ -24,7 +24,7 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	free(server_hello->cipher_suites.cipher_id);
 	server_hello->cipher_suites.length = 0x02;
 	server_hello->cipher_suites.cipher_id = malloc(2);
-	int choosen_suite = rand()%8; //specify the number of supported cipher suite
+	int choosen_suite = rand()%4; //specify the number of supported cipher suite
 	*(server_hello->cipher_suites.cipher_id) = client_hello->cipher_suites.cipher_id[choosen_suite];
 	TLS_param->cipher_suite = *(server_hello->cipher_suites.cipher_id);
 
@@ -46,6 +46,7 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 }
 
 handshake * make_certificate(TLS_parameters *TLS_param){
+    
 	// Make and send Certificate
 	certificate_message *cert_message = make_certificate_message("../certificates/server.pem");
 	
@@ -131,7 +132,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         int *secret_len;
         
         /* Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve */
-        if(NULL == (key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1))){
+        if(NULL == (key = EC_KEY_new_by_curve_name( NID_secp256k1))){
             printf("\nError setting  EC parameters\n");
         }
         
@@ -139,7 +140,15 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         if(1 != EC_KEY_generate_key(key)){
             printf("\nError in generate EC keys\n");
         }
-        
+       // int message_len = i2d_ECParameters(key, NULL);
+        unsigned char *message = NULL;
+
+        int message_len = i2o_ECPublicKey(key, &message);
+        printf("\nECC message\n");
+        printf("%s",message);
+        for(int i = 0;i<message_len;i++)
+            printf("%s",message);
+        printf("\n");
         /* Get the peer's public key, and provide the peer with our public key -
          * how this is done will be specific to your circumstances */
         //peerkey = get_peerkey_low(key);

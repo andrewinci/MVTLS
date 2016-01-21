@@ -12,27 +12,6 @@
 #include "ServerClientHello.h"
 #endif
 
-cipher_suites get_supported_cipher_suites(){
-    int nSupported = 10;
-    cipher_suites defaultCipherSuites;
-    defaultCipherSuites.length = nSupported*2;
-    defaultCipherSuites.cipher_id = malloc(nSupported*sizeof(uint16_t));
-    uint16_t supported[] = {
-        //DHE
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,
-        //RSA
-        TLS_RSA_WITH_NULL_MD5,
-        TLS_RSA_WITH_3DES_EDE_CBC_SHA,
-        TLS_RSA_WITH_AES_128_GCM_SHA256,
-        TLS_RSA_WITH_AES_256_GCM_SHA384
-    };
-    memcpy(defaultCipherSuites.cipher_id, supported, nSupported*2);
-    return defaultCipherSuites;
-}
-
 handshake_hello *make_hello(session_id session){
     
     handshake_hello *hello = malloc(sizeof(handshake_hello));
@@ -52,7 +31,7 @@ handshake_hello *make_hello(session_id session){
 	
     hello->session_id = session;
     
-    hello->cipher_suites = get_supported_cipher_suites();
+    //hello->cipher_suites = get_supported_cipher_suites();
     
     return hello;
 }
@@ -61,7 +40,7 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     
     //compute the lenght
     if(mode == CLIENT_MODE)
-        *streamLen = 2 + hello->cipher_suites.length + 2 + hello->compression_methods.length + 1 + 32 + hello->session_id.session_lenght + 1;
+        *streamLen = 2 + hello->cipher_suite_len + 2 + hello->compression_methods.length + 1 + 32 + hello->session_id.session_lenght + 1;
     else
         *streamLen = 2 + 2 + 1 + 32 + hello->session_id.session_lenght + 1;
 
@@ -95,18 +74,18 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     //serialize cipher suite
     if(mode == SERVER_MODE){
         //ServerHello
-        uint16_t cipher_id =REV16(*(hello->cipher_suites.cipher_id));
+        uint16_t cipher_id = REV16(hello->cipher_suites[0].cipher_id);
         memcpy(buff, &cipher_id, 2); // only one cipher suite has to be in the message
         buff+=2;
     }
     else{
-        uint16_t *cipher_ids = hello->cipher_suites.cipher_id;
         //ClientHello
-        memcpy(buff, &hello->cipher_suites.length, 1);
+        uint16_t cipher_suite_len = REV16(hello->cipher_suite_len);
+        memcpy(buff, &cipher_suite_len, 1);
         buff++;
         uint16_t temp;
-        for(int i=0;i<hello->cipher_suites.length/2;i++){
-            temp = REV16(*(cipher_ids+i));
+        for(int i=0;i<hello->cipher_suite_len/2;i++){
+            temp = REV16(hello->cipher_suites[i].cipher_id);
             memcpy(buff, &temp, 2);
             buff+=2;
         }
@@ -161,29 +140,42 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     
     result -> session_id = session;
     
-    //deserialize cipher suite
-    cipher_suites csuite;
-    
     if(mode == SERVER_MODE){
         //ServerHello
-        csuite.cipher_id = malloc(2);
-        memcpy(csuite.cipher_id, stream, 2); // only one cipher suite has to be in the message
-        *csuite.cipher_id = REV16(*csuite.cipher_id);
+        //extract cipher suite
+        uint16_t cipher_id = 0;
+        result->cipher_suites = malloc(sizeof(cipher_suite_t));
+        memcpy(&cipher_id, stream, 2); // only one cipher suite has to be in the message
+        cipher_id = REV16(cipher_id);
+        //search cipher suite
+        int i = 0;
+        for(;cipher_suite_list[i].cipher_id == cipher_id && i<cipher_suite_len;i++);
+        result->cipher_suites = malloc(sizeof(cipher_suite_t));
+        memcpy(result->cipher_suites, cipher_suite_list+i, sizeof(cipher_suite_t));
         *stream+=2;
-        csuite.length = 2;
+        result->cipher_suite_len = 2;
     }
     else{
         //ClientHello
-        csuite.length = *stream;
-        stream++;
-        csuite.cipher_id = malloc(sizeof(uint16_t)*csuite.length);
-        for(int i=0;i<csuite.length/2;i++){
-            memcpy(csuite.cipher_id+i, stream, 2);
-            *(csuite.cipher_id+i) = REV16(*(csuite.cipher_id+i));
+        int len = 0;
+        memcpy(&len, stream, 2);
+        len = REV16(len);
+        result->cipher_suite_len = len;
+        stream+=2;
+        result->cipher_suites = malloc((len/2)*sizeof(cipher_suite_t));
+        
+        for(int i=0;i<len/2;i++){
+            uint16_t cipher_id = 0;
+            memcpy(&cipher_id, stream, 2);
+            cipher_id = REV16(cipher_id);
+            //getting cipher_suite for each id
+            int j = 0;
+            for(;cipher_suite_list[j].cipher_id == cipher_id && j<cipher_suite_len;j++);
+
+            memcpy(result->cipher_suites+i, cipher_suite_list+j, sizeof(cipher_suite_t));
             stream+=2;
         }
     }
-    result->cipher_suites = csuite;
     
     //deserialize compression
     compression_methods cmethods;
@@ -198,30 +190,30 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     return result;
 }
 
-void print_hello(handshake_hello *h){
-    printf("\n****Client/Server hello***\n");
-    printf("Version : %d\n",h->TLS_version);
-    printf("**Random**\n");
-    printf("UNIX time stamp : %d\n", h->random.UNIX_time);
-    printf("Random bytes (28): ");
-    for(int i=0;i<28;i++)
-        printf("%02x ",*(h->random.random_bytes+i));
-    printf("\n**Session**\n");
-    printf("Length : %d\n",h->session_id.session_lenght);
-    printf("Session id : ");
-    for(int i=0; i<h->session_id.session_lenght;i++)
-        printf("%02x ",*(h->session_id.session_id+i));
-
-    printf("\n**Cipher suite**\n");
-    printf("Length : %d\n", h->cipher_suites.length);
-    printf("Cipher suites :\n");
-    for(int i=0;i<h->cipher_suites.length/2;i++)
-        printf("%04x\n",*(h->cipher_suites.cipher_id+i));
-    printf("no compression(not yet implemented)\n");
-}
+//void print_hello(handshake_hello *h){
+//    printf("\n****Client/Server hello***\n");
+//    printf("Version : %d\n",h->TLS_version);
+//    printf("**Random**\n");
+//    printf("UNIX time stamp : %d\n", h->random.UNIX_time);
+//    printf("Random bytes (28): ");
+//    for(int i=0;i<28;i++)
+//        printf("%02x ",*(h->random.random_bytes+i));
+//    printf("\n**Session**\n");
+//    printf("Length : %d\n",h->session_id.session_lenght);
+//    printf("Session id : ");
+//    for(int i=0; i<h->session_id.session_lenght;i++)
+//        printf("%02x ",*(h->session_id.session_id+i));
+//
+//    printf("\n**Cipher suite**\n");
+//    printf("Length : %d\n", h->cipher_suites.length);
+//    printf("Cipher suites :\n");
+//    for(int i=0;i<h->cipher_suites.length/2;i++)
+//        printf("%04x\n",*(h->cipher_suites.cipher_id+i));
+//    printf("no compression(not yet implemented)\n");
+//}
 
 void free_hello(handshake_hello *h){
-    free(h->cipher_suites.cipher_id);
+    free(h->cipher_suites);
     free(h->session_id.session_id);
     free(h);
 }
