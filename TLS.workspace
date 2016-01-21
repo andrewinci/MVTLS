@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="AdvancedProgramming" Database="">
+  <Project Name="TLSServer" Path="TLSServer.project" Active="No"/>
+  <Project Name="TLSClient" Path="TLSClient.project" Active="Yes"/>
+  <Project Name="TLSClient" Path="TLSClient.project" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="TLSServer" ConfigName="Debug"/>
+      <Project Name="TLSClient" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="AdvancedProgramming" ConfigName="Debug"/>
+      <Project Name="AdvancedProgramming" ConfigName="Debug"/>
+      <Project Name="TLSServer" ConfigName="Release"/>
+      <Project Name="TLSClient" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
