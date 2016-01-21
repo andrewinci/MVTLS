@@ -3,8 +3,5 @@ build/
 xcodeIntermediates/
 xcodeProduct/
 .codelite/
-AdvancedProgramming.mk
-AdvancedProgramming.project
-AdvancedProgramming.workspace
 TLSProject/
 DHtest/

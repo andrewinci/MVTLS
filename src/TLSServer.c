@@ -81,7 +81,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 		exit(-1);
 	}
 
-	// Insert server_key_ex  into handshake
+	// Insert server_key_ex into handshake
 	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, kx);
 
 	// Save parameters
