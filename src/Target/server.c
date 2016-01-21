@@ -34,14 +34,18 @@ int main() {
 	wait_channel(server2client);
     
     //print details about the connection
+    print_random();
+    printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
     printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
     printf("\nMaster key: \n");
     for(int i=0;i<TLS_param.master_secret_len;i++)
         printf("%02X ",TLS_param.master_secret[i]);
 
-    
+    free(TLS_param.master_secret);
+	free(TLS_param.handshake_messages);
 	free(TLS_param.server_certificate);
 	free(server2client);
+	X509_free(TLS_param.server_certificate);
 	//free openssl resources
 	CRYPTO_cleanup_all_ex_data();
 }
@@ -90,9 +94,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					
 					// Backup ServerHello
 					backup_handshake(&TLS_param, server_hello);
-					
-					printf("\nCipher suite: %s\n",TLS_param.cipher_suite.name);
-					print_random();
 
 					free_handshake(server_hello);
 					free_hello(client_hello);
@@ -146,8 +147,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                         client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_DH(cliet_public);
                     }
-						
-					print_master_secret();
+
 				}
 				break;
 			
@@ -174,9 +174,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					print_handshake(finished);
 					free_handshake(finished);
 					
-					// Free global variables and close the channel
-					free(TLS_param.master_secret);
-					free(TLS_param.handshake_messages);
 					stop_channel(server2client);
 				}
 				break;

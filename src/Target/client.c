@@ -38,10 +38,17 @@ int main() {
 	// Start channel and listener for new messages
 	start_listener(client2server);
 	wait_channel(client2server);
-	
+
+	//print details about the connection
+	print_random();
+	printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
+    printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
+    printf("\nMaster key: \n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02X ",TLS_param.master_secret[i]);
+
 	free(client2server);
-    
-    
+
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
@@ -89,9 +96,6 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					memcpy(TLS_param.server_random,&(server_hello->random.UNIX_time), 4);
 					memcpy(TLS_param.server_random+4, server_hello->random.random_bytes, 28);
 					
-					printf("\nCipher suite :%s\n",TLS_param.cipher_suite.name);
-					print_random();
-					
 					free_hello(server_hello);
 				}
 				break;
@@ -110,8 +114,6 @@ void onPacketReceive(channel *client2server, packet_basic *p){
                     TLS_param.server_certificate = certificate_m->X509_certificate;
                     TLS_param.server_certificate->references+=1;
                     
-                    printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
-
 					free_certificate_message(certificate_m);
 				}
 				break;
@@ -140,11 +142,8 @@ void onPacketReceive(channel *client2server, packet_basic *p){
                     printf("\n>>> Client Key Exchange\n");
                     print_handshake(client_key_exchange);
                     free_handshake(client_key_exchange);
-                    
-                    //send_RSA_client_key_exchange(client2server, &TLS_param);
-                    print_master_secret();
 
-					
+
 					printf("\n>>> Change cipher spec\n");
 					record* change_cipher_spec = make_change_cipher_spec();
 					send_record(client2server, change_cipher_spec);
