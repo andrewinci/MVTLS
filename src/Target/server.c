@@ -43,7 +43,6 @@ int main() {
 
     free(TLS_param.master_secret);
 	free(TLS_param.handshake_messages);
-	free(TLS_param.server_certificate);
 	free(server2client);
 	X509_free(TLS_param.server_certificate);
 	//free openssl resources
@@ -108,7 +107,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// ToDo FIX THIS MESS
 
-                    if(TLS_param.cipher_suite.kx == DHE_RSA_KX){
+                    if(TLS_param.cipher_suite.kx == DHE_KX){
 
 						//DHE_DSS DHE_RSA DH_anon
 						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
@@ -143,7 +142,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                         client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_RSA(client_key_exchange);
                     }
-                    else if(TLS_param.cipher_suite.kx == DHE_RSA_KX){
+                    else if(TLS_param.cipher_suite.kx == DHE_KX){
                         client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_DH(cliet_public);
                     }

@@ -14,7 +14,7 @@
 
 void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
     
-    if(kx == DHE_RSA_KX){
+    if(kx == DHE_KX){
     
         DH_server_key_exchange *dh_server_key_ex = (DH_server_key_exchange*)server_key_exchange;
         unsigned char *buf;
@@ -59,7 +59,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
 }
 
 void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
-    if(kx == DHE_RSA_KX){
+    if(kx == DHE_KX){
         DH_server_key_exchange *dh_server_key_ex = malloc(sizeof(DH_server_key_exchange));
         uint16_t len;
         memcpy(&len, message, 2);

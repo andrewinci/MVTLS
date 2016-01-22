@@ -37,39 +37,12 @@ handshake * make_client_hello(unsigned char *client_random){
 	client_hello->TLS_version = TLS1_2;
     
     //add ciphersuites
-    int supported = 29;
+    int supported = 2;
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
         0x0014,
         0x0015,
-        0x0016,
-        0x0033,
-        0x0039,
-        0x0045,
-        0x0067,
-        0x006B,
-        0x0088,
-        0x009A,
-        0x009E,
-        0x009F,
-        0x0001,
-        0x0002,
-        0x0004,
-        0x0005,
-        0x0007,
-        0x0009,
-        0x000A,
-        0x002F,
-        0x0035,
-        0x003B,
-        0x003C,
-        0x003D,
-        0x0041,
-        0x0084,
-        0x0096,
-        0x009C,
-        0x009D
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
@@ -146,7 +119,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
 
         return client_key_exchange;
     }
-    else if (key_ex_alg == DHE_RSA_KX){
+    else if (key_ex_alg == DHE_KX){
         DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
@@ -192,6 +165,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         
         serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length);
         
+        DH_free(privkey);
         free(client_key_exchange);
         return client_key_exchange_h;
     }

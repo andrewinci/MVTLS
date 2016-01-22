@@ -65,7 +65,7 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 handshake * make_server_key_exchange(TLS_parameters *TLS_param){
     
     uint16_t kx = TLS_param->cipher_suite.kx;
-    if(kx == DHE_RSA_KX){
+    if(kx == DHE_KX){
         //DH servervkey exchange
         //generate ephemeral diffie helman parameters
         DH *privkey;
@@ -118,7 +118,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         handshake *server_key_ex_h = malloc(sizeof(handshake));
         
         server_key_ex_h->type = SERVER_KEY_EXCHANGE;
-        serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_RSA_KX);
+        serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_KX);
         
         //save parameters for second step
         TLS_param->server_key_ex = server_key_ex;
@@ -128,7 +128,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         DH_free(privkey);
         return server_key_ex_h;
     }
-    else if( kx == ECDHE_RSA_KX){
+    else if( kx == ECDHE_KX){
         EC_KEY *key, *peerkey;
         int field_size;
         unsigned char *secret;
