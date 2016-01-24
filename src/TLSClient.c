@@ -123,7 +123,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
-        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange))
+        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange)==0)
         {
             printf("\nError in server key eschange, signature not valid\n");
             exit(-1);
@@ -166,7 +166,9 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length);
         
         DH_free(privkey);
+        free(client_key_exchange->key);
         free(client_key_exchange);
+        free(pre_master_key);
         return client_key_exchange_h;
     }
     return NULL;

@@ -82,8 +82,11 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
         message+=len;
         memcpy(&(dh_server_key_ex->sign_hash_alg), message, 2);
         message+=2;
+        
         memcpy(&(dh_server_key_ex->signature_length), message, 2);
         message+=2;
+        dh_server_key_ex->signature_length = REV16(dh_server_key_ex->signature_length);
+        
         dh_server_key_ex->signature = malloc(dh_server_key_ex->signature_length);
         memcpy(dh_server_key_ex->signature, message, dh_server_key_ex->signature_length);
         message+=2;
@@ -121,9 +124,14 @@ void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *messa
         return rsa_server_key_ex;
 }
 
-void free_DH_server_key_exchange(DH_server_key_exchange *params){
-    BN_free(params->g);
-    BN_free(params->p);
-    BN_free(params->pubKey);
-    free(params->signature);
+void free_server_key_exchange(void *server_key_ex, cipher_suite_t cipher_suite){
+    if(server_key_ex!=NULL && cipher_suite.kx == DHE_KX){
+        DH_server_key_exchange *params = (DH_server_key_exchange*)server_key_ex;
+        BN_free(params->g);
+        BN_free(params->p);
+        BN_free(params->pubKey);
+        free(params->signature);
+        free(params);
+    }
+        
 }

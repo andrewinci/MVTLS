@@ -24,7 +24,7 @@ int main() {
 	char *channelTo = "Client";
 	channel *server2client = create_channel(fileName, channelFrom, channelTo, SERVER);
 	set_on_receive(server2client, &onPacketReceive);
-	
+
 	TLS_param.previous_state = 0x00;
     //ToDo: load certificate
 	printf("*** TLS server is started ***\n");
@@ -145,6 +145,8 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                     else if(TLS_param.cipher_suite.kx == DHE_KX){
                         client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_DH(cliet_public);
+                        free(cliet_public->key);
+                        free(cliet_public);
                     }
 
 				}
@@ -243,8 +245,9 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
 void compute_set_master_key_DH(client_key_exchange *cliet_public){
     DH *privkey = DH_new();
     DH_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
-    privkey->g = server_key_exchange->g;
-    privkey->p = server_key_exchange->p;
+    
+    privkey->g = BN_dup(server_key_exchange->g);
+    privkey->p = BN_dup(server_key_exchange->p);
     privkey->priv_key = TLS_param.private_key;
     privkey->pub_key = NULL;
     privkey->pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
@@ -263,5 +266,7 @@ void compute_set_master_key_DH(client_key_exchange *cliet_public){
     TLS_param.master_secret_len = 48;
     PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     
-    free_DH_server_key_exchange(TLS_param.server_key_ex);
+    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
+    DH_free(privkey);
+    free(pre_master_key);
 }

@@ -53,7 +53,7 @@ int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random
     
     const EVP_MD *sha1 = EVP_sha1();
     //compute sha1
-    unsigned char sha1_digest[EVP_MAX_MD_SIZE];
+    unsigned char sha1_digest[sha1->md_size];
     unsigned int sha1_len;
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
     EVP_DigestInit_ex(mdctx, sha1, NULL);
@@ -67,7 +67,7 @@ int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random
     
     const EVP_MD *md5 = EVP_md5();
     //compute md5
-    unsigned char md5_digest[EVP_MAX_MD_SIZE];
+    unsigned char md5_digest[md5->md_size];
     unsigned int md5_len;
     mdctx = EVP_MD_CTX_create();
     EVP_DigestInit_ex(mdctx, md5, NULL);
@@ -79,7 +79,10 @@ int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random
     EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
     EVP_MD_CTX_destroy(mdctx);
     
-    
+    //make stream to be encrypted
+    unsigned char *to_enc = malloc(sha1->md_size+md5->md_size);
+    memcpy(to_enc, sha1_digest, sha1->md_size);
+    memcpy(to_enc+sha1->md_size, md5_digest, md5->md_size);
     
     //ToDo : distinguish between rsa and dsa signature
     EVP_PKEY *pubkey = NULL;
@@ -91,15 +94,12 @@ int verify_DH_server_key_ex_sign(X509 *certificate, unsigned char *client_random
     EVP_PKEY_free(pubkey);
     
     //encrypt pre_master_key
-    unsigned char *decrypted_signature = malloc(RSA_size(rsa));
-    RSA_public_decrypt(server_key_ex->signature_length, server_key_ex->signature, decrypted_signature, rsa, RSA_PKCS1_PADDING);
+    int len =sha1->md_size+md5->md_size;
+    int result = RSA_verify(NID_md5_sha1, to_enc, len, server_key_ex->signature, server_key_ex->signature_length, rsa);
+   
     RSA_free(rsa);
-    
-    //verify
-    int result = 1;
-    if ( memcmp( sha1_digest, decrypted_signature, sha1->md_size ) || memcmp( md5_digest, decrypted_signature + sha1->md_size, md5->md_size ) )
-        result = 0;
-    
+    free(to_enc);
+
     free(p);
     free(g);
     free(pubkey_char);
@@ -119,13 +119,13 @@ int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_ra
     g_len = BN_bn2bin(server_key_ex->g, g);
     
     int pubkey_len;
-    unsigned char *pubkey = malloc(BN_num_bytes(server_key_ex->pubKey));
-    pubkey_len = BN_bn2bin(server_key_ex->pubKey, pubkey);
+    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pubKey));
+    pubkey_len = BN_bn2bin(server_key_ex->pubKey, pubkey_char);
     
     
     const EVP_MD *sha1 = EVP_sha1();
     //compute sha1
-    unsigned char sha1_digest[EVP_MAX_MD_SIZE];
+    unsigned char sha1_digest[sha1->md_size];
     unsigned int sha1_len;
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
     EVP_DigestInit_ex(mdctx, sha1, NULL);
@@ -133,13 +133,13 @@ int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_ra
     EVP_DigestUpdate(mdctx, server_random, 32);
     EVP_DigestUpdate(mdctx, p, p_len);
     EVP_DigestUpdate(mdctx, g, g_len);
-    EVP_DigestUpdate(mdctx, pubkey, pubkey_len);
+    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
     EVP_DigestFinal_ex(mdctx, sha1_digest, &sha1_len);
     EVP_MD_CTX_destroy(mdctx);
     
     const EVP_MD *md5 = EVP_md5();
     //compute md5
-    unsigned char md5_digest[EVP_MAX_MD_SIZE];
+    unsigned char md5_digest[md5->md_size];
     unsigned int md5_len;
     mdctx = EVP_MD_CTX_create();
     EVP_DigestInit_ex(mdctx, md5, NULL);
@@ -147,7 +147,7 @@ int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_ra
     EVP_DigestUpdate(mdctx, server_random, 32);
     EVP_DigestUpdate(mdctx, p, p_len);
     EVP_DigestUpdate(mdctx, g, g_len);
-    EVP_DigestUpdate(mdctx, pubkey, pubkey_len);
+    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
     EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
     EVP_MD_CTX_destroy(mdctx);
     
@@ -173,16 +173,19 @@ int sign_DH_server_key_ex(unsigned char *client_random, unsigned char *server_ra
     
     //ToDo : distinguish between rsa and dsa signature
     
-    //alocate memory for signature
+    //allocate memory for signature
     server_key_ex->signature = malloc(RSA_size(privateKey));
-    server_key_ex->signature_length = RSA_private_encrypt(sha1->md_size+md5->md_size, to_enc, server_key_ex->signature, privateKey, RSA_PKCS1_PADDING);
+    int len = sha1->md_size+md5->md_size;
+    
+    int res = RSA_sign(NID_md5_sha1, to_enc, len, server_key_ex->signature, &(server_key_ex->signature_length), privateKey);
+ 
     
     free(p);
     free(g);
-    free(pubkey);
+    free(pubkey_char);
     free(to_enc);
     RSA_free(privateKey);
-    return 1;
+    return res;
 }
 
 

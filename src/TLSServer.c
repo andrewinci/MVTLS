@@ -98,16 +98,11 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         //make server_key_ex packet
         
         DH_server_key_exchange *server_key_ex = malloc(sizeof(DH_server_key_exchange));
-        server_key_ex->g = BN_new();
-        server_key_ex->p = BN_new();
-        server_key_ex->pubKey = BN_new();
+        server_key_ex->g = BN_dup(privkey->g);
+        server_key_ex->p = BN_dup(privkey->p);
+        server_key_ex->pubKey = BN_dup(privkey->pub_key);
         //copy DH params in the message struct
-        if(BN_copy(server_key_ex->g, privkey->g)==NULL)
-            printf("\nError in copy DH parameters\n");
-        if(BN_copy(server_key_ex->p, privkey->p)==NULL)
-            printf("\nError in copy DH parameters\n");
-        if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
-            printf("\nError in copy DH parameters\n");
+     
         
         server_key_ex->sign_hash_alg = 0x0106; //already rot
         

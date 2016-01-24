@@ -17,13 +17,14 @@ void print_random();
 TLS_parameters TLS_param;
 
 int main() {
+    TLS_param.handshake_messages = NULL;
 	// Setup the channel
 	char *fileName = "SSLchannel.txt";
 	char *channelFrom = "Client";
 	char *channelTo = "Server";
 	channel *client2server = create_channel(fileName, channelFrom, channelTo, CLIENT);
 	set_on_receive(client2server, &onPacketReceive);
-	
+
 	TLS_param.previous_state = 0x0000;
 	printf("*** TLS client is started ***\n\n");
 	
@@ -52,6 +53,10 @@ int main() {
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
+
+    // ToDo: make only function for free all server key exchange taking the ciphersuite id and the struct to free
+    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
+    
     //free openssl resources
     CRYPTO_cleanup_all_ex_data();
 }
