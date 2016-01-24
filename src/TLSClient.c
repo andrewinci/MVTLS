@@ -30,12 +30,23 @@ void backup_handshake(TLS_parameters *TLS_param, handshake *h){
 
 handshake * make_client_hello(unsigned char *client_random){
 	//make client hello without session
-	session_id *session= malloc(sizeof(session_id));
+	session_id *session= malloc(sizeof(session_id));    
 	session->session_lenght =0x00;
 	session->session_id = NULL;
 	handshake_hello *client_hello = make_hello(*session);
 	client_hello->TLS_version = TLS1_2;
-	
+    
+    //add ciphersuites
+    int supported = 2;
+    client_hello->cipher_suite_len = supported*2;
+    client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
+    uint16_t supported_id[] = {
+        0x0014,
+        0x0015,
+    };
+    for(int i=0;i<supported;i++)
+        client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
+
 	//make handshake
 	handshake *client_hello_h = malloc(sizeof(handshake));
 	client_hello_h->type = CLIENT_HELLO;
@@ -69,7 +80,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         memcpy(seed, TLS_param->client_random, 32);
         memcpy(seed+32, TLS_param->server_random, 32);
         
-        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
         TLS_param->master_secret_len = 48;
         
         //compute and set pre master key
@@ -108,11 +119,11 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
 
         return client_key_exchange;
     }
-    else if (key_ex_alg == DHE_RSA_KX){
+    else if (key_ex_alg == DHE_KX){
         DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
-        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange))
+        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange)==0)
         {
             printf("\nError in server key eschange, signature not valid\n");
             exit(-1);
@@ -136,7 +147,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         memcpy(seed, TLS_param->client_random, 32);
         memcpy(seed+32, TLS_param->server_random, 32);
         
-        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
         TLS_param->master_secret_len = 48;
         
         //compute and set pre master key
@@ -154,7 +165,10 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         
         serialize_client_key_exchange(client_key_exchange, &client_key_exchange_h->message, &client_key_exchange_h->length);
         
+        DH_free(privkey);
+        free(client_key_exchange->key);
         free(client_key_exchange);
+        free(pre_master_key);
         return client_key_exchange_h;
     }
     return NULL;
@@ -177,7 +191,7 @@ handshake * make_finished_message(TLS_parameters *TLS_param ) {
 	//make finished handshake
 	handshake *finished_h = malloc(sizeof(handshake));
 	finished_h->type = FINISHED;
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite);
+	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
 	
 	//compute hash of handshake messages
 	unsigned char md_value[EVP_MAX_MD_SIZE];

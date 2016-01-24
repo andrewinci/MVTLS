@@ -21,12 +21,14 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	server_hello->TLS_version = TLS1_2;
 	
 	// Choose a cipher suite
-	free(server_hello->cipher_suites.cipher_id);
-	server_hello->cipher_suites.length = 0x02;
-	server_hello->cipher_suites.cipher_id = malloc(2);
-	int choosen_suite = rand()%8; //specify the number of supported cipher suite
-	*(server_hello->cipher_suites.cipher_id) = client_hello->cipher_suites.cipher_id[choosen_suite];
-	TLS_param->cipher_suite = *(server_hello->cipher_suites.cipher_id);
+    server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
+    srand(time(NULL));
+	int choosen_suite = rand()%(client_hello->cipher_suite_len/2); //specify the number of supported cipher suite
+    
+    memcpy(server_hello->cipher_suites, &(client_hello->cipher_suites[choosen_suite]), sizeof(cipher_suite_t));
+    
+    // Set cipher suite in global param
+    TLS_param->cipher_suite = client_hello->cipher_suites[choosen_suite];
 
 	// Copy server's random
 	memcpy(TLS_param->server_random,&(server_hello->random.UNIX_time), 4);
@@ -46,9 +48,11 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 }
 
 handshake * make_certificate(TLS_parameters *TLS_param){
+    
 	// Make and send Certificate
 	certificate_message *cert_message = make_certificate_message("../certificates/server.pem");
-	
+	TLS_param->server_certificate = cert_message->X509_certificate;
+    TLS_param->server_certificate->references+=1;
 	handshake *certificate_h = malloc(sizeof(handshake));
 	certificate_h->type = CERTIFICATE;
 	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
@@ -60,8 +64,8 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 
 handshake * make_server_key_exchange(TLS_parameters *TLS_param){
     
-    uint16_t kx = get_kx_algorithm(TLS_param->cipher_suite);
-    if(kx == DHE_RSA_KX){
+    uint16_t kx = TLS_param->cipher_suite.kx;
+    if(kx == DHE_KX){
         //DH servervkey exchange
         //generate ephemeral diffie helman parameters
         DH *privkey;
@@ -94,16 +98,11 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         //make server_key_ex packet
         
         DH_server_key_exchange *server_key_ex = malloc(sizeof(DH_server_key_exchange));
-        server_key_ex->g = BN_new();
-        server_key_ex->p = BN_new();
-        server_key_ex->pubKey = BN_new();
+        server_key_ex->g = BN_dup(privkey->g);
+        server_key_ex->p = BN_dup(privkey->p);
+        server_key_ex->pubKey = BN_dup(privkey->pub_key);
         //copy DH params in the message struct
-        if(BN_copy(server_key_ex->g, privkey->g)==NULL)
-            printf("\nError in copy DH parameters\n");
-        if(BN_copy(server_key_ex->p, privkey->p)==NULL)
-            printf("\nError in copy DH parameters\n");
-        if(BN_copy(server_key_ex->pubKey, privkey->pub_key)==NULL)
-            printf("\nError in copy DH parameters\n");
+     
         
         server_key_ex->sign_hash_alg = 0x0106; //already rot
         
@@ -114,24 +113,24 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         handshake *server_key_ex_h = malloc(sizeof(handshake));
         
         server_key_ex_h->type = SERVER_KEY_EXCHANGE;
-        serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_RSA_KX);
+        serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, DHE_KX);
         
         //save parameters for second step
         TLS_param->server_key_ex = server_key_ex;
         //save private DH key
         TLS_param->private_key = BN_new();
         BN_copy(TLS_param->private_key, privkey->priv_key);
-        
+        DH_free(privkey);
         return server_key_ex_h;
     }
-    else if( kx == ECDHE_RSA_KX){
+    else if( kx == ECDHE_KX){
         EC_KEY *key, *peerkey;
         int field_size;
         unsigned char *secret;
         int *secret_len;
         
         /* Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve */
-        if(NULL == (key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1))){
+        if(NULL == (key = EC_KEY_new_by_curve_name( NID_secp256k1))){
             printf("\nError setting  EC parameters\n");
         }
         
@@ -139,7 +138,15 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         if(1 != EC_KEY_generate_key(key)){
             printf("\nError in generate EC keys\n");
         }
-        
+       // int message_len = i2d_ECParameters(key, NULL);
+        unsigned char *message = NULL;
+
+        int message_len = i2o_ECPublicKey(key, &message);
+        printf("\nECC message\n");
+        printf("%s",message);
+        for(int i = 0;i<message_len;i++)
+            printf("%s",message);
+        printf("\n");
         /* Get the peer's public key, and provide the peer with our public key -
          * how this is done will be specific to your circumstances */
         //peerkey = get_peerkey_low(key);

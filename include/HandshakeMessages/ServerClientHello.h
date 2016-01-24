@@ -33,13 +33,6 @@ typedef struct session_id_t {
     uint8_t *session_id;
 } session_id;
 
-// Ciphers suite list
-typedef struct cipher_suites_t {
-    uint8_t length; //lenght of cipher_id stream in BYTE
-    uint16_t *cipher_id;
-    
-} cipher_suites;
-
 // (Useless) Compression methods
 typedef struct compression_methods_t {
     uint16_t length;
@@ -51,7 +44,8 @@ typedef struct{
     uint16_t TLS_version; 
     random_data random;							// 32 bytes
     session_id session_id;					// 1+session_id.session_lenght bytes
-    cipher_suites cipher_suites;			// 1+2*cipher_suites.lenght bytes
+    uint16_t cipher_suite_len;
+    cipher_suite_t *cipher_suites;			// 1+2*cipher_suites.lenght bytes
     compression_methods compression_methods;// 3 bytes
 } handshake_hello;
 

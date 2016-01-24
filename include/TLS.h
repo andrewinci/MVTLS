@@ -9,6 +9,7 @@
 #ifndef TLS_h
 #define TLS_h
 #include <stdio.h>
+#include <time.h>
 #include "ServerClientHandshakeProtocol.h"
 #include "ServerClientRecordProtocol.h"
 #include "Crypto.h"
@@ -20,7 +21,7 @@
 typedef struct{
     uint16_t tls_version;
     uint16_t previous_state;
-    uint16_t cipher_suite;
+    cipher_suite_t cipher_suite;
     
     unsigned char client_random[32];
     unsigned char server_random[32];

@@ -48,6 +48,4 @@ handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
 void print_handshake(handshake *h);
 
-key_exchange_algorithm get_kx_algorithm(uint16_t cipher_suite_Id);
-
 void free_handshake(handshake *h);
