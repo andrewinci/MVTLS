@@ -217,7 +217,7 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     RSA *privateKey = NULL;
     FILE *fp;
     
-    if(NULL != (fp= fopen("../certificates/server.key", "r")) )
+    if(NULL != (fp= fopen("../certificates/serverRSA.key", "r")) )
     {
         privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
         if(privateKey==NULL)

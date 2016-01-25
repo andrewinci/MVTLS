@@ -41,7 +41,7 @@ handshake * make_client_hello(unsigned char *client_random){
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
-        0xC010,
+        0x0011,
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
@@ -188,7 +188,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         DHE_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
-        if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange)==0)
+        if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)==0)
         {
             printf("\nError in server key eschange, signature not valid\n");
             exit(-1);

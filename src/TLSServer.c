@@ -50,7 +50,13 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 handshake * make_certificate(TLS_parameters *TLS_param){
     
 	// Make and send Certificate
-	certificate_message *cert_message = make_certificate_message("../certificates/server.pem");
+    certificate_message *cert_message = NULL;
+    
+    if(TLS_param->cipher_suite.au == RSA_AU)
+        cert_message = make_certificate_message("../certificates/serverRSA.pem");
+    else if(TLS_param->cipher_suite.au == DSS_AU)
+        cert_message = make_certificate_message("../certificates/serverDSA.pem");
+    
 	TLS_param->server_certificate = cert_message->X509_certificate;
     TLS_param->server_certificate->references+=1;
 	handshake *certificate_h = malloc(sizeof(handshake));
@@ -66,6 +72,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
     
     uint16_t kx = TLS_param->cipher_suite.kx;
     if(kx == DHE_KX){
+        
         //DH servervkey exchange
         //generate ephemeral diffie helman parameters
         DH *privkey;
@@ -75,7 +82,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         if(NULL == (privkey = DH_new())){
             printf("error in DH new\n");
         }
-        if(1 != DH_generate_parameters_ex(privkey, 100, DH_GENERATOR_2 , NULL)){
+        if(1 != DH_generate_parameters_ex(privkey, 1024, DH_GENERATOR_2 , NULL)){
             printf("error in parameter generate\n");
         }
         
@@ -107,7 +114,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         server_key_ex->sign_hash_alg = 0x0106; //already rotated
         
         //add signature
-        sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
+        sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
         
         //serialize and make handshake
         handshake *server_key_ex_h = malloc(sizeof(handshake));
@@ -120,10 +127,14 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         //save private DH key
         TLS_param->private_key = BN_new();
         BN_copy(TLS_param->private_key, privkey->priv_key);
+
         DH_free(privkey);
+        
         return server_key_ex_h;
+        
     }
     else if( kx == ECDHE_KX){
+        
         EC_KEY *key;
 
         uint16_t curve_name = NID_secp256k1;

@@ -35,7 +35,7 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
     free(seed_p);
 }
 
-int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex) {
+int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au) {
     
     //extract p g pubkey
     int p_len;
@@ -80,25 +80,41 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
     EVP_MD_CTX_destroy(mdctx);
     
     //make stream to be encrypted
-    unsigned char *to_enc = malloc(sha1->md_size+md5->md_size);
-    memcpy(to_enc, sha1_digest, sha1->md_size);
-    memcpy(to_enc+sha1->md_size, md5_digest, md5->md_size);
+    int to_verify_len =sha1->md_size+md5->md_size;
+    unsigned char *to_verify = malloc(sha1->md_size+md5->md_size);
+    memcpy(to_verify, sha1_digest, sha1->md_size);
+    memcpy(to_verify+sha1->md_size, md5_digest, md5->md_size);
     
-    //ToDo : distinguish between rsa and dsa signature
-    EVP_PKEY *pubkey = NULL;
-    RSA *rsa = NULL;
-    
-    pubkey = X509_get_pubkey(certificate);
-    rsa = EVP_PKEY_get1_RSA(pubkey);
-    
-    EVP_PKEY_free(pubkey);
-    
-    //encrypt pre_master_key
-    int len =sha1->md_size+md5->md_size;
-    int result = RSA_verify(NID_md5_sha1, to_enc, len, server_key_ex->signature, server_key_ex->signature_length, rsa);
-   
-    RSA_free(rsa);
-    free(to_enc);
+    int result = 0;
+    if(au == RSA_AU){
+        
+        EVP_PKEY *pubkey = NULL;
+        RSA *rsa = NULL;
+        
+        pubkey = X509_get_pubkey(certificate);
+        rsa = EVP_PKEY_get1_RSA(pubkey);
+        
+
+        
+        //encrypt pre_master_key
+        result = RSA_verify(NID_md5_sha1, to_verify, to_verify_len, server_key_ex->signature, server_key_ex->signature_length, rsa);
+        
+        EVP_PKEY_free(pubkey);
+        RSA_free(rsa);
+        
+    }else if(au == DSS_AU){
+        EVP_PKEY *pubkey = NULL;
+        DSA *dsa = NULL;
+        
+        pubkey = X509_get_pubkey(certificate);
+        dsa = EVP_PKEY_get1_DSA(pubkey);
+        
+        result = DSA_verify(NID_md5_sha1, to_verify, to_verify_len, server_key_ex->signature, server_key_ex->signature_length, dsa);
+        
+        EVP_PKEY_free(pubkey);
+        DSA_free(dsa);
+    }
+    free(to_verify);
 
     free(p);
     free(g);
@@ -107,7 +123,7 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
     return result;
 }
 
-int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex) {
+int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au) {
     
     //extract p g pubkey
     int p_len;
@@ -152,39 +168,64 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     EVP_MD_CTX_destroy(mdctx);
     
     //make stream to be encrypted
-    unsigned char *to_enc = malloc(sha1->md_size+md5->md_size);
-    memcpy(to_enc, sha1_digest, sha1->md_size);
-    memcpy(to_enc+sha1->md_size, md5_digest, md5->md_size);
+    int to_sign_len = sha1->md_size+md5->md_size;
+    unsigned char *to_sign = (unsigned char *)malloc(to_sign_len*sizeof(unsigned char));
     
-    //get private key from file
-    RSA *privateKey = NULL;
-    FILE *fp;
+    memcpy(to_sign, sha1_digest, sha1->md_size);
+    memcpy(to_sign+sha1->md_size, md5_digest, md5->md_size);
     
-    if(NULL != (fp= fopen("../certificates/server.key", "r")) )
-    {
-        privateKey=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
-        if(privateKey==NULL)
-        {
-            printf("\nerror in retrieve private key");
+    int res = 0;
+    if(au==RSA_AU){
+
+            /*RSA signature */
+        
+            //get private key from file
+            RSA *rsa_private = NULL;
+            FILE *fp;
+            
+            if(NULL != (fp= fopen("../certificates/serverRSA.key", "r")) )
+            {
+                rsa_private=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
+                if(rsa_private==NULL)
+                {
+                    printf("\nunable to open RSA private key, store it in : ../certificates/serverRSA.key\n");
+                    exit(-1);
+                }
+            }
+            fclose(fp);
+            
+            //allocate memory for signature
+            server_key_ex->signature = malloc(RSA_size(rsa_private));
+            
+            res = RSA_sign(NID_md5_sha1, to_sign, to_sign_len, server_key_ex->signature, &(server_key_ex->signature_length), rsa_private);
+        
+            RSA_free(rsa_private);
+        
+    }else if(au == DSS_AU){
+        
+        /*DSA signature */
+        
+        // get private key for sign
+        FILE *private_key_file = fopen("../certificates/serverDSA.key", "r");
+        if (!private_key_file) {
+            fprintf(stderr, "unable to open DSA private key file, store it in : certificates/serverDSA.key\n");
             exit(-1);
         }
+        
+        DSA *dsa_private = PEM_read_DSAPrivateKey(private_key_file, NULL, NULL, NULL);
+        fclose(private_key_file);
+        
+        //allocate memory for signature
+        server_key_ex->signature = malloc(DSA_size(dsa_private));
+
+        res = DSA_sign(NID_md5_sha1, to_sign, to_sign_len, server_key_ex->signature, &(server_key_ex->signature_length), dsa_private );
+        
+        DSA_free(dsa_private);
     }
-    fclose(fp);
-    
-    //ToDo : distinguish between rsa and dsa signature
-    
-    //allocate memory for signature
-    server_key_ex->signature = malloc(RSA_size(privateKey));
-    int len = sha1->md_size+md5->md_size;
-    
-    int res = RSA_sign(NID_md5_sha1, to_enc, len, server_key_ex->signature, &(server_key_ex->signature_length), privateKey);
- 
-    
     free(p);
     free(g);
     free(pubkey_char);
-    free(to_enc);
-    RSA_free(privateKey);
+    free(to_sign);
     return res;
 }
 
