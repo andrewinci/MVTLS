@@ -103,7 +103,7 @@ DHE_server_key * make_DHE_server_key_ex(TLS_parameters *TLS_param){
 	if(DH_generate_parameters_ex(privkey, 100, DH_GENERATOR_2 , NULL) != 1){
 		printf("\nError in generate_parameter_ex\n");
 		exit(-1);
-	}
+	}   
 	if(DH_check(privkey, &codes) != 1){
 		printf("\nError in DH_check\n");
 		exit(-1);
