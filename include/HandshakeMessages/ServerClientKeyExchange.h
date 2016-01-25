@@ -34,8 +34,7 @@ typedef struct {
     
     BIGNUM *pub_key;
     
-    //signature hash algorithm,  1 for signature alg, 1 for hash,
-    uint16_t sign_hash_alg; //RSA, SHA512 0x0106 !!! we not rev the byte !!!
+    uint16_t sign_hash_alg; 
     
     unsigned int signature_length;
     

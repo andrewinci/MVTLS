@@ -41,7 +41,7 @@ handshake * make_client_hello(unsigned char *client_random){
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
-        0x0011,
+        0xC006,
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);

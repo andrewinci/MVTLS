@@ -56,6 +56,8 @@ handshake * make_certificate(TLS_parameters *TLS_param){
         cert_message = make_certificate_message("../certificates/serverRSA.pem");
     else if(TLS_param->cipher_suite.au == DSS_AU)
         cert_message = make_certificate_message("../certificates/serverDSA.pem");
+    else if(TLS_param->cipher_suite.au == ECDSA_AU)
+        cert_message = make_certificate_message("../certificates/serverECDSA.pem");
     
 	TLS_param->server_certificate = cert_message->X509_certificate;
     TLS_param->server_certificate->references+=1;
@@ -111,7 +113,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         //copy DH params in the message struct
      
         
-        server_key_ex->sign_hash_alg = 0x0106; //already rotated
+        server_key_ex->sign_hash_alg = TLS_param->cipher_suite.hash+(TLS_param->cipher_suite.au<<8);// 0x0106; //already rotated
         
         //add signature
         sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
@@ -159,7 +161,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         server_key_ex->pub_key = BN_new();
         EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
         
-        server_key_ex->sign_hash_alg = 0x0106; //already rotated
+        server_key_ex->sign_hash_alg = TLS_param->cipher_suite.hash+(TLS_param->cipher_suite.au<<8); //already rotated
         
         //add signature
         sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);

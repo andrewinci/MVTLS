@@ -230,6 +230,7 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
 }
 
 int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex){
+    //RFC 4492
     server_key_ex->signature_length = 0x01;
     server_key_ex->signature = malloc(1);
     *(server_key_ex->signature) = 0x01;
