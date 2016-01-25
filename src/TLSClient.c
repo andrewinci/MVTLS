@@ -41,8 +41,7 @@ handshake * make_client_hello(unsigned char *client_random){
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
-        0x0014,
-        0x0015,
+        0xC010,
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
@@ -64,7 +63,73 @@ handshake * make_client_hello(unsigned char *client_random){
 }
 
 handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg){
-    if(key_ex_alg == RSA_KX){
+    
+    if(key_ex_alg == ECDHE_KX){
+        
+        ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange * )TLS_param->server_key_ex;
+        
+        EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
+        
+        /* Generate the private and public key */
+        if(1 != EC_KEY_generate_key(key)){
+            printf("\nError in generate EC keys\n");
+        }
+        
+        //getting server public key
+        EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), server_key_exchange->pub_key, NULL, NULL);
+        
+        // compute master secret
+        int field_size, pre_master_len;
+        unsigned char *pre_master;
+
+        /* Calculate the size of the buffer for the shared secret */
+        field_size = EC_GROUP_get_degree(EC_KEY_get0_group(key));
+        pre_master_len = (field_size+7)/8;
+        
+        /* Allocate the memory for the shared secret */
+        pre_master = malloc(sizeof(unsigned char)*pre_master_len);
+        
+        /* Derive the shared secret */
+        ECDH_compute_key(pre_master, pre_master_len, pub_key_point, key, NULL);
+        
+        // Derive master key
+        unsigned char seed[64];
+        memcpy(seed, TLS_param->client_random, 32);
+        memcpy(seed+32, TLS_param->server_random, 32);
+        const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+        TLS_param->master_secret_len = 48;
+        
+        //compute and set pre master key
+        PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+        free(pre_master);
+        
+        //make client key exchange
+        client_key_exchange *client_key_ex = (client_key_exchange*)malloc(sizeof(client_key_exchange));
+
+        BIGNUM *pub_key = BN_new();
+        EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, pub_key, NULL);
+        
+        client_key_ex->key_length = BN_num_bytes(pub_key);
+        client_key_ex->key = (unsigned char *)malloc(sizeof(unsigned char)*client_key_ex->key_length);
+        BN_bn2bin(pub_key, client_key_ex->key);
+        
+        BN_free(pub_key);
+        EC_POINT_free(pub_key_point);
+        EC_KEY_free(key);
+        
+        //make handshake
+        handshake *client_key_ex_h = (handshake*) malloc(sizeof(handshake));
+        serialize_client_key_exchange(client_key_ex, &(client_key_ex_h->message), &(client_key_ex_h->length));
+        client_key_ex_h->type = CLIENT_KEY_EXCHANGE;
+
+
+        free(client_key_ex->key);
+        free(client_key_ex);
+        
+        return client_key_ex_h;
+
+    }
+    else if(key_ex_alg == RSA_KX){
 
         //make pre master key
         int pre_master_key_len = 58;
@@ -120,10 +185,10 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         return client_key_exchange;
     }
     else if (key_ex_alg == DHE_KX){
-        DH_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
+        DHE_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
         
         //verify sign
-        if(verify_DH_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange)==0)
+        if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange)==0)
         {
             printf("\nError in server key eschange, signature not valid\n");
             exit(-1);

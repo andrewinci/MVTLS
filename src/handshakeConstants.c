@@ -8,7 +8,7 @@
 
 #include "handshakeConstants.h"
 
-int cipher_suite_len = 62;
+int cipher_suite_len = 61;
 
 cipher_suite_t cipher_suite_list[] ={
     //RSA

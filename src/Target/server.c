@@ -13,6 +13,7 @@ void print_random();
 void print_master_secret();
 void compute_set_master_key_RSA(client_key_exchange *client_key_exchange);
 void compute_set_master_key_DH(client_key_exchange *cliet_public);
+void compute_set_master_key_ECDHE(client_key_exchange *cliet_public);
 void onPacketReceive(channel *server2client, packet_basic *p);
 
 TLS_parameters TLS_param;
@@ -107,7 +108,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// ToDo FIX THIS MESS
 
-                    if(TLS_param.cipher_suite.kx == DHE_KX){
+                    //if(TLS_param.cipher_suite.kx == DHE_KX){
 
 						//DHE_DSS DHE_RSA DH_anon
 						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
@@ -117,7 +118,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 						backup_handshake(&TLS_param, server_key_exchange);
 					
 						free_handshake(server_key_exchange);
-					}
+					//}
 
 					// Make and send ServerHelloDone
 					printf("\n>>> Server hello done\n");
@@ -145,6 +146,12 @@ void onPacketReceive(channel *server2client, packet_basic *p){
                     else if(TLS_param.cipher_suite.kx == DHE_KX){
                         client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
                         compute_set_master_key_DH(cliet_public);
+                        free(cliet_public->key);
+                        free(cliet_public);
+                    }
+                    else if(TLS_param.cipher_suite.kx == ECDHE_KX){
+                        client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
+                        compute_set_master_key_ECDHE(cliet_public);
                         free(cliet_public->key);
                         free(cliet_public);
                     }
@@ -244,7 +251,7 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
 
 void compute_set_master_key_DH(client_key_exchange *cliet_public){
     DH *privkey = DH_new();
-    DH_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
+    DHE_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
     
     privkey->g = BN_dup(server_key_exchange->g);
     privkey->p = BN_dup(server_key_exchange->p);
@@ -270,3 +277,47 @@ void compute_set_master_key_DH(client_key_exchange *cliet_public){
     DH_free(privkey);
     free(pre_master_key);
 }
+
+void compute_set_master_key_ECDHE(client_key_exchange *cliet_public){
+    ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange *) TLS_param.server_key_ex;
+    EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
+    
+    //get and set public key
+    BIGNUM *pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
+    EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), pub_key, NULL, NULL);
+    EC_KEY_set_public_key(key, pub_key_point);
+    EC_POINT_free(pub_key_point);
+    BN_free(pub_key);
+    
+    //set private key
+    EC_KEY_set_private_key(key, TLS_param.private_key);
+
+    // compute master secret
+    // compute master secret
+    int field_size, pre_master_len;
+    unsigned char *pre_master;
+
+    
+    /* Calculate the size of the buffer for the shared secret */
+    field_size = EC_GROUP_get_degree(EC_KEY_get0_group(key));
+    pre_master_len = (field_size+7)/8;
+    
+    /* Allocate the memory for the shared secret */
+    pre_master = malloc(sizeof(unsigned char)*pre_master_len);
+    
+    /* Derive the shared secret */
+    TLS_param.master_secret_len = ECDH_compute_key(pre_master, pre_master_len, EC_KEY_get0_public_key(key), key, NULL);
+    
+    // Derive master key
+    unsigned char seed[64];
+    memcpy(seed, TLS_param.client_random, 32);
+    memcpy(seed+32, TLS_param.server_random, 32);
+    const EVP_MD *hash_function = get_hash_function(TLS_param.cipher_suite.hash);
+    TLS_param.master_secret_len = 48;
+    
+    //compute and set pre master key
+    PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
+    
+    free(pre_master);
+}
+

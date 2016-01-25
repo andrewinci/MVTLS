@@ -23,7 +23,25 @@
 #ifndef server_key_exchange_structs
 #define server_key_exchange_structs
 
-
+/*
+ RFC 
+ named_curve
+ Indicates that a named curve will be used. The use of this option is
+ strongly recommended.
+ */
+typedef struct {
+    uint16_t named_curve;
+    
+    BIGNUM *pub_key;
+    
+    //signature hash algorithm,  1 for signature alg, 1 for hash,
+    uint16_t sign_hash_alg; //RSA, SHA512 0x0106 !!! we not rev the byte !!!
+    
+    unsigned int signature_length;
+    
+    unsigned char *signature;
+    
+}ECDHE_server_key_exchange; //we supported only named curve
 
 typedef struct{
     
@@ -40,7 +58,7 @@ typedef struct{
     
     unsigned char *signature;
     
-}DH_server_key_exchange;
+}DHE_server_key_exchange;
 
 typedef struct{
     

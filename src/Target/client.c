@@ -127,9 +127,11 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 				
 				if(TLS_param.previous_state == CERTIFICATE){
 					TLS_param.previous_state = SERVER_KEY_EXCHANGE;
-					
+					printf("<<< Server Key Exchange\n");
+                    print_handshake(h);
 					//save the server key exchange parameters
 					TLS_param.server_key_ex = deserialize_server_key_exchange(h->length, h->message, TLS_param.cipher_suite.kx);
+                    backup_handshake(&TLS_param, h);
 				}
 				break;
 				

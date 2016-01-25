@@ -97,17 +97,17 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         
         //make server_key_ex packet
         
-        DH_server_key_exchange *server_key_ex = malloc(sizeof(DH_server_key_exchange));
+        DHE_server_key_exchange *server_key_ex = malloc(sizeof(DHE_server_key_exchange));
         server_key_ex->g = BN_dup(privkey->g);
         server_key_ex->p = BN_dup(privkey->p);
         server_key_ex->pubKey = BN_dup(privkey->pub_key);
         //copy DH params in the message struct
      
         
-        server_key_ex->sign_hash_alg = 0x0106; //already rot
+        server_key_ex->sign_hash_alg = 0x0106; //already rotated
         
         //add signature
-        sign_DH_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
+        sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
         
         //serialize and make handshake
         handshake *server_key_ex_h = malloc(sizeof(handshake));
@@ -124,13 +124,11 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         return server_key_ex_h;
     }
     else if( kx == ECDHE_KX){
-        EC_KEY *key, *peerkey;
-        int field_size;
-        unsigned char *secret;
-        int *secret_len;
-        
+        EC_KEY *key;
+
+        uint16_t curve_name = NID_secp256k1;
         /* Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve */
-        if(NULL == (key = EC_KEY_new_by_curve_name( NID_secp256k1))){
+        if(NULL == (key = EC_KEY_new_by_curve_name( curve_name))){
             printf("\nError setting  EC parameters\n");
         }
         
@@ -138,42 +136,35 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         if(1 != EC_KEY_generate_key(key)){
             printf("\nError in generate EC keys\n");
         }
-       // int message_len = i2d_ECParameters(key, NULL);
-        unsigned char *message = NULL;
+        
+        //save server private key
+        TLS_param->private_key = BN_dup(EC_KEY_get0_private_key(key));
+        
+        // Make server key ex pachet
+        ECDHE_server_key_exchange *server_key_ex = malloc(sizeof(ECDHE_server_key_exchange));
+        server_key_ex->named_curve = curve_name;
+        
+        // get public key
+        server_key_ex->pub_key = BN_new();
+        EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
+        
+        server_key_ex->sign_hash_alg = 0x0106; //already rotated
+        
+        //add signature
+        sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
+        
+        
+        //serialize and make handshake
+        handshake *server_key_ex_h = malloc(sizeof(handshake));
+        
+        server_key_ex_h->type = SERVER_KEY_EXCHANGE;
+        serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, ECDHE_KX);
+        
+        //save parameters for second step
+        TLS_param->server_key_ex = server_key_ex;
 
-        int message_len = i2o_ECPublicKey(key, &message);
-        printf("\nECC message\n");
-        printf("%s",message);
-        for(int i = 0;i<message_len;i++)
-            printf("%s",message);
-        printf("\n");
-        /* Get the peer's public key, and provide the peer with our public key -
-         * how this is done will be specific to your circumstances */
-        //peerkey = get_peerkey_low(key);
-        
-        /* Calculate the size of the buffer for the shared secret */
-        field_size = EC_GROUP_get_degree(EC_KEY_get0_group(key));
-        *secret_len = (field_size+7)/8;
-        
-        /* Allocate the memory for the shared secret */
-        if(NULL == (secret = OPENSSL_malloc(*secret_len))){
-            printf("\nErrror openssl malloc EC\n");
-        }
-        /* Derive the shared secret */
-        *secret_len = ECDH_compute_key(secret, *secret_len, EC_KEY_get0_public_key(peerkey),
-                                       key, NULL);
-        
-        /* Clean up */
         EC_KEY_free(key);
-        EC_KEY_free(peerkey);
-        
-        if(*secret_len <= 0)
-        {
-            OPENSSL_free(secret);
-            return NULL;
-        }
-        
-        //return secret;
+        return server_key_ex_h;
     }
     return NULL;
 }
