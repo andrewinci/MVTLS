@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$_certificate_8h.html#ad0e82f3d518a6ae40f26d4578626c964" title="make_certificate_message" alt="" coords="105,5,285,32"/>
+<area shape="rect" id="node3" href="$_certificate_8h.html#aa9ddf572a9591ebeea6976eb73166969" title="serialize_certificate\l_message" alt="" coords="127,57,263,98"/>
+<area shape="rect" id="node4" href="$_certificate_8h.html#a8c07e2aeba61bff325f51823f6deb1ce" title="deserialize_certificate\l_message" alt="" coords="119,122,270,163"/>
+<area shape="rect" id="node5" href="$_certificate_8h.html#a331141076714f5f490122c468d68bcb6" title="free_certificate_message" alt="" coords="109,188,280,215"/>
+</map>

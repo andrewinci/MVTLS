@@ -1,0 +1,10 @@
+<map id="/Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/include/ServerClientHandshakeProtocol.h" name="/Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/include/ServerClientHandshakeProtocol.h">
+<area shape="rect" id="node2" href="$_t_l_s_8h.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/include/TLS.h" alt="" coords="354,133,563,189"/>
+<area shape="rect" id="node7" href="$_server_client_handshake_protocol_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/src/ServerClientHandshake\lProtocol.c" alt="" coords="587,126,820,197"/>
+<area shape="rect" id="node8" href="$client_handshake_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/tests/clientHandshake.c" alt="" coords="845,133,1056,189"/>
+<area shape="rect" id="node9" href="$server_handshake_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/tests/serverHandshake.c" alt="" coords="1081,133,1297,189"/>
+<area shape="rect" id="node3" href="$client_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/src/Target/client.c" alt="" coords="5,245,213,301"/>
+<area shape="rect" id="node4" href="$server_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/src/Target/server.c" alt="" coords="238,245,447,301"/>
+<area shape="rect" id="node5" href="$_t_l_s_client_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/src/TLSClient.c" alt="" coords="471,245,680,301"/>
+<area shape="rect" id="node6" href="$_t_l_s_server_8c.html" title="/Users/Darka/Dropbox\l/UNITN/AdvancedProgramming\l/Project/src/TLSServer.c" alt="" coords="705,245,913,301"/>
+</map>

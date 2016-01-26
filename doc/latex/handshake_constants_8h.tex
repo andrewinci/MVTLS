@@ -1,0 +1,317 @@
+\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/handshake\+Constants.h File Reference}
+\label{handshake_constants_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/handshake\+Constants.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/handshake\+Constants.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/hmac.\+h$>$}\\*
+Include dependency graph for handshake\+Constants.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{handshake_constants_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{handshake_constants_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf cipher\+\_\+suite\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf R\+E\+V16}(value)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})
+\item 
+\#define {\bf R\+E\+V32}(value)~(\{(value \& 0x000000\+F\+F\+U) $<$$<$ 24 $\vert$ (value \& 0x0000\+F\+F00\+U) $<$$<$ 8 $\vert$(value \& 0x00\+F\+F0000\+U) $>$$>$ 8 $\vert$ (value \& 0x\+F\+F000000\+U) $>$$>$ 24;\})
+\item 
+\#define {\bf channel\+\_\+mode\+\_\+enum}
+\item 
+\#define {\bf enum\+\_\+record\+\_\+version}
+\item 
+\#define {\bf enum\+\_\+handshake\+\_\+type}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf key\+\_\+exchange\+\_\+algorithm} \{ {\bf R\+S\+A\+\_\+\+KX} = 1, 
+{\bf D\+H\+E\+\_\+\+KX} = 2, 
+{\bf E\+C\+D\+H\+E\+\_\+\+KX} = 3
+ \}
+\item 
+enum {\bf authentication\+\_\+algorithm} \{ {\bf R\+S\+A\+\_\+\+AU} = 1, 
+{\bf D\+S\+S\+\_\+\+AU} = 2, 
+{\bf E\+C\+D\+S\+A\+\_\+\+AU} = 3
+ \}
+\item 
+enum {\bf hash\+\_\+algorithm} \{ \\*
+{\bf none} = 0, 
+{\bf md5} = 1, 
+{\bf sha1} = 2, 
+{\bf sha224} = 3, 
+\\*
+{\bf sha256} = 4, 
+{\bf sha384} = 5, 
+{\bf sha512} = 6
+ \}
+\item 
+enum {\bf channel\+\_\+mode} \{ {\bf S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE}, 
+{\bf C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE}
+ \}
+\item 
+enum {\bf T\+L\+S\+\_\+version} \{ {\bf S\+S\+L3\+\_\+0} = 0x0300, 
+{\bf T\+L\+S1\+\_\+0} = 0x0301, 
+{\bf T\+L\+S1\+\_\+1} = 0x0302, 
+{\bf T\+L\+S1\+\_\+2} = 0x0303
+ \}
+\item 
+enum \{ \\*
+{\bf H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST} = 0x00, 
+{\bf C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO} = 0x01, 
+{\bf S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO} = 0x02, 
+{\bf C\+E\+R\+T\+I\+F\+I\+C\+A\+TE} = 0x0B, 
+\\*
+{\bf S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE} = 0x0C, 
+{\bf C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST} = 0x0D, 
+{\bf S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE} = 0x0E, 
+{\bf C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY} = 0x0F, 
+\\*
+{\bf C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE} = 0x10, 
+{\bf F\+I\+N\+I\+S\+H\+ED} = 0x14
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf cipher\+\_\+suite\+\_\+t} {\bf get\+\_\+cipher\+\_\+suite} (uint16\+\_\+t id)
+\item 
+const E\+V\+P\+\_\+\+MD $\ast$ {\bf get\+\_\+hash\+\_\+function} ({\bf hash\+\_\+algorithm} h)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!channel\+\_\+mode\+\_\+enum@{channel\+\_\+mode\+\_\+enum}}
+\index{channel\+\_\+mode\+\_\+enum@{channel\+\_\+mode\+\_\+enum}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{channel\+\_\+mode\+\_\+enum}]{\setlength{\rightskip}{0pt plus 5cm}\#define channel\+\_\+mode\+\_\+enum}\label{handshake_constants_8h_ad178e23abe9541af08a19faf6109b345}
+
+
+Definition at line 58 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!enum\+\_\+handshake\+\_\+type@{enum\+\_\+handshake\+\_\+type}}
+\index{enum\+\_\+handshake\+\_\+type@{enum\+\_\+handshake\+\_\+type}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{enum\+\_\+handshake\+\_\+type}]{\setlength{\rightskip}{0pt plus 5cm}\#define enum\+\_\+handshake\+\_\+type}\label{handshake_constants_8h_a6eb9081c5175e768e759097d17825af9}
+
+
+Definition at line 90 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!enum\+\_\+record\+\_\+version@{enum\+\_\+record\+\_\+version}}
+\index{enum\+\_\+record\+\_\+version@{enum\+\_\+record\+\_\+version}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{enum\+\_\+record\+\_\+version}]{\setlength{\rightskip}{0pt plus 5cm}\#define enum\+\_\+record\+\_\+version}\label{handshake_constants_8h_a001483e7dc4cd6d301d74a578b0b97e7}
+
+
+Definition at line 77 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!R\+E\+V16@{R\+E\+V16}}
+\index{R\+E\+V16@{R\+E\+V16}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{R\+E\+V16}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+V16(
+\begin{DoxyParamCaption}
+\item[{}]{value}
+\end{DoxyParamCaption}
+)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})}\label{handshake_constants_8h_ab7690321561c4c2f8e301abd41440aa4}
+
+
+Definition at line 18 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!R\+E\+V32@{R\+E\+V32}}
+\index{R\+E\+V32@{R\+E\+V32}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{R\+E\+V32}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+V32(
+\begin{DoxyParamCaption}
+\item[{}]{value}
+\end{DoxyParamCaption}
+)~(\{(value \& 0x000000\+F\+F\+U) $<$$<$ 24 $\vert$ (value \& 0x0000\+F\+F00\+U) $<$$<$ 8 $\vert$(value \& 0x00\+F\+F0000\+U) $>$$>$ 8 $\vert$ (value \& 0x\+F\+F000000\+U) $>$$>$ 24;\})}\label{handshake_constants_8h_aac89d13e711b8a32822746e51237265c}
+
+
+Definition at line 19 of file handshake\+Constants.\+h.
+
+
+
+\subsection{Enumeration Type Documentation}
+\subsubsection[{anonymous enum}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum}\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55b}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST@{H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST@{H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST}}\item[{\em 
+H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+ST\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55babae9b7a6a527c720a4eab46d35a4ed71}
+}]\index{C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO@{C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO@{C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO}}\item[{\em 
+C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+LO\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55ba0c8da6c451065bed79ea70684e6f3fca}
+}]\index{S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO@{S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO@{S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO}}\item[{\em 
+S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+LO\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55ba28914d3bb26ec8c2bd2d5ad9781cbf8c}
+}]\index{C\+E\+R\+T\+I\+F\+I\+C\+A\+TE@{C\+E\+R\+T\+I\+F\+I\+C\+A\+TE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+E\+R\+T\+I\+F\+I\+C\+A\+TE@{C\+E\+R\+T\+I\+F\+I\+C\+A\+TE}}\item[{\em 
+C\+E\+R\+T\+I\+F\+I\+C\+A\+TE\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55baaf428ae486a42ccf4119898f179e3a07}
+}]\index{S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE@{S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE@{S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE}}\item[{\em 
+S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55babe276092f7af8dc33c7b4de9f51cd607}
+}]\index{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST@{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST@{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST}}\item[{\em 
+C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+ST\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55ba0defc0af2846f90d1786d817a7af5516}
+}]\index{S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE@{S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE@{S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE}}\item[{\em 
+S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+NE\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55baa7a5264dd122628f26d55e601a05bcf1}
+}]\index{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY@{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY@{C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY}}\item[{\em 
+C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+FY\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55ba1e6ed3d0ebef1c53bf791791547bf475}
+}]\index{C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE@{C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE@{C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE}}\item[{\em 
+C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+GE\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55ba2fcb8d386327535a875365fc4638cc47}
+}]\index{F\+I\+N\+I\+S\+H\+ED@{F\+I\+N\+I\+S\+H\+ED}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!F\+I\+N\+I\+S\+H\+ED@{F\+I\+N\+I\+S\+H\+ED}}\item[{\em 
+F\+I\+N\+I\+S\+H\+ED\label{handshake_constants_8h_a06fc87d81c62e9abb8790b6e5713c55badbd1812bee789fbf3548cf79d3f2b400}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 91 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!authentication\+\_\+algorithm@{authentication\+\_\+algorithm}}
+\index{authentication\+\_\+algorithm@{authentication\+\_\+algorithm}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{authentication\+\_\+algorithm}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf authentication\+\_\+algorithm}}\label{handshake_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{R\+S\+A\+\_\+\+AU@{R\+S\+A\+\_\+\+AU}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!R\+S\+A\+\_\+\+AU@{R\+S\+A\+\_\+\+AU}}\item[{\em 
+R\+S\+A\+\_\+\+AU\label{handshake_constants_8h_a433e2522c8a62ae4d8b1c91badefef50a89f44b27b8e2464a498e4ba3f8fc22fc}
+}]\index{D\+S\+S\+\_\+\+AU@{D\+S\+S\+\_\+\+AU}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!D\+S\+S\+\_\+\+AU@{D\+S\+S\+\_\+\+AU}}\item[{\em 
+D\+S\+S\+\_\+\+AU\label{handshake_constants_8h_a433e2522c8a62ae4d8b1c91badefef50ad2bfec02f0c8b7252dee8e58eb1f9904}
+}]\index{E\+C\+D\+S\+A\+\_\+\+AU@{E\+C\+D\+S\+A\+\_\+\+AU}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!E\+C\+D\+S\+A\+\_\+\+AU@{E\+C\+D\+S\+A\+\_\+\+AU}}\item[{\em 
+E\+C\+D\+S\+A\+\_\+\+AU\label{handshake_constants_8h_a433e2522c8a62ae4d8b1c91badefef50a83b74be0583f5ebc8fb148a73f1f2af8}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 28 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!channel\+\_\+mode@{channel\+\_\+mode}}
+\index{channel\+\_\+mode@{channel\+\_\+mode}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{channel\+\_\+mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf channel\+\_\+mode}}\label{handshake_constants_8h_af21001704588d21e61c566facf69ec3d}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE@{S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE@{S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE}}\item[{\em 
+S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE\label{handshake_constants_8h_af21001704588d21e61c566facf69ec3daa93134a3bb4b74bc01af0b16d0621035}
+}]\index{C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE@{C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE@{C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE}}\item[{\em 
+C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE\label{handshake_constants_8h_af21001704588d21e61c566facf69ec3da7aba1b408dc6d2d1b01b58a09893f204}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 59 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!hash\+\_\+algorithm@{hash\+\_\+algorithm}}
+\index{hash\+\_\+algorithm@{hash\+\_\+algorithm}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{hash\+\_\+algorithm}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf hash\+\_\+algorithm}}\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598f}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{none@{none}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!none@{none}}\item[{\em 
+none\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598fab7e4e0120a041dbe6528b050c04269e0}
+}]\index{md5@{md5}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!md5@{md5}}\item[{\em 
+md5\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598fa261074350302568b2909ca5caaf32c4c}
+}]\index{sha1@{sha1}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!sha1@{sha1}}\item[{\em 
+sha1\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598fa79411db037421f2bf2355d19f282444b}
+}]\index{sha224@{sha224}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!sha224@{sha224}}\item[{\em 
+sha224\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598facb6a53bfc68618e77b14499a4ffa2af6}
+}]\index{sha256@{sha256}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!sha256@{sha256}}\item[{\em 
+sha256\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598faae05dc47268fd8bb7a5487b436b846c4}
+}]\index{sha384@{sha384}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!sha384@{sha384}}\item[{\em 
+sha384\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598fa9649ba9bdeaba1101afe027a0c12132c}
+}]\index{sha512@{sha512}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!sha512@{sha512}}\item[{\em 
+sha512\label{handshake_constants_8h_a0f89141ac474c59cb87d2eb5e16a598fad2ca23df70d31573b0a95997d6cd1851}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 34 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!key\+\_\+exchange\+\_\+algorithm@{key\+\_\+exchange\+\_\+algorithm}}
+\index{key\+\_\+exchange\+\_\+algorithm@{key\+\_\+exchange\+\_\+algorithm}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{key\+\_\+exchange\+\_\+algorithm}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf key\+\_\+exchange\+\_\+algorithm}}\label{handshake_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{R\+S\+A\+\_\+\+KX@{R\+S\+A\+\_\+\+KX}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!R\+S\+A\+\_\+\+KX@{R\+S\+A\+\_\+\+KX}}\item[{\em 
+R\+S\+A\+\_\+\+KX\label{handshake_constants_8h_a7203e83530e35d8ed2f3300ba0408a54a588cd643610c24e27466d1a9aff8240c}
+}]\index{D\+H\+E\+\_\+\+KX@{D\+H\+E\+\_\+\+KX}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!D\+H\+E\+\_\+\+KX@{D\+H\+E\+\_\+\+KX}}\item[{\em 
+D\+H\+E\+\_\+\+KX\label{handshake_constants_8h_a7203e83530e35d8ed2f3300ba0408a54ab61f45aad7ff39e082697202bf1082fd}
+}]\index{E\+C\+D\+H\+E\+\_\+\+KX@{E\+C\+D\+H\+E\+\_\+\+KX}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!E\+C\+D\+H\+E\+\_\+\+KX@{E\+C\+D\+H\+E\+\_\+\+KX}}\item[{\em 
+E\+C\+D\+H\+E\+\_\+\+KX\label{handshake_constants_8h_a7203e83530e35d8ed2f3300ba0408a54ace718a8a2e5bc8f17421e8ae952a0eaf}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 22 of file handshake\+Constants.\+h.
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!T\+L\+S\+\_\+version@{T\+L\+S\+\_\+version}}
+\index{T\+L\+S\+\_\+version@{T\+L\+S\+\_\+version}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{T\+L\+S\+\_\+version}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf T\+L\+S\+\_\+version}}\label{handshake_constants_8h_ac8ed8b9ca0557f5d1811c1582a195c79}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{S\+S\+L3\+\_\+0@{S\+S\+L3\+\_\+0}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!S\+S\+L3\+\_\+0@{S\+S\+L3\+\_\+0}}\item[{\em 
+S\+S\+L3\+\_\+0\label{handshake_constants_8h_ac8ed8b9ca0557f5d1811c1582a195c79a9987d2692a8e1ffff04145e5b6e7b779}
+}]\index{T\+L\+S1\+\_\+0@{T\+L\+S1\+\_\+0}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!T\+L\+S1\+\_\+0@{T\+L\+S1\+\_\+0}}\item[{\em 
+T\+L\+S1\+\_\+0\label{handshake_constants_8h_ac8ed8b9ca0557f5d1811c1582a195c79a1f6dceb194d8c3be66bbe658735e30d5}
+}]\index{T\+L\+S1\+\_\+1@{T\+L\+S1\+\_\+1}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!T\+L\+S1\+\_\+1@{T\+L\+S1\+\_\+1}}\item[{\em 
+T\+L\+S1\+\_\+1\label{handshake_constants_8h_ac8ed8b9ca0557f5d1811c1582a195c79af7c57d6ddf553a98b250a2c0da261860}
+}]\index{T\+L\+S1\+\_\+2@{T\+L\+S1\+\_\+2}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!T\+L\+S1\+\_\+2@{T\+L\+S1\+\_\+2}}\item[{\em 
+T\+L\+S1\+\_\+2\label{handshake_constants_8h_ac8ed8b9ca0557f5d1811c1582a195c79a05ba9c03f48f1d2ab9774e456d24522f}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 78 of file handshake\+Constants.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!get\+\_\+cipher\+\_\+suite@{get\+\_\+cipher\+\_\+suite}}
+\index{get\+\_\+cipher\+\_\+suite@{get\+\_\+cipher\+\_\+suite}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{get\+\_\+cipher\+\_\+suite(uint16\+\_\+t id)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t} get\+\_\+cipher\+\_\+suite (
+\begin{DoxyParamCaption}
+\item[{uint16\+\_\+t}]{id}
+\end{DoxyParamCaption}
+)}\label{handshake_constants_8h_a72c5c0aa20bd86fc5c152ec8dca0de9f}
+
+
+Definition at line 103 of file handshake\+Constants.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{handshake_constants_8h_a72c5c0aa20bd86fc5c152ec8dca0de9f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{handshake\+Constants.\+h@{handshake\+Constants.\+h}!get\+\_\+hash\+\_\+function@{get\+\_\+hash\+\_\+function}}
+\index{get\+\_\+hash\+\_\+function@{get\+\_\+hash\+\_\+function}!handshake\+Constants.\+h@{handshake\+Constants.\+h}}
+\subsubsection[{get\+\_\+hash\+\_\+function(hash\+\_\+algorithm h)}]{\setlength{\rightskip}{0pt plus 5cm}const E\+V\+P\+\_\+\+MD$\ast$ get\+\_\+hash\+\_\+function (
+\begin{DoxyParamCaption}
+\item[{{\bf hash\+\_\+algorithm}}]{h}
+\end{DoxyParamCaption}
+)}\label{handshake_constants_8h_a98e6374e1aa179c023ba0eb8bdf36196}
+
+
+Definition at line 83 of file handshake\+Constants.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{handshake_constants_8h_a98e6374e1aa179c023ba0eb8bdf36196_icgraph}
+\end{center}
+\end{figure}
+
+

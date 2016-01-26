@@ -1,0 +1,282 @@
+\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.h File Reference}
+\label{_server_client_record_protocol_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Server\+Client\+Basic.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Record\+Protocol.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf record\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Record protocol struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bf R\+E\+V16}(value)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})
+\item 
+\#define {\bf enum\+\_\+recordtype}
+\item 
+\#define {\bf struct\+\_\+record}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf record\+Type} \{ {\bf H\+A\+N\+D\+S\+H\+A\+KE} = 0x16, 
+{\bf C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC} = 0x14, 
+{\bf A\+L\+E\+RT} = 0x15, 
+{\bf A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA} = 0x17
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bf send\+\_\+record} ({\bf channel} $\ast$ch, {\bf record\+\_\+t} $\ast$to\+\_\+send)
+\item 
+{\bf record\+\_\+t} $\ast$ {\bf deserialize\+\_\+record} (unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)
+\item 
+void {\bf serialize\+\_\+record} ({\bf record\+\_\+t} $\ast$r, unsigned char $\ast$$\ast$message, uint16\+\_\+t $\ast$message\+\_\+len)
+\item 
+void {\bf print\+\_\+record} ({\bf record\+\_\+t} $\ast$r)
+\item 
+void {\bf free\+\_\+record} ({\bf record\+\_\+t} $\ast$r)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!enum\+\_\+recordtype@{enum\+\_\+recordtype}}
+\index{enum\+\_\+recordtype@{enum\+\_\+recordtype}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{enum\+\_\+recordtype}]{\setlength{\rightskip}{0pt plus 5cm}\#define enum\+\_\+recordtype}\label{_server_client_record_protocol_8h_a8c5722e7989c38a4d454e64cf7ac3772}
+
+
+Definition at line 22 of file Server\+Client\+Record\+Protocol.\+h.
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!R\+E\+V16@{R\+E\+V16}}
+\index{R\+E\+V16@{R\+E\+V16}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{R\+E\+V16}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+V16(
+\begin{DoxyParamCaption}
+\item[{}]{value}
+\end{DoxyParamCaption}
+)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})}\label{_server_client_record_protocol_8h_ab7690321561c4c2f8e301abd41440aa4}
+
+
+Definition at line 14 of file Server\+Client\+Record\+Protocol.\+h.
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!struct\+\_\+record@{struct\+\_\+record}}
+\index{struct\+\_\+record@{struct\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{struct\+\_\+record}]{\setlength{\rightskip}{0pt plus 5cm}\#define struct\+\_\+record}\label{_server_client_record_protocol_8h_a0baff3a4433d5bc8ea15f3cdf1dc8070}
+
+
+Definition at line 39 of file Server\+Client\+Record\+Protocol.\+h.
+
+
+
+\subsection{Enumeration Type Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!record\+Type@{record\+Type}}
+\index{record\+Type@{record\+Type}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{record\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf record\+Type}}\label{_server_client_record_protocol_8h_a37febb4b566c4bc753a92cc519aa612f}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{H\+A\+N\+D\+S\+H\+A\+KE@{H\+A\+N\+D\+S\+H\+A\+KE}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!H\+A\+N\+D\+S\+H\+A\+KE@{H\+A\+N\+D\+S\+H\+A\+KE}}\item[{\em 
+H\+A\+N\+D\+S\+H\+A\+KE\label{_server_client_record_protocol_8h_a37febb4b566c4bc753a92cc519aa612facc6ddcaa36bd57e5aec12749cb5ce29c}
+}]\index{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC@{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC@{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC}}\item[{\em 
+C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC\label{_server_client_record_protocol_8h_a37febb4b566c4bc753a92cc519aa612fa4ba5b5ec083856acccc568fff147a664}
+}]\index{A\+L\+E\+RT@{A\+L\+E\+RT}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!A\+L\+E\+RT@{A\+L\+E\+RT}}\item[{\em 
+A\+L\+E\+RT\label{_server_client_record_protocol_8h_a37febb4b566c4bc753a92cc519aa612fa45e0bb0f520fb3851c7d6cc5c5ddd6f9}
+}]\index{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA@{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA@{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA}}\item[{\em 
+A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA\label{_server_client_record_protocol_8h_a37febb4b566c4bc753a92cc519aa612fae5600c9ebf3ad742718c2ba003539a45}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 27 of file Server\+Client\+Record\+Protocol.\+h.
+
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!deserialize\+\_\+record@{deserialize\+\_\+record}}
+\index{deserialize\+\_\+record@{deserialize\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{deserialize\+\_\+record(unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf record\+\_\+t}$\ast$ deserialize\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+\_\+len}
+\end{DoxyParamCaption}
+)}\label{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}
+Deserialize a byte stream message of length message\+\_\+len into a record struct.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \+: message received \\
+\hline
+{\em message\+Len} & \+: message length \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+record \+: the deserialized record 
+\end{DoxyReturn}
+
+
+Definition at line 22 of file Server\+Client\+Record\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!free\+\_\+record@{free\+\_\+record}}
+\index{free\+\_\+record@{free\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{free\+\_\+record(record\+\_\+t $\ast$r)}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r}
+\end{DoxyParamCaption}
+)}\label{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc}
+Free memory for a record r 
+\begin{DoxyParams}{Parameters}
+{\em r} & \+: pointer to record to free \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file Server\+Client\+Record\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!print\+\_\+record@{print\+\_\+record}}
+\index{print\+\_\+record@{print\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{print\+\_\+record(record\+\_\+t $\ast$r)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r}
+\end{DoxyParamCaption}
+)}\label{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}
+
+
+Definition at line 48 of file Server\+Client\+Record\+Protocol.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!send\+\_\+record@{send\+\_\+record}}
+\index{send\+\_\+record@{send\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{send\+\_\+record(channel $\ast$ch, record\+\_\+t $\ast$to\+\_\+send)}]{\setlength{\rightskip}{0pt plus 5cm}int send\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf channel} $\ast$}]{ch, }
+\item[{{\bf record\+\_\+t} $\ast$}]{to\+\_\+send}
+\end{DoxyParamCaption}
+)}\label{_server_client_record_protocol_8h_a9c15d75d985c391a872c04a941540f67}
+Send record to\+\_\+send over the channel ch. Note \+:for send record is important to set \textquotesingle{}to\textquotesingle{} and \textquotesingle{}from\textquotesingle{} in the channel creation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel to use \\
+\hline
+{\em to\+\_\+send} & \+: record to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the message was successfully sent, 0 otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 36 of file Server\+Client\+Record\+Protocol.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a9c15d75d985c391a872c04a941540f67_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a9c15d75d985c391a872c04a941540f67_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!serialize\+\_\+record@{serialize\+\_\+record}}
+\index{serialize\+\_\+record@{serialize\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{serialize\+\_\+record(record\+\_\+t $\ast$r, unsigned char $\ast$$\ast$message, uint16\+\_\+t $\ast$message\+\_\+len)}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r, }
+\item[{unsigned char $\ast$$\ast$}]{message, }
+\item[{uint16\+\_\+t $\ast$}]{message\+\_\+len}
+\end{DoxyParamCaption}
+)}\label{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}
+Serialize record in a byte stream of length message\+\_\+len stored in message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \+: pointer to null (the function allocate space for you) \\
+\hline
+{\em message\+Len} & \+: pointer to integer (will contains the message length) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 11 of file Server\+Client\+Record\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c_icgraph}
+\end{center}
+\end{figure}
+
+

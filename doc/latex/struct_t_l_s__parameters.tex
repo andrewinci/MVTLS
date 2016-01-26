@@ -1,0 +1,141 @@
+\section{T\+L\+S\+\_\+parameters Struct Reference}
+\label{struct_t_l_s__parameters}\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+
+
+{\ttfamily \#include $<$T\+L\+S.\+h$>$}
+
+
+
+Collaboration diagram for T\+L\+S\+\_\+parameters\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{struct_t_l_s__parameters__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t {\bf tls\+\_\+version}
+\item 
+uint16\+\_\+t {\bf previous\+\_\+state}
+\item 
+{\bf cipher\+\_\+suite\+\_\+t} {\bf cipher\+\_\+suite}
+\item 
+unsigned char {\bf client\+\_\+random} [32]
+\item 
+unsigned char {\bf server\+\_\+random} [32]
+\item 
+void $\ast$ {\bf server\+\_\+key\+\_\+ex}
+\item 
+unsigned char $\ast$ {\bf master\+\_\+secret}
+\item 
+int {\bf master\+\_\+secret\+\_\+len}
+\item 
+int {\bf handshake\+\_\+messages\+\_\+len}
+\item 
+unsigned char $\ast$ {\bf handshake\+\_\+messages}
+\item 
+X509 $\ast$ {\bf server\+\_\+certificate}
+\item 
+B\+I\+G\+N\+UM $\ast$ {\bf private\+\_\+key}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 21 of file T\+L\+S.\+h.
+
+
+
+\subsection{Field Documentation}
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!cipher\+\_\+suite@{cipher\+\_\+suite}}
+\index{cipher\+\_\+suite@{cipher\+\_\+suite}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{cipher\+\_\+suite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t} cipher\+\_\+suite}\label{struct_t_l_s__parameters_af1d8ebe57a775be2b91550dbcacb2a58}
+
+
+Definition at line 24 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!client\+\_\+random@{client\+\_\+random}}
+\index{client\+\_\+random@{client\+\_\+random}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{client\+\_\+random}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char client\+\_\+random[32]}\label{struct_t_l_s__parameters_adbdca8d573a8e073ef16bf14229fb4c9}
+
+
+Definition at line 26 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!handshake\+\_\+messages@{handshake\+\_\+messages}}
+\index{handshake\+\_\+messages@{handshake\+\_\+messages}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{handshake\+\_\+messages}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ handshake\+\_\+messages}\label{struct_t_l_s__parameters_ac6734c87e703c22f7d34f71ca116d005}
+
+
+Definition at line 35 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!handshake\+\_\+messages\+\_\+len@{handshake\+\_\+messages\+\_\+len}}
+\index{handshake\+\_\+messages\+\_\+len@{handshake\+\_\+messages\+\_\+len}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{handshake\+\_\+messages\+\_\+len}]{\setlength{\rightskip}{0pt plus 5cm}int handshake\+\_\+messages\+\_\+len}\label{struct_t_l_s__parameters_afbdbb7d32255aef8951f95ccc44957fc}
+
+
+Definition at line 34 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!master\+\_\+secret@{master\+\_\+secret}}
+\index{master\+\_\+secret@{master\+\_\+secret}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{master\+\_\+secret}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ master\+\_\+secret}\label{struct_t_l_s__parameters_a68c2015df5cb7259aa1abdee33c8e6f3}
+
+
+Definition at line 31 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!master\+\_\+secret\+\_\+len@{master\+\_\+secret\+\_\+len}}
+\index{master\+\_\+secret\+\_\+len@{master\+\_\+secret\+\_\+len}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{master\+\_\+secret\+\_\+len}]{\setlength{\rightskip}{0pt plus 5cm}int master\+\_\+secret\+\_\+len}\label{struct_t_l_s__parameters_a7112487b636ca7921055d94ae02478fe}
+
+
+Definition at line 32 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!previous\+\_\+state@{previous\+\_\+state}}
+\index{previous\+\_\+state@{previous\+\_\+state}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{previous\+\_\+state}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t previous\+\_\+state}\label{struct_t_l_s__parameters_a7876cd7f12771bb13dfd180e2d74e02b}
+
+
+Definition at line 23 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!private\+\_\+key@{private\+\_\+key}}
+\index{private\+\_\+key@{private\+\_\+key}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{private\+\_\+key}]{\setlength{\rightskip}{0pt plus 5cm}B\+I\+G\+N\+UM$\ast$ private\+\_\+key}\label{struct_t_l_s__parameters_aa7d109714bb4c1faa6aba18c0dd3dcae}
+
+
+Definition at line 39 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!server\+\_\+certificate@{server\+\_\+certificate}}
+\index{server\+\_\+certificate@{server\+\_\+certificate}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{server\+\_\+certificate}]{\setlength{\rightskip}{0pt plus 5cm}X509$\ast$ server\+\_\+certificate}\label{struct_t_l_s__parameters_a832ae425d6bb6330e1e5e825ab85ac31}
+
+
+Definition at line 37 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!server\+\_\+key\+\_\+ex@{server\+\_\+key\+\_\+ex}}
+\index{server\+\_\+key\+\_\+ex@{server\+\_\+key\+\_\+ex}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{server\+\_\+key\+\_\+ex}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ server\+\_\+key\+\_\+ex}\label{struct_t_l_s__parameters_a8ca08ac851747e17048fddf461c65ec4}
+
+
+Definition at line 29 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!server\+\_\+random@{server\+\_\+random}}
+\index{server\+\_\+random@{server\+\_\+random}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{server\+\_\+random}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char server\+\_\+random[32]}\label{struct_t_l_s__parameters_a9159f146fbc286a8b55f4aa83396ae2f}
+
+
+Definition at line 27 of file T\+L\+S.\+h.
+
+\index{T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}!tls\+\_\+version@{tls\+\_\+version}}
+\index{tls\+\_\+version@{tls\+\_\+version}!T\+L\+S\+\_\+parameters@{T\+L\+S\+\_\+parameters}}
+\subsubsection[{tls\+\_\+version}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t tls\+\_\+version}\label{struct_t_l_s__parameters_a8fd63193690a09b75e0aaf9b971ed3df}
+
+
+Definition at line 22 of file T\+L\+S.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/{\bf T\+L\+S.\+h}\end{DoxyCompactItemize}

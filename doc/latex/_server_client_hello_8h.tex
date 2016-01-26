@@ -1,0 +1,188 @@
+\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Hello.h File Reference}
+\label{_server_client_hello_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Hello.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Hello.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rand.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}handshake\+Constants.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Hello.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf random\+\_\+data}
+\item 
+struct {\bf session\+\_\+id\+\_\+t}
+\item 
+struct {\bf compression\+\_\+methods\+\_\+t}
+\item 
+struct {\bf handshake\+\_\+hello}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct {\bf session\+\_\+id\+\_\+t} {\bf session\+\_\+id}
+\item 
+typedef struct {\bf compression\+\_\+methods\+\_\+t} {\bf compression\+\_\+methods}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf handshake\+\_\+hello} $\ast$ {\bf make\+\_\+hello} ({\bf session\+\_\+id} session)
+\item 
+void {\bf serialize\+\_\+client\+\_\+server\+\_\+hello} ({\bf handshake\+\_\+hello} $\ast$hello, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, {\bf channel\+\_\+mode} {\bf mode})
+\item 
+{\bf handshake\+\_\+hello} $\ast$ {\bf deserialize\+\_\+client\+\_\+server\+\_\+hello} (unsigned char $\ast$stream, uint32\+\_\+t stream\+Len, {\bf channel\+\_\+mode} {\bf mode})
+\item 
+void {\bf free\+\_\+hello} ({\bf handshake\+\_\+hello} $\ast$h)
+\item 
+void {\bf print\+\_\+hello} ({\bf handshake\+\_\+hello} $\ast$h)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!compression\+\_\+methods@{compression\+\_\+methods}}
+\index{compression\+\_\+methods@{compression\+\_\+methods}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{compression\+\_\+methods}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf compression\+\_\+methods\+\_\+t}  {\bf compression\+\_\+methods}}\label{_server_client_hello_8h_ad64900d501d884d8d2ad41e6cab355ab}
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!session\+\_\+id@{session\+\_\+id}}
+\index{session\+\_\+id@{session\+\_\+id}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{session\+\_\+id}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf session\+\_\+id\+\_\+t}  {\bf session\+\_\+id}}\label{_server_client_hello_8h_af8cbdb57b82bcf7717e8458037950fc5}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!deserialize\+\_\+client\+\_\+server\+\_\+hello@{deserialize\+\_\+client\+\_\+server\+\_\+hello}}
+\index{deserialize\+\_\+client\+\_\+server\+\_\+hello@{deserialize\+\_\+client\+\_\+server\+\_\+hello}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{deserialize\+\_\+client\+\_\+server\+\_\+hello(unsigned char $\ast$stream, uint32\+\_\+t stream\+Len, channel\+\_\+mode mode)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handshake\+\_\+hello}$\ast$ deserialize\+\_\+client\+\_\+server\+\_\+hello (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{stream, }
+\item[{uint32\+\_\+t}]{stream\+Len, }
+\item[{{\bf channel\+\_\+mode}}]{mode}
+\end{DoxyParamCaption}
+)}\label{_server_client_hello_8h_a71bd78b5544397ec83eb69e441745d41}
+
+
+Definition at line 106 of file Server\+Client\+Hello.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{_server_client_hello_8h_a71bd78b5544397ec83eb69e441745d41_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h_a71bd78b5544397ec83eb69e441745d41_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!free\+\_\+hello@{free\+\_\+hello}}
+\index{free\+\_\+hello@{free\+\_\+hello}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{free\+\_\+hello(handshake\+\_\+hello $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+hello (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake\+\_\+hello} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_hello_8h_ac3a430a602976795e137b6bc69cb48d8}
+
+
+Definition at line 209 of file Server\+Client\+Hello.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h_ac3a430a602976795e137b6bc69cb48d8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!make\+\_\+hello@{make\+\_\+hello}}
+\index{make\+\_\+hello@{make\+\_\+hello}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{make\+\_\+hello(session\+\_\+id session)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handshake\+\_\+hello}$\ast$ make\+\_\+hello (
+\begin{DoxyParamCaption}
+\item[{{\bf session\+\_\+id}}]{session}
+\end{DoxyParamCaption}
+)}\label{_server_client_hello_8h_a6c087a662fb16149689eb181665f84c2}
+
+
+Definition at line 15 of file Server\+Client\+Hello.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h_a6c087a662fb16149689eb181665f84c2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!print\+\_\+hello@{print\+\_\+hello}}
+\index{print\+\_\+hello@{print\+\_\+hello}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{print\+\_\+hello(handshake\+\_\+hello $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+hello (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake\+\_\+hello} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_hello_8h_add56b3ce05e50522bff5091a1ad27125}
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{_server_client_hello_8h_add56b3ce05e50522bff5091a1ad27125_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}!serialize\+\_\+client\+\_\+server\+\_\+hello@{serialize\+\_\+client\+\_\+server\+\_\+hello}}
+\index{serialize\+\_\+client\+\_\+server\+\_\+hello@{serialize\+\_\+client\+\_\+server\+\_\+hello}!Server\+Client\+Hello.\+h@{Server\+Client\+Hello.\+h}}
+\subsubsection[{serialize\+\_\+client\+\_\+server\+\_\+hello(handshake\+\_\+hello $\ast$hello, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, channel\+\_\+mode mode)}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+client\+\_\+server\+\_\+hello (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake\+\_\+hello} $\ast$}]{hello, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len, }
+\item[{{\bf channel\+\_\+mode}}]{mode}
+\end{DoxyParamCaption}
+)}\label{_server_client_hello_8h_ac5f8704687d37db6d67172540b3005e6}
+
+
+Definition at line 37 of file Server\+Client\+Hello.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_hello_8h_ac5f8704687d37db6d67172540b3005e6_icgraph}
+\end{center}
+\end{figure}
+
+

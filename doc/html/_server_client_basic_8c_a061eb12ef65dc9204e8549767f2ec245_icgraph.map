@@ -1,0 +1,13 @@
+<map id="create_packet" name="create_packet">
+<area shape="rect" id="node2" href="$_server_client_basic_8c.html#a1ee7c2639900cfda8120e0a01215058c" title="deserialize_packet" alt="" coords="161,31,293,57"/>
+<area shape="rect" id="node6" href="$_server_client_record_protocol_8c.html#a1b5ebed9d99a7ae01e6f8c5c464aad45" title="send_record" alt="" coords="179,107,275,133"/>
+<area shape="rect" id="node11" href="$client_basic_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="379,208,429,235"/>
+<area shape="rect" id="node12" href="$client_basic_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="164,208,289,235"/>
+<area shape="rect" id="node3" href="$_server_client_basic_8c.html#acc975c295cc4a9e275948e333c45598e" title="reader" alt="" coords="374,5,434,32"/>
+<area shape="rect" id="node4" href="$_server_client_basic_8c.html#a801af14d28354b83a224a815657e1b0c" title="start_listener" alt="" coords="695,5,793,32"/>
+<area shape="rect" id="node5" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="848,81,899,108"/>
+<area shape="rect" id="node7" href="$_server_client_handshake_protocol_8c.html#a3957323f66c0273e5192a1de1c114c98" title="send_handshake" alt="" coords="342,56,466,83"/>
+<area shape="rect" id="node8" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="515,107,640,133"/>
+<area shape="rect" id="node10" href="$client_record_8c.html#ac0f2228420376f4db7e1274f2b41667c" title="main" alt="" coords="379,157,429,184"/>
+<area shape="rect" id="node9" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="688,157,800,184"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="backup_handshake" name="backup_handshake">
+<area shape="rect" id="node2" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="525,31,576,57"/>
+<area shape="rect" id="node3" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="192,31,317,57"/>
+<area shape="rect" id="node4" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="365,81,477,108"/>
+</map>

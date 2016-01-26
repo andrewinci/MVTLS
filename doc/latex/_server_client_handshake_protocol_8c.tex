@@ -1,0 +1,197 @@
+\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Handshake\+Protocol.c File Reference}
+\label{_server_client_handshake_protocol_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Handshake\+Protocol.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Handshake\+Protocol.\+c}}
+{\ttfamily \#include \char`\"{}Server\+Client\+Handshake\+Protocol.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Handshake\+Protocol.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf record\+\_\+t} $\ast$ {\bf make\+\_\+record} ({\bf handshake} $\ast$h)
+\item 
+int {\bf send\+\_\+handshake} ({\bf channel} $\ast$ch, {\bf handshake} $\ast$h)
+\item 
+void {\bf serialize\+\_\+handshake} ({\bf handshake} $\ast$h, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)
+\item 
+{\bf handshake} $\ast$ {\bf deserialize\+\_\+handshake} (unsigned char $\ast$message, uint32\+\_\+t message\+Len)
+\item 
+void {\bf free\+\_\+handshake} ({\bf handshake} $\ast$h)
+\item 
+void {\bf print\+\_\+handshake} ({\bf handshake} $\ast$h)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!deserialize\+\_\+handshake@{deserialize\+\_\+handshake}}
+\index{deserialize\+\_\+handshake@{deserialize\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{deserialize\+\_\+handshake(unsigned char $\ast$message, uint32\+\_\+t message\+Len)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handshake}$\ast$ deserialize\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+Len}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_a0d451caa6430ee73c2f4a12da77f7ae8}
+
+
+Definition at line 50 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_a0d451caa6430ee73c2f4a12da77f7ae8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!free\+\_\+handshake@{free\+\_\+handshake}}
+\index{free\+\_\+handshake@{free\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{free\+\_\+handshake(handshake $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_ac9f849b491102037572823bf78f0de77}
+
+
+Definition at line 66 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_ac9f849b491102037572823bf78f0de77_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!make\+\_\+record@{make\+\_\+record}}
+\index{make\+\_\+record@{make\+\_\+record}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{make\+\_\+record(handshake $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf record\+\_\+t}$\ast$ make\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_af5867dc851af702258d5f1970a846a91}
+
+
+Definition at line 11 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{_server_client_handshake_protocol_8c_af5867dc851af702258d5f1970a846a91_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_af5867dc851af702258d5f1970a846a91_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!print\+\_\+handshake@{print\+\_\+handshake}}
+\index{print\+\_\+handshake@{print\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{print\+\_\+handshake(handshake $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_ab0a9a882a7a46b4f895af1f15baac7e5}
+
+
+Definition at line 73 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{_server_client_handshake_protocol_8c_ab0a9a882a7a46b4f895af1f15baac7e5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_ab0a9a882a7a46b4f895af1f15baac7e5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!send\+\_\+handshake@{send\+\_\+handshake}}
+\index{send\+\_\+handshake@{send\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{send\+\_\+handshake(channel $\ast$ch, handshake $\ast$h)}]{\setlength{\rightskip}{0pt plus 5cm}int send\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{{\bf channel} $\ast$}]{ch, }
+\item[{{\bf handshake} $\ast$}]{h}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_a3957323f66c0273e5192a1de1c114c98}
+
+
+Definition at line 25 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_a3957323f66c0273e5192a1de1c114c98_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_a3957323f66c0273e5192a1de1c114c98_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}!serialize\+\_\+handshake@{serialize\+\_\+handshake}}
+\index{serialize\+\_\+handshake@{serialize\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+c@{Server\+Client\+Handshake\+Protocol.\+c}}
+\subsubsection[{serialize\+\_\+handshake(handshake $\ast$h, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{{\bf handshake} $\ast$}]{h, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len}
+\end{DoxyParamCaption}
+)}\label{_server_client_handshake_protocol_8c_a4e06a4c53eef90fd7af096635deffe62}
+
+
+Definition at line 35 of file Server\+Client\+Handshake\+Protocol.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8c_a4e06a4c53eef90fd7af096635deffe62_icgraph}
+\end{center}
+\end{figure}
+
+

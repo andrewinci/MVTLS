@@ -1,0 +1,13 @@
+<map id="onPacketReceive" name="onPacketReceive">
+<area shape="rect" id="node2" href="$_server_client_record_protocol_8h.html#abb4c45954ce00d016a651588a179ff19" title="deserialize_record" alt="" coords="179,5,309,32"/>
+<area shape="rect" id="node3" href="$_server_client_record_protocol_8h.html#af6de1ff6a0b52cc2ad9224dbc4e9a14c" title="serialize_record" alt="" coords="186,56,302,83"/>
+<area shape="rect" id="node4" href="$_server_client_record_protocol_8h.html#a9c15d75d985c391a872c04a941540f67" title="send_record" alt="" coords="196,107,292,133"/>
+<area shape="rect" id="node10" href="$_server_client_basic_8h.html#a3a33ed13805793c4583241491fe1bef0" title="free_packet" alt="" coords="370,157,462,184"/>
+<area shape="rect" id="node11" href="$_server_client_record_protocol_8h.html#a9212df7db09a62df2f7d4a913f04defc" title="free_record" alt="" coords="199,208,289,235"/>
+<area shape="rect" id="node12" href="$_server_client_basic_8h.html#a830a41c9f058bd3c6f37f404a01608af" title="stop_channel" alt="" coords="193,259,295,285"/>
+<area shape="rect" id="node5" href="$_server_client_record_protocol_8c.html#af281a53bbcd83ad0887baf01e13a752e" title="serialize_record" alt="" coords="358,5,474,32"/>
+<area shape="rect" id="node6" href="$_server_client_basic_8h.html#a061eb12ef65dc9204e8549767f2ec245" title="create_packet" alt="" coords="363,56,469,83"/>
+<area shape="rect" id="node7" href="$_server_client_basic_8h.html#a934a66fb291446397ef52e669db428f8" title="send_packet" alt="" coords="367,107,465,133"/>
+<area shape="rect" id="node8" href="$_server_client_basic_8c.html#a1ac9a1fa040ab3ed039c8841ca864c57" title="serialize_packet" alt="" coords="523,81,640,108"/>
+<area shape="rect" id="node9" href="$_server_client_basic_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="533,132,629,159"/>
+</map>

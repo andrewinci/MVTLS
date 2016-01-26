@@ -1,0 +1,145 @@
+\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.c File Reference}
+\label{_server_client_key_exchange_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.\+c}}
+{\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Key\+Exchange.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf serialize\+\_\+server\+\_\+key\+\_\+exchange} (void $\ast$server\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, {\bf key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+void $\ast$ {\bf deserialize\+\_\+server\+\_\+key\+\_\+exchange} (uint32\+\_\+t message\+\_\+len, unsigned char $\ast$message, {\bf key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+void {\bf serialize\+\_\+client\+\_\+key\+\_\+exchange} ({\bf client\+\_\+key\+\_\+exchange} $\ast${\bf client\+\_\+key\+\_\+exchange}, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)
+\item 
+void $\ast$ {\bf deserialize\+\_\+client\+\_\+key\+\_\+exchange} (uint32\+\_\+t message\+\_\+len, unsigned char $\ast$message)
+\item 
+void {\bf free\+\_\+server\+\_\+key\+\_\+exchange} (void $\ast$server\+\_\+key\+\_\+ex, {\bf cipher\+\_\+suite\+\_\+t} cipher\+\_\+suite)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}!deserialize\+\_\+client\+\_\+key\+\_\+exchange@{deserialize\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{deserialize\+\_\+client\+\_\+key\+\_\+exchange@{deserialize\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}}
+\subsubsection[{deserialize\+\_\+client\+\_\+key\+\_\+exchange(uint32\+\_\+t message\+\_\+len, unsigned char $\ast$message)}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ deserialize\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{message\+\_\+len, }
+\item[{unsigned char $\ast$}]{message}
+\end{DoxyParamCaption}
+)}\label{_server_client_key_exchange_8c_a225e72dcfe80ab6f0bd08043a3c264a0}
+
+
+Definition at line 185 of file Server\+Client\+Key\+Exchange.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c_a225e72dcfe80ab6f0bd08043a3c264a0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}!deserialize\+\_\+server\+\_\+key\+\_\+exchange@{deserialize\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{deserialize\+\_\+server\+\_\+key\+\_\+exchange@{deserialize\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}}
+\subsubsection[{deserialize\+\_\+server\+\_\+key\+\_\+exchange(uint32\+\_\+t message\+\_\+len, unsigned char $\ast$message, key\+\_\+exchange\+\_\+algorithm kx)}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ deserialize\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{uint32\+\_\+t}]{message\+\_\+len, }
+\item[{unsigned char $\ast$}]{message, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\label{_server_client_key_exchange_8c_a8eb5113e9d14196b6c1dbe3df1c56c06}
+
+
+Definition at line 104 of file Server\+Client\+Key\+Exchange.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c_a8eb5113e9d14196b6c1dbe3df1c56c06_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}!free\+\_\+server\+\_\+key\+\_\+exchange@{free\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{free\+\_\+server\+\_\+key\+\_\+exchange@{free\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}}
+\subsubsection[{free\+\_\+server\+\_\+key\+\_\+exchange(void $\ast$server\+\_\+key\+\_\+ex, cipher\+\_\+suite\+\_\+t cipher\+\_\+suite)}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf cipher\+\_\+suite\+\_\+t}}]{cipher\+\_\+suite}
+\end{DoxyParamCaption}
+)}\label{_server_client_key_exchange_8c_a9b34f5779b31eb5a18a2fc5c644aaa78}
+
+
+Definition at line 199 of file Server\+Client\+Key\+Exchange.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c_a9b34f5779b31eb5a18a2fc5c644aaa78_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}!serialize\+\_\+client\+\_\+key\+\_\+exchange@{serialize\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{serialize\+\_\+client\+\_\+key\+\_\+exchange@{serialize\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}}
+\subsubsection[{serialize\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange $\ast$client\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf client\+\_\+key\+\_\+exchange} $\ast$}]{client\+\_\+key\+\_\+exchange, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len}
+\end{DoxyParamCaption}
+)}\label{_server_client_key_exchange_8c_a0c677b3ebb47b3db1a455bc051384af9}
+
+
+Definition at line 171 of file Server\+Client\+Key\+Exchange.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c_a0c677b3ebb47b3db1a455bc051384af9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}!serialize\+\_\+server\+\_\+key\+\_\+exchange@{serialize\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{serialize\+\_\+server\+\_\+key\+\_\+exchange@{serialize\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+c@{Server\+Client\+Key\+Exchange.\+c}}
+\subsubsection[{serialize\+\_\+server\+\_\+key\+\_\+exchange(void $\ast$server\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, key\+\_\+exchange\+\_\+algorithm kx)}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{server\+\_\+key\+\_\+exchange, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\label{_server_client_key_exchange_8c_a290e31280396f330234592d27ac3b2d9}
+
+
+Definition at line 15 of file Server\+Client\+Key\+Exchange.\+c.
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_key_exchange_8c_a290e31280396f330234592d27ac3b2d9_icgraph}
+\end{center}
+\end{figure}
+
+
