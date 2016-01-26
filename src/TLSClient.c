@@ -41,7 +41,7 @@ handshake * make_client_hello(unsigned char *client_random){
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
-        0x009E
+        0xC006
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
@@ -67,7 +67,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
     if(key_ex_alg == ECDHE_KX){
         
         ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange * )TLS_param->server_key_ex;
-        
+		
         //verify sign
         if(verify_ECDHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)<1)
         {

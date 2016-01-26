@@ -234,6 +234,9 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
     int to_sign_len = md5->md_size + sha1->md_size;
     unsigned char *to_sign = (unsigned char*)malloc(sizeof(unsigned char)*to_sign_len);
 
+    memcpy(to_sign, sha1_digest, sha1->md_size);
+    memcpy(to_sign+sha1->md_size, md5_digest, md5->md_size);
+
     int res=0;
     switch (au) {
         case RSA_AU:
