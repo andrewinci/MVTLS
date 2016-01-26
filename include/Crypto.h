@@ -27,16 +27,14 @@
 
 #endif /* Crypto_h */
 
-/*
- * Starting from premaster secret, compute master key and set it in TLS_param
- */
-
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result);
 
-int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au);
 
 int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au);
 
-int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex);
+int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au);
 
 
+int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au);
+
+int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au);

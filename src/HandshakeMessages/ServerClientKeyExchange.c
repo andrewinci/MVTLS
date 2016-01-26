@@ -93,8 +93,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
         memcpy(result, &(server_key_ex->sign_hash_alg), 2); //copy hash, sign alg
         result+=2;
         
-        len = server_key_ex->signature_length;
-        len = REV16(len);
+        len = REV16(server_key_ex->signature_length);
         memcpy(result, &len, 2);
         result+=2;
         
@@ -151,6 +150,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
         uint8_t pubkey_len = *message;
         message++;
         server_key_ex->pub_key = BN_bin2bn(message, pubkey_len, NULL);
+        message+=pubkey_len;
         
         memcpy(&(server_key_ex->sign_hash_alg), message, 2);
         message+=2;

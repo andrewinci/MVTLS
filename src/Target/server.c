@@ -105,20 +105,17 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					send_handshake(server2client, certificate);
 					backup_handshake(&TLS_param, certificate);
 					free_handshake(certificate);
-
-					// ToDo FIX THIS MESS
-
-                    //if(TLS_param.cipher_suite.kx == DHE_KX){
-
-						//DHE_DSS DHE_RSA DH_anon
-						handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
+                    
+                    // make server key exchange if need
+                    handshake * server_key_exchange = make_server_key_exchange(&TLS_param);
+                    if(server_key_exchange!=NULL){
 						printf("\n>>> Server key exchange\n");
 						print_handshake(server_key_exchange);
 						send_handshake(server2client, server_key_exchange);
 						backup_handshake(&TLS_param, server_key_exchange);
 					
 						free_handshake(server_key_exchange);
-					//}
+					}
 
 					// Make and send ServerHelloDone
 					printf("\n>>> Server hello done\n");
@@ -292,7 +289,6 @@ void compute_set_master_key_ECDHE(client_key_exchange *cliet_public){
     //set private key
     EC_KEY_set_private_key(key, TLS_param.private_key);
 
-    // compute master secret
     // compute master secret
     int field_size, pre_master_len;
     unsigned char *pre_master;

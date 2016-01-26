@@ -53,7 +53,7 @@ typedef struct{
     //signature hash algorithm,  1 for signature alg, 1 for hash,
     uint16_t sign_hash_alg; //RSA, SHA512 0x0106 !!! we not rev the byte !!!
     
-    unsigned int signature_length;
+    uint16_t signature_length;
     
     unsigned char *signature;
     

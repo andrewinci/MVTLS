@@ -23,12 +23,14 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	// Choose a cipher suite
     server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
     srand(time(NULL));
-	int choosen_suite = rand()%(client_hello->cipher_suite_len/2); //specify the number of supported cipher suite
+	int chosen_suite_num = rand()%(client_hello->cipher_suite_len/2); //specify the number of supported cipher suite
+    cipher_suite_t chosen_suite = get_cipher_suite( client_hello->cipher_suites[chosen_suite_num].cipher_id );
     
-    memcpy(server_hello->cipher_suites, &(client_hello->cipher_suites[choosen_suite]), sizeof(cipher_suite_t));
+    server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
+    *(server_hello->cipher_suites) = chosen_suite;
     
     // Set cipher suite in global param
-    TLS_param->cipher_suite = client_hello->cipher_suites[choosen_suite];
+    TLS_param->cipher_suite = chosen_suite;
 
 	// Copy server's random
 	memcpy(TLS_param->server_random,&(server_hello->random.UNIX_time), 4);
@@ -164,8 +166,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
         server_key_ex->sign_hash_alg = TLS_param->cipher_suite.hash+(TLS_param->cipher_suite.au<<8); //already rotated
         
         //add signature
-        sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex);
-        
+        sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
         
         //serialize and make handshake
         handshake *server_key_ex_h = malloc(sizeof(handshake));

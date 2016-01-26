@@ -31,8 +31,6 @@ handshake_hello *make_hello(session_id session){
 	
     hello->session_id = session;
     
-    //hello->cipher_suites = get_supported_cipher_suites();
-    
     return hello;
 }
 
@@ -148,8 +146,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
         cipher_id = REV16(cipher_id);
 
         result->cipher_suites = malloc(sizeof(cipher_suite_t));
-        cipher_suite_t temp = get_cipher_suite(cipher_id);
-        memcpy(result->cipher_suites, &temp, sizeof(cipher_suite_t));
+        result->cipher_suites[0] = get_cipher_suite(cipher_id);
         *stream+=2;
         result->cipher_suite_len = 2;
     }
@@ -210,7 +207,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
 //}
 
 void free_hello(handshake_hello *h){
-    free(h->cipher_suites);
+    //free(h->cipher_suites);
     free(h->session_id.session_id);
     free(h);
 }

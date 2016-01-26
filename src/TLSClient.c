@@ -37,11 +37,11 @@ handshake * make_client_hello(unsigned char *client_random){
 	client_hello->TLS_version = TLS1_2;
     
     //add ciphersuites
-    int supported = 2;
+    int supported = 1;
     client_hello->cipher_suite_len = supported*2;
     client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
     uint16_t supported_id[] = {
-        0xC006,
+        0x009E
     };
     for(int i=0;i<supported;i++)
         client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
@@ -67,6 +67,14 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
     if(key_ex_alg == ECDHE_KX){
         
         ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange * )TLS_param->server_key_ex;
+        
+        //verify sign
+        if(verify_ECDHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)<1)
+        {
+            printf("\nError in server key exchange, signature not valid\n");
+            exit(-1);
+        }
+        printf("Signature is valid");
         
         EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
         
@@ -185,12 +193,12 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
         return client_key_exchange;
     }
     else if (key_ex_alg == DHE_KX){
-        DHE_server_key_exchange *server_key_exchange = TLS_param->server_key_ex;
+        DHE_server_key_exchange *server_key_exchange = (DHE_server_key_exchange*)TLS_param->server_key_ex;
         
         //verify sign
         if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)==0)
         {
-            printf("\nError in server key eschange, signature not valid\n");
+            printf("\nError in server key exchange, signature not valid\n");
             exit(-1);
         }
         printf("Signature is valid");
