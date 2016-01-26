@@ -3,8 +3,12 @@ build/
 xcodeIntermediates/
 xcodeProduct/
 .codelite/
-AdvancedProgramming.mk
-AdvancedProgramming.project
 AdvancedProgramming.workspace
+TLSClient.mk
+TLSClient.project
+TLSClient.txt
+TLSServer.mk
+TLSServer.project
+TLSServer.txt
 TLSProject/
 DHtest/
