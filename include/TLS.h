@@ -65,6 +65,10 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param);
 
 handshake * make_server_hello_done();
 
+DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param);
+
+ECDHE_server_key_exchange * make_ECDHE_server_key_exchange(TLS_parameters *TLS_param);
+
 /*
  * This function appends to handshake_messages the handshake h
  */
