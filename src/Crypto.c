@@ -8,9 +8,9 @@
 
 #include "Crypto.h"
 
-int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign);
-int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign);
-int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign);
+int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign);
+int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign);
+int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign);
 
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result){
     int buffer_size = ((1+result_len/hash->md_size)*hash->md_size);
@@ -169,7 +169,7 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     EVP_MD_CTX_destroy(mdctx);
     
     //make stream to be encrypted
-    int to_sign_len = sha1->md_size+md5->md_size;
+    unsigned int to_sign_len = sha1->md_size+md5->md_size;
     unsigned char *to_sign = (unsigned char *)malloc(to_sign_len*sizeof(unsigned char));
     
     memcpy(to_sign, sha1_digest, sha1->md_size);
@@ -323,7 +323,6 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
         pubkey = X509_get_pubkey(certificate);
         ecdsa = EVP_PKEY_get1_EC_KEY(pubkey);
         
-        // ToDo:ERROR, INVALID SIGNATURE
         result = ECDSA_verify(NID_md5_sha1, to_verify, to_verify_len, server_key_ex->signature, server_key_ex->signature_length, ecdsa);
         
         EVP_PKEY_free(pubkey);
@@ -335,7 +334,7 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
     return result;
 }
 
-int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign){
+int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign){
     // get private key for sign
     FILE *private_key_file = fopen("../certificates/serverDSA.key", "r");
     if (!private_key_file) {
@@ -356,7 +355,7 @@ int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, int
     return res;
 }
 
-int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign) {
+int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign) {
     //get private key from file
     int res;
     RSA *rsa_private = NULL;
@@ -382,7 +381,7 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, int
     return res;
 }
 
-int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, int to_sign_len, unsigned char *to_sign){
+int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign){
     // get private key for sign
     FILE *private_key_file = fopen("../certificates/serverECDSA.key", "r");
     if (!private_key_file) {
@@ -403,4 +402,3 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, i
     
     return res;
 }
-
