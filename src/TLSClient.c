@@ -247,13 +247,13 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
     return NULL;
 }
 
-record * make_change_cipher_spec() {
+record_t * make_change_cipher_spec() {
 
 	//make and send change cipher spec message
-	record *change_cipher_spec_message = malloc(sizeof(record));
+	record_t *change_cipher_spec_message = malloc(sizeof(record_t));
 	change_cipher_spec_message->type = CHANGE_CIPHER_SPEC;
 	change_cipher_spec_message->version = TLS1_2;
-	change_cipher_spec_message->lenght = 0x01;
+	change_cipher_spec_message->length = 0x01;
 	change_cipher_spec_message->message = malloc(1);
 	*(change_cipher_spec_message->message) = 0x01;
 	return change_cipher_spec_message;

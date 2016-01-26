@@ -8,32 +8,32 @@
 
 #include "ServerClientRecordProtocol.h"
 
-void serialize_record(record *r, unsigned char **message, uint16_t *messageLen){
-    *messageLen = r->lenght;
+void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
+    *messageLen = r->length;
     uint16_t lenghtRev = REV16(*messageLen);
     *message = calloc((*messageLen)+5,1);
     memcpy(*message, &(r->type), 1);
     memcpy(*message+1, &(r->version), 2);
     memcpy(*message+3, &lenghtRev, 2);
-    memcpy(*message+5, r->message, r->lenght);
+    memcpy(*message+5, r->message, r->length);
     *messageLen+=5;
 }
 
-record *deserialize_record(unsigned char *message, uint32_t messageLen){
-    record *result = malloc(sizeof(record));
+record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
+    record_t *result = malloc(sizeof(record_t));
 
     result->type = *message;
     memcpy(&(result->version), message+1, 2);
-    memcpy(&(result->lenght), message+3, 2);
-    result->lenght = REV16(result->lenght);
+    memcpy(&(result->length), message+3, 2);
+    result->length = REV16(result->length);
     
-    result->message = malloc(result->lenght);
-    memcpy(result->message, message+5, result->lenght);
+    result->message = malloc(result->length);
+    memcpy(result->message, message+5, result->length);
     
     return result;
 }
 
-int send_record(channel *ch, record *r){
+int send_record(channel *ch, record_t *r){
     unsigned char *message = NULL;
     uint16_t messageLen;
     serialize_record(r, &message, &messageLen);
@@ -45,7 +45,7 @@ int send_record(channel *ch, record *r){
     return result;
 }
 
-void print_record(record *r){
+void print_record(record_t *r){
 //    printf("\n***RECORD***\n");
 //    printf("Type : %d\n",r.type);
 //    printf("Version : %d\n",r.version);
@@ -65,7 +65,7 @@ void print_record(record *r){
     free(message);
 }
 
-void free_record(record *r){
+void free_record(record_t *r){
 	if(r==NULL)
 		return;
 	free(r->message);

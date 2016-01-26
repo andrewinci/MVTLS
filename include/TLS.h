@@ -49,7 +49,7 @@ handshake * make_client_hello(unsigned char *client_random);
 
 handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg);
 
-record * make_change_cipher_spec();
+record_t * make_change_cipher_spec();
 
 handshake * make_finished_message(TLS_parameters *TLS_param ) ;
 

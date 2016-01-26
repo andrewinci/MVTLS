@@ -8,22 +8,22 @@
 
 #include "ServerClientHandshakeProtocol.h"
 
-record *make_record(handshake *h) {
+record_t *make_record(handshake *h) {
     unsigned char *message = NULL;
     uint32_t messageLen = 0;
     serialize_handshake(h, &message, &messageLen);
     
     //make record
-    record *to_send = malloc(sizeof(record));
+    record_t *to_send = malloc(sizeof(record_t));
     to_send->type = HANDSHAKE;
     to_send->version = TLS1_2;
-    to_send->lenght = messageLen;
+    to_send->length = messageLen;
     to_send->message = message;
     return to_send;
 }
 
 int send_handshake(channel *ch, handshake *h){
-    record *to_send;
+    record_t *to_send;
     to_send = make_record(h);
     
     int result = send_record(ch, to_send);

@@ -22,7 +22,7 @@ int main() {
 	char *fileName = "SSLchannel.txt";
 	char *channelFrom = "Client";
 	char *channelTo = "Server";
-	channel *client2server = create_channel(fileName, channelFrom, channelTo, CLIENT);
+	channel *client2server = create_channel(fileName, channelFrom, channelTo);
 	set_on_receive(client2server, &onPacketReceive);
 
 	TLS_param.previous_state = 0x0000;
@@ -69,7 +69,7 @@ int main() {
 void onPacketReceive(channel *client2server, packet_basic *p){
 	
 	// Get record and print
-	record *r = deserialize_record(p->message, p->messageLen);
+	record_t *r = deserialize_record(p->message, p->length);
 	if(r->type == CHANGE_CIPHER_SPEC){
 		printf("\n<<< Change cipher spec\n");
 		print_record(r);
@@ -78,7 +78,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 		free_packet(p);
 	}
 	else if(r->type == HANDSHAKE){
-		handshake *h = deserialize_handshake(r->message, r->lenght);
+		handshake *h = deserialize_handshake(r->message, r->length);
 		
 		free_record(r);
 		free_packet(p);
@@ -153,7 +153,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 
 
 					printf("\n>>> Change cipher spec\n");
-					record* change_cipher_spec = make_change_cipher_spec();
+					record_t* change_cipher_spec = make_change_cipher_spec();
 					send_record(client2server, change_cipher_spec);
 					print_record(change_cipher_spec);
 					free_record(change_cipher_spec);

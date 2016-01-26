@@ -37,46 +37,57 @@
 
 #define DELAY_TIME 50
 
-// operation mode
-#ifndef enum_mode
-#define enum_mode
-typedef enum{
-    SERVER,CLIENT
-}mode;
-#endif
-
 #ifndef struct_packet
 #define struct_packet
-// basic packet
-typedef struct{
-    char *source; //8 byte
-    char *destination;   //8 byte
-    uint32_t messageLen;
+/** This struct substitute the TCP in our implementation*/
+typedef struct
+{
+    /** Packet source name, 8 Byte length*/
+    char *source;
+    
+    /** Packet destination name, 8 Byte length*/
+    char *destination;
+    
+    /** Message to send length*/
+    uint32_t length;
+    
+    /** Message byte stream of lenght lenght*/
     unsigned char *message;
 
-}packet_basic;
+}
+packet_basic;
 #endif
 
 #ifndef struct_channel
 #define struct_channel
-typedef struct channel{
-    // server client mode
-    mode mod;
-    // channel from
+/** \struct channel Struct for model and manage a file channel
+ between client and server*/
+typedef struct channel
+{
+    /** Channel source name e.g. server*/
     char *channel_source;
-    // channel to
+    
+    /** Channel destination name e.g. client*/
     char *channel_destination;
-    // file to use for exchange messages
+    
+    /** File to use for exchange messages,
+     the channel between client and server */
     char *fileName;
-    // file descriptor
+    
+    /** Channel file descriptor */
     int fd;
-    // function to be called when a packet is received
+    
+    /** Function to be called when a packet is received */
     void (*onPacketReceive)(struct channel *ch, packet_basic *p);
-    // value to establish if reading thread is enabled
+    
+    /** If the listener is running it is setted to 1 otherwise it is 0*/
     int isEnabled;
-    // reading thread
+    
+    /** Secondary thread for reading/writing */
     pthread_t thread;
-}channel;
+    
+}
+channel;
 #endif
 
 /*
@@ -86,7 +97,7 @@ typedef struct channel{
  * serverName : name of the server/client
  * return the created channel
  */
-channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode channelMode);
+channel *create_channel(char *fileName, char *channelFrom, char *channelTo);
 
 /*
  * Set the function to be called when a message is received
@@ -97,7 +108,7 @@ channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode
  */
 int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basic *p));
 
-/*
+/**
  * Send a message trough the channel ch
  *
  * ch : channel to be used
@@ -106,7 +117,7 @@ int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basi
  */
 int send_packet(channel *ch, packet_basic *p);
 
-/*
+/**
  * Start the channel. We open another thread for the reading
  * and the current thread for writing. From now on (if the operation
  * is succesfull) the client/server read continously from channel.
@@ -122,26 +133,28 @@ int start_listener(channel *ch);
  */
 void wait_channel(channel *ch);
 
-/*
- * Stop the reading thread and the channel
- * It doesn't free the channel, this operation
- * has to be done manually with free()
+/**
+ * Stop the reading/write thread and the channel.
+ * Note: the function doesn't free the channel.
+ * \param ch : channel to stop
  */
 void stop_channel(channel *ch);
 
-/*
- * Create a packet
+/**
+ * Create a packet starting from a byte stream 
+ * source and destination
  *
- * from : packet source
- * to   : packet receiver
- * message : the message to be sent
- * messageLen : message lenght (only message)
+ * \param source        : packet source
+ * \param destination   : packet receiver
+ * \param message       : message stream to be 
+                        encapsulate into packet
+ * \param message_length: message lenght
+ * \return a pointer to a builded packet
  */
-packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen);
+packet_basic *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
-/*
+/**
  * Delete and free memory allocated by packet
- *
- * p : packet to remove
+ * \param p : pointer to packet to free
  */
 void free_packet(packet_basic *p);

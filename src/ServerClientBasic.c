@@ -16,9 +16,8 @@ packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen);
 void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen);
 
 
-channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode channelMode){
+channel *create_channel(char *fileName, char *channelFrom, char *channelTo){
     channel *ch = malloc(sizeof(channel));
-    ch->mod = channelMode;
     ch->channel_source = channelFrom;
     ch->channel_destination = channelTo;
     ch->fileName = fileName;
@@ -128,24 +127,24 @@ void wait_channel(channel *ch){
     pthread_join(ch->thread, NULL);
 }
 
-packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen){
+packet_basic *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
     packet_basic *result = malloc(sizeof(packet_basic));    
     
-	if(from!=NULL){
+	if(source!=NULL){
         result->source = calloc(8,1);
-        memcpy(result->source, from, 8);
+        memcpy(result->source, source, 8);
     }else result->source = NULL;
 	
-    if(to!=NULL){
+    if(destination!=NULL){
         result->destination = calloc(8,1);
-        memcpy(result->destination, to, 8);
+        memcpy(result->destination, destination, 8);
     }else result->destination = NULL;
     if(message!=NULL){
-        result->message = malloc(messageLen);
-        memcpy(result->message, message, messageLen);
+        result->message = malloc(message_length);
+        memcpy(result->message, message, message_length);
     }else result->message = NULL;
     
-    result->messageLen = messageLen;
+    result->length = message_length;
     return result;
 }
 
@@ -245,15 +244,15 @@ void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen){
         *strLen = 0;
         return;
     }
-    *strLen = p->messageLen+4+8+8;
+    *strLen = p->length+4+8+8;
     *str = malloc(*strLen);
 
     if(*str!=NULL){
         memcpy(*str, p->source, 8);
         memcpy(*str+8, p->destination, 8);
         memcpy(*str+16, strLen, 4);
-        if(p->messageLen>0)
-            memcpy(*str+20,p->message,p->messageLen);
+        if(p->length>0)
+            memcpy(*str+20,p->message,p->length);
     }
     else
     {
