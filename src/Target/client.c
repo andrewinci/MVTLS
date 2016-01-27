@@ -7,7 +7,34 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 #include "TLS.h"
+#define USAGE 	"TLSClient: TLS1.2 version handshake\n"\
+				"\n"\
+				"Usage:  \n"\
+				"  TLSClient [args] \n"\
+				" \n"\
+				"Options: \n"\
+				"  Specify cipher suite id (not hex) \n"\
+				"    -c  --cipher_id        [id]\n"\
+				"   \n"\
+				"  Cipher suite name     \n"\
+				"    -n  --name             [name]\n"\
+				"   \n"\
+				"  Specify key exchange    \n"\
+				"    -x  --key_exchange    (RSA|DHE|ECDHE)  \n"\
+				"   \n"\
+				"  Specify authentication algorithm \n"\
+				"    -a  --auth_algorithm  (RSA|DSS|ECDSA) \n"\
+				" \n"\
+				"  Specify hash algorithm \n"\
+				"    -h  --hash_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \n"\
+				" \n"\
+				"  Show supported cipher suites \n"\
+				"    -l --list\n"\
+				" \n"\
+				"  Show this help \n"\
+				"    --help \n\n"
 
 void onPacketReceive(channel *ch, packet_basic *p);
 
@@ -16,10 +43,92 @@ void print_random();
 
 TLS_parameters TLS_param;
 
-int main() {
+int main(int argc, char **argv) {
+    
+    //PARAMETERS
+    int to_send_cipher_suite_len = 0;
+    cipher_suite_t to_send_cipher_suite[NUM_CIPHER_SUITE];
+    key_exchange_algorithm kx = NONE_KX;
+    authentication_algorithm au = NONE_AU;
+    hash_algorithm ha = NONE_H;
+    for(int i=1;i<argc;i+=2){
+        if(strcmp(argv[i], "-c")==0 || strcmp(argv[i], "--cipher_id")==0){
+            cipher_suite_t c = get_cipher_suite_by_id(atoi(argv[i+1]));
+            if(c.name!=NULL){
+                to_send_cipher_suite[to_send_cipher_suite_len] = c;
+                printf("Load:%s\n",to_send_cipher_suite[to_send_cipher_suite_len].name);
+                to_send_cipher_suite_len++;
+            }else
+                printf("cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
+        }
+        
+        else if(strcmp(argv[i], "-n")==0 || strcmp(argv[i], "--name")==0){
+            cipher_suite_t c = get_cipher_suite_by_name(argv[i+1]);
+            if(c.name!=NULL){
+                to_send_cipher_suite[to_send_cipher_suite_len] = c;
+                printf("Load:%s\n",to_send_cipher_suite[to_send_cipher_suite_len].name);
+                to_send_cipher_suite_len++;
+            }else
+                printf("cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
+        }
+
+        else if(strcmp(argv[i], "-x")==0 || strcmp(argv[i], "--key_exchange")==0){
+            if(strcmp("RSA", argv[i+1])==0)
+                kx = RSA_KX;
+            else if(strcmp("DHE", argv[i+1])==0)
+                kx = DHE_KX;
+            else if(strcmp("ECDHE", argv[i+1])==0)
+                kx = ECDHE_KX;
+        }
+        else if(strcmp(argv[i], "-a")==0 || strcmp(argv[i], "--auth_algorithm")==0){
+            if(strcmp("RSA", argv[i+1])==0)
+                au = RSA_AU;
+            else if(strcmp("DSS", argv[i+1])==0)
+                au = DSS_AU;
+            else if(strcmp("ECDSA", argv[i+1])==0)
+                au = ECDSA_AU;
+        }
+        else if(strcmp(argv[i], "-h")==0 || strcmp(argv[i], "--hash_algorithm")==0){
+            if(strcmp("MD5", argv[i+1])==0)
+                ha = MD5_H;
+            else if(strcmp("SHA1", argv[i+1])==0)
+                ha = SHA1_H;
+            else if(strcmp("SHA224", argv[i+1])==0)
+                ha = SHA224_H;
+            else if(strcmp("SHA256", argv[i+1])==0)
+                ha = SHA256_H;
+            else if(strcmp("SHA384", argv[i+1])==0)
+                ha = SHA384_H;
+            else if(strcmp("SHA512", argv[i+1])==0)
+                ha = SHA512_H;
+        }
+        else if(argc == 2 && strcmp(argv[i], "--help")==0){
+            printf("%s",USAGE);
+            return 0;
+        }
+        else if( argc == 2 && (strcmp(argv[i], "-l")==0 || strcmp(argv[i], "--list")==0)){
+            int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+            printf("Supported cipher suite are the follows:\n");
+            for(int i=0;i<num_added;i++)
+                printf("%s\n",to_send_cipher_suite[i].name);
+            return 0;
+        }
+    }
+    // if no option load all cipher suite
+    if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
+        get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        printf("All supported cipher suite are loaded\n");
+        printf("use --help for show the help\n");
+    }else if (to_send_cipher_suite_len == 0){
+        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        for(int j=0;j<num_added;j++)
+            printf("Load %s\n",to_send_cipher_suite[j+to_send_cipher_suite_len].name);
+        to_send_cipher_suite_len+=num_added;
+    }
     TLS_param.handshake_messages = NULL;
-	// Setup the channel
-	char *fileName = "SSLchannel.txt";
+	
+    // Setup the channel
+	char *fileName = "TLSchannel.txt";
 	char *channelFrom = "Client";
 	char *channelTo = "Server";
 	channel *client2server = create_channel(fileName, channelFrom, channelTo);
@@ -30,7 +139,7 @@ int main() {
 	
 	// Make ClientHello
 	printf(">>> Client hello\n");
-	handshake *client_hello = make_client_hello(TLS_param.client_random);
+	handshake *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
 	print_handshake(client_hello);
 	send_handshake(client2server, client_hello);
 	backup_handshake(&TLS_param,client_hello);
@@ -42,7 +151,9 @@ int main() {
 
 	//print details about the connection
 	print_random();
-	printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
+    // print certificate details
+    printf("\nCertificate details:\n");
+    printf("%s",TLS_param.server_certificate->name);
     printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
     printf("\nMaster key: \n");
     for(int i=0;i<TLS_param.master_secret_len;i++)

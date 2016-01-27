@@ -19,9 +19,9 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 
 	// Choose and set cipher suite
 	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
-	srand(time(NULL));
+	srand((int)time(NULL));
 	int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2); // Specify the number of supported cipher suite
-	cipher_suite_t choosen_suite = get_cipher_suite( client_hello->cipher_suites[choosen_suite_num].cipher_id );
+	cipher_suite_t choosen_suite = get_cipher_suite_by_id( client_hello->cipher_suites[choosen_suite_num].cipher_id );
 
 	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
 	*(server_hello->cipher_suites) = choosen_suite;

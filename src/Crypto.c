@@ -248,20 +248,11 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
             break;
     }
     
-    printf("\nsignature:\n");
-    for(int i=0;i<server_key_ex->signature_length;i++)
-        printf("%02X ",server_key_ex->signature[i] );
-    
     free(pubkey_char);
     return res;
 }
 
 int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au){
-    
-    printf("\nsignature:\n");
-    for(int i=0;i<server_key_ex->signature_length;i++)
-        printf("%02X ",server_key_ex->signature[i]);
-    
     
     int pubkey_len;
     unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pub_key));

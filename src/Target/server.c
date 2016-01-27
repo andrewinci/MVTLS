@@ -20,7 +20,7 @@ TLS_parameters TLS_param;
 
 int main() {
 	// Setup the channel
-	char *fileName = "SSLchannel.txt";
+	char *fileName = "TLSchannel.txt";
 	char *channelFrom = "Server";
 	char *channelTo = "Client";
 	channel *server2client = create_channel(fileName, channelFrom, channelTo);
@@ -35,12 +35,15 @@ int main() {
 	wait_channel(server2client);
 
 	// Print details about connection
-	print_random();
-	printf("\nCertificate details: %s\n", TLS_param.server_certificate->name);
-	printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
-	printf("\nMaster key: \n");
-	for(int i=0;i<TLS_param.master_secret_len;i++)
-		printf("%02X ",TLS_param.master_secret[i]);
+    print_random();
+    
+    // print certificate details
+    printf("\nCertificate details:\n");
+    printf("%s",TLS_param.server_certificate->name);
+    printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
+    printf("\nMaster key: \n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02X ",TLS_param.master_secret[i]);
 	printf("\n");
 
 	// Clean up

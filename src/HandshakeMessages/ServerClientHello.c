@@ -146,7 +146,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
         cipher_id = REV16(cipher_id);
 
         result->cipher_suites = malloc(sizeof(cipher_suite_t));
-        result->cipher_suites[0] = get_cipher_suite(cipher_id);
+        result->cipher_suites[0] = get_cipher_suite_by_id(cipher_id);
         *stream+=2;
         result->cipher_suite_len = 2;
     }
@@ -165,7 +165,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
             cipher_id = REV16(cipher_id);
             
             //getting cipher_suite for each id
-            cipher_suite_t temp = get_cipher_suite(cipher_id);
+            cipher_suite_t temp = get_cipher_suite_by_id(cipher_id);
             memcpy(result->cipher_suites+i, &temp, sizeof(cipher_suite_t));
             stream+=2;
         }

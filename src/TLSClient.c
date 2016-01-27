@@ -33,27 +33,18 @@ void backup_handshake(TLS_parameters *TLS_param, handshake *h){
 
 /* Functions to send messages */
 
-handshake * make_client_hello(unsigned char *client_random){
+handshake * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
 	// Initialize client hello (without SessionID)
 	session_id *session= malloc(sizeof(session_id));    
 	session->session_lenght =0x00;
 	session->session_id = NULL;
 	handshake_hello *client_hello = make_hello(*session);
 	client_hello->TLS_version = TLS1_2;
-
-	// Add ciphersuites
-	int supported = 1;
-	client_hello->cipher_suite_len = supported*2;
-	client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*supported);
-	uint16_t supported_id[] = {
-		0xC006,		// ECDHE_ECDSA
-		//0xC010,		// ECDHE_RSA
-		//0x0011,		// DHE_DSS
-		//0x0014,		// DHE_RSA
-		//0x0001		// RSA
-		};
-	for(int i=0;i<supported;i++)
-		client_hello->cipher_suites[i]=get_cipher_suite(supported_id[i]);
+    
+    client_hello->cipher_suite_len = 2*cipher_suite_len;
+    client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*cipher_suite_len);
+	for(int i=0;i<cipher_suite_len;i++)
+        client_hello->cipher_suites[i]=cipher_suite_list[i];
 
 	// Insert server hello into handshake packet
 	handshake *client_hello_h = malloc(sizeof(handshake));

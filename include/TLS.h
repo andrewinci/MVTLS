@@ -45,7 +45,7 @@ typedef struct{
 
 /* Functions for make message*/
 
-handshake * make_client_hello(unsigned char *client_random);
+handshake * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len);
 
 handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg);
 

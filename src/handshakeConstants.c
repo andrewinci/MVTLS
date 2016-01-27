@@ -8,8 +8,7 @@
 
 #include "handshakeConstants.h"
 
-int cipher_suite_len = 61;
-
+const int NUM_CIPHER_SUITE = 62;
 cipher_suite_t cipher_suite_list[] ={
     //RSA
     {0x0001 , "TLS_RSA_WITH_NULL_MD5" , 1 , 1 , 0 , 1 },
@@ -77,21 +76,22 @@ cipher_suite_t cipher_suite_list[] ={
     {0x0088 , "TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA" , 2 , 1 , 256 , 2 },
     {0x009A , "TLS_DHE_RSA_WITH_SEED_CBC_SHA" , 2 , 1 , 128 , 2 },
     {0x009E , "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256" , 2 , 1 , 128 , 4 },
-    {0x009F , "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384" , 2 , 1 , 256 , 5 }
+    {0x009F , "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384" , 2 , 1 , 256 , 5 },
+    {0x0000 , NULL, -1, -1, -1, -1}
 };
 
 const EVP_MD *get_hash_function(hash_algorithm h){
     switch (h) {
-        case sha1:
+        case SHA1_H:
             return EVP_sha();
             
-        case sha256:
+        case SHA256_H:
             return EVP_sha256();
         
-        case sha384:
+        case SHA384_H:
             return EVP_sha384();
         
-        case md5:
+        case MD5_H:
             return EVP_md5();
             
         default:
@@ -99,9 +99,27 @@ const EVP_MD *get_hash_function(hash_algorithm h){
     }
 }
 
+int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]){
+    int j=0;
+    for(int i=0;i<NUM_CIPHER_SUITE;i++)
+        if( (kx == NONE_KX || cipher_suite_list[i].kx == kx) &&
+            (h == NONE_H     || cipher_suite_list[i].hash == h) &&
+            (au == NONE_AU || cipher_suite_list[i].au == au)){
+            array[j] = cipher_suite_list[i];
+            j++;
+        }
+    return j;
+}
 
-cipher_suite_t get_cipher_suite(uint16_t id){
+cipher_suite_t get_cipher_suite_by_name(char *name){
     int i=0;
-    for(;i<cipher_suite_len && cipher_suite_list[i].cipher_id != id;i++);
+    for(;i<NUM_CIPHER_SUITE && strcmp(cipher_suite_list[i].name, name)!=0;i++);
     return cipher_suite_list[i];
+}
+
+cipher_suite_t get_cipher_suite_by_id(uint16_t id){
+    int i=0;
+    for(;i<NUM_CIPHER_SUITE && cipher_suite_list[i].cipher_id != id;i++)
+        ;
+        return cipher_suite_list[i];
 }
