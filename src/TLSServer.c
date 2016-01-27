@@ -190,7 +190,7 @@ handshake * make_server_hello_done() {
 	// Make and insert server done into handshake packet
 	handshake *server_hello_done = malloc(sizeof(handshake));
 	server_hello_done->type = SERVER_DONE;
-	server_hello_done->length =0x00;
+	server_hello_done->length = 0x00;
 	server_hello_done->message = NULL;
 
 	return server_hello_done;

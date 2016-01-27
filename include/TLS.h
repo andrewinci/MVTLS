@@ -49,6 +49,12 @@ handshake * make_client_hello(unsigned char *client_random);
 
 handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg);
 
+void make_RSA_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param);
+
+void make_DHE_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param);
+
+void make_ECDHE_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param);
+
 record_t * make_change_cipher_spec();
 
 handshake * make_finished_message(TLS_parameters *TLS_param ) ;
