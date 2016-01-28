@@ -84,7 +84,10 @@ const EVP_MD *get_hash_function(hash_algorithm h){
     switch (h) {
         case SHA1_H:
             return EVP_sha();
-            
+
+        case SHA224_H:
+            return EVP_sha224();
+        
         case SHA256_H:
             return EVP_sha256();
         

@@ -1,10 +1,12 @@
-//
-//  SSL/TLS Project
-//  ServerClientFileSocket.c
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
+/*
+ *  SSL/TLS Project
+ *  ServerClientFileSocket.c
+ *
+ *
+ *
+ *  Created on 22/12/15.
+ *  Copyright © 2015 Mello, Darka. All rights reserved.
+ */
 
 #include "ServerClientBasic.h"
 

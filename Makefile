@@ -53,8 +53,7 @@ testBasic: basicProtocol
 # Protocols
 TLS: handshakeProtocol
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/Crypto.o $(SRCDIR)/Crypto.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSClient.o $(SRCDIR)/TLSClient.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSServer.o $(SRCDIR)/TLSServer.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLS.o $(SRCDIR)/TLS.c
 
 handshakeProtocol: recordProtocol handshakeMessages
 	@printf "${GREEN}** Make object code for handshake protocol**${NC}\n"

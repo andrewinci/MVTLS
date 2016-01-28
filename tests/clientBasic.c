@@ -1,10 +1,14 @@
-//
-//  SSL/TLS Project
-//  clientBasic.c
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *
+ *  \file clientBasic.c
+ *  Client for testing the basic protocol layer.
+ *
+ *  \addtogroup BasicProtocolLayer
+ *  @{
+ *  \date Created on 22/12/15.
+ *  \copyright Copyright © 2015 Mello, Darka. All rights reserved.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,3 +64,4 @@ void onPacketReceive(channel *ch, packet_basic *p){
     }
 	free_packet(p);
 }
+ /** @} */

@@ -1,23 +1,23 @@
-//
-//  SSL/TLS Project
-//  ServerClientFileSocket.h
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
-//  Basic client server comunication through file
-//
-//  PROTOCOL:
-//  The protocol is very basic
-//  8 byte for source
-//  8 byte for receiver
-//  4 byte for packet length
-//  message
-//  
-//
-//  both server and client after read a message they blank the file
-//  both server and client cannot write if the file is not blank, they wait
-//
+/**
+ *  SSL/TLS Project
+ *  \file ServerClientFileSocket.h
+ *  Basic client/server comunication through file.
+ *
+ *  PROTOCOL:
+ *  The protocol is very basic
+ *  8 byte for source
+ *  8 byte for receiver
+ *  4 byte for packet length
+ *  message
+ *
+ *  both server and client after read a message they blank the file
+ *  both server and client cannot write if the file is not blank, they wait
+ *
+ *  \addtogroup BasicProtocolLayer
+ *
+ *  Created on 22/12/15.
+ *  Copyright © 2015 Mello, Darka. All rights reserved.
+ */
 
 #ifndef ServerClientBasic_h
 #define ServerClientBasic_h

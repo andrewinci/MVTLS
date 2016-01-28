@@ -37,9 +37,7 @@
 				"    --help \n\n"
 
 void onPacketReceive(channel *ch, packet_basic *p);
-
-void print_master_secret();
-void print_random();
+void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);
 
 TLS_parameters TLS_param;
 
@@ -116,7 +114,8 @@ int main(int argc, char **argv) {
     }
     // if no option load all cipher suite
     if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
-        get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        
         printf("All supported cipher suite are loaded\n");
         printf("use --help for show the help\n");
     }else if (to_send_cipher_suite_len == 0){
@@ -127,30 +126,43 @@ int main(int argc, char **argv) {
     }
     TLS_param.handshake_messages = NULL;
 	
+    do_handshake(to_send_cipher_suite_len, to_send_cipher_suite);
+}
+
+/*
+ * Send packets for starting a secure connection (handshake)
+ */
+void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]) {
     // Setup the channel
-	char *fileName = "TLSchannel.txt";
-	char *channelFrom = "Client";
-	char *channelTo = "Server";
-	channel *client2server = create_channel(fileName, channelFrom, channelTo);
-	set_on_receive(client2server, &onPacketReceive);
-
-	TLS_param.previous_state = 0x0000;
-	printf("*** TLS client is started ***\n\n");
-	
-	// Make ClientHello
-	printf(">>> Client hello\n");
-	handshake *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
-	print_handshake(client_hello);
-	send_handshake(client2server, client_hello);
-	backup_handshake(&TLS_param,client_hello);
-	free_handshake(client_hello);
-	
-	// Start channel and listener for new messages
-	start_listener(client2server);
-	wait_channel(client2server);
-
-	//print details about the connection
-	print_random();
+    char *fileName = "TLSchannel.txt";
+    char *channelFrom = "Client";
+    char *channelTo = "Server";
+    channel *client2server = create_channel(fileName, channelFrom, channelTo);
+    set_on_receive(client2server, &onPacketReceive);
+    
+    TLS_param.previous_state = 0x0000;
+    printf("*** TLS client is started ***\n\n");
+    
+    // Make ClientHello
+    printf(">>> Client hello\n");
+    handshake *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
+    print_handshake(client_hello);
+    send_handshake(client2server, client_hello);
+    backup_handshake(&TLS_param,client_hello);
+    free_handshake(client_hello);
+    
+    // Start channel and listener for new messages
+    start_listener(client2server);
+    wait_channel(client2server);
+    
+    //print details about the connection
+    //print server and client random
+    printf("Server random :\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.server_random[i]);
+    printf("\nClient random :\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.client_random[i]);
     // print certificate details
     printf("\nCertificate details:\n");
     printf("%s",TLS_param.server_certificate->name);
@@ -158,14 +170,14 @@ int main(int argc, char **argv) {
     printf("\nMaster key: \n");
     for(int i=0;i<TLS_param.master_secret_len;i++)
         printf("%02X ",TLS_param.master_secret[i]);
-	printf("\n");
-
-	free(client2server);
-
+    printf("\n");
+    
+    free(client2server);
+    
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
-
+    
     // ToDo: make only function for free all server key exchange taking the ciphersuite id and the struct to free
     //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
     
@@ -292,19 +304,3 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 	}
 }
 
-void print_master_secret() {
-	printf("\nMaster secret:\n");
-	for(int i=0;i<48;i++)
-		printf("%02x ",TLS_param.master_secret[i]);
-	printf("\n");
-}
-
-void print_random() {
-	//print server and client random
-	printf("Server random :\n");
-	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.server_random[i]);
-	printf("\nClient random :\n");
-	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.client_random[i]);
-}
