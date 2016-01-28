@@ -42,7 +42,6 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	server_hello->TLS_version = TLS1_2;
 
 	// Choose and set cipher suite
-	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
 	srand((int)time(NULL));
 	int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2); // Specify the number of supported cipher suite
 	cipher_suite_t choosen_suite = get_cipher_suite_by_id( client_hello->cipher_suites[choosen_suite_num].cipher_id );
@@ -306,7 +305,7 @@ void make_RSA_client_key_exchange(client_key_exchange *client_key_ex, TLS_parame
     rsa = EVP_PKEY_get1_RSA(pubkey);
     
     // Encrypt pre master key
-    unsigned char *pre_master_key_enc = malloc(256);
+    unsigned char *pre_master_key_enc = malloc(sizeof(unsigned char)*256);
     int pre_master_key_enc_len = 0;
     pre_master_key_enc_len = RSA_public_encrypt(pre_master_key_len, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
     

@@ -30,7 +30,7 @@ typedef struct {
 // Session ID
 typedef struct session_id_t {
     uint8_t session_lenght;
-    uint8_t *session_id;
+    unsigned char *session_id;
 } session_id;
 
 // (Useless) Compression methods

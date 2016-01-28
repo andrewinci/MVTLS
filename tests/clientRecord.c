@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
     r->type = HANDSHAKE;
     r->version = TLS1_2;
     r->lenght = 0x01;
-    r->message = malloc(1);
+    r->message = malloc(1*sizeof(unsigned char));
     *(r->message)='\x31';
     
     send_record(client, r);

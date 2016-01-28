@@ -10,14 +10,14 @@
 
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result){
     int buffer_size = ((1+result_len/hash->md_size)*hash->md_size);
-    unsigned char *buff = malloc(buffer_size);
+    unsigned char *buff = malloc(sizeof(unsigned char)*buffer_size);
     int label_len = (int)strlen(label);
     *result = buff;
     
     //compute p_hash(secret,seed)
     //secret is equal to secret
     //seed is equal to label concatenate with seed
-    unsigned char *seed_p = malloc(label_len+seed_len);
+    unsigned char *seed_p = malloc(sizeof(unsigned char)*(label_len+seed_len));
     memcpy(seed_p, label, label_len);
     memcpy(seed_p+label_len, seed, seed_len);
     
@@ -47,7 +47,7 @@ int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, uns
     fclose(private_key_file);
     
     //allocate memory for signature
-    *signature = malloc(DSA_size(dsa_private));
+    *signature = malloc(sizeof(unsigned char)*DSA_size(dsa_private));
     
     int res = DSA_sign(sign_type, to_sign, to_sign_len, *signature, signature_length, dsa_private );
     
@@ -74,7 +74,7 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
     fclose(fp);
     
     //allocate memory for signature
-    *signature = malloc(RSA_size(rsa_private));
+    *signature = malloc(sizeof(unsigned char)*RSA_size(rsa_private));
     
     res = RSA_sign(sign_type, to_sign, to_sign_len, *signature, signature_length, rsa_private);
     
@@ -95,7 +95,7 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, u
     fclose(private_key_file);
     
     //allocate memory for signature
-    *signature = malloc(ECDSA_size(ecdsa_private));
+    *signature = malloc(sizeof(unsigned char)*ECDSA_size(ecdsa_private));
     
     int res = ECDSA_sign(sign_type, to_sign, to_sign_len, *signature, signature_length, ecdsa_private );
     
@@ -109,15 +109,15 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
     
     //extract p g pubkey
     int p_len;
-    unsigned char *p = malloc(BN_num_bytes(server_key_ex->p));
+    unsigned char *p = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->p));
     p_len = BN_bn2bin(server_key_ex->p, p);
     
     int g_len;
-    unsigned char *g = malloc(BN_num_bytes(server_key_ex->g));
+    unsigned char *g = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->g));
     g_len = BN_bn2bin(server_key_ex->g, g);
     
     int pubkey_len;
-    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pubKey));
+    unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pubKey));
     pubkey_len = BN_bn2bin(server_key_ex->pubKey, pubkey_char);
     
     //get hash function from packet
@@ -195,15 +195,15 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     
     //extract p g pubkey
     int p_len;
-    unsigned char *p = malloc(BN_num_bytes(server_key_ex->p));
+    unsigned char *p = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->p));
     p_len = BN_bn2bin(server_key_ex->p, p);
     
     int g_len;
-    unsigned char *g = malloc(BN_num_bytes(server_key_ex->g));
+    unsigned char *g = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->g));
     g_len = BN_bn2bin(server_key_ex->g, g);
     
     int pubkey_len;
-    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pubKey));
+    unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pubKey));
     pubkey_len = BN_bn2bin(server_key_ex->pubKey, pubkey_char);
     
     // choose random hash alg
@@ -270,7 +270,7 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
     
     //RFC 4492
     int pubkey_len;
-    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pub_key));
+    unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pub_key));
     pubkey_len = BN_bn2bin(server_key_ex->pub_key, pubkey_char);
     
     // choose random hash alg
@@ -330,7 +330,7 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
 int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au){
     
     int pubkey_len;
-    unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pub_key));
+    unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pub_key));
     pubkey_len = BN_bn2bin(server_key_ex->pub_key, pubkey_char);
     
     //get hash function from packet

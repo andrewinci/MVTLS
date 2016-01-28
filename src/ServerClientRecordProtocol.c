@@ -11,7 +11,7 @@
 void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
     *messageLen = r->length;
     uint16_t lenghtRev = REV16(*messageLen);
-    *message = calloc((*messageLen)+5,1);
+    *message = calloc((*messageLen)+5,sizeof(unsigned char));
     memcpy(*message, &(r->type), 1);
     memcpy(*message+1, &(r->version), 2);
     memcpy(*message+3, &lenghtRev, 2);
@@ -27,7 +27,7 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
     memcpy(&(result->length), message+3, 2);
     result->length = REV16(result->length);
     
-    result->message = malloc(result->length);
+    result->message = malloc(sizeof(unsigned char)*(result->length));
     memcpy(result->message, message+5, result->length);
     
     return result;

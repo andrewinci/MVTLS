@@ -43,7 +43,7 @@ certificate_message *make_certificate_message(char *cert_file_name){
 
 void serialize_certificate_message(certificate_message *cert, unsigned char **stream, uint32_t *len){
     *len = cert->cert_length+3;
-    *stream = malloc(*len); //3 byte for the lenght of all certificate stream
+    *stream = malloc(sizeof(unsigned char)*(*len)); //3 byte for the lenght of all certificate stream
     unsigned char *buff=*stream;
     
     //copy length of the entire message
@@ -59,7 +59,7 @@ void serialize_certificate_message(certificate_message *cert, unsigned char **st
     //get certificate len
     raw_certificate_len = i2d_X509(cert->X509_certificate, NULL);
     
-    raw_cert =malloc(raw_certificate_len);
+    raw_cert =malloc(sizeof(unsigned char)*raw_certificate_len);
     
     if (raw_cert == NULL){
         printf("errror in serialize certificate");

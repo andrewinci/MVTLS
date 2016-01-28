@@ -142,7 +142,7 @@ packet_basic *create_packet(char *source, char *destination, unsigned char *mess
         memcpy(result->destination, destination, 8);
     }else result->destination = NULL;
     if(message!=NULL){
-        result->message = malloc(message_length);
+        result->message = malloc(sizeof(unsigned char)*message_length);
         memcpy(result->message, message, message_length);
     }else result->message = NULL;
     
@@ -189,7 +189,7 @@ uint32_t read_all_file(int fd, unsigned char **p){
         printf("\nThe message is too long, something went wrong\n");
         exit(-1);
     }
-    unsigned char *temp = malloc(fileSize*sizeof(unsigned char));
+    unsigned char *temp = malloc(sizeof(unsigned char)*fileSize);
     read(fd, temp, fileSize);
     *p = temp;
     return (uint32_t)fileSize;
@@ -214,7 +214,7 @@ packet_basic *deserialize_packet(unsigned char *str, uint32_t fileLen){
     memcpy(to, str+8, 8);
     memcpy(&packLen, str+16, 4);
     if(packLen>20){
-        message = malloc(fileLen-20);
+        message = malloc(sizeof(unsigned char)*(fileLen-20));
         memcpy(message, str+20, fileLen-20);
     }
     
@@ -247,7 +247,7 @@ void serialize_packet(packet_basic *p, unsigned char **str, uint32_t *strLen){
         return;
     }
     *strLen = p->length+4+8+8;
-    *str = malloc(*strLen);
+    *str = malloc(sizeof(unsigned char)*(*strLen));
 
     if(*str!=NULL){
         memcpy(*str, p->source, 8);

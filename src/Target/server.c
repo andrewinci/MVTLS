@@ -225,7 +225,8 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
 	  }
     }
     fclose(fp);
-    unsigned char *pre_master_key=malloc(100);
+    
+    unsigned char *pre_master_key = malloc(RSA_size(privateKey));
     if(!RSA_private_decrypt(client_key_exchange->key_length, client_key_exchange->key, pre_master_key, privateKey, RSA_PKCS1_PADDING))
     {
 	  printf("Error decrypt\n");

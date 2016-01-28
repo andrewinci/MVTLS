@@ -25,7 +25,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
         
         *streamLen = 2+pLen+2+gLen+2+pubKeyLen+2+2+server_key_ex->signature_length;
         
-        result = malloc(*streamLen);
+        result = malloc(sizeof(cipher_suite_t)*(*streamLen));
         
         *stream = result;
         pLen = REV16(pLen);
@@ -68,7 +68,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
         // named_curve(1)  curve_name(2) pub_key_len(1) pub_key(..) signature_alg(2) signature_len(2) siganture(..)
         *streamLen = 1 + 2 + 1 + BN_num_bytes(server_key_ex->pub_key) + 2 + 2 + server_key_ex->signature_length;
         
-        result = (unsigned char * )malloc(sizeof(char)*(*streamLen));
+        result = malloc(sizeof(char)*(*streamLen));
         *stream = result;
         
         //set named_curve mode
@@ -130,7 +130,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
         message+=2;
         server_key_ex->signature_length = REV16(server_key_ex->signature_length);
         
-        server_key_ex->signature = malloc(server_key_ex->signature_length);
+        server_key_ex->signature = malloc(sizeof(cipher_suite_t)*server_key_ex->signature_length);
         memcpy(server_key_ex->signature, message, server_key_ex->signature_length);
         message+=2;
         
@@ -159,7 +159,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
         message+=2;
         server_key_ex->signature_length = REV16(server_key_ex->signature_length);
         
-        server_key_ex->signature = malloc(server_key_ex->signature_length);
+        server_key_ex->signature = malloc(sizeof(cipher_suite_t)*server_key_ex->signature_length);
         memcpy(server_key_ex->signature, message, server_key_ex->signature_length);
         message+=2;
         
@@ -171,7 +171,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
 void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
     
         //the first 2 message byte are the key length
-        unsigned char *buff = malloc(client_key_exchange->key_length+2);
+        unsigned char *buff = malloc(sizeof(cipher_suite_t)*(client_key_exchange->key_length+2));
         *stream = buff;
         //add lenght
         uint16_t temp = REV16(client_key_exchange->key_length);
@@ -189,7 +189,7 @@ void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *messa
         
         rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
         
-        unsigned char *buff = malloc(rsa_server_key_ex->key_length);
+        unsigned char *buff = malloc(sizeof(cipher_suite_t)*rsa_server_key_ex->key_length);
         rsa_server_key_ex->key = buff;
         memcpy(buff, message, rsa_server_key_ex->key_length);
         

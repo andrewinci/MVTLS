@@ -26,7 +26,7 @@ int main(int argc, char **argv){
     printf("*** Client is start ***\n");
     
     //sending packet
-    unsigned char *message = malloc(2);
+    unsigned char *message = malloc(sizeof(unsigned char)*2);
     *message = '1';
     char to[] = "Server\0";
     printf("Client send: %c \n",*message);

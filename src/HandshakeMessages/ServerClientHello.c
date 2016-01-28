@@ -22,7 +22,7 @@ handshake_hello *make_hello(session_id session){
     
     //add random
     hello->random.UNIX_time = (uint32_t)time(NULL);
-    uint8_t *random_stream = malloc(28);
+    uint8_t *random_stream = malloc(sizeof(uint8_t)*28);
     RAND_pseudo_bytes(random_stream, 28);
     
     for(int i=0;i<28;i++)
@@ -42,7 +42,7 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     else
         *streamLen = 2 + 2 + 1 + 32 + hello->session_id.session_lenght + 1;
 
-    *stream = malloc(*streamLen);
+    *stream = malloc(sizeof(unsigned char)*(*streamLen));
     unsigned char *buff = *stream;
     
     //serialize TLS Version
@@ -132,7 +132,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     session.session_lenght = *stream;
     stream++;
     
-    session.session_id = malloc(session.session_lenght);
+    session.session_id = malloc(sizeof(unsigned char)*session.session_lenght);
     memcpy(session.session_id, stream, session.session_lenght);
     stream+=session.session_lenght;
     
@@ -157,7 +157,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
         ciphers_len = REV16(ciphers_len);
         result->cipher_suite_len = ciphers_len;
         stream+=2;
-        result->cipher_suites = malloc((ciphers_len/2)*sizeof(cipher_suite_t));
+        result->cipher_suites = malloc(sizeof(cipher_suite_t)*(ciphers_len/2));
         
         for(int i=0;i<ciphers_len/2;i++){
             uint16_t cipher_id = 0;
