@@ -204,6 +204,11 @@ void free_server_key_exchange(void *server_key_ex, cipher_suite_t cipher_suite){
         BN_free(params->pubKey);
         free(params->signature);
         free(params);
+    }else if(server_key_ex!=NULL && cipher_suite.kx == ECDHE_KX){
+        ECDHE_server_key_exchange *params = (ECDHE_server_key_exchange*) server_key_ex;
+        free(params->signature);
+        BN_free(params->pub_key);
+        free(server_key_ex);
     }
         
 }
