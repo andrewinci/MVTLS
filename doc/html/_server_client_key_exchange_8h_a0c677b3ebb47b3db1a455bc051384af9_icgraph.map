@@ -1,6 +1,0 @@
-<map id="serialize_client_key_exchange" name="serialize_client_key_exchange">
-<area shape="rect" id="node2" href="$_t_l_s_client_8c.html#a1d636a0c5736cd41d842badc9bae59a2" title="make_client_key_exchange" alt="" coords="192,31,379,57"/>
-<area shape="rect" id="node3" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="427,31,552,57"/>
-<area shape="rect" id="node4" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="600,5,712,32"/>
-<area shape="rect" id="node5" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="760,31,811,57"/>
-</map>

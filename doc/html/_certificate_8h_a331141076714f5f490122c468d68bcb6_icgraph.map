@@ -1,9 +1,0 @@
-<map id="free_certificate_message" name="free_certificate_message">
-<area shape="rect" id="node2" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="224,56,349,83"/>
-<area shape="rect" id="node5" href="$_t_l_s_server_8c.html#a5eb53d1bc9bb2c85a82f170eb750ec47" title="make_certificate" alt="" coords="227,107,346,133"/>
-<area shape="rect" id="node8" href="$test_certificate_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="261,157,312,184"/>
-<area shape="rect" id="node3" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="404,5,516,32"/>
-<area shape="rect" id="node4" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="571,31,621,57"/>
-<area shape="rect" id="node6" href="$server_8c.html#a99e7ea8c8b4c7487c1b02c8e05056850" title="onPacketReceive" alt="" coords="397,107,523,133"/>
-<area shape="rect" id="node7" href="$server_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="571,107,621,133"/>
-</map>

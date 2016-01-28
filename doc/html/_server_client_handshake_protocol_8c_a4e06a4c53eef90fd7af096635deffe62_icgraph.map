@@ -1,9 +1,0 @@
-<map id="serialize_handshake" name="serialize_handshake">
-<area shape="rect" id="node2" href="$_server_client_handshake_protocol_8c.html#af5867dc851af702258d5f1970a846a91" title="make_record" alt="" coords="198,65,298,92"/>
-<area shape="rect" id="node7" href="$_server_client_handshake_protocol_8c.html#ab0a9a882a7a46b4f895af1f15baac7e5" title="print_handshake" alt="" coords="356,116,476,143"/>
-<area shape="rect" id="node8" href="$_t_l_s_client_8c.html#a296877a0eca29b0d28b16d7ff05a3a9c" title="backup_handshake" alt="" coords="347,167,485,193"/>
-<area shape="rect" id="node3" href="$_server_client_handshake_protocol_8c.html#a3957323f66c0273e5192a1de1c114c98" title="send_handshake" alt="" coords="354,65,478,92"/>
-<area shape="rect" id="node4" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="867,91,917,117"/>
-<area shape="rect" id="node5" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="533,91,659,117"/>
-<area shape="rect" id="node6" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="707,40,819,67"/>
-</map>

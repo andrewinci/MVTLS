@@ -1,6 +1,0 @@
-<map id="make_server_hello" name="make_server_hello">
-<area shape="rect" id="node2" href="$_server_client_hello_8h.html#a6c087a662fb16149689eb181665f84c2" title="make_hello" alt="" coords="221,5,312,32"/>
-<area shape="rect" id="node3" href="$handshake_constants_8h.html#a72c5c0aa20bd86fc5c152ec8dca0de9f" title="get_cipher_suite" alt="" coords="207,56,327,83"/>
-<area shape="rect" id="node4" href="$_server_client_hello_8h.html#ac5f8704687d37db6d67172540b3005e6" title="serialize_client_server\l_hello" alt="" coords="190,107,343,149"/>
-<area shape="rect" id="node5" href="$_server_client_hello_8h.html#ac3a430a602976795e137b6bc69cb48d8" title="free_hello" alt="" coords="227,173,307,200"/>
-</map>

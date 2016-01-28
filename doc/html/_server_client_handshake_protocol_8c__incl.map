@@ -1,9 +1,0 @@
-<map id="/Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/src/ServerClientHandshakeProtocol.c" name="/Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/src/ServerClientHandshakeProtocol.c">
-<area shape="rect" id="node2" href="$_server_client_handshake_protocol_8h.html" title="ServerClientHandshakeProtocol.h" alt="" coords="709,125,931,152"/>
-<area shape="rect" id="node8" href="$_server_client_record_protocol_8h.html" title="ServerClientRecordProtocol.h" alt="" coords="423,200,621,227"/>
-<area shape="rect" id="node15" href="$handshake_constants_8h.html" title="handshakeConstants.h" alt="" coords="1383,275,1541,301"/>
-<area shape="rect" id="node17" href="$_server_client_hello_8h.html" title="ServerClientHello.h" alt="" coords="698,200,835,227"/>
-<area shape="rect" id="node19" href="$_certificate_8h.html" title="Certificate.h" alt="" coords="1071,200,1164,227"/>
-<area shape="rect" id="node22" href="$_server_client_key_exchange_8h.html" title="ServerClientKeyExchange.h" alt="" coords="1511,200,1700,227"/>
-<area shape="rect" id="node9" href="$_server_client_basic_8h.html" title="ServerClientBasic.h" alt="" coords="260,275,399,301"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="deserialize_client_server_hello" name="deserialize_client_server_hello">
-<area shape="rect" id="node2" href="$client_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="179,31,304,57"/>
-<area shape="rect" id="node3" href="$_server_client_basic_8c.html#a5b4ec3e9c08effaa58ed3dd61374eec3" title="set_on_receive" alt="" coords="352,5,464,32"/>
-<area shape="rect" id="node4" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="512,31,563,57"/>
-</map>

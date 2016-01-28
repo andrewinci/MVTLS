@@ -1,8 +1,0 @@
-<map id="serialize_client_server_hello" name="serialize_client_server_hello">
-<area shape="rect" id="node2" href="$_t_l_s_client_8c.html#a7e9d39cee7763f58776c37c9523d6526" title="make_client_hello" alt="" coords="211,5,341,32"/>
-<area shape="rect" id="node4" href="$_t_l_s_server_8c.html#a341639a20fd0d666a2ff69458541fda0" title="make_server_hello" alt="" coords="209,56,343,83"/>
-<area shape="rect" id="node7" href="$client_handshake_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="251,107,301,133"/>
-<area shape="rect" id="node3" href="$client_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="429,5,480,32"/>
-<area shape="rect" id="node5" href="$server_8c.html#a99e7ea8c8b4c7487c1b02c8e05056850" title="onPacketReceive" alt="" coords="392,56,517,83"/>
-<area shape="rect" id="node6" href="$server_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="565,56,616,83"/>
-</map>

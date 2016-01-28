@@ -1,8 +1,0 @@
-<map id="onPacketReceive" name="onPacketReceive">
-<area shape="rect" id="node2" href="$_server_client_basic_8h.html#a061eb12ef65dc9204e8549767f2ec245" title="create_packet" alt="" coords="179,5,285,32"/>
-<area shape="rect" id="node3" href="$_server_client_basic_8h.html#a934a66fb291446397ef52e669db428f8" title="send_packet" alt="" coords="183,56,281,83"/>
-<area shape="rect" id="node6" href="$_server_client_basic_8h.html#a3a33ed13805793c4583241491fe1bef0" title="free_packet" alt="" coords="186,107,278,133"/>
-<area shape="rect" id="node7" href="$_server_client_basic_8h.html#a830a41c9f058bd3c6f37f404a01608af" title="stop_channel" alt="" coords="181,157,283,184"/>
-<area shape="rect" id="node4" href="$_server_client_basic_8c.html#a1ac9a1fa040ab3ed039c8841ca864c57" title="serialize_packet" alt="" coords="333,31,451,57"/>
-<area shape="rect" id="node5" href="$_server_client_basic_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="344,81,440,108"/>
-</map>

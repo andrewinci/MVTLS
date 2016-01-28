@@ -1,5 +1,0 @@
-<map id="print_hello" name="print_hello">
-<area shape="rect" id="node2" href="$client_handshake_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="176,5,227,32"/>
-<area shape="rect" id="node3" href="$server_handshake_8c.html#af805e53c7da83075bf45c4e071b3a6cf" title="onPacketReceive" alt="" coords="139,56,264,83"/>
-<area shape="rect" id="node4" href="$server_handshake_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="312,56,363,83"/>
-</map>
