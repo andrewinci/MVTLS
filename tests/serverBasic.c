@@ -1,14 +1,13 @@
-/**
- *  SSL/TLS Project
- *
- *  \file serverBasic.c
- *  Server for testing the basic protocol layer.
- *
- *  \addtogroup BasicProtocolLayer
- *  @{
- *  \date Created on 22/12/15.
- *  \copyright Copyright © 2015 Mello, Darka. All rights reserved.
- */
+//
+//  SSL/TLS Project
+//
+//  serverBasic.c
+//  Server for testing the basic protocol layer.
+//
+//
+//  Created on 22/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
+//
 
 #include <stdio.h>
 #include <stdlib.h>

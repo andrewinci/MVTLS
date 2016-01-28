@@ -35,12 +35,19 @@ int main() {
 	wait_channel(server2client);
 
 	// Print details about connection
-    print_random();
+    printf("\nServer random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.server_random[i]);
+    printf("\nClient random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.client_random[i]);
+    printf("\n");
     
-    // print certificate details
     printf("\nCertificate details:\n");
     printf("%s",TLS_param.server_certificate->name);
+    
     printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
+    
     printf("\nMaster key: \n");
     for(int i=0;i<TLS_param.master_secret_len;i++)
         printf("%02X ",TLS_param.master_secret[i]);
@@ -191,24 +198,6 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 	}
 }
 
-void print_random() {
-    // Print randoms of server and client
-    printf("\nServer random:\n");
-    for(int i=0;i<32;i++)
-	  printf("%02x ",TLS_param.server_random[i]);
-    printf("\nClient random:\n");
-    for(int i=0;i<32;i++)
-	  printf("%02x ",TLS_param.client_random[i]);
-    printf("\n");
-}
-
-void print_master_secret() {
-    // Print MasterSecret
-    printf("\nMaster secret:\n");
-    for(int i=0;i<TLS_param.master_secret_len;i++)
-	  printf("%02x ",TLS_param.master_secret[i]);
-    printf("\n");
-    }
 
 void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     //get private key from file
