@@ -184,9 +184,8 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
     
-    // ToDo: make only function for free all server key exchange taking the ciphersuite id and the struct to free
-    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
-    
+    // ToDo: make only one function for free all server key exchange taking the ciphersuite id and the struct to free
+    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
     //free openssl resources
     CRYPTO_cleanup_all_ex_data();
 }

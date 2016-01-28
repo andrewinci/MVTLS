@@ -141,7 +141,7 @@ DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param
 	int codes;
 	if((privkey = DH_new()) == NULL)
 		printf("\nError in DH_new\n");
-	if(DH_generate_parameters_ex(privkey, 1024, DH_GENERATOR_2 , NULL) != 1)
+	if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1)
 		printf("\nError in DH_generate_parameters\n");
 	if(DH_check(privkey, &codes) != 1)
 		printf("\nError in DH_check\n");

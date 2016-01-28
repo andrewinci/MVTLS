@@ -83,6 +83,8 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
 }
 
 int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign, int sign_type){
+    int res;
+    EC_KEY *ecdsa_private;
     // get private key for sign
     FILE *private_key_file = fopen("../certificates/serverECDSA.key", "r");
     if (!private_key_file) {
@@ -90,15 +92,14 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, u
         exit(-1);
     }
     
-    EC_KEY *ecdsa_private = PEM_read_ECPrivateKey(private_key_file, NULL, NULL, NULL);
+    ecdsa_private = PEM_read_ECPrivateKey(private_key_file, NULL, NULL, NULL);
     
     fclose(private_key_file);
-    
+
     //allocate memory for signature
     *signature = malloc(sizeof(unsigned char)*ECDSA_size(ecdsa_private));
     
-    int res = ECDSA_sign(sign_type, to_sign, to_sign_len, *signature, signature_length, ecdsa_private );
-    
+    res = ECDSA_sign(sign_type, to_sign, to_sign_len, *signature, signature_length, ecdsa_private );
     
     EC_KEY_free(ecdsa_private);
     

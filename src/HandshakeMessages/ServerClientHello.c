@@ -207,7 +207,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
 //}
 
 void free_hello(handshake_hello *h){
-    //free(h->cipher_suites);
+    free(h->cipher_suites);
     free(h->session_id.session_id);
     free(h);
 }
