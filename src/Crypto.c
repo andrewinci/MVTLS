@@ -130,6 +130,9 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
         case SHA256_H:
             sign_type = NID_sha256;
             break;
+        case SHA384_H:
+            sign_type = NID_sha384;
+            break;
         case SHA512_H:
             sign_type = NID_sha512;
             break;
@@ -138,9 +141,10 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
             exit(-1);
             break;
     }
+
     const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
-    //compute sha1
+    //compute hash
     unsigned char hash_digest[hash->md_size];
     
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
@@ -229,7 +233,7 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     }
     const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
-    //compute sha1
+    //compute hash
     unsigned char hash_digest[hash->md_size];
     
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
@@ -268,48 +272,53 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
     int pubkey_len;
     unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pub_key));
     pubkey_len = BN_bn2bin(server_key_ex->pub_key, pubkey_char);
-
     
-    const EVP_MD *sha1 = EVP_sha1();
-    //compute sha1
-    unsigned char sha1_digest[sha1->md_size];
-    unsigned int sha1_len;
+    // choose random hash alg
+    srand((int)time(NULL));
+    hash_algorithm sign_hash_alg = rand()%4+3;
+    
+    //set in packet
+    server_key_ex->sign_hash_alg = sign_hash_alg+(au<<8);
+    int sign_type;
+    switch (sign_hash_alg) {
+        case SHA224_H:
+            sign_type = NID_sha224;
+            break;
+        case SHA256_H:
+            sign_type = NID_sha256;
+            break;
+        case SHA384_H:
+            sign_type = NID_sha384;
+            break;
+        case SHA512_H:
+            sign_type = NID_sha512;
+            break;
+        default:
+            printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
+            exit(-1);
+            break;
+    }
+    const EVP_MD *hash = get_hash_function(sign_hash_alg);
+    
+    //compute hash
+    unsigned char hash_digest[hash->md_size];
+    
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
-    EVP_DigestInit_ex(mdctx, sha1, NULL);
+    EVP_DigestInit_ex(mdctx, hash, NULL);
     EVP_DigestUpdate(mdctx, client_random, 32);
     EVP_DigestUpdate(mdctx, server_random, 32);
     EVP_DigestUpdate(mdctx, &server_key_ex->named_curve, 2);
     EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
-    EVP_DigestFinal_ex(mdctx, sha1_digest, &sha1_len);
+    EVP_DigestFinal_ex(mdctx, hash_digest, NULL);
     EVP_MD_CTX_destroy(mdctx);
-    
-    const EVP_MD *md5 = EVP_md5();
-    //compute md5
-    unsigned char md5_digest[md5->md_size];
-    unsigned int md5_len;
-    mdctx = EVP_MD_CTX_create();
-    EVP_DigestInit_ex(mdctx, md5, NULL);
-    EVP_DigestUpdate(mdctx, client_random, 32);
-    EVP_DigestUpdate(mdctx, server_random, 32);
-    EVP_DigestUpdate(mdctx, &server_key_ex->named_curve, 2);
-    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
-
-    EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
-    EVP_MD_CTX_destroy(mdctx);
-
-    int to_sign_len = md5->md_size + sha1->md_size;
-    unsigned char *to_sign = (unsigned char*)malloc(sizeof(unsigned char)*to_sign_len);
-
-    memcpy(to_sign, sha1_digest, sha1->md_size);
-    memcpy(to_sign+sha1->md_size, md5_digest, md5->md_size);
 
     int res=0;
     switch (au) {
         case RSA_AU:
-            res = sign_with_RSA(&server_key_ex->signature, &server_key_ex->signature_length, to_sign_len, to_sign,NID_md5_sha1);
+            res = sign_with_RSA(&server_key_ex->signature, &server_key_ex->signature_length, hash->md_size, hash_digest, sign_type);
             break;
         case ECDSA_AU:
-            res = sign_with_ECDSA(&server_key_ex->signature, &server_key_ex->signature_length, to_sign_len, to_sign,NID_md5_sha1);
+            res = sign_with_ECDSA(&server_key_ex->signature, &server_key_ex->signature_length, hash->md_size, hash_digest, sign_type);
         default:
             break;
     }
@@ -324,40 +333,39 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
     unsigned char *pubkey_char = malloc(BN_num_bytes(server_key_ex->pub_key));
     pubkey_len = BN_bn2bin(server_key_ex->pub_key, pubkey_char);
     
+    //get hash function from packet
+    hash_algorithm sign_hash_alg = (server_key_ex->sign_hash_alg) & 0x00FF;
+    int sign_type;
+    switch (sign_hash_alg) {
+        case SHA224_H:
+            sign_type = NID_sha224;
+            break;
+        case SHA256_H:
+            sign_type = NID_sha256;
+            break;
+        case SHA384_H:
+            sign_type = NID_sha384;
+            break;
+        case SHA512_H:
+            sign_type = NID_sha512;
+            break;
+        default:
+            printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
+            exit(-1);
+            break;
+    }
+    const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
-    const EVP_MD *sha1 = EVP_sha1();
-    //compute sha1
-    unsigned char sha1_digest[sha1->md_size];
-    unsigned int sha1_len;
+    //compute hash
+    unsigned char hash_digest[hash->md_size];
     EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
-    EVP_DigestInit_ex(mdctx, sha1, NULL);
+    EVP_DigestInit_ex(mdctx, hash, NULL);
     EVP_DigestUpdate(mdctx, client_random, 32);
     EVP_DigestUpdate(mdctx, server_random, 32);
     EVP_DigestUpdate(mdctx, &server_key_ex->named_curve, 2);
     EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
-    EVP_DigestFinal_ex(mdctx, sha1_digest, &sha1_len);
+    EVP_DigestFinal_ex(mdctx, hash_digest, NULL);
     EVP_MD_CTX_destroy(mdctx);
-    
-    const EVP_MD *md5 = EVP_md5();
-    //compute md5
-    unsigned char md5_digest[md5->md_size];
-    unsigned int md5_len;
-    mdctx = EVP_MD_CTX_create();
-    EVP_DigestInit_ex(mdctx, md5, NULL);
-    EVP_DigestUpdate(mdctx, client_random, 32);
-    EVP_DigestUpdate(mdctx, server_random, 32);
-    EVP_DigestUpdate(mdctx, &server_key_ex->named_curve, 2);
-    EVP_DigestUpdate(mdctx, pubkey_char, pubkey_len);
-    
-    EVP_DigestFinal_ex(mdctx, md5_digest, &md5_len);
-    EVP_MD_CTX_destroy(mdctx);
-
-    
-    //make stream to be encrypted
-    int to_verify_len =sha1->md_size+md5->md_size;
-    unsigned char *to_verify = malloc(sha1->md_size+md5->md_size);
-    memcpy(to_verify, sha1_digest, sha1->md_size);
-    memcpy(to_verify+sha1->md_size, md5_digest, md5->md_size);
     
     int result = 0;
     if(au == RSA_AU){
@@ -368,7 +376,7 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
         pubkey = X509_get_pubkey(certificate);
         rsa = EVP_PKEY_get1_RSA(pubkey);
         
-        result = RSA_verify(NID_md5_sha1, to_verify, to_verify_len, server_key_ex->signature, server_key_ex->signature_length, rsa);
+        result = RSA_verify(sign_type, hash_digest, hash->md_size, server_key_ex->signature, server_key_ex->signature_length, rsa);
         
         EVP_PKEY_free(pubkey);
         RSA_free(rsa);
@@ -380,12 +388,11 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
         pubkey = X509_get_pubkey(certificate);
         ecdsa = EVP_PKEY_get1_EC_KEY(pubkey);
         
-        result = ECDSA_verify(NID_md5_sha1, to_verify, to_verify_len, server_key_ex->signature, server_key_ex->signature_length, ecdsa);
+        result = ECDSA_verify(sign_type, hash_digest, hash->md_size, server_key_ex->signature, server_key_ex->signature_length, ecdsa);
         
         EVP_PKEY_free(pubkey);
         EC_KEY_free(ecdsa);
     }
-    free(to_verify);
     free(pubkey_char);
     
     return result;

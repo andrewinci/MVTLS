@@ -157,10 +157,6 @@ DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param
 	server_key_ex->g = BN_dup(privkey->g);
 	server_key_ex->p = BN_dup(privkey->p);
 	server_key_ex->pubKey = BN_dup(privkey->pub_key);
-
-
-    // Set hash algorithm and authentication
-    server_key_ex->sign_hash_alg = TLS_param->cipher_suite.hash+(TLS_param->cipher_suite.au<<8); // 0x0106 // Already rotated
 	
     // Add signature and set hash algorithm
 	sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
@@ -193,9 +189,6 @@ ECDHE_server_key_exchange * make_ECDHE_server_key_exchange(TLS_parameters *TLS_p
 	server_key_ex->named_curve = curve_name;
 	server_key_ex->pub_key = BN_new();
 	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
-
-	// Set hash algorithm and authentication
-	server_key_ex->sign_hash_alg = TLS_param->cipher_suite.hash+(TLS_param->cipher_suite.au<<8); // Already rotated
 
 	// Add signature
 	sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);

@@ -123,6 +123,12 @@ int main(int argc, char **argv) {
         for(int j=0;j<num_added;j++)
             printf("Load %s\n",to_send_cipher_suite[j+to_send_cipher_suite_len].name);
         to_send_cipher_suite_len+=num_added;
+        if(to_send_cipher_suite_len == 0){
+            printf("no supported cipher suite with the selected arguments\n");
+            printf("%s",USAGE);
+            return 0;
+        }
+            
     }
     TLS_param.handshake_messages = NULL;
 	
