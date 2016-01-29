@@ -106,7 +106,7 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, u
     return res;
 }
 
-int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au) {
+int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au) {
     
     //extract p g pubkey
     int p_len;
@@ -192,7 +192,7 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
     return result;
 }
 
-int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, DHE_server_key_exchange *server_key_ex, authentication_algorithm au) {
+int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au) {
     
     //extract p g pubkey
     int p_len;
@@ -267,7 +267,7 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     return result;
 }
 
-int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au){
+int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au){
     
     //RFC 4492
     int pubkey_len;
@@ -328,7 +328,7 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
     return res;
 }
 
-int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ECDHE_server_key_exchange *server_key_ex, authentication_algorithm au){
+int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au){
     
     int pubkey_len;
     unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pub_key));

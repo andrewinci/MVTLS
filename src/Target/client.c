@@ -36,10 +36,10 @@
 				"  Show this help \n"\
 				"    --help \n\n"
 
-void onPacketReceive(channel *ch, packet_basic *p);
+void onPacketReceive(channel_t *ch, packet_basic_t *p);
 void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);
 
-TLS_parameters TLS_param;
+TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv) {
     
@@ -143,7 +143,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     char *fileName = "TLSchannel.txt";
     char *channelFrom = "Client";
     char *channelTo = "Server";
-    channel *client2server = create_channel(fileName, channelFrom, channelTo);
+    channel_t *client2server = create_channel(fileName, channelFrom, channelTo);
     set_on_receive(client2server, &onPacketReceive);
     
     TLS_param.previous_state = 0x0000;
@@ -151,8 +151,9 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     
     // Make ClientHello
     printf(">>> Client hello\n");
-    handshake *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
+    handshake_t *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
     print_handshake(client_hello);
+
     send_handshake(client2server, client_hello);
     backup_handshake(&TLS_param,client_hello);
     free_handshake(client_hello);
@@ -194,7 +195,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
  * Function called from basic protocol
  * when a message is received
  */
-void onPacketReceive(channel *client2server, packet_basic *p){
+void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 	
 	// Get record and print
 	record_t *r = deserialize_record(p->message, p->length);
@@ -206,7 +207,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 		free_packet(p);
 	}
 	else if(r->type == HANDSHAKE){
-		handshake *h = deserialize_handshake(r->message, r->length);
+		handshake_t *h = deserialize_handshake(r->message, r->length);
 		
 		free_record(r);
 		free_packet(p);
@@ -217,7 +218,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 				if(TLS_param.previous_state == 0x0000){
 					TLS_param.previous_state = SERVER_HELLO;
 					backup_handshake(&TLS_param,h);
-					handshake_hello *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
+					handshake_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
 
 					printf("\n<<< Server Hello\n");
 					print_handshake(h);
@@ -244,7 +245,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					printf("\n<<< Certificate\n");
 					print_handshake(h);
 					
-					certificate_message *certificate_m = deserialize_certificate_message(h->message, h->length);
+					certificate_message_t *certificate_m = deserialize_certificate_message(h->message, h->length);
                     TLS_param.server_certificate = certificate_m->X509_certificate;
                     TLS_param.server_certificate->references+=1;
                     
@@ -272,7 +273,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					print_handshake(h);
 					
 					//make Client Key Exchange Message
-                    handshake * client_key_exchange = make_client_key_exchange(&TLS_param, TLS_param.cipher_suite.kx);
+                    handshake_t * client_key_exchange = make_client_key_exchange(&TLS_param, TLS_param.cipher_suite.kx);
                     backup_handshake(&TLS_param, client_key_exchange);
                     send_handshake(client2server, client_key_exchange);
                     printf("\n>>> Client Key Exchange\n");
@@ -287,7 +288,7 @@ void onPacketReceive(channel *client2server, packet_basic *p){
 					free_record(change_cipher_spec);
 					
 					printf("\n>>> Finished\n");
-					handshake *finished = make_finished_message(&TLS_param);
+					handshake_t *finished = make_finished_message(&TLS_param);
 					send_handshake(client2server, finished);
 					print_handshake(finished);
 					free_handshake(finished);

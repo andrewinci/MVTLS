@@ -6,7 +6,7 @@
 //  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
-#include "handshakeConstants.h"
+#include "TLSConstants.h"
 
 const int NUM_CIPHER_SUITE = 62;
 cipher_suite_t cipher_suite_list[] ={

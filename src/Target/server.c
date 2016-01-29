@@ -11,19 +11,19 @@
 
 void print_random();
 void print_master_secret();
-void compute_set_master_key_RSA(client_key_exchange *client_key_exchange);
-void compute_set_master_key_DH(client_key_exchange *cliet_public);
-void compute_set_master_key_ECDHE(client_key_exchange *cliet_public);
-void onPacketReceive(channel *server2client, packet_basic *p);
+void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange);
+void compute_set_master_key_DH(client_key_exchange_t *cliet_public);
+void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public);
+void onPacketReceive(channel_t *server2client, packet_basic_t *p);
 
-TLS_parameters TLS_param;
+TLS_parameters_t TLS_param;
 
 int main() {
 	// Setup the channel
 	char *fileName = "TLSchannel.txt";
 	char *channelFrom = "Server";
 	char *channelTo = "Client";
-	channel *server2client = create_channel(fileName, channelFrom, channelTo);
+	channel_t *server2client = create_channel(fileName, channelFrom, channelTo);
 	set_on_receive(server2client, &onPacketReceive);
 
 	TLS_param.previous_state = 0x00;
@@ -67,7 +67,7 @@ int main() {
  * Function called from basic protocol
  * when a message is received
  */
-void onPacketReceive(channel *server2client, packet_basic *p){
+void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 
 	// Get record and print
 	record_t *r = deserialize_record(p->message, p->length);
@@ -79,7 +79,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 		free_packet(p);
 	}
 	else if(r->type == HANDSHAKE){
-		handshake *h = deserialize_handshake(r->message, r->length);
+		handshake_t *h = deserialize_handshake(r->message, r->length);
 
 		free_record(r);
 		free_packet(p);
@@ -89,7 +89,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 				if(TLS_param.previous_state == 0x00){
 					TLS_param.previous_state = CLIENT_HELLO;
 					backup_handshake(&TLS_param, h);
-					handshake_hello *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
+					handshake_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 
 					printf("<<< Client Hello\n");
 					print_handshake(h);
@@ -100,7 +100,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// Choose a cipher suite and send ServerHello
 					printf("\n>>> Server Hello\n");
-					handshake * server_hello = make_server_hello(&TLS_param, client_hello);
+					handshake_t * server_hello = make_server_hello(&TLS_param, client_hello);
 					print_handshake(server_hello);
 					send_handshake(server2client, server_hello);
 
@@ -112,7 +112,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// Retrieve and send Certificate
 					printf("\n>>> Certificate\n");
-					handshake *certificate = make_certificate(&TLS_param);
+					handshake_t *certificate = make_certificate(&TLS_param);
 					print_handshake(certificate);
 					send_handshake(server2client, certificate);
 					backup_handshake(&TLS_param, certificate);
@@ -120,7 +120,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// Make server key exchange if needed
 					if(TLS_param.cipher_suite.kx == DHE_KX || TLS_param.cipher_suite.kx == ECDHE_KX){
-						handshake *server_key_exchange = make_server_key_exchange(&TLS_param);
+						handshake_t *server_key_exchange = make_server_key_exchange(&TLS_param);
 						printf("\n>>> Server key exchange\n");
 						print_handshake(server_key_exchange);
 						send_handshake(server2client, server_key_exchange);
@@ -131,7 +131,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 
 					// Make and send ServerHelloDone
 					printf("\n>>> Server hello done\n");
-					handshake * server_hello_done = make_server_hello_done();
+					handshake_t * server_hello_done = make_server_hello_done();
 					print_handshake(server_hello_done);
 					send_handshake(server2client, server_hello_done);
 					backup_handshake(&TLS_param, server_hello_done);
@@ -147,17 +147,17 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					printf("\n<<< Client Key Exchange\n");
 					if(TLS_param.cipher_suite.kx == RSA_KX){
 						print_handshake(h);
-						client_key_exchange *client_key_exchange = deserialize_client_key_exchange(h->length, h->message);
+						client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->length, h->message);
 						compute_set_master_key_RSA(client_key_exchange);
 					}
 					else if(TLS_param.cipher_suite.kx == DHE_KX){
-						client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
+						client_key_exchange_t *cliet_public = deserialize_client_key_exchange(h->length, h->message);
 						compute_set_master_key_DH(cliet_public);
 						free(cliet_public->key);
 						free(cliet_public);
 					}
 					else if(TLS_param.cipher_suite.kx == ECDHE_KX){
-						client_key_exchange *cliet_public = deserialize_client_key_exchange(h->length, h->message);
+						client_key_exchange_t *cliet_public = deserialize_client_key_exchange(h->length, h->message);
 						compute_set_master_key_ECDHE(cliet_public);
 						free(cliet_public->key);
 						free(cliet_public);
@@ -183,7 +183,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 					// Send Finished
 					printf("\n>>> Finished\n");
 
-					handshake *finished = make_finished_message(&TLS_param);
+					handshake_t *finished = make_finished_message(&TLS_param);
 					send_handshake(server2client, finished);
 					print_handshake(finished);
 					free_handshake(finished);
@@ -201,7 +201,7 @@ void onPacketReceive(channel *server2client, packet_basic *p){
 }
 
 
-void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
+void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
     //get private key from file
     RSA *privateKey = NULL;
     FILE *fp;
@@ -239,9 +239,9 @@ void compute_set_master_key_RSA(client_key_exchange *client_key_exchange) {
     free(client_key_exchange);
 }
 
-void compute_set_master_key_DH(client_key_exchange *cliet_public){
+void compute_set_master_key_DH(client_key_exchange_t *cliet_public){
     DH *privkey = DH_new();
-    DHE_server_key_exchange *server_key_exchange = TLS_param.server_key_ex;
+    dhe_server_key_exchange_t *server_key_exchange = TLS_param.server_key_ex;
     
     privkey->g = BN_dup(server_key_exchange->g);
     privkey->p = BN_dup(server_key_exchange->p);
@@ -268,8 +268,8 @@ void compute_set_master_key_DH(client_key_exchange *cliet_public){
     free(pre_master_key);
 }
 
-void compute_set_master_key_ECDHE(client_key_exchange *cliet_public){
-    ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange *) TLS_param.server_key_ex;
+void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public){
+    ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t *) TLS_param.server_key_ex;
     EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
     
     //get and set public key

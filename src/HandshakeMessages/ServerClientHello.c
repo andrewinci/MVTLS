@@ -12,9 +12,9 @@
 #include "ServerClientHello.h"
 #endif
 
-handshake_hello *make_hello(session_id session){
+handshake_hello_t *make_hello(session_id session){
     
-    handshake_hello *hello = malloc(sizeof(handshake_hello));
+    handshake_hello_t *hello = malloc(sizeof(handshake_hello_t));
     
     //compression method by default is setted to null
     hello->compression_methods.length = 0x01;
@@ -34,7 +34,7 @@ handshake_hello *make_hello(session_id session){
     return hello;
 }
 
-void serialize_client_server_hello(handshake_hello *hello, unsigned char **stream, uint32_t *streamLen, channel_mode mode){
+void serialize_client_server_hello(handshake_hello_t *hello, unsigned char **stream, uint32_t *streamLen, channel_mode mode){
     
     //compute the lenght
     if(mode == CLIENT_MODE)
@@ -51,7 +51,7 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     buff+=2;
     
     //serialize random
-    random_data rdata = hello->random;
+    random_data_t rdata = hello->random;
     
     rdata.UNIX_time = REV32(rdata.UNIX_time);
     memcpy(buff, &(rdata.UNIX_time), 4);
@@ -103,9 +103,9 @@ void serialize_client_server_hello(handshake_hello *hello, unsigned char **strea
     }
 }
 
-handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode){
+handshake_hello_t *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode){
     
-    handshake_hello *result = malloc(sizeof(handshake_hello));
+    handshake_hello_t *result = malloc(sizeof(handshake_hello_t));
     
     //deserialize TLSversion
     uint16_t TLS_version;
@@ -115,7 +115,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     
     
     //deserialize random
-    random_data rdata;
+    random_data_t rdata;
     
     memcpy(&rdata.UNIX_time, stream, 4);
     rdata.UNIX_time = REV32(rdata.UNIX_time);
@@ -172,7 +172,7 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     }
     
     //deserialize compression
-    compression_methods cmethods;
+    compression_methods_t cmethods;
     
     cmethods.length = *stream;
     stream++;
@@ -184,29 +184,24 @@ handshake_hello *deserialize_client_server_hello(unsigned char *stream, uint32_t
     return result;
 }
 
-//void print_hello(handshake_hello *h){
-//    printf("\n****Client/Server hello***\n");
-//    printf("Version : %d\n",h->TLS_version);
-//    printf("**Random**\n");
-//    printf("UNIX time stamp : %d\n", h->random.UNIX_time);
-//    printf("Random bytes (28): ");
-//    for(int i=0;i<28;i++)
-//        printf("%02x ",*(h->random.random_bytes+i));
-//    printf("\n**Session**\n");
-//    printf("Length : %d\n",h->session_id.session_lenght);
-//    printf("Session id : ");
-//    for(int i=0; i<h->session_id.session_lenght;i++)
-//        printf("%02x ",*(h->session_id.session_id+i));
-//
-//    printf("\n**Cipher suite**\n");
-//    printf("Length : %d\n", h->cipher_suites.length);
-//    printf("Cipher suites :\n");
-//    for(int i=0;i<h->cipher_suites.length/2;i++)
-//        printf("%04x\n",*(h->cipher_suites.cipher_id+i));
-//    printf("no compression(not yet implemented)\n");
-//}
+void print_hello(handshake_hello_t *h){
+    printf("\n***Client/Server hello***\n");
+    printf("Version : %d\n",h->TLS_version);
+    printf("UNIX time stamp : %d\n", h->random.UNIX_time);
+    printf("Random bytes (28): ");
+    for(int i=0;i<28;i++)
+        printf("%02x ",*(h->random.random_bytes+i));
+    printf("Session id : ");
+    for(int i=0; i<h->session_id.session_lenght;i++)
+        printf("%02x ",*(h->session_id.session_id+i));
+    
+    printf("Cipher suites :\n");
+    for(int i=0;i<h->cipher_suite_len/2;i++)
+        printf("id : %02X name: %s", h->cipher_suites[i].cipher_id ,h->cipher_suites[i].name);
+    printf("no compression(not yet implemented)\n");
+}
 
-void free_hello(handshake_hello *h){
+void free_hello(handshake_hello_t *h){
     free(h->cipher_suites);
     free(h->session_id.session_id);
     free(h);

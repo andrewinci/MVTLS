@@ -23,14 +23,14 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-#include "handshakeConstants.h"
+#include "TLSConstants.h"
 
 #endif /* Certificate_h */
 
 typedef struct {
     uint32_t cert_length; //only 3 byte are used
     X509 *X509_certificate;
-}certificate_message;
+}certificate_message_t;
 
 /*
  * Create a certificate message from a list of certificate
@@ -38,19 +38,19 @@ typedef struct {
  * list_size        : the number of path in cert_files_name
  *  return a certificate_message ready for serialize and send
  */
-certificate_message *make_certificate_message(char *cert_file_name);
+certificate_message_t *make_certificate_message(char *cert_file_name);
 
 /*
  * Serialization of the packet like always
  */
-void serialize_certificate_message(certificate_message *cert, unsigned char **stream, uint32_t *len);
+void serialize_certificate_message(certificate_message_t *cert, unsigned char **stream, uint32_t *len);
 
 /*
  * Deserialization
  */
-certificate_message *deserialize_certificate_message(unsigned char *stream, uint32_t len);
+certificate_message_t *deserialize_certificate_message(unsigned char *stream, uint32_t len);
 
 /*
  * Free the allocation
  */
-void free_certificate_message(certificate_message *cert);
+void free_certificate_message(certificate_message_t *cert);

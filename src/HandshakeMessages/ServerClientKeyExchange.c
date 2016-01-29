@@ -19,7 +19,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
     
     if(kx == DHE_KX){
     
-        DHE_server_key_exchange *server_key_ex = (DHE_server_key_exchange*)server_key_exchange;
+        dhe_server_key_exchange_t *server_key_ex = (dhe_server_key_exchange_t*)server_key_exchange;
 
         int pLen = BN_num_bytes(server_key_ex->p), gLen = BN_num_bytes(server_key_ex->g), pubKeyLen = BN_num_bytes(server_key_ex->pubKey);
         
@@ -62,7 +62,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
  
     }else if(kx == ECDHE_KX){
         
-        ECDHE_server_key_exchange *server_key_ex = (ECDHE_server_key_exchange*)server_key_exchange;
+        ecdhe_server_key_exchange_t *server_key_ex = (ecdhe_server_key_exchange_t*)server_key_exchange;
         
         //compute stream len
         // named_curve(1)  curve_name(2) pub_key_len(1) pub_key(..) signature_alg(2) signature_len(2) siganture(..)
@@ -103,7 +103,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
 
 void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx){
     if(kx == DHE_KX){
-        DHE_server_key_exchange *server_key_ex = malloc(sizeof(DHE_server_key_exchange));
+        dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
         uint16_t len;
         memcpy(&len, message, 2);
         message+=2;
@@ -138,7 +138,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
     }
     else if (kx == ECDHE_KX){
         
-        ECDHE_server_key_exchange *server_key_ex = malloc(sizeof(ECDHE_server_key_exchange));
+        ecdhe_server_key_exchange_t *server_key_ex = malloc(sizeof(ecdhe_server_key_exchange_t));
         
         message++; //we already know that it is 0x03 for named_curve
         
@@ -168,7 +168,7 @@ void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *messa
     return NULL;
 }
 
-void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
+void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
     
         //the first 2 message byte are the key length
         unsigned char *buff = malloc(sizeof(cipher_suite_t)*(client_key_exchange->key_length+2));
@@ -183,7 +183,7 @@ void serialize_client_key_exchange(client_key_exchange *client_key_exchange, uns
 }
 
 void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message){
-        client_key_exchange *rsa_server_key_ex = malloc(sizeof(client_key_exchange));
+        client_key_exchange_t *rsa_server_key_ex = malloc(sizeof(client_key_exchange_t));
         memcpy(&(rsa_server_key_ex->key_length), message, 2);
         message+=2;
         
@@ -196,19 +196,72 @@ void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *messa
         return rsa_server_key_ex;
 }
 
+void print_server_key_exchange(void *server_key_exchange, key_exchange_algorithm kx){
+    if(kx == DHE_KX){
+        dhe_server_key_exchange_t *server_key_ex = (dhe_server_key_exchange_t *) server_key_exchange;
+        //extract p g pubkey
+        char *p = NULL;
+        p = BN_bn2hex(server_key_ex->p);
+        
+        char *g = NULL;
+        g = BN_bn2hex(server_key_ex->g);
+        
+        char *pubkey_charK = NULL;
+        pubkey_charK = BN_bn2hex(server_key_ex->pubKey);
+        
+        printf("\n*** DHE Server key exchange ***\n");
+        printf("** DHE parameters **\n");
+        printf(" p: %s",p);
+        printf("\n g: %s",g);
+        printf("\n public key : %s",pubkey_charK);
+        
+        printf("\n Signature hash algorithm : %04x", server_key_ex->sign_hash_alg);
+        printf("\n Signature : ");
+        for(int i =0;i<server_key_ex->signature_length; i++)
+            printf("%02X", server_key_ex->signature[i]);
+        
+        OPENSSL_free(p);
+        OPENSSL_free(g);
+        OPENSSL_free(pubkey_charK);
+        
+    }else if (kx == ECDHE_KX){
+        ecdhe_server_key_exchange_t *server_key_ex = (ecdhe_server_key_exchange_t *) server_key_exchange;
+        
+        char *pubkey_charK = NULL;
+        pubkey_charK = BN_bn2hex(server_key_ex->pub_key);
+        
+        printf("\n**** ECDHE Server key exchange **\n");
+        printf(" curve type : named_curve");
+        printf("\n named curve : %04X", server_key_ex->named_curve);
+        printf("\n public key : %s",pubkey_charK);
+        
+        printf("\n Signature hash algorithm : %04x", server_key_ex->sign_hash_alg);
+        printf("\n Signature : ");
+        for(int i =0;i<server_key_ex->signature_length; i++)
+            printf("%02X", server_key_ex->signature[i]);
+        
+        OPENSSL_free(pubkey_charK);
+    }
+}
+
 void free_server_key_exchange(void *server_key_ex, cipher_suite_t cipher_suite){
     if(server_key_ex!=NULL && cipher_suite.kx == DHE_KX){
-        DHE_server_key_exchange *params = (DHE_server_key_exchange*)server_key_ex;
+        dhe_server_key_exchange_t *params = (dhe_server_key_exchange_t*)server_key_ex;
         BN_free(params->g);
         BN_free(params->p);
         BN_free(params->pubKey);
         free(params->signature);
         free(params);
     }else if(server_key_ex!=NULL && cipher_suite.kx == ECDHE_KX){
-        ECDHE_server_key_exchange *params = (ECDHE_server_key_exchange*) server_key_ex;
+        ecdhe_server_key_exchange_t *params = (ecdhe_server_key_exchange_t*) server_key_ex;
         free(params->signature);
         BN_free(params->pub_key);
         free(server_key_ex);
     }
-        
+    else if(server_key_ex!=NULL && cipher_suite.kx == ECDHE_KX){
+        ecdhe_server_key_exchange_t *params = (ecdhe_server_key_exchange_t*) server_key_ex;
+        free(params->signature);
+        BN_free(params->pub_key);
+        free(server_key_ex);
+    }
 }

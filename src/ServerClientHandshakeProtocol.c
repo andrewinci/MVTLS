@@ -8,7 +8,7 @@
 
 #include "ServerClientHandshakeProtocol.h"
 
-record_t *make_record(handshake *h) {
+record_t *make_record(handshake_t *h) {
     unsigned char *message = NULL;
     uint32_t messageLen = 0;
     serialize_handshake(h, &message, &messageLen);
@@ -22,7 +22,7 @@ record_t *make_record(handshake *h) {
     return to_send;
 }
 
-int send_handshake(channel *ch, handshake *h){
+int send_handshake(channel_t *ch, handshake_t *h){
     record_t *to_send;
     to_send = make_record(h);
     
@@ -32,7 +32,7 @@ int send_handshake(channel *ch, handshake *h){
     return result;
 }
 
-void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamLen){
+void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen){
     unsigned char *buff = malloc(sizeof(unsigned char)*(h->length+4));
     *stream = buff;
     *buff = h->type;
@@ -47,8 +47,8 @@ void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamL
     *streamLen = h->length+4;
 }
 
-handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){
-    handshake *h = malloc(sizeof(handshake));
+handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
+    handshake_t *h = malloc(sizeof(handshake_t));
     h->type = *message;
     message++;
     
@@ -63,14 +63,14 @@ handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen){
     return h;
 }
 
-void free_handshake(handshake *h){
+void free_handshake(handshake_t *h){
 	if(h==NULL)
 		return;
 	free(h->message);
 	free(h);
 }
 
-void print_handshake(handshake *h){
+void print_handshake(handshake_t *h){
     unsigned char *message = NULL;
     uint32_t messageLen = 0;
     serialize_handshake(h, &message, &messageLen);

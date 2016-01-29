@@ -15,9 +15,9 @@
 #endif
 
 #ifdef MAKEFILE
-#include "../handshakeConstants.h"
+#include "../TLSConstants.h"
 #else
-#include "handshakeConstants.h"
+#include "TLSConstants.h"
 #endif
 
 #ifndef server_key_exchange_structs
@@ -40,7 +40,7 @@ typedef struct {
     
     unsigned char *signature;
     
-}ECDHE_server_key_exchange; //we supported only named curve
+}ecdhe_server_key_exchange_t; //we supported only named curve
 
 typedef struct{
     
@@ -57,7 +57,7 @@ typedef struct{
     
     unsigned char *signature;
     
-}DHE_server_key_exchange;
+}dhe_server_key_exchange_t;
 
 typedef struct{
     
@@ -65,7 +65,7 @@ typedef struct{
     
     unsigned char *key;
     
-}client_key_exchange;
+}client_key_exchange_t;
 
 #endif
 
@@ -73,7 +73,7 @@ void serialize_server_key_exchange(void *server_key_exchange, unsigned char **st
 
 void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx);
 
-void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
+void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
 
 void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message);
 

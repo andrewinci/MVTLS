@@ -1,6 +1,6 @@
 //
 //  SSL/TLS Project
-//  handshakeConstants.h
+//  TLSConstants.h
 //
 //  Created on 24/12/15.
 //  Copyright © 2015 Mello, Darka. All rights reserved.
@@ -9,8 +9,8 @@
 // the handshake protocol and some function 
 //
 
-#ifndef handshakeConstants_h
-#define handshakeConstants_h
+#ifndef TLSConstants_h
+#define TLSConstants_h
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -19,7 +19,15 @@
 #define REV16(value)({(value & 0x00FFU) << 8 | (value & 0xFF00U) >> 8;})
 #define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
 
-
+/*
+ * Record Version
+ */
+typedef enum{
+    SSL3_0 = 0x0300,
+    TLS1_0 = 0x0301,
+    TLS1_1 = 0x0302,
+    TLS1_2 = 0x0303
+}TLS_version;
 
 typedef enum{
     NONE_KX = -1,
@@ -46,57 +54,15 @@ typedef enum
     SHA512_H = 6
 }hash_algorithm;
 
-typedef struct{
-    uint16_t cipher_id;
-    char *name;
-    key_exchange_algorithm kx;
-    authentication_algorithm au;
-    uint16_t key_size;
-    hash_algorithm hash;
-    
-}cipher_suite_t;
-extern const int NUM_CIPHER_SUITE;
 
-cipher_suite_t get_cipher_suite_by_id(uint16_t id);
-
-cipher_suite_t get_cipher_suite_by_name(char *name);
-
-int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]);
-
-#endif
-
-#ifndef channel_mode_enum
-#define channel_mode_enum
 typedef enum{
     SERVER_MODE,
     CLIENT_MODE
 }channel_mode;
-#endif
-
-/*
- * Starting from cipher suite id retrieve the hash function
- * to be used in PRF
- */
-const EVP_MD *get_hash_function(hash_algorithm h);
-
-/*
- * Record Version
- */
-#ifndef enum_record_version
-#define enum_record_version
-typedef enum{
-    SSL3_0 = 0x0300,
-    TLS1_0 = 0x0301,
-    TLS1_1 = 0x0302,
-    TLS1_2 = 0x0303
-}TLS_version;
-#endif
 
 /*
  * Types of handshake packet
  */
-#ifndef enum_handshake_type
-#define enum_handshake_type
 enum {
     HELLO_REQUEST           = 0x00,
     CLIENT_HELLO            = 0x01,
@@ -109,4 +75,29 @@ enum {
     CLIENT_KEY_EXCHANGE     = 0x10,
     FINISHED                = 0x14
 };
+
+typedef struct{
+    uint16_t cipher_id;
+    char *name;
+    key_exchange_algorithm kx;
+    authentication_algorithm au;
+    uint16_t key_size;
+    hash_algorithm hash;
+    
+}cipher_suite_t;
+
 #endif
+
+extern const int NUM_CIPHER_SUITE;
+
+/*
+ * Starting from cipher suite id retrieve the hash function
+ * to be used in PRF
+ */
+const EVP_MD *get_hash_function(hash_algorithm h);
+
+cipher_suite_t get_cipher_suite_by_id(uint16_t id);
+
+cipher_suite_t get_cipher_suite_by_name(char *name);
+
+int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]);

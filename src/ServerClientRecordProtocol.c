@@ -33,11 +33,11 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
     return result;
 }
 
-int send_record(channel *ch, record_t *r){
+int send_record(channel_t *ch, record_t *r){
     unsigned char *message = NULL;
     uint16_t messageLen;
     serialize_record(r, &message, &messageLen);
-    packet_basic *tosend = create_packet(NULL, NULL, message, messageLen);  //the basic layer puts automatically 'from' and 'to'
+    packet_basic_t *tosend = create_packet(NULL, NULL, message, messageLen);  //the basic layer puts automatically 'from' and 'to'
                                                                             //if they are NULL
     int result = send_packet(ch, tosend);
 	free(message);

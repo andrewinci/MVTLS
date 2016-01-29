@@ -18,7 +18,7 @@
 #include <string.h>
 
 #include "ServerClientRecordProtocol.h"
-#include "handshakeConstants.h"
+#include "TLSConstants.h"
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
@@ -37,15 +37,15 @@ typedef struct{
 	uint8_t type;
 	uint32_t length;  
     unsigned char *message;
-} handshake;
+}handshake_t;
 
 
-int send_handshake(channel *ch, handshake *h);
+int send_handshake(channel_t *ch, handshake_t *h);
 
-void serialize_handshake(handshake *h, unsigned char **stream, uint32_t *streamLen);
+void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen);
 
-handshake *deserialize_handshake(unsigned char *message, uint32_t messageLen);
+handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
-void print_handshake(handshake *h);
+void print_handshake(handshake_t *h);
 
-void free_handshake(handshake *h);
+void free_handshake(handshake_t *h);

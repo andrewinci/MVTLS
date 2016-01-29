@@ -71,7 +71,7 @@ record_t;
  * \param to_send  : record to send
  * \return 1 if the message was successfully sent, 0 otherwise
  */
-int send_record(channel *ch, record_t *to_send);
+int send_record(channel_t *ch, record_t *to_send);
 
 /**
  * Deserialize a byte stream message of length message_len into 

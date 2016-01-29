@@ -9,7 +9,7 @@
 #include "TLS.h"
 /* Utils functions */
 
-void backup_handshake(TLS_parameters *TLS_param, handshake *h){
+void backup_handshake(TLS_parameters_t *TLS_param, handshake_t *h){
     
     // Initialize
     unsigned char *temp_message = NULL;
@@ -32,13 +32,13 @@ void backup_handshake(TLS_parameters *TLS_param, handshake *h){
 
                 /*** SERVER ***/
 
-handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client_hello){
+handshake_t * make_server_hello(TLS_parameters_t *TLS_param, handshake_hello_t *client_hello){
 
 	// Initialize  server hello (without SessionID)
 	session_id *session= malloc(sizeof(session_id));
 	session->session_lenght = 0x00;
 	session->session_id = NULL;
-	handshake_hello *server_hello = make_hello(*session);
+	handshake_hello_t *server_hello = make_hello(*session);
 	server_hello->TLS_version = TLS1_2;
 
 	// Choose and set cipher suite
@@ -50,7 +50,7 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	*(server_hello->cipher_suites) = choosen_suite;
 
 	// Insert server hello into handshake packet
-	handshake *server_hello_h = malloc(sizeof(handshake));
+	handshake_t *server_hello_h = malloc(sizeof(handshake_t));
 	server_hello_h->type = SERVER_HELLO;
 	server_hello_h->message = NULL;
 	server_hello_h->length = 0;
@@ -68,10 +68,10 @@ handshake * make_server_hello(TLS_parameters *TLS_param, handshake_hello *client
 	return server_hello_h;
 }
 
-handshake * make_certificate(TLS_parameters *TLS_param){
+handshake_t * make_certificate(TLS_parameters_t *TLS_param){
 
 	// Initialize certificate message
-	certificate_message *cert_message = NULL;
+	certificate_message_t *cert_message = NULL;
 
 	// Make certificate message
 	switch (TLS_param->cipher_suite.au){
@@ -90,7 +90,7 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 	}
 
 	// Insert certificate message into handshake packet
-	handshake *certificate_h = malloc(sizeof(handshake));
+	handshake_t *certificate_h = malloc(sizeof(handshake_t));
 	certificate_h->type = CERTIFICATE;
 	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
 
@@ -104,7 +104,7 @@ handshake * make_certificate(TLS_parameters *TLS_param){
 	return certificate_h;
 }
 
-handshake * make_server_key_exchange(TLS_parameters *TLS_param){
+handshake_t * make_server_key_exchange(TLS_parameters_t *TLS_param){
 
 	// Initialize server key exchange
 	void *server_key_ex = NULL;
@@ -112,10 +112,10 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	// Make  server key exchange packet
 	switch (TLS_param->cipher_suite.kx){
 		case DHE_KX:
-			server_key_ex = (DHE_server_key_exchange *)make_DHE_server_key_exchange(TLS_param);
+			server_key_ex = (dhe_server_key_exchange_t *)make_DHE_server_key_exchange(TLS_param);
 			break;
 		case ECDHE_KX:
-			server_key_ex = (ECDHE_server_key_exchange *)make_ECDHE_server_key_exchange(TLS_param);
+			server_key_ex = (ecdhe_server_key_exchange_t *)make_ECDHE_server_key_exchange(TLS_param);
 			break;
 		default:
 			printf("\nError in make_server_key_exchange, key excahnge algorithm not recognized\n");
@@ -123,7 +123,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	}
     
     // Insert server key exchange into handshake packet
-	handshake *server_key_ex_h = malloc(sizeof(handshake));
+	handshake_t *server_key_ex_h = malloc(sizeof(handshake_t));
 	server_key_ex_h->type = SERVER_KEY_EXCHANGE;
 	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, TLS_param->cipher_suite.kx);
 
@@ -133,7 +133,7 @@ handshake * make_server_key_exchange(TLS_parameters *TLS_param){
 	return server_key_ex_h;
 }
 
-DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param){
+dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_param){
 
 	// Diffie-Hellman server key exchange
 	// Generate ephemeral Diffie-Hellman parameters
@@ -152,7 +152,7 @@ DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param
 		printf("Error in DH_generate_key\n");
 
 	// Set server key exchange parameters
-	DHE_server_key_exchange *server_key_ex = malloc(sizeof(DHE_server_key_exchange));
+	dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
 	server_key_ex->g = BN_dup(privkey->g);
 	server_key_ex->p = BN_dup(privkey->p);
 	server_key_ex->pubKey = BN_dup(privkey->pub_key);
@@ -170,7 +170,7 @@ DHE_server_key_exchange * make_DHE_server_key_exchange(TLS_parameters *TLS_param
 	return server_key_ex;
 }
 
-ECDHE_server_key_exchange * make_ECDHE_server_key_exchange(TLS_parameters *TLS_param){
+ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *TLS_param){
 
 	// Elliptic cruve Diffie-Hellman server key exchange
 	// Generate ephemeral Diffie-Hellman parameters
@@ -184,7 +184,7 @@ ECDHE_server_key_exchange * make_ECDHE_server_key_exchange(TLS_parameters *TLS_p
 		printf("\nError in generate EC keys\n");
 
 	// Set server key exchange parameters
-	ECDHE_server_key_exchange *server_key_ex = malloc(sizeof(ECDHE_server_key_exchange));
+	ecdhe_server_key_exchange_t *server_key_ex = malloc(sizeof(ecdhe_server_key_exchange_t));
 	server_key_ex->named_curve = curve_name;
 	server_key_ex->pub_key = BN_new();
 	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
@@ -202,10 +202,10 @@ ECDHE_server_key_exchange * make_ECDHE_server_key_exchange(TLS_parameters *TLS_p
 	return server_key_ex;
 }
 
-handshake * make_server_hello_done() {
+handshake_t * make_server_hello_done() {
 
 	// Make and insert server done into handshake packet
-	handshake *server_hello_done = malloc(sizeof(handshake));
+	handshake_t *server_hello_done = malloc(sizeof(handshake_t));
 	server_hello_done->type = SERVER_DONE;
 	server_hello_done->length = 0x00;
 	server_hello_done->message = NULL;
@@ -215,12 +215,12 @@ handshake * make_server_hello_done() {
 
                 /*** CLIENT ***/
 
-handshake * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
+handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
     // Initialize client hello (without SessionID)
     session_id *session= malloc(sizeof(session_id));
     session->session_lenght =0x00;
     session->session_id = NULL;
-    handshake_hello *client_hello = make_hello(*session);
+    handshake_hello_t *client_hello = make_hello(*session);
     client_hello->TLS_version = TLS1_2;
     
     client_hello->cipher_suite_len = 2*cipher_suite_len;
@@ -229,7 +229,7 @@ handshake * make_client_hello(unsigned char *client_random, cipher_suite_t ciphe
         client_hello->cipher_suites[i]=cipher_suite_list[i];
     
     // Insert server hello into handshake packet
-    handshake *client_hello_h = malloc(sizeof(handshake));
+    handshake_t *client_hello_h = malloc(sizeof(handshake_t));
     client_hello_h->type = CLIENT_HELLO;
     serialize_client_server_hello(client_hello, &(client_hello_h->message), &(client_hello_h->length), CLIENT_MODE);
     
@@ -244,12 +244,12 @@ handshake * make_client_hello(unsigned char *client_random, cipher_suite_t ciphe
     return client_hello_h;
 }
 
-handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_alg){
+handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key_ex_alg){
     
     // Initialize handshake packet and client key exchange message
-    handshake *client_key_exchange_h = malloc(sizeof(handshake));
+    handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
     client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
-    client_key_exchange *client_key_ex = malloc(sizeof(client_key_exchange));
+    client_key_exchange_t *client_key_ex = malloc(sizeof(client_key_exchange_t));
     
     switch (TLS_param->cipher_suite.kx){
         case RSA_KX:
@@ -275,7 +275,7 @@ handshake * make_client_key_exchange(TLS_parameters *TLS_param, uint16_t key_ex_
     return client_key_exchange_h;
 }
 
-void make_RSA_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param){
+void make_RSA_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
     
     // Initialize pre master key
     int pre_master_key_len = 58;
@@ -319,10 +319,10 @@ void make_RSA_client_key_exchange(client_key_exchange *client_key_ex, TLS_parame
     free(pre_master_key);
 }
 
-void make_DHE_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param){
+void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
     
     // Set server key exchange type
-    DHE_server_key_exchange *server_key_exchange = (DHE_server_key_exchange*)TLS_param->server_key_ex;
+    dhe_server_key_exchange_t *server_key_exchange = (dhe_server_key_exchange_t*)TLS_param->server_key_ex;
     
     // Verify signature
     if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au) == 0){
@@ -365,10 +365,10 @@ void make_DHE_client_key_exchange(client_key_exchange *client_key_ex, TLS_parame
     free(pre_master_key);
 }
 
-void make_ECDHE_client_key_exchange(client_key_exchange *client_key_ex, TLS_parameters *TLS_param){
+void make_ECDHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
     
     // Set server key exchange algorithm
-    ECDHE_server_key_exchange *server_key_exchange = (ECDHE_server_key_exchange * )TLS_param->server_key_ex;
+    ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t * )TLS_param->server_key_ex;
     
     // Verify signature
     if(verify_ECDHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)<1){
@@ -436,10 +436,10 @@ record_t * make_change_cipher_spec() {
     return change_cipher_spec_message;
 }
 
-handshake * make_finished_message(TLS_parameters *TLS_param ) {
+handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) {
     
     // Initialize finished
-    handshake *finished_h = malloc(sizeof(handshake));
+    handshake_t *finished_h = malloc(sizeof(handshake_t));
     finished_h->type = FINISHED;
     
     // Compute hashes of handshake messages
