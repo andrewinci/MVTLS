@@ -27,6 +27,9 @@
 				"  Specify authentication algorithm \n"\
 				"    -a  --auth_algorithm  (RSA|DSS|ECDSA) \n"\
 				" \n"\
+                "  Specify verbosity \n"\
+                "    -v     0 default (1|2) \n"\
+                " \n"\
 				"  Specify hash algorithm \n"\
 				"    -h  --hash_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \n"\
 				" \n"\
@@ -39,6 +42,8 @@
 void onPacketReceive(channel_t *ch, packet_basic_t *p);
 void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);
 
+int v=0;
+
 TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv) {
@@ -46,7 +51,7 @@ int main(int argc, char **argv) {
     //PARAMETERS
     int to_send_cipher_suite_len = 0;
     cipher_suite_t to_send_cipher_suite[NUM_CIPHER_SUITE];
-    key_exchange_algorithm kx = NONE_KX;
+    key_exchange_algorithm kx = DHE_KX;
     authentication_algorithm au = NONE_AU;
     hash_algorithm ha = NONE_H;
     for(int i=1;i<argc;i+=2){
@@ -100,6 +105,9 @@ int main(int argc, char **argv) {
             else if(strcmp("SHA512", argv[i+1])==0)
                 ha = SHA512_H;
         }
+        else if(strcmp(argv[i], "-v")==0 ){
+            v = atoi(argv[i+1]);
+        }
         else if(argc == 2 && strcmp(argv[i], "--help")==0){
             printf("%s",USAGE);
             return 0;
@@ -152,7 +160,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     // Make ClientHello
     printf(">>> Client hello\n");
     handshake_t *client_hello = make_client_hello(TLS_param.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
-    print_handshake(client_hello);
+    print_handshake(client_hello,v,TLS_param.cipher_suite.kx);
 
     send_handshake(client2server, client_hello);
     backup_handshake(&TLS_param,client_hello);
@@ -220,7 +228,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					server_client_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
 
 					printf("\n<<< Server Hello\n");
-					print_handshake(h);
+					print_handshake(h,v,TLS_param.cipher_suite.kx);
 					
 					// Extract data for next steps
                     TLS_param.cipher_suite = *server_hello->cipher_suites;
@@ -242,7 +250,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Certificate\n");
-					print_handshake(h);
+					print_handshake(h,v,TLS_param.cipher_suite.kx);
 					
 					certificate_message_t *certificate_m = deserialize_certificate_message(h->message, h->length);
                     TLS_param.server_certificate = certificate_m->X509_certificate;
@@ -257,7 +265,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 				if(TLS_param.previous_state == CERTIFICATE){
 					TLS_param.previous_state = SERVER_KEY_EXCHANGE;
 					printf("<<< Server Key Exchange\n");
-                    print_handshake(h);
+                    print_handshake(h,v,TLS_param.cipher_suite.kx);
 					//save the server key exchange parameters
 					TLS_param.server_key_ex = deserialize_server_key_exchange(h->message, h->length, TLS_param.cipher_suite.kx);
                     backup_handshake(&TLS_param, h);
@@ -269,14 +277,14 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 				if((TLS_param.previous_state == CERTIFICATE || TLS_param.previous_state == SERVER_KEY_EXCHANGE)){
 					backup_handshake(&TLS_param,h);
 					printf("<<< Server Hello Done\n");
-					print_handshake(h);
+					print_handshake(h,v,TLS_param.cipher_suite.kx);
 					
 					//make Client Key Exchange Message
                     handshake_t * client_key_exchange = make_client_key_exchange(&TLS_param, TLS_param.cipher_suite.kx);
                     backup_handshake(&TLS_param, client_key_exchange);
                     send_handshake(client2server, client_key_exchange);
                     printf("\n>>> Client Key Exchange\n");
-                    print_handshake(client_key_exchange);
+                    print_handshake(client_key_exchange,v,TLS_param.cipher_suite.kx);
                     free_handshake(client_key_exchange);
 
 
@@ -289,7 +297,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					printf("\n>>> Finished\n");
 					handshake_t *finished = make_finished_message(&TLS_param);
 					send_handshake(client2server, finished);
-					print_handshake(finished);
+					print_handshake(finished,v,TLS_param.cipher_suite.kx);
 					free_handshake(finished);
 				}
 				break;
@@ -297,7 +305,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 			case FINISHED:
 				
 				printf("\n<<< Finished\n");
-				print_handshake(h);
+				print_handshake(h,v,TLS_param.cipher_suite.kx);
 				free_handshake(h);
 				stop_channel(client2server);
 				break;

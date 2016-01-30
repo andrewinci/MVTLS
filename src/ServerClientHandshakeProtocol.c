@@ -70,9 +70,8 @@ void free_handshake(handshake_t *h){
 	free(h);
 }
 
-void print_handshake(handshake_t *h){
-    int verbosity = 2;
-    key_exchange_algorithm kx = DHE_KX;
+void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
+    
     if(verbosity>1){
         if (h->type == CLIENT_HELLO){
             server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);

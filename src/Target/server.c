@@ -16,9 +16,14 @@ void compute_set_master_key_DHE(client_key_exchange_t *cliet_public);
 void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public);
 void onPacketReceive(channel_t *server2client, packet_basic_t *p);
 void do_handshake();
+
+int v = 0;
 TLS_parameters_t TLS_param;
 
-int main() {
+int main(int argc, char **argv) {
+    if(argc>1 && strcmp(argv[1], "-v")==0 ){
+        v = atoi(argv[2]);
+    }
     do_handshake();
 }
 
@@ -61,7 +66,7 @@ void do_handshake() {
     free(TLS_param.master_secret);
     free(TLS_param.handshake_messages);
     free(server2client);
-    BN_free(TLS_param.private_key);
+    BN_free(TLS_param.private_key);//
     X509_free(TLS_param.server_certificate);
     //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     CRYPTO_cleanup_all_ex_data();
@@ -96,7 +101,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 
 					printf("<<< Client Hello\n");
-					print_handshake(h);
+					print_handshake(h,v,TLS_param.cipher_suite.kx);
 
 					// Backup client random
 					memcpy(TLS_param.client_random,&(client_hello->random.UNIX_time),4);
@@ -105,7 +110,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					// Choose a cipher suite and send ServerHello
 					printf("\n>>> Server Hello\n");
 					handshake_t * server_hello = make_server_hello(&TLS_param, client_hello);
-					print_handshake(server_hello);
+					print_handshake(server_hello,v,TLS_param.cipher_suite.kx);
 					send_handshake(server2client, server_hello);
 
 					// Backup ServerHello
@@ -117,7 +122,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					// Retrieve and send Certificate
 					printf("\n>>> Certificate\n");
 					handshake_t *certificate = make_certificate(&TLS_param);
-					print_handshake(certificate);
+					print_handshake(certificate,v,TLS_param.cipher_suite.kx);
 					send_handshake(server2client, certificate);
 					backup_handshake(&TLS_param, certificate);
 					free_handshake(certificate);
@@ -126,7 +131,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					if(TLS_param.cipher_suite.kx == DHE_KX || TLS_param.cipher_suite.kx == ECDHE_KX){
 						handshake_t *server_key_exchange = make_server_key_exchange(&TLS_param);
 						printf("\n>>> Server key exchange\n");
-						print_handshake(server_key_exchange);
+						print_handshake(server_key_exchange,v,TLS_param.cipher_suite.kx);
 						send_handshake(server2client, server_key_exchange);
 						backup_handshake(&TLS_param, server_key_exchange);
 
@@ -136,7 +141,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					// Make and send ServerHelloDone
 					printf("\n>>> Server hello done\n");
 					handshake_t * server_hello_done = make_server_hello_done();
-					print_handshake(server_hello_done);
+					print_handshake(server_hello_done,v,TLS_param.cipher_suite.kx);
 					send_handshake(server2client, server_hello_done);
 					backup_handshake(&TLS_param, server_hello_done);
 					free_handshake(server_hello_done);
@@ -149,7 +154,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					TLS_param.previous_state = CLIENT_KEY_EXCHANGE;
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Client Key Exchange\n");
-                    print_handshake(h);
+                    print_handshake(h,v,TLS_param.cipher_suite.kx);
                     client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
                     switch (TLS_param.cipher_suite.kx) {
                         case RSA_KX:
@@ -173,7 +178,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					// Receive Finished
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Finished\n");
-					print_handshake(h);
+					print_handshake(h,v,TLS_param.cipher_suite.kx);
 					free_handshake(h);
 
 					// Send ChangeCipherSpec
@@ -188,7 +193,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 
 					handshake_t *finished = make_finished_message(&TLS_param);
 					send_handshake(server2client, finished);
-					print_handshake(finished);
+					print_handshake(finished,v,TLS_param.cipher_suite.kx);
 					free_handshake(finished);
 
 					stop_channel(server2client);

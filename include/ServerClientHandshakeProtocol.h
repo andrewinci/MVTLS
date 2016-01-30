@@ -46,6 +46,6 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
 
 handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
-void print_handshake(handshake_t *h);
+void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx);
 
 void free_handshake(handshake_t *h);
