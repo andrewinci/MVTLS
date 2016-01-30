@@ -185,8 +185,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
     
-    // ToDo: make only one function for free all server key exchange taking the ciphersuite id and the struct to free
-    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite);
+    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     //free openssl resources
     CRYPTO_cleanup_all_ex_data();
 }
@@ -218,7 +217,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 				if(TLS_param.previous_state == 0x0000){
 					TLS_param.previous_state = SERVER_HELLO;
 					backup_handshake(&TLS_param,h);
-					handshake_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
+					server_client_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
 
 					printf("\n<<< Server Hello\n");
 					print_handshake(h);
@@ -260,7 +259,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					printf("<<< Server Key Exchange\n");
                     print_handshake(h);
 					//save the server key exchange parameters
-					TLS_param.server_key_ex = deserialize_server_key_exchange(h->length, h->message, TLS_param.cipher_suite.kx);
+					TLS_param.server_key_ex = deserialize_server_key_exchange(h->message, h->length, TLS_param.cipher_suite.kx);
                     backup_handshake(&TLS_param, h);
 				}
 				break;

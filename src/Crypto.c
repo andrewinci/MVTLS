@@ -123,27 +123,31 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
     
     //get hash function from packet
     hash_algorithm sign_hash_alg = (server_key_ex->sign_hash_alg) & 0x00FF;
+    
     int sign_type;
+    const EVP_MD *hash;
     switch (sign_hash_alg) {
         case SHA224_H:
             sign_type = NID_sha224;
+            hash = EVP_sha224();
             break;
         case SHA256_H:
             sign_type = NID_sha256;
+            hash = EVP_sha256();
             break;
         case SHA384_H:
             sign_type = NID_sha384;
+            hash = EVP_sha384();
             break;
         case SHA512_H:
             sign_type = NID_sha512;
+            hash = EVP_sha512();
             break;
         default:
             printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
             exit(-1);
             break;
     }
-
-    const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
     //compute hash
     unsigned char hash_digest[hash->md_size];
@@ -213,26 +217,31 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
     
     //set in packet
     server_key_ex->sign_hash_alg = sign_hash_alg+(au<<8);
+    
     int sign_type;
+    const EVP_MD *hash;
     switch (sign_hash_alg) {
         case SHA224_H:
             sign_type = NID_sha224;
+            hash = EVP_sha224();
             break;
         case SHA256_H:
             sign_type = NID_sha256;
+            hash = EVP_sha256();
             break;
         case SHA384_H:
             sign_type = NID_sha384;
+            hash = EVP_sha384();
             break;
         case SHA512_H:
             sign_type = NID_sha512;
+            hash = EVP_sha512();
             break;
         default:
             printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
             exit(-1);
             break;
     }
-    const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
     //compute hash
     unsigned char hash_digest[hash->md_size];
@@ -281,25 +290,29 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
     //set in packet
     server_key_ex->sign_hash_alg = sign_hash_alg+(au<<8);
     int sign_type;
+    const EVP_MD *hash;
     switch (sign_hash_alg) {
         case SHA224_H:
             sign_type = NID_sha224;
+            hash = EVP_sha224();
             break;
         case SHA256_H:
             sign_type = NID_sha256;
+            hash = EVP_sha256();
             break;
         case SHA384_H:
             sign_type = NID_sha384;
+            hash = EVP_sha384();
             break;
         case SHA512_H:
             sign_type = NID_sha512;
+            hash = EVP_sha512();
             break;
         default:
             printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
             exit(-1);
             break;
     }
-    const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
     //compute hash
     unsigned char hash_digest[hash->md_size];
@@ -337,25 +350,29 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
     //get hash function from packet
     hash_algorithm sign_hash_alg = (server_key_ex->sign_hash_alg) & 0x00FF;
     int sign_type;
+    const EVP_MD *hash;
     switch (sign_hash_alg) {
         case SHA224_H:
             sign_type = NID_sha224;
+            hash = EVP_sha224();
             break;
         case SHA256_H:
             sign_type = NID_sha256;
+            hash = EVP_sha256();
             break;
         case SHA384_H:
             sign_type = NID_sha384;
+            hash = EVP_sha384();
             break;
         case SHA512_H:
             sign_type = NID_sha512;
+            hash = EVP_sha512();
             break;
         default:
             printf("Error in recognize hash for signature or too low level of security in server_key_ex\n");
             exit(-1);
             break;
     }
-    const EVP_MD *hash = get_hash_function(sign_hash_alg);
     
     //compute hash
     unsigned char hash_digest[hash->md_size];

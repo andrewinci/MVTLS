@@ -32,13 +32,13 @@ void backup_handshake(TLS_parameters_t *TLS_param, handshake_t *h){
 
                 /*** SERVER ***/
 
-handshake_t * make_server_hello(TLS_parameters_t *TLS_param, handshake_hello_t *client_hello){
+handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello_t *client_hello){
 
 	// Initialize  server hello (without SessionID)
-	session_id *session= malloc(sizeof(session_id));
+	session_id_t *session= malloc(sizeof(session_id_t));
 	session->session_lenght = 0x00;
 	session->session_id = NULL;
-	handshake_hello_t *server_hello = make_hello(*session);
+	server_client_hello_t *server_hello = make_hello(*session);
 	server_hello->TLS_version = TLS1_2;
 
 	// Choose and set cipher suite
@@ -46,6 +46,8 @@ handshake_t * make_server_hello(TLS_parameters_t *TLS_param, handshake_hello_t *
 	int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2); // Specify the number of supported cipher suite
 	cipher_suite_t choosen_suite = get_cipher_suite_by_id( client_hello->cipher_suites[choosen_suite_num].cipher_id );
 
+    server_hello->cipher_suite_len = 2; 
+    
 	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
 	*(server_hello->cipher_suites) = choosen_suite;
 
@@ -86,6 +88,7 @@ handshake_t * make_certificate(TLS_parameters_t *TLS_param){
 			break;
 		default:
 			printf("\nError in make_certificate_message");
+            exit(-1);
 			break;
 	}
 
@@ -141,8 +144,10 @@ dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_p
 	int codes;
 	if((privkey = DH_new()) == NULL)
 		printf("\nError in DH_new\n");
-	if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1)
+    if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1){
 		printf("\nError in DH_generate_parameters\n");
+        exit(-1);
+    }
 	if(DH_check(privkey, &codes) != 1)
 		printf("\nError in DH_check\n");
 	if(codes != 0)
@@ -217,10 +222,10 @@ handshake_t * make_server_hello_done() {
 
 handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
     // Initialize client hello (without SessionID)
-    session_id *session= malloc(sizeof(session_id));
+    session_id_t *session= malloc(sizeof(session_id_t));
     session->session_lenght =0x00;
     session->session_id = NULL;
-    handshake_hello_t *client_hello = make_hello(*session);
+    server_client_hello_t *client_hello = make_hello(*session);
     client_hello->TLS_version = TLS1_2;
     
     client_hello->cipher_suite_len = 2*cipher_suite_len;
@@ -249,28 +254,27 @@ handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key
     // Initialize handshake packet and client key exchange message
     handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
     client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
-    client_key_exchange_t *client_key_ex = malloc(sizeof(client_key_exchange_t));
+    client_key_exchange_t *client_key_exchange = malloc(sizeof(client_key_exchange_t));
     
     switch (TLS_param->cipher_suite.kx){
         case RSA_KX:
-            make_RSA_client_key_exchange(client_key_ex, TLS_param);
+            make_RSA_client_key_exchange(client_key_exchange, TLS_param);
             break;
         case DHE_KX:
-            make_DHE_client_key_exchange(client_key_ex, TLS_param);
+            make_DHE_client_key_exchange(client_key_exchange, TLS_param);
             break;
         case ECDHE_KX:
-            make_ECDHE_client_key_exchange(client_key_ex, TLS_param);
+            make_ECDHE_client_key_exchange(client_key_exchange, TLS_param);
             break;
         default:
             printf("\nError in make_client_key_exchange\n");
+            exit(-1);
             break;
     }
     
-    serialize_client_key_exchange(client_key_ex, &(client_key_exchange_h->message), (&client_key_exchange_h->length));
+    serialize_client_key_exchange(client_key_exchange, &(client_key_exchange_h->message), (&client_key_exchange_h->length));
     
-    //Clean up
-    free(client_key_ex->key);
-    free(client_key_ex);
+    free_client_key_exchange(client_key_exchange);
     
     return client_key_exchange_h;
 }
@@ -332,16 +336,16 @@ void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_para
     printf("Signature is valid");
     
     // Initialize and set Diffie-Hellman parameters
-    DH *privkey = DH_new();
-    privkey->g = server_key_exchange->g;
-    privkey->p = server_key_exchange->p;
-    if(DH_generate_key(privkey) != 1)
+    DH *dh_key = DH_new();
+    dh_key->g = server_key_exchange->g;
+    dh_key->p = server_key_exchange->p;
+    if(DH_generate_key(dh_key) != 1)
         printf("Error in DH_generate_key\n");
     
     // Initialize pre master key
-    unsigned char *pre_master_key = malloc(DH_size(privkey));
+    unsigned char *pre_master_key = malloc(DH_size(dh_key));
     int pre_master_key_len = 0;
-    pre_master_key_len = DH_compute_key(pre_master_key, server_key_exchange->pubKey, privkey);
+    pre_master_key_len = DH_compute_key(pre_master_key, server_key_exchange->pubKey, dh_key);
     
     // Copy random
     unsigned char seed[64];
@@ -356,12 +360,12 @@ void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_para
     PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
     
     // Set client key exchange parameters
-    client_key_ex->key_length = BN_num_bytes(privkey->pub_key);
+    client_key_ex->key_length = BN_num_bytes(dh_key->pub_key);
     client_key_ex->key = malloc(sizeof(unsigned char)*client_key_ex->key_length);
-    BN_bn2bin(privkey->pub_key, client_key_ex->key);
+    BN_bn2bin(dh_key->pub_key, client_key_ex->key);
     
     // Clean up
-    DH_free(privkey);
+    DH_free(dh_key);
     free(pre_master_key);
 }
 

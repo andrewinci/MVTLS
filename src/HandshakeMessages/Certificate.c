@@ -75,7 +75,6 @@ void serialize_certificate_message(certificate_message_t *cert, unsigned char **
     
     //copy the certificate
     memcpy(buff, raw_cert, raw_certificate_len);
-    buff+=raw_certificate_len;
     
     OPENSSL_free(raw_cert);
 }

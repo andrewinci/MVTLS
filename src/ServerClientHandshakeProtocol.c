@@ -71,14 +71,47 @@ void free_handshake(handshake_t *h){
 }
 
 void print_handshake(handshake_t *h){
-    unsigned char *message = NULL;
-    uint32_t messageLen = 0;
-    serialize_handshake(h, &message, &messageLen);
-    for(int i=0; i<messageLen; i++){
-        if(i%9 == 0)
-            printf("\n");
-        printf("%02x ", message[i]);
+    int verbosity = 2;
+    key_exchange_algorithm kx = DHE_KX;
+    if(verbosity>1){
+        if (h->type == CLIENT_HELLO){
+            server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
+            print_hello(client_hello);
+            free_hello(client_hello);
+        }
+        else if (h->type == SERVER_HELLO){
+            server_client_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
+            print_hello(server_hello);
+            free_hello(server_hello);
+        }
+        else if (h->type == CERTIFICATE){
+            certificate_message_t *certificate = deserialize_certificate_message(h->message, h->length);
+            PEM_write_X509(stdout, certificate->X509_certificate);
+            free_certificate_message(certificate);
+        }
+        else if (h->type == SERVER_KEY_EXCHANGE){
+            server_key_exchange_t *server_key_exchange = deserialize_server_key_exchange(h->message, h->length, kx);
+            print_server_key_exchange(server_key_exchange, kx);
+            free_server_key_exchange(server_key_exchange, kx);
+        }
+        else if (h->type == CLIENT_KEY_EXCHANGE){
+            client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
+            print_client_key_exchange(client_key_exchange);
+            free_client_key_exchange(client_key_exchange);
+        }
     }
-    printf("\n");
-    free(message);
+    if(verbosity>0){
+        unsigned char *message = NULL;
+        uint32_t messageLen = 0;
+        serialize_handshake(h, &message, &messageLen);
+        printf("\n");
+        if(message!=NULL)
+            for(int i=0; i<messageLen; i++){
+                if(i%9 == 0)
+                    printf("\n");
+                printf("%02x ", *(message+i));
+            }
+        printf("\n");
+        free(message);
+    }
 }

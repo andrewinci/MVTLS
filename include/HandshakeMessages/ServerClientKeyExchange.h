@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/hmac.h>
-#endif
 
 #ifdef MAKEFILE
 #include "../TLSConstants.h"
@@ -20,8 +19,6 @@
 #include "TLSConstants.h"
 #endif
 
-#ifndef server_key_exchange_structs
-#define server_key_exchange_structs
 
 /*
  RFC 
@@ -67,14 +64,24 @@ typedef struct{
     
 }client_key_exchange_t;
 
+typedef void server_key_exchange_t;
+
 #endif
 
-void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
+void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
 
-void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx);
+server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, uint32_t message_len, key_exchange_algorithm kx);
+
+void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx);
+
+void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx);
+
 
 void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
 
-void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message);
+client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len);
 
-void free_server_key_exchange(void *server_key_ex, cipher_suite_t cipher_suite);
+void print_client_key_exchange(client_key_exchange_t *client_key_exchange);
+
+void free_client_key_exchange(client_key_exchange_t *client_key_exchange);
+

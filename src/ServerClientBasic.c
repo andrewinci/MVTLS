@@ -39,8 +39,10 @@ int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_
 }
 
 int send_packet(channel_t *ch, packet_basic_t *p){
-	if(ch == NULL)
+    if(ch == NULL){
 		printf("Error ch is null");
+        return -1;
+    }
     if(ch->fd == -1)
         return 0;
     

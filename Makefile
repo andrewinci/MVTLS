@@ -65,7 +65,7 @@ handshakeMessages:
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/Certificate.o $(SRCDIR)/HandshakeMessages/Certificate.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientHello.o $(SRCDIR)/HandshakeMessages/ServerClientHello.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ServerClientKeyExchange.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/handshakeConstants.o $(SRCDIR)/handshakeConstants.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSConstants.o $(SRCDIR)/TLSConstants.c
 
 recordProtocol: basicProtocol
 	@printf "${GREEN}** Make object code for record protocol**${NC}\n"

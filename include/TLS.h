@@ -60,7 +60,7 @@ handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) ;
                 /**** SERVER ****/
 
 /* Functions for send handshake packet */
-handshake_t * make_server_hello(TLS_parameters_t *TLS_param, handshake_hello_t *client_hello);
+handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello_t *client_hello);
 
 handshake_t * make_certificate(TLS_parameters_t *TLS_param);
 

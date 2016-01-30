@@ -93,6 +93,9 @@ const EVP_MD *get_hash_function(hash_algorithm h){
         
         case SHA384_H:
             return EVP_sha384();
+            
+        case SHA512_H:
+            return EVP_sha512();
         
         case MD5_H:
             return EVP_md5();
