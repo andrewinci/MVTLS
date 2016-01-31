@@ -203,6 +203,7 @@ void print_hello(server_client_hello_t *h){
 }
 
 void free_hello(server_client_hello_t *h){
+	free(h->compression_methods.compression_id);
     free(h->cipher_suites);
     free(h->session_id.session_id);
     free(h);

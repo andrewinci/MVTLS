@@ -190,7 +190,7 @@ uint32_t read_all_file(int fd, unsigned char **p){
         printf("\nThe message is too long, something went wrong\n");
         exit(-1);
     }
-    unsigned char *temp = malloc(sizeof(unsigned char)*fileSize);
+    unsigned char *temp = calloc(sizeof(unsigned char),fileSize);
     read(fd, temp, fileSize);
     *p = temp;
     return (uint32_t)fileSize;
