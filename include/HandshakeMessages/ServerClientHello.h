@@ -36,7 +36,7 @@ typedef struct{
 // (Useless) Compression methods
 typedef struct {
     uint16_t length;
-    uint8_t compression_id;
+    uint8_t *compression_id;
 } compression_methods_t;
 
 // Handshake hello packet

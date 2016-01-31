@@ -175,9 +175,12 @@ server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, ui
     //ToDo : non dare per scontato 1 byte
     cmethods.length = *stream;
     stream++;
-    
-    cmethods.compression_id = *stream;
-    
+    if(cmethods.length>0){
+		cmethods.compression_id = malloc(sizeof(uint8_t)*cmethods.length);
+		memcpy(cmethods.compression_id,stream,cmethods.length);
+    }else{
+		cmethods.compression_id = NULL;
+	}
     result->compression_methods = cmethods;
     
     return result;

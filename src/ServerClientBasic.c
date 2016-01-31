@@ -247,15 +247,18 @@ void serialize_packet(packet_basic_t *p, unsigned char **str, uint32_t *strLen){
         *strLen = 0;
         return;
     }
-    *strLen = p->length+4+8+8;
-    *str = malloc(sizeof(unsigned char)*(*strLen));
 
-    if(*str!=NULL){
-        memcpy(*str, p->source, 8);
-        memcpy(*str+8, p->destination, 8);
-        memcpy(*str+16, strLen, 4);
+    int len = p->length+4+8+8;
+    unsigned char *buff = malloc(sizeof(unsigned char)*len);
+
+    *str = buff;
+    *strLen = len;
+    if(buff!=NULL){
+        memcpy(buff, p->source, 8);
+        memcpy(buff+8, p->destination, 8);
+        memcpy(buff+16, strLen, 4);
         if(p->length>0)
-            memcpy(*str+20,p->message,p->length);
+            memcpy(buff+20,p->message,p->length);
     }
     else
     {

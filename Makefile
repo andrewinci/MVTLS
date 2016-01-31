@@ -3,8 +3,8 @@ CC := gcc # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
 CFLAGS := -g -Wall -std=gnu99 -D MAKEFILE 
-OPENSSLINCLUDE ?= -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib
-OPENSSLFLAGS := -lssl -lcrypto
+OPENSSLINCLUDE ?= -I/usr/local/ssl/include -L/usr/local/ssl/lib
+OPENSSLFLAGS := -lssl -lcrypto -ldl
 OPENSSL := $(OPENSSLFLAGS) $(OPENSSLINCLUDE)
 LFLAGS := -pthread
 INC :=  -I include $(OPENSSL)

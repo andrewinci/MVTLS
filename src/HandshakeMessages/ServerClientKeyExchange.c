@@ -177,7 +177,7 @@ void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, u
         buff+=2;
         //add key
         memcpy(buff, client_key_exchange->key, client_key_exchange->key_length);
-        *streamLen=client_key_exchange->key_length+3;
+        *streamLen=client_key_exchange->key_length+2;
 }
 
 client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len){
@@ -255,12 +255,6 @@ void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange
         free(params->signature);
         free(params);
     }else if(server_key_ex!=NULL && kx == ECDHE_KX){
-        ecdhe_server_key_exchange_t *params = (ecdhe_server_key_exchange_t*) server_key_ex;
-        free(params->signature);
-        BN_free(params->pub_key);
-        free(server_key_ex);
-    }
-    else if(server_key_ex!=NULL && kx == ECDHE_KX){
         ecdhe_server_key_exchange_t *params = (ecdhe_server_key_exchange_t*) server_key_ex;
         free(params->signature);
         BN_free(params->pub_key);
