@@ -66,9 +66,9 @@ void do_handshake() {
     free(TLS_param.master_secret);
     free(TLS_param.handshake_messages);
     free(server2client);
-    //BN_free(TLS_param.private_key); // this is the responsible for segmentation faults
+
     X509_free(TLS_param.server_certificate);
-    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
+    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     CRYPTO_cleanup_all_ex_data();
 }
 
@@ -253,7 +253,7 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_public){
     
 	privkey->g = BN_dup(server_key_exchange->g);
 	privkey->p = BN_dup(server_key_exchange->p);
-	privkey->priv_key = TLS_param.private_key;
+	privkey->priv_key = BN_dup(TLS_param.private_key);
 	privkey->pub_key = NULL;
 	privkey->pub_key = BN_bin2bn(client_public->key, client_public->key_length, NULL);
     
@@ -272,6 +272,7 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_public){
     PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     
     free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx);
+    BN_clear_free(TLS_param.private_key);
     DH_free(privkey);
     free(pre_master_key);
 }
@@ -313,7 +314,8 @@ void compute_set_master_key_ECDHE(client_key_exchange_t *client_public){
     
     //compute and set pre master key
     PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
-    
+
+    BN_clear_free(TLS_param.private_key);
     EC_KEY_free(key);
     free(pre_master);
 }

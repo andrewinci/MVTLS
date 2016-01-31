@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     //PARAMETERS
     int to_send_cipher_suite_len = 0;
     cipher_suite_t to_send_cipher_suite[NUM_CIPHER_SUITE];
-    key_exchange_algorithm kx = DHE_KX;
+    key_exchange_algorithm kx = NONE_KX;
     authentication_algorithm au = NONE_AU;
     hash_algorithm ha = NONE_H;
     for(int i=1;i<argc;i+=2){
@@ -194,8 +194,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
     free(TLS_param.handshake_messages);
     free(TLS_param.master_secret);
     X509_free(TLS_param.server_certificate);
-    
-    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
+    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     //free openssl resources
     CRYPTO_cleanup_all_ex_data();
 }

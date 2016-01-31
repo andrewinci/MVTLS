@@ -337,8 +337,8 @@ void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_para
     
     // Initialize and set Diffie-Hellman parameters
     DH *dh_key = DH_new();
-    dh_key->g = server_key_exchange->g;
-    dh_key->p = server_key_exchange->p;
+    dh_key->g = BN_dup(server_key_exchange->g);
+    dh_key->p = BN_dup(server_key_exchange->p);
     if(DH_generate_key(dh_key) != 1)
         printf("Error in DH_generate_key\n");
     
