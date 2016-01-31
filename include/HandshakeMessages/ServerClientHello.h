@@ -22,32 +22,32 @@
 #endif /* ServerClientHello_h */
 
 // 32-bit of random
-typedef struct {
-    uint32_t UNIX_time;
-    uint8_t random_bytes[28];
-} random_data_t;
+typedef struct{
+	uint32_t UNIX_time;
+	uint8_t random_bytes[28];
+}random_data_t;
 
 // Session ID
 typedef struct{
-    uint8_t session_lenght;
-    unsigned char *session_id;
-} session_id_t;
+	uint8_t session_lenght;
+	unsigned char *session_id;
+}session_id_t;
 
-// (Useless) Compression methods
-typedef struct {
-    uint16_t length;
-    uint8_t *compression_id;
-} compression_methods_t;
+// Compression methods
+typedef struct{
+	uint16_t length;
+	uint8_t *compression_id;
+}compression_methods_t;
 
 // Handshake hello packet
 typedef struct{
-    uint16_t TLS_version; 
-    random_data_t random;							// 32 bytes
-    session_id_t session_id;					// 1+session_id.session_lenght bytes
-    uint16_t cipher_suite_len;
-    cipher_suite_t *cipher_suites;			// 1+2*cipher_suites.lenght bytes
-    compression_methods_t compression_methods;// 3 bytes
-} server_client_hello_t;
+	uint16_t TLS_version; 
+	random_data_t random;
+	session_id_t session_id;
+	uint16_t cipher_suite_len;
+	cipher_suite_t *cipher_suites;
+	compression_methods_t compression_methods;
+}server_client_hello_t;
 
 /*
  * Make a client hello message

@@ -27,9 +27,9 @@
 
 #endif /* Certificate_h */
 
-typedef struct {
-    uint32_t cert_length; //only 3 byte are used
-    X509 *X509_certificate;
+typedef struct{
+	uint32_t cert_length; // only 3 byte are used
+	X509 *X509_certificate;
 }certificate_message_t;
 
 /*

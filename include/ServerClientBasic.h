@@ -39,54 +39,48 @@
 #ifndef struct_packet
 #define struct_packet
 /** This struct substitute the TCP in our implementation*/
-typedef struct
-{
-    /** Packet source name, 8 Byte length*/
-    char *source;
-    
-    /** Packet destination name, 8 Byte length*/
-    char *destination;
-    
-    /** Message to send length*/
-    uint32_t length;
-    
-    /** Message byte stream of lenght lenght*/
-    unsigned char *message;
+typedef struct{
+	/** Packet source name, 8 Byte length*/
+	char *source;
 
-}
-packet_basic_t;
+	/** Packet destination name, 8 Byte length*/
+	char *destination;
+
+	/** Message to send length*/
+	uint32_t length;
+
+	/** Message byte stream of lenght lenght*/
+	unsigned char *message;
+}packet_basic_t;
 #endif
 
 #ifndef struct_channel
 #define struct_channel
 /** \struct channel Struct for model and manage a file channel
  between client and server*/
-typedef struct channel_t
-{
-    /** Channel source name e.g. server*/
-    char *channel_source;
-    
-    /** Channel destination name e.g. client*/
-    char *channel_destination;
-    
-    /** File to use for exchange messages,
-     the channel between client and server */
-    char *fileName;
-    
-    /** Channel file descriptor */
-    int fd;
-    
-    /** Function to be called when a packet is received */
-    void (*onPacketReceive)(struct channel_t *ch, packet_basic_t *p);
-    
-    /** If the listener is running it is setted to 1 otherwise it is 0*/
-    int isEnabled;
-    
-    /** Secondary thread for reading/writing */
-    pthread_t thread;
-    
-}
-channel_t;
+typedef struct channel_t{
+	/** Channel source name e.g. server*/
+	char *channel_source;
+
+	/** Channel destination name e.g. client*/
+	char *channel_destination;
+
+	/** File to use for exchange messages,
+	the channel between client and server */
+	char *fileName;
+
+	/** Channel file descriptor */
+	int fd;
+
+	/** Function to be called when a packet is received */
+	void (*onPacketReceive)(struct channel_t *ch, packet_basic_t *p);
+
+	/** If the listener is running it is setted to 1 otherwise it is 0*/
+	int isEnabled;
+
+	/** Secondary thread for reading/writing */
+	pthread_t thread;
+}channel_t;
 #endif
 
 /*

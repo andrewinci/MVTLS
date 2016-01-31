@@ -26,14 +26,12 @@
 /** \enum record_type 
  *  Define the different type of record
  */
-typedef enum
-{
-    HANDSHAKE           = 0x16,
-    CHANGE_CIPHER_SPEC  = 0x14,
-    ALERT               = 0x15,
-    APPLICATION_DATA    = 0x17
-}
-record_type;
+typedef enum{
+	HANDSHAKE				= 0x16,
+	CHANGE_CIPHER_SPEC	= 0x14,
+	ALERT						= 0x15,
+	APPLICATION_DATA		= 0x17
+}record_type;
 #endif
 
 /*
@@ -46,21 +44,19 @@ record_type;
 * \struct record_t
 * \brief Record protocol struct
 */
-typedef struct
-{
-    /** Record message type  */
-    record_type type;
-    
-    /** TLS version */
-    uint16_t version;
-    
-    /** Message to send length */
-    uint16_t length;
-    
-    //** Message to send*/
-    unsigned char *message;
-}
-record_t;
+typedef struct{
+	/** Record message type  */
+	record_type type;
+
+	/** TLS version */
+	uint16_t version;
+
+	/** Message to send length */
+	uint16_t length;
+
+	/** Message to send*/
+	unsigned char *message;
+}record_t;
 #endif
 
 /**

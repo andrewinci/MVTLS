@@ -39,7 +39,6 @@ typedef struct{
     unsigned char *message;
 }handshake_t;
 
-
 int send_handshake(channel_t *ch, handshake_t *h);
 
 void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen);
