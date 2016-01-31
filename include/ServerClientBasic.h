@@ -1,11 +1,7 @@
 //
 //  SSL/TLS Project
 //  ServerClientFileSocket.h
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
-//  Basic client server comunication through file
+//  Basic client/server communication through file.
 //
 //  PROTOCOL:
 //  The protocol is very basic
@@ -13,10 +9,13 @@
 //  8 byte for receiver
 //  4 byte for packet length
 //  message
-//  
 //
 //  both server and client after read a message they blank the file
 //  both server and client cannot write if the file is not blank, they wait
+//
+//
+//  Created on 22/12/15.
+//  Copyright © 2015 Mello, Darka. All rights reserved.
 //
 
 #ifndef ServerClientBasic_h
@@ -37,46 +36,51 @@
 
 #define DELAY_TIME 50
 
-// operation mode
-#ifndef enum_mode
-#define enum_mode
-typedef enum{
-    SERVER,CLIENT
-}mode;
-#endif
-
 #ifndef struct_packet
 #define struct_packet
-// basic packet
+/** This struct substitute the TCP in our implementation*/
 typedef struct{
-    char *source; //8 byte
-    char *destination;   //8 byte
-    uint32_t messageLen;
-    unsigned char *message;
+	/** Packet source name, 8 Byte length*/
+	char *source;
 
-}packet_basic;
+	/** Packet destination name, 8 Byte length*/
+	char *destination;
+
+	/** Message to send length*/
+	uint32_t length;
+
+	/** Message byte stream of lenght lenght*/
+	unsigned char *message;
+}packet_basic_t;
 #endif
 
 #ifndef struct_channel
 #define struct_channel
-typedef struct channel{
-    // server client mode
-    mode mod;
-    // channel from
-    char *channel_source;
-    // channel to
-    char *channel_destination;
-    // file to use for exchange messages
-    char *fileName;
-    // file descriptor
-    int fd;
-    // function to be called when a packet is received
-    void (*onPacketReceive)(struct channel *ch, packet_basic *p);
-    // value to establish if reading thread is enabled
-    int isEnabled;
-    // reading thread
-    pthread_t thread;
-}channel;
+/** \struct channel Struct for model and manage a file channel
+ between client and server*/
+typedef struct channel_t{
+	/** Channel source name e.g. server*/
+	char *channel_source;
+
+	/** Channel destination name e.g. client*/
+	char *channel_destination;
+
+	/** File to use for exchange messages,
+	the channel between client and server */
+	char *fileName;
+
+	/** Channel file descriptor */
+	int fd;
+
+	/** Function to be called when a packet is received */
+	void (*onPacketReceive)(struct channel_t *ch, packet_basic_t *p);
+
+	/** If the listener is running it is setted to 1 otherwise it is 0*/
+	int isEnabled;
+
+	/** Secondary thread for reading/writing */
+	pthread_t thread;
+}channel_t;
 #endif
 
 /*
@@ -86,7 +90,7 @@ typedef struct channel{
  * serverName : name of the server/client
  * return the created channel
  */
-channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode channelMode);
+channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
 
 /*
  * Set the function to be called when a message is received
@@ -95,18 +99,18 @@ channel *create_channel(char *fileName, char *channelFrom, char *channelTo, mode
  * onPacketReceive : pointer to the function
  * return : 1 if the function was setted, 0 otherwise
  */
-int set_on_receive(channel *ch, void (*onPacketReceive)(channel *ch, packet_basic *p));
+int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_basic_t *p));
 
-/*
+/**
  * Send a message trough the channel ch
  *
  * ch : channel to be used
  * p : pointer to packet to be sent
  * return : 1 if the message was sent, 0 otherwise
  */
-int send_packet(channel *ch, packet_basic *p);
+int send_packet(channel_t *ch, packet_basic_t *p);
 
-/*
+/**
  * Start the channel. We open another thread for the reading
  * and the current thread for writing. From now on (if the operation
  * is succesfull) the client/server read continously from channel.
@@ -115,33 +119,35 @@ int send_packet(channel *ch, packet_basic *p);
  * ch : channel to start
  * return : 1 if the thread was started, 0 otherwise
  */
-int start_listener(channel *ch);
+int start_listener(channel_t *ch);
 
 /*
  * Stop the main and wait untill stop is called
  */
-void wait_channel(channel *ch);
+void wait_channel(channel_t *ch);
 
-/*
- * Stop the reading thread and the channel
- * It doesn't free the channel, this operation
- * has to be done manually with free()
+/**
+ * Stop the reading/write thread and the channel.
+ * Note: the function doesn't free the channel.
+ * \param ch : channel to stop
  */
-void stop_channel(channel *ch);
+void stop_channel(channel_t *ch);
 
-/*
- * Create a packet
+/**
+ * Create a packet starting from a byte stream 
+ * source and destination
  *
- * from : packet source
- * to   : packet receiver
- * message : the message to be sent
- * messageLen : message lenght (only message)
+ * \param source        : packet source
+ * \param destination   : packet receiver
+ * \param message       : message stream to be 
+                        encapsulate into packet
+ * \param message_length: message lenght
+ * \return a pointer to a builded packet
  */
-packet_basic *create_packet(char *from, char *to, unsigned char *message, uint32_t messageLen);
+packet_basic_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
-/*
+/**
  * Delete and free memory allocated by packet
- *
- * p : packet to remove
+ * \param p : pointer to packet to free
  */
-void free_packet(packet_basic *p);
+void free_packet(packet_basic_t *p);

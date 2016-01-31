@@ -12,16 +12,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/hmac.h>
-#endif
 
 #ifdef MAKEFILE
-#include "../handshakeConstants.h"
+#include "../TLSConstants.h"
 #else
-#include "handshakeConstants.h"
+#include "TLSConstants.h"
 #endif
 
-#ifndef server_key_exchange_structs
-#define server_key_exchange_structs
 
 /*
  RFC 
@@ -29,52 +26,58 @@
  Indicates that a named curve will be used. The use of this option is
  strongly recommended.
  */
-typedef struct {
-    uint16_t named_curve;
-    
-    BIGNUM *pub_key;
-    
-    uint16_t sign_hash_alg; 
-    
-    unsigned int signature_length;
-    
-    unsigned char *signature;
-    
-}ECDHE_server_key_exchange; //we supported only named curve
+typedef struct{
+	uint16_t named_curve;
+
+	BIGNUM *pub_key;
+
+	uint16_t sign_hash_alg; 
+
+	unsigned int signature_length;
+
+	unsigned char *signature;
+
+}ecdhe_server_key_exchange_t; // we support only named curve
 
 typedef struct{
-    
-    BIGNUM *p;
-    
-    BIGNUM *g;
-    
-    BIGNUM *pubKey;
-    
-    //signature hash algorithm,  1 for signature alg, 1 for hash,
-    uint16_t sign_hash_alg; //RSA, SHA512 0x0106 !!! we not rev the byte !!!
-    
-    unsigned int signature_length;
-    
-    unsigned char *signature;
-    
-}DHE_server_key_exchange;
+	BIGNUM *p;
+
+	BIGNUM *g;
+
+	BIGNUM *pubKey;
+
+	// Signature and hash algorithms,  1 byte for signature alg, 1byte for hash
+	uint16_t sign_hash_alg; 
+
+	unsigned int signature_length;
+
+	unsigned char *signature;
+
+}dhe_server_key_exchange_t;
 
 typedef struct{
-    
-    uint16_t key_length;
-    
-    unsigned char *key;
-    
-}client_key_exchange;
+	uint16_t key_length;
+
+	unsigned char *key;
+
+}client_key_exchange_t;
+
+typedef void server_key_exchange_t;
 
 #endif
 
-void serialize_server_key_exchange(void *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
+void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
 
-void *deserialize_server_key_exchange(uint32_t message_len, unsigned char *message, key_exchange_algorithm kx);
+server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, uint32_t message_len, key_exchange_algorithm kx);
 
-void serialize_client_key_exchange(client_key_exchange *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
+void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx);
 
-void *deserialize_client_key_exchange(uint32_t message_len, unsigned char *message);
+void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx);
 
-void free_server_key_exchange(void *server_key_ex, cipher_suite_t cipher_suite);
+void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
+
+client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len);
+
+void print_client_key_exchange(client_key_exchange_t *client_key_exchange);
+
+void free_client_key_exchange(client_key_exchange_t *client_key_exchange);

@@ -1,6 +1,9 @@
 //
 //  SSL/TLS Project
+//
 //  serverBasic.c
+//  Server for testing the basic protocol layer.
+//
 //
 //  Created on 22/12/15.
 //  Copyright © 2015 Mello, Darka. All rights reserved.
@@ -56,3 +59,4 @@ void onPacketReceive(channel *ch, packet_basic *p){
     }
     free_packet(p); 
 }
+ /** @} */

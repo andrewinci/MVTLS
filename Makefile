@@ -3,8 +3,8 @@ CC := gcc # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
 CFLAGS := -g -Wall -std=gnu99 -D MAKEFILE 
-OPENSSLINCLUDE ?= -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib
-OPENSSLFLAGS := -lssl -lcrypto
+OPENSSLINCLUDE ?= -I/usr/local/ssl/include -L/usr/local/ssl/lib
+OPENSSLFLAGS := -lssl -lcrypto -ldl
 OPENSSL := $(OPENSSLFLAGS) $(OPENSSLINCLUDE)
 LFLAGS := -pthread
 INC :=  -I include $(OPENSSL)
@@ -53,8 +53,7 @@ testBasic: basicProtocol
 # Protocols
 TLS: handshakeProtocol
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/Crypto.o $(SRCDIR)/Crypto.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSClient.o $(SRCDIR)/TLSClient.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSServer.o $(SRCDIR)/TLSServer.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLS.o $(SRCDIR)/TLS.c
 
 handshakeProtocol: recordProtocol handshakeMessages
 	@printf "${GREEN}** Make object code for handshake protocol**${NC}\n"
@@ -66,7 +65,7 @@ handshakeMessages:
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/Certificate.o $(SRCDIR)/HandshakeMessages/Certificate.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientHello.o $(SRCDIR)/HandshakeMessages/ServerClientHello.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ServerClientKeyExchange.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/handshakeConstants.o $(SRCDIR)/handshakeConstants.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSConstants.o $(SRCDIR)/TLSConstants.c
 
 recordProtocol: basicProtocol
 	@printf "${GREEN}** Make object code for record protocol**${NC}\n"
