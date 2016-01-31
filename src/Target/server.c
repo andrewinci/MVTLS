@@ -65,10 +65,10 @@ void do_handshake() {
     // Clean up
     free(TLS_param.master_secret);
     free(TLS_param.handshake_messages);
+	free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     free(server2client);
-
     X509_free(TLS_param.server_certificate);
-   // free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
+	
     CRYPTO_cleanup_all_ex_data();
 }
 
@@ -271,7 +271,6 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_public){
     TLS_param.master_secret_len = 48;
     PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param.master_secret_len, &TLS_param.master_secret);
     
-    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx);
     BN_clear_free(TLS_param.private_key);
     DH_free(privkey);
     free(pre_master_key);
