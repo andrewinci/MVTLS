@@ -68,7 +68,7 @@ void do_handshake() {
     free(server2client);
 
     X509_free(TLS_param.server_certificate);
-    free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
+    //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     CRYPTO_cleanup_all_ex_data();
 }
 
