@@ -66,7 +66,7 @@ void do_handshake() {
     free(TLS_param.master_secret);
     free(TLS_param.handshake_messages);
     free(server2client);
-    BN_free(TLS_param.private_key);//
+    //BN_free(TLS_param.private_key); // this is the responsible for segmentation faults
     X509_free(TLS_param.server_certificate);
     //free_server_key_exchange(TLS_param.server_key_ex, TLS_param.cipher_suite.kx); //ToDo : somewhere we free part of this struct hence this call give an error
     CRYPTO_cleanup_all_ex_data();
@@ -82,7 +82,8 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 	record_t *r = deserialize_record(p->message, p->length);
 	if(r->type == CHANGE_CIPHER_SPEC){
 		printf("\n<<< Change CipherSpec\n");
-		print_record(r);
+		if(v>1)
+			print_record(r);
 
 		free_record(r);
 		free_packet(p);
@@ -100,7 +101,7 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					backup_handshake(&TLS_param, h);
 					server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 
-					printf("<<< Client Hello\n");
+					printf("\n<<< Client Hello\n");
 					print_handshake(h,v,TLS_param.cipher_suite.kx);
 
 					// Backup client random
@@ -154,22 +155,22 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					TLS_param.previous_state = CLIENT_KEY_EXCHANGE;
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Client Key Exchange\n");
-                    print_handshake(h,v,TLS_param.cipher_suite.kx);
-                    client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
-                    switch (TLS_param.cipher_suite.kx) {
-                        case RSA_KX:
-                            compute_set_master_key_RSA(client_key_exchange);
-                            break;
-                        case DHE_KX:
-                            compute_set_master_key_DHE(client_key_exchange);
-                            break;
-                        case ECDHE_KX:
-                            compute_set_master_key_ECDHE(client_key_exchange);
-                            break;
-                        default:
-                            break;
-                    }
-                    free_client_key_exchange(client_key_exchange);
+					print_handshake(h, v, TLS_param.cipher_suite.kx);
+					client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
+					switch (TLS_param.cipher_suite.kx) {
+						case RSA_KX:
+							compute_set_master_key_RSA(client_key_exchange);
+							break;
+						case DHE_KX:
+							compute_set_master_key_DHE(client_key_exchange);
+							break;
+						case ECDHE_KX:
+							compute_set_master_key_ECDHE(client_key_exchange);
+							break;
+						default:
+							break;
+					}
+					free_client_key_exchange(client_key_exchange);
 				}
 				break;
 
@@ -185,7 +186,8 @@ void onPacketReceive(channel_t *server2client, packet_basic_t *p){
 					printf("\n>>> Change CipherSpec\n");
 					record_t* change_cipher_spec = make_change_cipher_spec();
 					send_record(server2client, change_cipher_spec);
-					print_record(change_cipher_spec);
+					if(v>1)
+						print_record(change_cipher_spec);
 					free_record(change_cipher_spec);
 
 					// Send Finished
@@ -245,15 +247,15 @@ void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
     free(pre_master_key);
 }
 
-void compute_set_master_key_DHE(client_key_exchange_t *cliet_public){
-    DH *privkey = DH_new();
-    dhe_server_key_exchange_t *server_key_exchange = TLS_param.server_key_ex;
+void compute_set_master_key_DHE(client_key_exchange_t *client_public){
+	DH *privkey = DH_new();
+	dhe_server_key_exchange_t *server_key_exchange = TLS_param.server_key_ex;
     
-    privkey->g = BN_dup(server_key_exchange->g);
-    privkey->p = BN_dup(server_key_exchange->p);
-    privkey->priv_key = TLS_param.private_key;
-    privkey->pub_key = NULL;
-    privkey->pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
+	privkey->g = BN_dup(server_key_exchange->g);
+	privkey->p = BN_dup(server_key_exchange->p);
+	privkey->priv_key = TLS_param.private_key;
+	privkey->pub_key = NULL;
+	privkey->pub_key = BN_bin2bn(client_public->key, client_public->key_length, NULL);
     
     //make pre master key
     unsigned char *pre_master_key = malloc(DH_size(privkey));
@@ -274,12 +276,12 @@ void compute_set_master_key_DHE(client_key_exchange_t *cliet_public){
     free(pre_master_key);
 }
 
-void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public){
+void compute_set_master_key_ECDHE(client_key_exchange_t *client_public){
     ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t *) TLS_param.server_key_ex;
     EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
     
     //get and set public key
-    BIGNUM *pub_key = BN_bin2bn(cliet_public->key, cliet_public->key_length, NULL);
+    BIGNUM *pub_key = BN_bin2bn(client_public->key, client_public->key_length, NULL);
     EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), pub_key, NULL, NULL);
     EC_KEY_set_public_key(key, pub_key_point);
     EC_POINT_free(pub_key_point);
