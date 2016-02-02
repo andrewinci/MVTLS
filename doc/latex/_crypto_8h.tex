@@ -1,0 +1,102 @@
+\hypertarget{_crypto_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.h File Reference}
+\label{_crypto_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rand.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/pem.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/rsa.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d}{P\+RF} (const E\+V\+P\+\_\+\+MD $\ast$hash, unsigned char $\ast$secret, int secret\+\_\+len, char $\ast$label, unsigned char $\ast$seed, int seed\+\_\+len, int result\+\_\+len, unsigned char $\ast$$\ast$result)
+\item 
+int \hyperlink{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex} (unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, \hyperlink{structdhe__server__key__exchange__t}{dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}{authentication\+\_\+algorithm} au)
+\item 
+int \hyperlink{_crypto_8h_afbf202296205717442436cd3838d6df7}{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign} (X509 $\ast$certificate, unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, \hyperlink{structdhe__server__key__exchange__t}{dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}{authentication\+\_\+algorithm} au)
+\item 
+int \hyperlink{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex} (unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, \hyperlink{structecdhe__server__key__exchange__t}{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}{authentication\+\_\+algorithm} au)
+\item 
+int \hyperlink{_crypto_8h_a5de0523f653b00816828961ba5cc990b}{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign} (X509 $\ast$certificate, unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, \hyperlink{structecdhe__server__key__exchange__t}{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}{authentication\+\_\+algorithm} au)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Crypto.\+h@{Crypto.\+h}!P\+RF@{P\+RF}}
+\index{P\+RF@{P\+RF}!Crypto.\+h@{Crypto.\+h}}
+\subsubsection[{\texorpdfstring{P\+R\+F(const E\+V\+P\+\_\+\+M\+D $\ast$hash, unsigned char $\ast$secret, int secret\+\_\+len, char $\ast$label, unsigned char $\ast$seed, int seed\+\_\+len, int result\+\_\+len, unsigned char $\ast$$\ast$result)}{PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result)}}]{\setlength{\rightskip}{0pt plus 5cm}void P\+RF (
+\begin{DoxyParamCaption}
+\item[{const E\+V\+P\+\_\+\+MD $\ast$}]{hash, }
+\item[{unsigned char $\ast$}]{secret, }
+\item[{int}]{secret\+\_\+len, }
+\item[{char $\ast$}]{label, }
+\item[{unsigned char $\ast$}]{seed, }
+\item[{int}]{seed\+\_\+len, }
+\item[{int}]{result\+\_\+len, }
+\item[{unsigned char $\ast$$\ast$}]{result}
+\end{DoxyParamCaption}
+)}\hypertarget{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d}{}\label{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d}
+
+
+Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), and make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange().
+
+\index{Crypto.\+h@{Crypto.\+h}!sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}}
+\index{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}!Crypto.\+h@{Crypto.\+h}}
+\subsubsection[{\texorpdfstring{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+ex, authentication\+\_\+algorithm au)}{sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au)}}]{\setlength{\rightskip}{0pt plus 5cm}int sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{client\+\_\+random, }
+\item[{unsigned char $\ast$}]{server\+\_\+random, }
+\item[{{\bf dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf authentication\+\_\+algorithm}}]{au}
+\end{DoxyParamCaption}
+)}\hypertarget{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}{}\label{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}
+
+
+Referenced by make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
+
+\index{Crypto.\+h@{Crypto.\+h}!sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}}
+\index{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}!Crypto.\+h@{Crypto.\+h}}
+\subsubsection[{\texorpdfstring{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+ex, authentication\+\_\+algorithm au)}{sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au)}}]{\setlength{\rightskip}{0pt plus 5cm}int sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{client\+\_\+random, }
+\item[{unsigned char $\ast$}]{server\+\_\+random, }
+\item[{{\bf ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf authentication\+\_\+algorithm}}]{au}
+\end{DoxyParamCaption}
+)}\hypertarget{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}{}\label{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}
+
+
+Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
+
+\index{Crypto.\+h@{Crypto.\+h}!verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}}
+\index{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}!Crypto.\+h@{Crypto.\+h}}
+\subsubsection[{\texorpdfstring{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign(\+X509 $\ast$certificate, unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+ex, authentication\+\_\+algorithm au)}{verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au)}}]{\setlength{\rightskip}{0pt plus 5cm}int verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{X509 $\ast$}]{certificate, }
+\item[{unsigned char $\ast$}]{client\+\_\+random, }
+\item[{unsigned char $\ast$}]{server\+\_\+random, }
+\item[{{\bf dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf authentication\+\_\+algorithm}}]{au}
+\end{DoxyParamCaption}
+)}\hypertarget{_crypto_8h_afbf202296205717442436cd3838d6df7}{}\label{_crypto_8h_afbf202296205717442436cd3838d6df7}
+
+
+Referenced by make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
+
+\index{Crypto.\+h@{Crypto.\+h}!verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}}
+\index{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}!Crypto.\+h@{Crypto.\+h}}
+\subsubsection[{\texorpdfstring{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign(\+X509 $\ast$certificate, unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+ex, authentication\+\_\+algorithm au)}{verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au)}}]{\setlength{\rightskip}{0pt plus 5cm}int verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign (
+\begin{DoxyParamCaption}
+\item[{X509 $\ast$}]{certificate, }
+\item[{unsigned char $\ast$}]{client\+\_\+random, }
+\item[{unsigned char $\ast$}]{server\+\_\+random, }
+\item[{{\bf ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf authentication\+\_\+algorithm}}]{au}
+\end{DoxyParamCaption}
+)}\hypertarget{_crypto_8h_a5de0523f653b00816828961ba5cc990b}{}\label{_crypto_8h_a5de0523f653b00816828961ba5cc990b}
+
+
+Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
+

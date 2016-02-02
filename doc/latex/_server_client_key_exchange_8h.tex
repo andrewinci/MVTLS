@@ -1,0 +1,147 @@
+\hypertarget{_server_client_key_exchange_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.h File Reference}
+\label{_server_client_key_exchange_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Server\+Client\+Key\+Exchange.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/hmac.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structecdhe__server__key__exchange__t}{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}
+\item 
+struct \hyperlink{structdhe__server__key__exchange__t}{dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}
+\item 
+struct \hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void \hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_server_client_key_exchange_8h_a8cb71f83bed21f1dd9bb8cdb9dca1e5f}{serialize\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+\hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$ \hyperlink{_server_client_key_exchange_8h_a25e978e5b5d2fc430d4c8f841b2901b3}{deserialize\+\_\+server\+\_\+key\+\_\+exchange} (unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+void \hyperlink{_server_client_key_exchange_8h_a642a719366693ae25cf8bc7538f5c5c6}{print\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+exchange, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+void \hyperlink{_server_client_key_exchange_8h_a65291857fa8a23542435005375c86a20}{free\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
+\item 
+void \hyperlink{_server_client_key_exchange_8h_ae993e656dc83c25c3d5b952471a77d7d}{serialize\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)
+\item 
+\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$ \hyperlink{_server_client_key_exchange_8h_adedc3876e814faf9f270bf832bda1813}{deserialize\+\_\+client\+\_\+key\+\_\+exchange} (unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)
+\item 
+void \hyperlink{_server_client_key_exchange_8h_a6a413a5d722f256d016581158220834f}{print\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+exchange)
+\item 
+void \hyperlink{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a}{free\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+exchange)
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!server\+\_\+key\+\_\+exchange\+\_\+t@{server\+\_\+key\+\_\+exchange\+\_\+t}}
+\index{server\+\_\+key\+\_\+exchange\+\_\+t@{server\+\_\+key\+\_\+exchange\+\_\+t}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{server\+\_\+key\+\_\+exchange\+\_\+t}{server_key_exchange_t}}]{\setlength{\rightskip}{0pt plus 5cm}typedef void {\bf server\+\_\+key\+\_\+exchange\+\_\+t}}\hypertarget{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{}\label{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!deserialize\+\_\+client\+\_\+key\+\_\+exchange@{deserialize\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{deserialize\+\_\+client\+\_\+key\+\_\+exchange@{deserialize\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{deserialize\+\_\+client\+\_\+key\+\_\+exchange(unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)}{deserialize_client_key_exchange(unsigned char *message, uint32_t message_len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf client\+\_\+key\+\_\+exchange\+\_\+t}$\ast$ deserialize\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_adedc3876e814faf9f270bf832bda1813}{}\label{_server_client_key_exchange_8h_adedc3876e814faf9f270bf832bda1813}
+
+
+Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!deserialize\+\_\+server\+\_\+key\+\_\+exchange@{deserialize\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{deserialize\+\_\+server\+\_\+key\+\_\+exchange@{deserialize\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{deserialize\+\_\+server\+\_\+key\+\_\+exchange(unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len, key\+\_\+exchange\+\_\+algorithm kx)}{deserialize_server_key_exchange(unsigned char *message, uint32_t message_len, key_exchange_algorithm kx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf server\+\_\+key\+\_\+exchange\+\_\+t}$\ast$ deserialize\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+\_\+len, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a25e978e5b5d2fc430d4c8f841b2901b3}{}\label{_server_client_key_exchange_8h_a25e978e5b5d2fc430d4c8f841b2901b3}
+
+
+Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!free\+\_\+client\+\_\+key\+\_\+exchange@{free\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{free\+\_\+client\+\_\+key\+\_\+exchange@{free\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{free\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+exchange)}{free_client_key_exchange(client_key_exchange_t *client_key_exchange)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+exchange}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a}{}\label{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a}
+
+
+Referenced by make\+\_\+client\+\_\+key\+\_\+exchange(), on\+Packet\+Receive(), and print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!free\+\_\+server\+\_\+key\+\_\+exchange@{free\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{free\+\_\+server\+\_\+key\+\_\+exchange@{free\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{free\+\_\+server\+\_\+key\+\_\+exchange(server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+ex, key\+\_\+exchange\+\_\+algorithm kx)}{free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+ex, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a65291857fa8a23542435005375c86a20}{}\label{_server_client_key_exchange_8h_a65291857fa8a23542435005375c86a20}
+
+
+Referenced by do\+\_\+handshake(), and print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!print\+\_\+client\+\_\+key\+\_\+exchange@{print\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{print\+\_\+client\+\_\+key\+\_\+exchange@{print\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+exchange)}{print_client_key_exchange(client_key_exchange_t *client_key_exchange)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+exchange}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a6a413a5d722f256d016581158220834f}{}\label{_server_client_key_exchange_8h_a6a413a5d722f256d016581158220834f}
+
+
+Referenced by print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!print\+\_\+server\+\_\+key\+\_\+exchange@{print\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{print\+\_\+server\+\_\+key\+\_\+exchange@{print\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+server\+\_\+key\+\_\+exchange(server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+exchange, key\+\_\+exchange\+\_\+algorithm kx)}{print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+exchange, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a642a719366693ae25cf8bc7538f5c5c6}{}\label{_server_client_key_exchange_8h_a642a719366693ae25cf8bc7538f5c5c6}
+
+
+Referenced by print\+\_\+handshake().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!serialize\+\_\+client\+\_\+key\+\_\+exchange@{serialize\+\_\+client\+\_\+key\+\_\+exchange}}
+\index{serialize\+\_\+client\+\_\+key\+\_\+exchange@{serialize\+\_\+client\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{serialize\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)}{serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+client\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+exchange, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_ae993e656dc83c25c3d5b952471a77d7d}{}\label{_server_client_key_exchange_8h_ae993e656dc83c25c3d5b952471a77d7d}
+
+
+Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
+
+\index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!serialize\+\_\+server\+\_\+key\+\_\+exchange@{serialize\+\_\+server\+\_\+key\+\_\+exchange}}
+\index{serialize\+\_\+server\+\_\+key\+\_\+exchange@{serialize\+\_\+server\+\_\+key\+\_\+exchange}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
+\subsubsection[{\texorpdfstring{serialize\+\_\+server\+\_\+key\+\_\+exchange(server\+\_\+key\+\_\+exchange\+\_\+t $\ast$server\+\_\+key\+\_\+exchange, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len, key\+\_\+exchange\+\_\+algorithm kx)}{serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+server\+\_\+key\+\_\+exchange (
+\begin{DoxyParamCaption}
+\item[{{\bf server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{server\+\_\+key\+\_\+exchange, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{stream\+Len, }
+\item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_key_exchange_8h_a8cb71f83bed21f1dd9bb8cdb9dca1e5f}{}\label{_server_client_key_exchange_8h_a8cb71f83bed21f1dd9bb8cdb9dca1e5f}
+
+
+Referenced by make\+\_\+server\+\_\+key\+\_\+exchange().
+

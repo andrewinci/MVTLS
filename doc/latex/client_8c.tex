@@ -1,0 +1,116 @@
+\hypertarget{client_8c}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.c File Reference}
+\label{client_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}T\+L\+S.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{client_8c_a56fe9bff0a1be75aae2da3e593053e2c}{U\+S\+A\+GE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{client_8c_aa8faa003f922c3bb30adfd8952af808f}{on\+Packet\+Receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+\item 
+void \hyperlink{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95}{do\+\_\+handshake} (int to\+\_\+send\+\_\+cipher\+\_\+suite\+\_\+len, \hyperlink{structcipher__suite__t}{cipher\+\_\+suite\+\_\+t} to\+\_\+send\+\_\+cipher\+\_\+suite\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{client_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{client_8c_ac8859e8c1ce357c4c8b37bbb1936ba1c}{v} = 0
+\item 
+\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} \hyperlink{client_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{client.\+c@{client.\+c}!U\+S\+A\+GE@{U\+S\+A\+GE}}
+\index{U\+S\+A\+GE@{U\+S\+A\+GE}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{U\+S\+A\+GE}{USAGE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+S\+A\+GE}\hypertarget{client_8c_a56fe9bff0a1be75aae2da3e593053e2c}{}\label{client_8c_a56fe9bff0a1be75aae2da3e593053e2c}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{stringliteral}{"TLSClient: TLS1.2 version handshake\(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"\(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"Usage:  \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  TLSClient [args] \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{" \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"Options: \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Specify cipher suite id (not hex) \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -c  --cipher\_id        [id]\(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"   \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Cipher suite name     \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -n  --name             [name]\(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"   \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Specify key exchange    \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -x  --key\_exchange    (RSA|DHE|ECDHE)  \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"   \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Specify authentication algorithm \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -a  --auth\_algorithm  (RSA|DSS|ECDSA) \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{" \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Specify verbosity \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -v     0 default (1|2) \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{" \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Specify hash algorithm \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -h  --hash\_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{" \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Show supported cipher suites \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    -l --list\(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{" \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"  Show this help \(\backslash\)n"}\(\backslash\)
+                \textcolor{stringliteral}{"    --help \(\backslash\)n\(\backslash\)n"}
+\end{DoxyCode}
+
+
+Referenced by main().
+
+
+
+\subsection{Function Documentation}
+\index{client.\+c@{client.\+c}!do\+\_\+handshake@{do\+\_\+handshake}}
+\index{do\+\_\+handshake@{do\+\_\+handshake}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{do\+\_\+handshake(int to\+\_\+send\+\_\+cipher\+\_\+suite\+\_\+len, cipher\+\_\+suite\+\_\+t to\+\_\+send\+\_\+cipher\+\_\+suite[])}{do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[])}}]{\setlength{\rightskip}{0pt plus 5cm}void do\+\_\+handshake (
+\begin{DoxyParamCaption}
+\item[{int}]{to\+\_\+send\+\_\+cipher\+\_\+suite\+\_\+len, }
+\item[{{\bf cipher\+\_\+suite\+\_\+t}}]{to\+\_\+send\+\_\+cipher\+\_\+suite\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95}{}\label{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95}
+
+
+Referenced by main().
+
+\index{client.\+c@{client.\+c}!main@{main}}
+\index{main@{main}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{client_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{client_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+\index{client.\+c@{client.\+c}!on\+Packet\+Receive@{on\+Packet\+Receive}}
+\index{on\+Packet\+Receive@{on\+Packet\+Receive}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{on\+Packet\+Receive(channel\+\_\+t $\ast$ch, packet\+\_\+basic\+\_\+t $\ast$p)}{onPacketReceive(channel_t *ch, packet_basic_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Packet\+Receive (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
+\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{client_8c_aa8faa003f922c3bb30adfd8952af808f}{}\label{client_8c_aa8faa003f922c3bb30adfd8952af808f}
+
+
+Referenced by do\+\_\+handshake(), and set\+\_\+on\+\_\+receive().
+
+
+
+\subsection{Variable Documentation}
+\index{client.\+c@{client.\+c}!T\+L\+S\+\_\+param@{T\+L\+S\+\_\+param}}
+\index{T\+L\+S\+\_\+param@{T\+L\+S\+\_\+param}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+param}{TLS_param}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf T\+L\+S\+\_\+parameters\+\_\+t} T\+L\+S\+\_\+param}\hypertarget{client_8c_aa8eef32066e04e25183a0cc549992c54}{}\label{client_8c_aa8eef32066e04e25183a0cc549992c54}
+\index{client.\+c@{client.\+c}!v@{v}}
+\index{v@{v}!client.\+c@{client.\+c}}
+\subsubsection[{\texorpdfstring{v}{v}}]{\setlength{\rightskip}{0pt plus 5cm}int v = 0}\hypertarget{client_8c_ac8859e8c1ce357c4c8b37bbb1936ba1c}{}\label{client_8c_ac8859e8c1ce357c4c8b37bbb1936ba1c}
+
+
+Referenced by do\+\_\+handshake(), main(), and on\+Packet\+Receive().
+

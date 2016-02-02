@@ -1,0 +1,266 @@
+\hypertarget{_server_client_basic_8c}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Basic.c File Reference}
+\label{_server_client_basic_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Basic.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Server\+Client\+Basic.\+c}}
+{\ttfamily \#include \char`\"{}Server\+Client\+Basic.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_server_client_basic_8c_a7e53c8ac07852acb8cc5bf863af20f68}{free\+\_\+packet} (\hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+\item 
+long long \hyperlink{_server_client_basic_8c_a4355b2213c5d049d51944ea7c5126532}{get\+\_\+file\+\_\+size} (int fd)
+\item 
+uint32\+\_\+t \hyperlink{_server_client_basic_8c_a41dd4a03c0fcb9195dac633e86be6877}{read\+\_\+all\+\_\+file} (int fd, unsigned char $\ast$$\ast$p)
+\item 
+\hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$ \hyperlink{_server_client_basic_8c_ad8968b9ba3eb5057f97f2aa19a4d6bb5}{deserialize\+\_\+packet} (unsigned char $\ast$str, uint32\+\_\+t file\+Len)
+\item 
+void \hyperlink{_server_client_basic_8c_ab59ee3ee3c4dedd27a412f4e85915604}{serialize\+\_\+packet} (\hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p, unsigned char $\ast$$\ast$str, uint32\+\_\+t $\ast$str\+Len)
+\item 
+\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ \hyperlink{_server_client_basic_8c_aaa07b9b9152780bcb7fbacf14efa7eda}{create\+\_\+channel} (char $\ast$file\+Name, char $\ast$channel\+From, char $\ast$channel\+To)
+\item 
+int \hyperlink{_server_client_basic_8c_ab8b2348db6f622cb7334a743187f0ac0}{set\+\_\+on\+\_\+receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, void($\ast$\hyperlink{server_8c_acf4f7155469cbb30edfa846d620b099b}{on\+Packet\+Receive})(\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p))
+\item 
+int \hyperlink{_server_client_basic_8c_a984177c20c9bdc900b4c1e2cb33165cb}{send\+\_\+packet} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+\item 
+void \hyperlink{_server_client_basic_8c_acc975c295cc4a9e275948e333c45598e}{reader} (void $\ast$data)
+\item 
+int \hyperlink{_server_client_basic_8c_ac13189fb7b788d6f0360927759b95a8b}{start\+\_\+listener} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch)
+\item 
+void \hyperlink{_server_client_basic_8c_aa8b8d9b75a74ccb0f6a701e16ae8999d}{stop\+\_\+channel} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch)
+\item 
+void \hyperlink{_server_client_basic_8c_a771a2acdb87f3679abacac37706d65d7}{wait\+\_\+channel} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch)
+\item 
+\hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$ \hyperlink{_server_client_basic_8c_a15f2b44261f5f05f631243058273ff80}{create\+\_\+packet} (char $\ast$source, char $\ast$destination, unsigned char $\ast$message, uint32\+\_\+t message\+\_\+length)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!create\+\_\+channel@{create\+\_\+channel}}
+\index{create\+\_\+channel@{create\+\_\+channel}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{create\+\_\+channel(char $\ast$file\+Name, char $\ast$channel\+From, char $\ast$channel\+To)}{create_channel(char *fileName, char *channelFrom, char *channelTo)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf channel\+\_\+t}$\ast$ create\+\_\+channel (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file\+Name, }
+\item[{char $\ast$}]{channel\+From, }
+\item[{char $\ast$}]{channel\+To}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_aaa07b9b9152780bcb7fbacf14efa7eda}{}\label{_server_client_basic_8c_aaa07b9b9152780bcb7fbacf14efa7eda}
+Create a server/client using the file\+Name as comunication channel
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & \+: file name of the channel \\
+\hline
+{\em server\+Name} & \+: name of the server/client \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the created channel 
+\end{DoxyReturn}
+
+
+Referenced by do\+\_\+handshake().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!create\+\_\+packet@{create\+\_\+packet}}
+\index{create\+\_\+packet@{create\+\_\+packet}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{create\+\_\+packet(char $\ast$source, char $\ast$destination, unsigned char $\ast$message, uint32\+\_\+t message\+\_\+length)}{create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf packet\+\_\+basic\+\_\+t}$\ast$ create\+\_\+packet (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{source, }
+\item[{char $\ast$}]{destination, }
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+\_\+length}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a15f2b44261f5f05f631243058273ff80}{}\label{_server_client_basic_8c_a15f2b44261f5f05f631243058273ff80}
+Create a packet starting from a byte stream source and destination
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & \+: packet source \\
+\hline
+{\em destination} & \+: packet receiver \\
+\hline
+{\em message} & \+: message stream to be encapsulate into packet \\
+\hline
+{\em message\+\_\+length} & message lenght \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to a builded packet 
+\end{DoxyReturn}
+
+
+Referenced by deserialize\+\_\+packet(), and send\+\_\+record().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!deserialize\+\_\+packet@{deserialize\+\_\+packet}}
+\index{deserialize\+\_\+packet@{deserialize\+\_\+packet}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{deserialize\+\_\+packet(unsigned char $\ast$str, uint32\+\_\+t file\+Len)}{deserialize_packet(unsigned char *str, uint32_t fileLen)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf packet\+\_\+basic\+\_\+t} $\ast$ deserialize\+\_\+packet (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{str, }
+\item[{uint32\+\_\+t}]{file\+Len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_ad8968b9ba3eb5057f97f2aa19a4d6bb5}{}\label{_server_client_basic_8c_ad8968b9ba3eb5057f97f2aa19a4d6bb5}
+
+
+Referenced by reader().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!free\+\_\+packet@{free\+\_\+packet}}
+\index{free\+\_\+packet@{free\+\_\+packet}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{free\+\_\+packet(packet\+\_\+basic\+\_\+t $\ast$p)}{free_packet(packet_basic_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+packet (
+\begin{DoxyParamCaption}
+\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a7e53c8ac07852acb8cc5bf863af20f68}{}\label{_server_client_basic_8c_a7e53c8ac07852acb8cc5bf863af20f68}
+Deallocate memory allocated by packet 
+\begin{DoxyParams}{Parameters}
+{\em p} & \+: pointer to packet to free \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by on\+Packet\+Receive(), reader(), and send\+\_\+record().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!get\+\_\+file\+\_\+size@{get\+\_\+file\+\_\+size}}
+\index{get\+\_\+file\+\_\+size@{get\+\_\+file\+\_\+size}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{get\+\_\+file\+\_\+size(int fd)}{get_file_size(int fd)}}]{\setlength{\rightskip}{0pt plus 5cm}long long get\+\_\+file\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a4355b2213c5d049d51944ea7c5126532}{}\label{_server_client_basic_8c_a4355b2213c5d049d51944ea7c5126532}
+
+
+Referenced by read\+\_\+all\+\_\+file(), and send\+\_\+packet().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!read\+\_\+all\+\_\+file@{read\+\_\+all\+\_\+file}}
+\index{read\+\_\+all\+\_\+file@{read\+\_\+all\+\_\+file}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{read\+\_\+all\+\_\+file(int fd, unsigned char $\ast$$\ast$p)}{read_all_file(int fd, unsigned char **p)}}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t read\+\_\+all\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{unsigned char $\ast$$\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a41dd4a03c0fcb9195dac633e86be6877}{}\label{_server_client_basic_8c_a41dd4a03c0fcb9195dac633e86be6877}
+
+
+Referenced by reader().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!reader@{reader}}
+\index{reader@{reader}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{reader(void $\ast$data)}{reader(void *data)}}]{\setlength{\rightskip}{0pt plus 5cm}void reader (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_acc975c295cc4a9e275948e333c45598e}{}\label{_server_client_basic_8c_acc975c295cc4a9e275948e333c45598e}
+
+
+Referenced by start\+\_\+listener().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!send\+\_\+packet@{send\+\_\+packet}}
+\index{send\+\_\+packet@{send\+\_\+packet}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{send\+\_\+packet(channel\+\_\+t $\ast$ch, packet\+\_\+basic\+\_\+t $\ast$p)}{send_packet(channel_t *ch, packet_basic_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}int send\+\_\+packet (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
+\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a984177c20c9bdc900b4c1e2cb33165cb}{}\label{_server_client_basic_8c_a984177c20c9bdc900b4c1e2cb33165cb}
+Send a message trough the channel ch
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel to be used \\
+\hline
+{\em p} & \+: pointer to packet to be sent \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 1 if the message was sent, 0 otherwise 
+\end{DoxyReturn}
+
+
+Referenced by send\+\_\+record().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!serialize\+\_\+packet@{serialize\+\_\+packet}}
+\index{serialize\+\_\+packet@{serialize\+\_\+packet}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{serialize\+\_\+packet(packet\+\_\+basic\+\_\+t $\ast$p, unsigned char $\ast$$\ast$str, uint32\+\_\+t $\ast$str\+Len)}{serialize_packet(packet_basic_t *p, unsigned char **str, uint32_t *strLen)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+packet (
+\begin{DoxyParamCaption}
+\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p, }
+\item[{unsigned char $\ast$$\ast$}]{str, }
+\item[{uint32\+\_\+t $\ast$}]{str\+Len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_ab59ee3ee3c4dedd27a412f4e85915604}{}\label{_server_client_basic_8c_ab59ee3ee3c4dedd27a412f4e85915604}
+
+
+Referenced by send\+\_\+packet().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!set\+\_\+on\+\_\+receive@{set\+\_\+on\+\_\+receive}}
+\index{set\+\_\+on\+\_\+receive@{set\+\_\+on\+\_\+receive}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{set\+\_\+on\+\_\+receive(channel\+\_\+t $\ast$ch, void($\ast$on\+Packet\+Receive)(channel\+\_\+t $\ast$ch, packet\+\_\+basic\+\_\+t $\ast$p))}{set_on_receive(channel_t *ch, void(*onPacketReceive)(channel_t *ch, packet_basic_t *p))}}]{\setlength{\rightskip}{0pt plus 5cm}int set\+\_\+on\+\_\+receive (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
+\item[{void($\ast$)({\bf channel\+\_\+t} $\ast$ch, {\bf packet\+\_\+basic\+\_\+t} $\ast$p)}]{on\+Packet\+Receive}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_ab8b2348db6f622cb7334a743187f0ac0}{}\label{_server_client_basic_8c_ab8b2348db6f622cb7334a743187f0ac0}
+Set the function to be called when a message is received
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel interested \\
+\hline
+{\em on\+Packet\+Receive} & \+: pointer to the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 1 if the function was setted, 0 otherwise 
+\end{DoxyReturn}
+
+
+Referenced by do\+\_\+handshake().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!start\+\_\+listener@{start\+\_\+listener}}
+\index{start\+\_\+listener@{start\+\_\+listener}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{start\+\_\+listener(channel\+\_\+t $\ast$ch)}{start_listener(channel_t *ch)}}]{\setlength{\rightskip}{0pt plus 5cm}int start\+\_\+listener (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_ac13189fb7b788d6f0360927759b95a8b}{}\label{_server_client_basic_8c_ac13189fb7b788d6f0360927759b95a8b}
+Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is succesfull) the client/server read continously from channel. (for S\+T\+OP use stop())
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel to start \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 1 if the thread was started, 0 otherwise 
+\end{DoxyReturn}
+
+
+Referenced by do\+\_\+handshake().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!stop\+\_\+channel@{stop\+\_\+channel}}
+\index{stop\+\_\+channel@{stop\+\_\+channel}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{stop\+\_\+channel(channel\+\_\+t $\ast$ch)}{stop_channel(channel_t *ch)}}]{\setlength{\rightskip}{0pt plus 5cm}void stop\+\_\+channel (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_aa8b8d9b75a74ccb0f6a701e16ae8999d}{}\label{_server_client_basic_8c_aa8b8d9b75a74ccb0f6a701e16ae8999d}
+Stop the reading/write thread and the channel. Note\+: the function doesn\textquotesingle{}t free the channel. 
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel to stop \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by on\+Packet\+Receive().
+
+\index{Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}!wait\+\_\+channel@{wait\+\_\+channel}}
+\index{wait\+\_\+channel@{wait\+\_\+channel}!Server\+Client\+Basic.\+c@{Server\+Client\+Basic.\+c}}
+\subsubsection[{\texorpdfstring{wait\+\_\+channel(channel\+\_\+t $\ast$ch)}{wait_channel(channel_t *ch)}}]{\setlength{\rightskip}{0pt plus 5cm}void wait\+\_\+channel (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_basic_8c_a771a2acdb87f3679abacac37706d65d7}{}\label{_server_client_basic_8c_a771a2acdb87f3679abacac37706d65d7}
+Stop the callee and wait untill stop is called 
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: the chanal to wait \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by do\+\_\+handshake().
+

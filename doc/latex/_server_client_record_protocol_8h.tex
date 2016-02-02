@@ -1,0 +1,174 @@
+\hypertarget{_server_client_record_protocol_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.h File Reference}
+\label{_server_client_record_protocol_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Server\+Client\+Basic.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structrecord__t}{record\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_server_client_record_protocol_8h_ab7690321561c4c2f8e301abd41440aa4}{R\+E\+V16}(value)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0}{send\+\_\+record} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structrecord__t}{record\+\_\+t} $\ast$to\+\_\+send)
+\item 
+\hyperlink{structrecord__t}{record\+\_\+t} $\ast$ \hyperlink{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}{deserialize\+\_\+record} (unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)
+\item 
+void \hyperlink{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}{serialize\+\_\+record} (\hyperlink{structrecord__t}{record\+\_\+t} $\ast$r, unsigned char $\ast$$\ast$message, uint16\+\_\+t $\ast$message\+\_\+len)
+\item 
+void \hyperlink{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}{print\+\_\+record} (\hyperlink{structrecord__t}{record\+\_\+t} $\ast$r)
+\item 
+void \hyperlink{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc}{free\+\_\+record} (\hyperlink{structrecord__t}{record\+\_\+t} $\ast$r)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\+S\+L/\+T\+LS Project
+
+This file is an interface to the record protocol. Provide function and struct for modelling and manage record messages.
+
+\begin{DoxyDate}{Date}
+Created on 23/12/15. 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. 
+\end{DoxyCopyright}
+
+
+\subsection{Macro Definition Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!R\+E\+V16@{R\+E\+V16}}
+\index{R\+E\+V16@{R\+E\+V16}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+V16}{REV16}}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\+E\+V16(
+\begin{DoxyParamCaption}
+\item[{}]{value}
+\end{DoxyParamCaption}
+)~(\{(value \& 0x00\+F\+F\+U) $<$$<$ 8 $\vert$ (value \& 0x\+F\+F00\+U) $>$$>$ 8;\})}\hypertarget{_server_client_record_protocol_8h_ab7690321561c4c2f8e301abd41440aa4}{}\label{_server_client_record_protocol_8h_ab7690321561c4c2f8e301abd41440aa4}
+Rotational byte for uint16 
+
+Referenced by deserialize\+\_\+client\+\_\+key\+\_\+exchange(), deserialize\+\_\+client\+\_\+server\+\_\+hello(), deserialize\+\_\+record(), deserialize\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), serialize\+\_\+client\+\_\+key\+\_\+exchange(), serialize\+\_\+client\+\_\+server\+\_\+hello(), serialize\+\_\+record(), and serialize\+\_\+server\+\_\+key\+\_\+exchange().
+
+
+
+\subsection{Enumeration Type Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!record\+\_\+type@{record\+\_\+type}}
+\index{record\+\_\+type@{record\+\_\+type}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{record\+\_\+type}{record_type}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf record\+\_\+type}}\hypertarget{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238}{}\label{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238}
+Define the different type of record \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{H\+A\+N\+D\+S\+H\+A\+KE@{H\+A\+N\+D\+S\+H\+A\+KE}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!H\+A\+N\+D\+S\+H\+A\+KE@{H\+A\+N\+D\+S\+H\+A\+KE}}\item[{\em 
+H\+A\+N\+D\+S\+H\+A\+KE\hypertarget{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238acc6ddcaa36bd57e5aec12749cb5ce29c}{}\label{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238acc6ddcaa36bd57e5aec12749cb5ce29c}
+}]\index{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC@{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC@{C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC}}\item[{\em 
+C\+H\+A\+N\+G\+E\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+P\+EC\hypertarget{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238a4ba5b5ec083856acccc568fff147a664}{}\label{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238a4ba5b5ec083856acccc568fff147a664}
+}]\index{A\+L\+E\+RT@{A\+L\+E\+RT}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!A\+L\+E\+RT@{A\+L\+E\+RT}}\item[{\em 
+A\+L\+E\+RT\hypertarget{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238a45e0bb0f520fb3851c7d6cc5c5ddd6f9}{}\label{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238a45e0bb0f520fb3851c7d6cc5c5ddd6f9}
+}]\index{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA@{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA@{A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA}}\item[{\em 
+A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA\hypertarget{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238ae5600c9ebf3ad742718c2ba003539a45}{}\label{_server_client_record_protocol_8h_a393986e23103348f07699f24dcb7f238ae5600c9ebf3ad742718c2ba003539a45}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!deserialize\+\_\+record@{deserialize\+\_\+record}}
+\index{deserialize\+\_\+record@{deserialize\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{deserialize\+\_\+record(unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)}{deserialize_record(unsigned char *message, uint32_t message_len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf record\+\_\+t}$\ast$ deserialize\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{message, }
+\item[{uint32\+\_\+t}]{message\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}{}\label{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}
+De-\/serialize a byte stream message of length message\+\_\+len into a record struct.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \+: message received \\
+\hline
+{\em message\+Len} & \+: message length \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+record \+: the de-\/serialized record 
+\end{DoxyReturn}
+
+
+Referenced by on\+Packet\+Receive().
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!free\+\_\+record@{free\+\_\+record}}
+\index{free\+\_\+record@{free\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{free\+\_\+record(record\+\_\+t $\ast$r)}{free_record(record_t *r)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc}{}\label{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc}
+Deallocate memory pointed by r 
+\begin{DoxyParams}{Parameters}
+{\em r} & \+: pointer to record to free \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by on\+Packet\+Receive(), and send\+\_\+handshake().
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!print\+\_\+record@{print\+\_\+record}}
+\index{print\+\_\+record@{print\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{print\+\_\+record(record\+\_\+t $\ast$r)}{print_record(record_t *r)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}{}\label{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}
+Print a description of the record 
+
+Referenced by on\+Packet\+Receive().
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!send\+\_\+record@{send\+\_\+record}}
+\index{send\+\_\+record@{send\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{send\+\_\+record(channel\+\_\+t $\ast$ch, record\+\_\+t $\ast$to\+\_\+send)}{send_record(channel_t *ch, record_t *to_send)}}]{\setlength{\rightskip}{0pt plus 5cm}int send\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
+\item[{{\bf record\+\_\+t} $\ast$}]{to\+\_\+send}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0}{}\label{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0}
+Send record to\+\_\+send over the channel ch. Note \+:for send record is important to set \textquotesingle{}to\textquotesingle{} and \textquotesingle{}from\textquotesingle{} in the channel creation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & \+: channel to use \\
+\hline
+{\em to\+\_\+send} & \+: record to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the message was successfully sent, 0 otherwise 
+\end{DoxyReturn}
+
+
+Referenced by on\+Packet\+Receive(), and send\+\_\+handshake().
+
+\index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!serialize\+\_\+record@{serialize\+\_\+record}}
+\index{serialize\+\_\+record@{serialize\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
+\subsubsection[{\texorpdfstring{serialize\+\_\+record(record\+\_\+t $\ast$r, unsigned char $\ast$$\ast$message, uint16\+\_\+t $\ast$message\+\_\+len)}{serialize_record(record_t *r, unsigned char **message, uint16_t *message_len)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+record (
+\begin{DoxyParamCaption}
+\item[{{\bf record\+\_\+t} $\ast$}]{r, }
+\item[{unsigned char $\ast$$\ast$}]{message, }
+\item[{uint16\+\_\+t $\ast$}]{message\+\_\+len}
+\end{DoxyParamCaption}
+)}\hypertarget{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}{}\label{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}
+Serialize record in a byte stream of length message\+\_\+len stored in message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \+: pointer to null (the function allocate space for you) \\
+\hline
+{\em message\+Len} & \+: pointer to integer (will contains the message length) \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by print\+\_\+record(), and send\+\_\+record().
+

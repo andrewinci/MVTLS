@@ -1,0 +1,80 @@
+\hypertarget{structchannel__t}{}\section{channel\+\_\+t Struct Reference}
+\label{structchannel__t}\index{channel\+\_\+t@{channel\+\_\+t}}
+
+
+{\ttfamily \#include $<$Server\+Client\+Basic.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{structchannel__t_a0a72aa1c901810c34da12df46f40041e}{channel\+\_\+source}
+\item 
+char $\ast$ \hyperlink{structchannel__t_a459138b7f05f5d080fa284cea148e1ea}{channel\+\_\+destination}
+\item 
+char $\ast$ \hyperlink{structchannel__t_a25c8761bc1f523fe6a53db546ae83add}{file\+Name}
+\item 
+int \hyperlink{structchannel__t_a6f8059414f0228f0256115e024eeed4b}{fd}
+\item 
+void($\ast$ \hyperlink{structchannel__t_ae391524520adf65e91f52efaffb033a5}{on\+Packet\+Receive} )(struct \hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+\item 
+int \hyperlink{structchannel__t_a5c56d01677044a9e8009acf457aa1a37}{is\+Enabled}
+\item 
+pthread\+\_\+t \hyperlink{structchannel__t_a01f75a9ad916f63a94e06a27635ba278}{thread}
+\end{DoxyCompactItemize}
+
+
+\subsection{Field Documentation}
+\index{channel\+\_\+t@{channel\+\_\+t}!channel\+\_\+destination@{channel\+\_\+destination}}
+\index{channel\+\_\+destination@{channel\+\_\+destination}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{channel\+\_\+destination}{channel_destination}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ channel\+\_\+destination}\hypertarget{structchannel__t_a459138b7f05f5d080fa284cea148e1ea}{}\label{structchannel__t_a459138b7f05f5d080fa284cea148e1ea}
+Channel destination name e.\+g. client 
+
+Referenced by create\+\_\+channel(), and send\+\_\+packet().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!channel\+\_\+source@{channel\+\_\+source}}
+\index{channel\+\_\+source@{channel\+\_\+source}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{channel\+\_\+source}{channel_source}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ channel\+\_\+source}\hypertarget{structchannel__t_a0a72aa1c901810c34da12df46f40041e}{}\label{structchannel__t_a0a72aa1c901810c34da12df46f40041e}
+Channel source name e.\+g. server 
+
+Referenced by create\+\_\+channel(), reader(), and send\+\_\+packet().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!fd@{fd}}
+\index{fd@{fd}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{fd}{fd}}]{\setlength{\rightskip}{0pt plus 5cm}int fd}\hypertarget{structchannel__t_a6f8059414f0228f0256115e024eeed4b}{}\label{structchannel__t_a6f8059414f0228f0256115e024eeed4b}
+Channel file descriptor 
+
+Referenced by create\+\_\+channel(), reader(), send\+\_\+packet(), and stop\+\_\+channel().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!file\+Name@{file\+Name}}
+\index{file\+Name@{file\+Name}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{file\+Name}{fileName}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ file\+Name}\hypertarget{structchannel__t_a25c8761bc1f523fe6a53db546ae83add}{}\label{structchannel__t_a25c8761bc1f523fe6a53db546ae83add}
+File to use for exchange messages, the channel between client and server 
+
+Referenced by create\+\_\+channel(), and reader().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!is\+Enabled@{is\+Enabled}}
+\index{is\+Enabled@{is\+Enabled}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{is\+Enabled}{isEnabled}}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Enabled}\hypertarget{structchannel__t_a5c56d01677044a9e8009acf457aa1a37}{}\label{structchannel__t_a5c56d01677044a9e8009acf457aa1a37}
+If the listener is running it is setted to 1 otherwise it is 0 
+
+Referenced by create\+\_\+channel(), reader(), start\+\_\+listener(), and stop\+\_\+channel().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!on\+Packet\+Receive@{on\+Packet\+Receive}}
+\index{on\+Packet\+Receive@{on\+Packet\+Receive}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{on\+Packet\+Receive}{onPacketReceive}}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ on\+Packet\+Receive) (struct {\bf channel\+\_\+t} $\ast$ch, {\bf packet\+\_\+basic\+\_\+t} $\ast$p)}\hypertarget{structchannel__t_ae391524520adf65e91f52efaffb033a5}{}\label{structchannel__t_ae391524520adf65e91f52efaffb033a5}
+Function to be called when a packet is received 
+
+Referenced by create\+\_\+channel(), reader(), set\+\_\+on\+\_\+receive(), and start\+\_\+listener().
+
+\index{channel\+\_\+t@{channel\+\_\+t}!thread@{thread}}
+\index{thread@{thread}!channel\+\_\+t@{channel\+\_\+t}}
+\subsubsection[{\texorpdfstring{thread}{thread}}]{\setlength{\rightskip}{0pt plus 5cm}pthread\+\_\+t thread}\hypertarget{structchannel__t_a01f75a9ad916f63a94e06a27635ba278}{}\label{structchannel__t_a01f75a9ad916f63a94e06a27635ba278}
+Secondary thread for reading/writing 
+
+Referenced by start\+\_\+listener(), and wait\+\_\+channel().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\hyperlink{_server_client_basic_8h}{Server\+Client\+Basic.\+h}\end{DoxyCompactItemize}

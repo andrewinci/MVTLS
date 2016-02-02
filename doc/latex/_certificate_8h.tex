@@ -1,0 +1,74 @@
+\hypertarget{_certificate_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Certificate.h File Reference}
+\label{_certificate_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Certificate.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\+Certificate.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/x509.\+h$>$}\\*
+{\ttfamily \#include $<$openssl/pem.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcertificate__message__t}{certificate\+\_\+message\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structcertificate__message__t}{certificate\+\_\+message\+\_\+t} $\ast$ \hyperlink{_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1}{make\+\_\+certificate\+\_\+message} (char $\ast$cert\+\_\+file\+\_\+name)
+\item 
+void \hyperlink{_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d}{serialize\+\_\+certificate\+\_\+message} (\hyperlink{structcertificate__message__t}{certificate\+\_\+message\+\_\+t} $\ast$cert, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$len)
+\item 
+\hyperlink{structcertificate__message__t}{certificate\+\_\+message\+\_\+t} $\ast$ \hyperlink{_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e}{deserialize\+\_\+certificate\+\_\+message} (unsigned char $\ast$stream, uint32\+\_\+t len)
+\item 
+void \hyperlink{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}{free\+\_\+certificate\+\_\+message} (\hyperlink{structcertificate__message__t}{certificate\+\_\+message\+\_\+t} $\ast$cert)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Certificate.\+h@{Certificate.\+h}!deserialize\+\_\+certificate\+\_\+message@{deserialize\+\_\+certificate\+\_\+message}}
+\index{deserialize\+\_\+certificate\+\_\+message@{deserialize\+\_\+certificate\+\_\+message}!Certificate.\+h@{Certificate.\+h}}
+\subsubsection[{\texorpdfstring{deserialize\+\_\+certificate\+\_\+message(unsigned char $\ast$stream, uint32\+\_\+t len)}{deserialize_certificate_message(unsigned char *stream, uint32_t len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf certificate\+\_\+message\+\_\+t}$\ast$ deserialize\+\_\+certificate\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{stream, }
+\item[{uint32\+\_\+t}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e}{}\label{_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e}
+
+
+Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
+
+\index{Certificate.\+h@{Certificate.\+h}!free\+\_\+certificate\+\_\+message@{free\+\_\+certificate\+\_\+message}}
+\index{free\+\_\+certificate\+\_\+message@{free\+\_\+certificate\+\_\+message}!Certificate.\+h@{Certificate.\+h}}
+\subsubsection[{\texorpdfstring{free\+\_\+certificate\+\_\+message(certificate\+\_\+message\+\_\+t $\ast$cert)}{free_certificate_message(certificate_message_t *cert)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+certificate\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{{\bf certificate\+\_\+message\+\_\+t} $\ast$}]{cert}
+\end{DoxyParamCaption}
+)}\hypertarget{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}{}\label{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}
+
+
+Referenced by make\+\_\+certificate(), on\+Packet\+Receive(), and print\+\_\+handshake().
+
+\index{Certificate.\+h@{Certificate.\+h}!make\+\_\+certificate\+\_\+message@{make\+\_\+certificate\+\_\+message}}
+\index{make\+\_\+certificate\+\_\+message@{make\+\_\+certificate\+\_\+message}!Certificate.\+h@{Certificate.\+h}}
+\subsubsection[{\texorpdfstring{make\+\_\+certificate\+\_\+message(char $\ast$cert\+\_\+file\+\_\+name)}{make_certificate_message(char *cert_file_name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf certificate\+\_\+message\+\_\+t}$\ast$ make\+\_\+certificate\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{cert\+\_\+file\+\_\+name}
+\end{DoxyParamCaption}
+)}\hypertarget{_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1}{}\label{_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1}
+
+
+Referenced by make\+\_\+certificate().
+
+\index{Certificate.\+h@{Certificate.\+h}!serialize\+\_\+certificate\+\_\+message@{serialize\+\_\+certificate\+\_\+message}}
+\index{serialize\+\_\+certificate\+\_\+message@{serialize\+\_\+certificate\+\_\+message}!Certificate.\+h@{Certificate.\+h}}
+\subsubsection[{\texorpdfstring{serialize\+\_\+certificate\+\_\+message(certificate\+\_\+message\+\_\+t $\ast$cert, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$len)}{serialize_certificate_message(certificate_message_t *cert, unsigned char **stream, uint32_t *len)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+certificate\+\_\+message (
+\begin{DoxyParamCaption}
+\item[{{\bf certificate\+\_\+message\+\_\+t} $\ast$}]{cert, }
+\item[{unsigned char $\ast$$\ast$}]{stream, }
+\item[{uint32\+\_\+t $\ast$}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d}{}\label{_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d}
+
+
+Referenced by make\+\_\+certificate().
+

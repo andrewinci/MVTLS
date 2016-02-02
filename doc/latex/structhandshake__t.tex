@@ -1,0 +1,47 @@
+\hypertarget{structhandshake__t}{}\section{handshake\+\_\+t Struct Reference}
+\label{structhandshake__t}\index{handshake\+\_\+t@{handshake\+\_\+t}}
+
+
+{\ttfamily \#include $<$Server\+Client\+Handshake\+Protocol.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{structhandshake__t_a1d127017fb298b889f4ba24752d08b8e}{type}
+\item 
+uint32\+\_\+t \hyperlink{structhandshake__t_aebb70c2aab3407a9f05334c47131a43b}{length}
+\item 
+unsigned char $\ast$ \hyperlink{structhandshake__t_abb13456032cf48eaa794391b6ed937c7}{message}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handshake protocol struct. Model fields of handshake messages. 
+
+\subsection{Field Documentation}
+\index{handshake\+\_\+t@{handshake\+\_\+t}!length@{length}}
+\index{length@{length}!handshake\+\_\+t@{handshake\+\_\+t}}
+\subsubsection[{\texorpdfstring{length}{length}}]{\setlength{\rightskip}{0pt plus 5cm}uint32\+\_\+t length}\hypertarget{structhandshake__t_aebb70c2aab3407a9f05334c47131a43b}{}\label{structhandshake__t_aebb70c2aab3407a9f05334c47131a43b}
+Message length 
+
+Referenced by deserialize\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), make\+\_\+server\+\_\+hello(), make\+\_\+server\+\_\+hello\+\_\+done(), make\+\_\+server\+\_\+key\+\_\+exchange(), on\+Packet\+Receive(), print\+\_\+handshake(), and serialize\+\_\+handshake().
+
+\index{handshake\+\_\+t@{handshake\+\_\+t}!message@{message}}
+\index{message@{message}!handshake\+\_\+t@{handshake\+\_\+t}}
+\subsubsection[{\texorpdfstring{message}{message}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ message}\hypertarget{structhandshake__t_abb13456032cf48eaa794391b6ed937c7}{}\label{structhandshake__t_abb13456032cf48eaa794391b6ed937c7}
+Handshake binary message 
+
+Referenced by deserialize\+\_\+handshake(), free\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), make\+\_\+server\+\_\+hello(), make\+\_\+server\+\_\+hello\+\_\+done(), make\+\_\+server\+\_\+key\+\_\+exchange(), on\+Packet\+Receive(), print\+\_\+handshake(), and serialize\+\_\+handshake().
+
+\index{handshake\+\_\+t@{handshake\+\_\+t}!type@{type}}
+\index{type@{type}!handshake\+\_\+t@{handshake\+\_\+t}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t type}\hypertarget{structhandshake__t_a1d127017fb298b889f4ba24752d08b8e}{}\label{structhandshake__t_a1d127017fb298b889f4ba24752d08b8e}
+Handshake type \+: H\+E\+L\+L\+O\+\_\+\+R\+E\+Q\+U\+E\+S\+T(0x00), C\+L\+I\+E\+N\+T\+\_\+\+H\+E\+L\+L\+O(0x01), S\+E\+R\+V\+E\+R\+\_\+\+H\+E\+L\+L\+O(0x02), C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E(0x0\+B), S\+E\+R\+V\+E\+R\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E(0x0\+C), C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+R\+E\+Q\+U\+E\+S\+T(0x0\+D), S\+E\+R\+V\+E\+R\+\_\+\+D\+O\+N\+E(0x0\+E), C\+E\+R\+T\+I\+F\+I\+C\+A\+T\+E\+\_\+\+V\+E\+R\+I\+F\+Y(0x0\+F), C\+L\+I\+E\+N\+T\+\_\+\+K\+E\+Y\+\_\+\+E\+X\+C\+H\+A\+N\+G\+E(0x10), F\+I\+N\+I\+S\+H\+E\+D(0x14) 
+
+Referenced by deserialize\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+client\+\_\+hello(), make\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), make\+\_\+server\+\_\+hello(), make\+\_\+server\+\_\+hello\+\_\+done(), make\+\_\+server\+\_\+key\+\_\+exchange(), on\+Packet\+Receive(), print\+\_\+handshake(), and serialize\+\_\+handshake().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\hyperlink{_server_client_handshake_protocol_8h}{Server\+Client\+Handshake\+Protocol.\+h}\end{DoxyCompactItemize}

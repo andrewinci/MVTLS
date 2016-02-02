@@ -1,0 +1,71 @@
+\hypertarget{structserver__client__hello__t}{}\section{server\+\_\+client\+\_\+hello\+\_\+t Struct Reference}
+\label{structserver__client__hello__t}\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+
+
+{\ttfamily \#include $<$Server\+Client\+Hello.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{structserver__client__hello__t_a5b4305b976c657bb4a056e00aeadb8ef}{T\+L\+S\+\_\+version}
+\item 
+\hyperlink{structrandom__data__t}{random\+\_\+data\+\_\+t} \hyperlink{structserver__client__hello__t_aefaae3d96978baaa21b9445a5728b4fe}{random}
+\item 
+\hyperlink{structsession__id__t}{session\+\_\+id\+\_\+t} \hyperlink{structserver__client__hello__t_a74379b0c9faddd3c3481e648a4ba2356}{session\+\_\+id}
+\item 
+uint16\+\_\+t \hyperlink{structserver__client__hello__t_a706adb2fc3f8fa8fe9bdd5793f32183e}{cipher\+\_\+suite\+\_\+len}
+\item 
+\hyperlink{structcipher__suite__t}{cipher\+\_\+suite\+\_\+t} $\ast$ \hyperlink{structserver__client__hello__t_a545e2b09874bc2250aed603ef61820a6}{cipher\+\_\+suites}
+\item 
+\hyperlink{structcompression__methods__t}{compression\+\_\+methods\+\_\+t} \hyperlink{structserver__client__hello__t_a08a470f144044c5ea244590f9ead8165}{compression\+\_\+methods}
+\end{DoxyCompactItemize}
+
+
+\subsection{Field Documentation}
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!cipher\+\_\+suite\+\_\+len@{cipher\+\_\+suite\+\_\+len}}
+\index{cipher\+\_\+suite\+\_\+len@{cipher\+\_\+suite\+\_\+len}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{cipher\+\_\+suite\+\_\+len}{cipher_suite_len}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t cipher\+\_\+suite\+\_\+len}\hypertarget{structserver__client__hello__t_a706adb2fc3f8fa8fe9bdd5793f32183e}{}\label{structserver__client__hello__t_a706adb2fc3f8fa8fe9bdd5793f32183e}
+
+
+Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), make\+\_\+client\+\_\+hello(), make\+\_\+server\+\_\+hello(), print\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!cipher\+\_\+suites@{cipher\+\_\+suites}}
+\index{cipher\+\_\+suites@{cipher\+\_\+suites}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{cipher\+\_\+suites}{cipher_suites}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t}$\ast$ cipher\+\_\+suites}\hypertarget{structserver__client__hello__t_a545e2b09874bc2250aed603ef61820a6}{}\label{structserver__client__hello__t_a545e2b09874bc2250aed603ef61820a6}
+
+
+Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), free\+\_\+hello(), make\+\_\+client\+\_\+hello(), make\+\_\+server\+\_\+hello(), on\+Packet\+Receive(), print\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!compression\+\_\+methods@{compression\+\_\+methods}}
+\index{compression\+\_\+methods@{compression\+\_\+methods}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{compression\+\_\+methods}{compression_methods}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf compression\+\_\+methods\+\_\+t} compression\+\_\+methods}\hypertarget{structserver__client__hello__t_a08a470f144044c5ea244590f9ead8165}{}\label{structserver__client__hello__t_a08a470f144044c5ea244590f9ead8165}
+
+
+Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), free\+\_\+hello(), make\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!random@{random}}
+\index{random@{random}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{random}{random}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf random\+\_\+data\+\_\+t} random}\hypertarget{structserver__client__hello__t_aefaae3d96978baaa21b9445a5728b4fe}{}\label{structserver__client__hello__t_aefaae3d96978baaa21b9445a5728b4fe}
+
+
+Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), make\+\_\+client\+\_\+hello(), make\+\_\+hello(), make\+\_\+server\+\_\+hello(), on\+Packet\+Receive(), print\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!session\+\_\+id@{session\+\_\+id}}
+\index{session\+\_\+id@{session\+\_\+id}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{session\+\_\+id}{session_id}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf session\+\_\+id\+\_\+t} session\+\_\+id}\hypertarget{structserver__client__hello__t_a74379b0c9faddd3c3481e648a4ba2356}{}\label{structserver__client__hello__t_a74379b0c9faddd3c3481e648a4ba2356}
+
+
+Referenced by free\+\_\+hello(), make\+\_\+hello(), print\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+\index{server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}!T\+L\+S\+\_\+version@{T\+L\+S\+\_\+version}}
+\index{T\+L\+S\+\_\+version@{T\+L\+S\+\_\+version}!server\+\_\+client\+\_\+hello\+\_\+t@{server\+\_\+client\+\_\+hello\+\_\+t}}
+\subsubsection[{\texorpdfstring{T\+L\+S\+\_\+version}{TLS_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t {\bf T\+L\+S\+\_\+version}}\hypertarget{structserver__client__hello__t_a5b4305b976c657bb4a056e00aeadb8ef}{}\label{structserver__client__hello__t_a5b4305b976c657bb4a056e00aeadb8ef}
+
+
+Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), make\+\_\+client\+\_\+hello(), make\+\_\+server\+\_\+hello(), on\+Packet\+Receive(), print\+\_\+hello(), and serialize\+\_\+client\+\_\+server\+\_\+hello().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Handshake\+Messages/\hyperlink{_server_client_hello_8h}{Server\+Client\+Hello.\+h}\end{DoxyCompactItemize}
