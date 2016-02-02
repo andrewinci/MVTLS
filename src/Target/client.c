@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 	}
-    // If no option load all cipher suite
+    // If no option is passed, load all cipher suite
 	if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
 		to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
 
@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
 		int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
 		to_send_cipher_suite_len+=num_added;
 		if(to_send_cipher_suite_len == 0){
-			printf("no supported cipher suite with the selected arguments\n");
+			printf("No supported cipher suite with the selected arguments\n");
 			printf("%s",USAGE);
 			return 0;
 		}            
@@ -141,9 +141,10 @@ int main(int argc, char **argv) {
 }
 
 /*
- * Send packets for starting a secure connection (handshake)
+ * Send packets to starting a secure connection (handshake)
  */
 void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]) {
+
 	// Setup the channel
 	char *fileName = "TLSchannel.txt";
 	char *channelFrom = "Client";
@@ -152,7 +153,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
 	set_on_receive(client2server, &onPacketReceive);
 
 	TLS_param.previous_state = 0x0000;
-	printf("*** TLS client is started ***\n\n");
+	printf("*** TLS client is started ***\n");
 
 	// Make client hello
 	printf("\n>>> Client hello\n");
@@ -167,27 +168,27 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
 	start_listener(client2server);
 	wait_channel(client2server);
 
- // Print details about connection
-	printf("\nServer random:\n");
+	// Print details about connection
+	printf("\n Server random:\n");
 	for(int i=0;i<32;i++)
 		printf("%02x ",TLS_param.server_random[i]);
-	printf("\nClient random:\n");
+	printf("\n Client random:\n");
 	for(int i=0;i<32;i++)
 		printf("%02x ",TLS_param.client_random[i]);
 	printf("\n");
 
-	printf("\nCertificate details:\n");
+	printf("\n Certificate details:\n");
 	printf("%s",TLS_param.server_certificate->name);
 
-	printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
+	printf("\n Cipher suite: %s",TLS_param.cipher_suite.name);
 
-	printf("\nMaster key: \n");
+	printf("\n Master key: \n");
 	for(int i=0;i<TLS_param.master_secret_len;i++)
 		printf("%02X ",TLS_param.master_secret[i]);
 	printf("\n");
 
+	// Clean up
 	free(client2server);
-
 	free(TLS_param.handshake_messages);
 	free(TLS_param.master_secret);
 	X509_free(TLS_param.server_certificate);
@@ -221,8 +222,8 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 
 			case SERVER_HELLO:
 				if(TLS_param.previous_state == 0x0000){
+
 					TLS_param.previous_state = SERVER_HELLO;
-					backup_handshake(&TLS_param,h);
 					server_client_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
 
 					printf("\n<<< Server Hello\n");
@@ -232,7 +233,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					TLS_param.cipher_suite = *server_hello->cipher_suites;
 					TLS_param.tls_version = server_hello->TLS_version;
 
-					// Backup server random
+					// Save server random
 					memcpy(TLS_param.server_random,&(server_hello->random.UNIX_time), 4);
 					memcpy(TLS_param.server_random+4, server_hello->random.random_bytes, 28);
 
@@ -264,7 +265,8 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					TLS_param.previous_state = SERVER_KEY_EXCHANGE;
 					printf("\n<<< Server Key Exchange\n");
 					print_handshake(h, v, TLS_param.cipher_suite.kx);
-					//save the server key exchange parameters
+
+					// Save server key exchange parameters
 					TLS_param.server_key_ex = deserialize_server_key_exchange(h->message, h->length, TLS_param.cipher_suite.kx);
 					backup_handshake(&TLS_param, h);
 				}
@@ -277,7 +279,7 @@ void onPacketReceive(channel_t *client2server, packet_basic_t *p){
 					printf("\n<<< Server Hello Done\n");
 					print_handshake(h, v, TLS_param.cipher_suite.kx);
 
-					// Make client_key_eschange packet
+					// Make client key exchange
 					handshake_t * client_key_exchange = make_client_key_exchange(&TLS_param, TLS_param.cipher_suite.kx);
 					backup_handshake(&TLS_param, client_key_exchange);
 					send_handshake(client2server, client_key_exchange);

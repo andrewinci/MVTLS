@@ -183,19 +183,20 @@ server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, ui
 }
 
 void print_hello(server_client_hello_t *h){
-	printf("\nVersion : %d\n",h->TLS_version);
-	printf("\nUNIX time stamp : %d\n", h->random.UNIX_time);
-	printf("\nRandom bytes (28): ");
+
+	printf("\n TLS version: %d\n",h->TLS_version);
+	printf("\n UNIX time stamp: %d\n", h->random.UNIX_time);
+	printf("\n Random bytes (28): ");
 	for(int i=0;i<28;i++)
 		printf("%02X ",h->random.random_bytes[i]);
-	printf("\nSession id : ");
+	printf("\n Session id: ");
 	for(int i=0; i < h->session_id.session_lenght; i++)
 		printf("%02X ",h->session_id.session_id[i]);
 
-	printf("\nCipher suites :\n");
+	printf("\n Cipher suites: \n");
 	for(int i=0;i<h->cipher_suite_len/2;i++)
 		printf("id: %04X name: %s\n", h->cipher_suites[i].cipher_id ,h->cipher_suites[i].name);
-	printf(" \nNo compression (not implemented yet)\n");
+	printf(" \n No compression (not implemented yet)\n");
 }
 
 void free_hello(server_client_hello_t *h){

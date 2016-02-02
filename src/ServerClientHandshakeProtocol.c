@@ -65,13 +65,6 @@ handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 	return h;
 }
 
-void free_handshake(handshake_t *h){
-	if(h==NULL)
-		return;
-	free(h->message);
-	free(h);
-}
-
 void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 
 	if(verbosity>1){
@@ -116,4 +109,11 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 			free(message);
 		}
 	}
+}
+
+void free_handshake(handshake_t *h){
+	if(h==NULL)
+		return;
+	free(h->message);
+	free(h);
 }

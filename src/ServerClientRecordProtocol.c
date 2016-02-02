@@ -9,6 +9,7 @@
 #include "ServerClientRecordProtocol.h"
 
 void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
+
 	*messageLen = r->length;
 	uint16_t lenghtRev = REV16(*messageLen);
 	*message = calloc((*messageLen)+5, sizeof(unsigned char));

@@ -39,45 +39,6 @@ int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_
 	return 0;
 }
 
-int send_packet(channel_t *ch, packet_basic_t *p){
-
-	if(ch == NULL){
-		printf("Error ch is null");
-		return -1;
-	}
-	if(ch->fd == -1)
-		return 0;
-
-	unsigned char *message = NULL;
-	uint32_t strLen;
-
-	if(p->source == NULL ){
-		p->source = calloc(8,1);
-		memcpy(p->source, ch->channel_source, strlen(ch->channel_source));
-	}
-
-	if(p->destination == NULL){
-		p->destination = calloc(8,1);
-		memcpy(p->destination, ch->channel_destination, strlen(ch->channel_destination));
-	}
-
-	serialize_packet(p, &message, &strLen);
-	if(message == NULL){
-		printf("\nerror in send packet\n");
-		exit(-1);
-	}
-
-	// Waiting untill the file is blank
-	while (get_file_size(ch->fd)!=0)
-		usleep(100);
-	// Now the file is empty
-	unsigned long writeResult = write(ch->fd, message, strLen);
-	free(message);
-	if(writeResult)
-		return 1;
-	return 0;
-}
-
 void reader(void *data){
 	channel_t *ch;
 	ch = (channel_t*)data;
@@ -159,6 +120,45 @@ packet_basic_t *create_packet(char *source, char *destination, unsigned char *me
 	return result;
 }
 
+int send_packet(channel_t *ch, packet_basic_t *p){
+
+	if(ch == NULL){
+		printf("Error ch is null");
+		return -1;
+	}
+	if(ch->fd == -1)
+		return 0;
+
+	unsigned char *message = NULL;
+	uint32_t strLen;
+
+	if(p->source == NULL ){
+		p->source = calloc(8,1);
+		memcpy(p->source, ch->channel_source, strlen(ch->channel_source));
+	}
+
+	if(p->destination == NULL){
+		p->destination = calloc(8,1);
+		memcpy(p->destination, ch->channel_destination, strlen(ch->channel_destination));
+	}
+
+	serialize_packet(p, &message, &strLen);
+	if(message == NULL){
+		printf("\nerror in send packet\n");
+		exit(-1);
+	}
+
+	// Waiting untill the file is blank
+	while (get_file_size(ch->fd)!=0)
+		usleep(100);
+	// Now the file is empty
+	unsigned long writeResult = write(ch->fd, message, strLen);
+	free(message);
+	if(writeResult)
+		return 1;
+	return 0;
+}
+
 void free_packet(packet_basic_t *p){
 	if(p == NULL)
 		return;
@@ -169,7 +169,7 @@ void free_packet(packet_basic_t *p){
 	free(p);
 }
 
-/********* Utility function for file managing *********/
+/********* Utilities function for file managing *********/
 
 /*
  * Compute the byte size of a file
@@ -206,7 +206,7 @@ uint32_t read_all_file(int fd, unsigned char **p){
 }
 
 
-/********* Serialization deserialization *********/
+/********* Serialization, deserialization *********/
 
 /*
  * Parse the message into packet

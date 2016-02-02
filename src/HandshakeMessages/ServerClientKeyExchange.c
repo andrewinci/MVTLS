@@ -205,12 +205,13 @@ void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_e
 		printf("** DHE parameters **\n");
 		printf(" p: %s",p);
 		printf("\n g: %s",g);
-		printf("\n public key : %s",pubkey_char);
+		printf("\n Public key: %s",pubkey_char);
 
-		printf("\n Signature hash algorithm : %04x", server_key_ex->sign_hash_alg);
-		printf("\n Signature : ");
+		printf("\n Signature hash algorithm: %04x", server_key_ex->sign_hash_alg);
+		printf("\n Signature: ");
 		for(int i =0;i<server_key_ex->signature_length; i++)
 			printf("%02X ", server_key_ex->signature[i]);
+		printf("\n");
 
 		OPENSSL_free(p);
 		OPENSSL_free(g);
@@ -220,12 +221,13 @@ void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_e
 
 		pubkey_char = BN_bn2hex(server_key_ex->pub_key);
 
-		printf(" Curve type : named_curve");
-		printf("\n Named curve : %04X", server_key_ex->named_curve);
-		printf("\n Public key : %s",pubkey_char);
+		printf("** ECDHE parameters **\n");
+		printf(" Curve type: named_curve");
+		printf("\n Named curve: %04X", server_key_ex->named_curve);
+		printf("\n Public key: %s",pubkey_char);
 
-		printf("\n Signature hash algorithm : %04x", server_key_ex->sign_hash_alg);
-		printf("\n Signature : ");
+		printf("\n Signature hash algorithm: %04x", server_key_ex->sign_hash_alg);
+		printf("\n Signature: ");
 		for(int i =0;i<server_key_ex->signature_length; i++)
 			printf("%02X ", server_key_ex->signature[i]);
 		printf("\n");
@@ -235,13 +237,14 @@ void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_e
 }
 
 void print_client_key_exchange(client_key_exchange_t *client_key_exchange){
-	printf(" Public key : ");
-	for(int i = 0; i < client_key_exchange->key_length; i++)
+	printf(" Public key: ");
+	for(int i = 0; i<client_key_exchange->key_length; i++)
 		printf("%02X ",client_key_exchange->key[i]);
+	printf("\n");
 }
 
 void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx){
-	if(server_key_ex!=NULL && kx == DHE_KX){
+	if(server_key_ex != NULL && kx == DHE_KX){
 		dhe_server_key_exchange_t *params = (dhe_server_key_exchange_t*)server_key_ex;
 		BN_free(params->g);
 		BN_free(params->p);
@@ -249,7 +252,7 @@ void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange
 		free(params->signature);
 		free(params);
 	}
-	else if(server_key_ex!=NULL && kx == ECDHE_KX){
+	else if(server_key_ex != NULL && kx == ECDHE_KX){
 		ecdhe_server_key_exchange_t *params = (ecdhe_server_key_exchange_t*) server_key_ex;
 		free(params->signature);
 		BN_free(params->pub_key);

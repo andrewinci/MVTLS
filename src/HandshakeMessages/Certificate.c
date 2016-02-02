@@ -43,6 +43,7 @@ certificate_message_t *make_certificate_message(char *cert_file_name){
 }
 
 void serialize_certificate_message(certificate_message_t *cert, unsigned char **stream, uint32_t *len){
+
 	*len = cert->cert_length+3;
 	*stream = malloc(sizeof(unsigned char)*(*len)); // 3 byte for the lenght of all certificate stream
 	unsigned char *buff=*stream;
@@ -76,6 +77,7 @@ void serialize_certificate_message(certificate_message_t *cert, unsigned char **
 }
 
 certificate_message_t *deserialize_certificate_message(unsigned char *stream, uint32_t len){
+
 	certificate_message_t *result = malloc(sizeof(certificate_message_t));
 	result->X509_certificate = NULL;
 	result->cert_length = len - 3; // 3 byte are used for the lenght
@@ -99,6 +101,7 @@ certificate_message_t *deserialize_certificate_message(unsigned char *stream, ui
 }
 
 void free_certificate_message(certificate_message_t *cert){
+
 	if(cert == NULL)
 		return;
 

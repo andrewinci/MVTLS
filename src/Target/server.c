@@ -21,7 +21,7 @@ void do_handshake();
 int v = 0;
 TLS_parameters_t TLS_param;
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv){
 	if(argc>1 && strcmp(argv[1], "-v")==0 ){
 		v = atoi(argv[2]);
 	}
