@@ -87,7 +87,7 @@ handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cip
  *	\param client_key_ex : the client key exchange message
  *	\param TLS_param : the connection parameters
  */
-void make_RSA_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
+void make_RSA_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
 	// Initialize pre master key
 	int pre_master_key_len = 58;
@@ -138,7 +138,7 @@ void make_RSA_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_para
  *	\param client_key_ex : the client key exchange message
  *	\param TLS_param : the connection parameters
  */
-void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
+void make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
 	// Set server key exchange type
 	dhe_server_key_exchange_t *server_key_exchange = (dhe_server_key_exchange_t*)TLS_param->server_key_ex;
@@ -191,7 +191,7 @@ void make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_para
  *	\param client_key_ex : the client key exchange message
  *	\param TLS_param : the connection parameters
  */
-void make_ECDHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param){
+void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
 	// Set server key exchange algorithm
 	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t * )TLS_param->server_key_ex;
@@ -267,13 +267,13 @@ handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key
     
     switch (TLS_param->cipher_suite.kx){
         case RSA_KX:
-            make_RSA_client_key_exchange(client_key_exchange, TLS_param);
+            make_RSA_client_key_exchange(TLS_param, client_key_exchange);
             break;
         case DHE_KX:
-            make_DHE_client_key_exchange(client_key_exchange, TLS_param);
+            make_DHE_client_key_exchange(TLS_param, client_key_exchange);
             break;
         case ECDHE_KX:
-            make_ECDHE_client_key_exchange(client_key_exchange, TLS_param);
+            make_ECDHE_client_key_exchange(TLS_param, client_key_exchange);
             break;
         default:
             printf("\nError in make_client_key_exchange\n");
