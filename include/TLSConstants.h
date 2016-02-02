@@ -105,7 +105,7 @@ typedef enum{
 }channel_mode;
 
 /**
- *	\enum handshake_type
+ *	\enum handshake_type    
  *	Types of handshake packet
  */
 enum {

@@ -13,7 +13,7 @@
 #define ServerClientRecordProtocol_h
 
 #include <stdio.h>
-#include "ServerClientBasic.h"
+#include "ServerClientTransportProtocol.h"
 
 /**	\def REV16 
 *	Rotational byte for uint16

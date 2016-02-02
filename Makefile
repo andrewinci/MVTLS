@@ -67,14 +67,14 @@ handshakeMessages:
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ServerClientKeyExchange.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSConstants.o $(SRCDIR)/TLSConstants.c
 
-recordProtocol: basicProtocol
+recordProtocol: transportProtocol
 	@printf "${GREEN}** Make object code for record protocol**${NC}\n"
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientRecordProtocol.o $(SRCDIR)/ServerClientRecordProtocol.c
 
-basicProtocol:
+transportProtocol:
 	@printf "${GREEN}** Make object code for basic protocol**${NC}\n"
 	@mkdir -p $(BUILDDIR)/
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientBasic.o $(SRCDIR)/ServerClientBasic.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientTransportProtocol.o $(SRCDIR)/ServerClientTransportProtocol.c
 
 # Other
 

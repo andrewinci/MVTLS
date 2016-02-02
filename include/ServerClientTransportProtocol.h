@@ -1,10 +1,10 @@
 /**
  *  SSL/TLS Project
- *  \file ServerClientFileSocket.h
+ *  \file ServerClientTransportProtocol.h
  *  Basic client/server communication through file.
  *
  *  PROTOCOL:
- *  The protocol is very basic
+ *  The protocol is very simple
  *  8 byte for source
  *  8 byte for receiver
  *  4 byte for packet length
@@ -18,8 +18,8 @@
  *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
-#ifndef ServerClientBasic_h
-#define ServerClientBasic_h
+#ifndef ServerClientTransportProtocol_h
+#define ServerClientTransportProtocol_h
 
 #include <stdio.h>
 #include <stdlib.h>
