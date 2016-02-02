@@ -3,7 +3,7 @@
 //  Certificate.h
 //
 //  Created on 28/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 //  The certificate message is divided in this way:
 //  lenght of all message: 3 byte

@@ -3,7 +3,7 @@
 //  handshakeConstants.c
 //
 //  Created on 07/01/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 
 #include "TLSConstants.h"

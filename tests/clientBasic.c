@@ -5,8 +5,8 @@
 //  Client for testing the basic protocol layer.
 //
 //  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+//  
 
 #include <stdio.h>
 #include <stdlib.h>

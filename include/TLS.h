@@ -1,10 +1,14 @@
-//
-//  TLS.h
-//  SSLXcodeProject
-//
-//  Created by Darka on 13/01/16.
-//  Copyright © 2016 Darka. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file TLS.h
+ *	This file provide a set of function for the TLS
+ *	handshake. The function are used for make TLS message
+ *	for both server and client.
+ *	
+ *  \date Created on 13/01/16.
+ *  \copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *
+ */
 
 #ifndef TLS_h
 #define TLS_h

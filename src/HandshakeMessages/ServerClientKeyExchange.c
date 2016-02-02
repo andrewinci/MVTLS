@@ -3,7 +3,7 @@
 //  ServerClientKeyExchange.c
 //
 //  Created on 6/01/16.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 
 #ifdef MAKEFILE

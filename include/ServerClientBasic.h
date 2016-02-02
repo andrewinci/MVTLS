@@ -1,22 +1,22 @@
-//
-//  SSL/TLS Project
-//  ServerClientFileSocket.h
-//  Basic client/server communication through file.
-//
-//  PROTOCOL:
-//  The protocol is very basic
-//  8 byte for source
-//  8 byte for receiver
-//  4 byte for packet length
-//  message
-//
-//  both server and client after read a message they blank the file
-//  both server and client cannot write if the file is not blank, they wait
-//
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file ServerClientFileSocket.h
+ *  Basic client/server communication through file.
+ *
+ *  PROTOCOL:
+ *  The protocol is very basic
+ *  8 byte for source
+ *  8 byte for receiver
+ *  4 byte for packet length
+ *  message
+ *
+ *  both server and client after read a message they blank the file
+ *  both server and client cannot write if the file is not blank, they wait
+ *
+ *
+ *  \date Created on 22/12/15.
+ *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
 
 #ifndef ServerClientBasic_h
 #define ServerClientBasic_h
@@ -32,13 +32,11 @@
 #include <pthread.h>
 #include <time.h>
 
-#endif
-
 #define DELAY_TIME 50
 
-#ifndef struct_packet
-#define struct_packet
-/** This struct substitute the TCP in our implementation*/
+/** \struct packet_basic
+ * This struct substitute the transport layer in our implementation 
+ */
 typedef struct{
 	/** Packet source name, 8 Byte length*/
 	char *source;
@@ -52,12 +50,11 @@ typedef struct{
 	/** Message byte stream of lenght lenght*/
 	unsigned char *message;
 }packet_basic_t;
-#endif
 
-#ifndef struct_channel
-#define struct_channel
-/** \struct channel Struct for model and manage a file channel
- between client and server*/
+/** \struct channel 
+* Struct for model and manage a file channel
+* between client and server
+*/
 typedef struct channel_t{
 	/** Channel source name e.g. server*/
 	char *channel_source;
@@ -83,30 +80,30 @@ typedef struct channel_t{
 }channel_t;
 #endif
 
-/*
+/**
  * Create a server/client using the fileName as comunication channel
  *
- * fileName : file name of the channel
- * serverName : name of the server/client
- * return the created channel
+ * \param fileName : file name of the channel
+ * \param serverName : name of the server/client
+ * \return the created channel
  */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
 
-/*
+/**
  * Set the function to be called when a message is received
  *
- * ch : channel interested
- * onPacketReceive : pointer to the function
- * return : 1 if the function was setted, 0 otherwise
+ * \param ch : channel interested
+ * \param onPacketReceive : pointer to the function
+ * \return : 1 if the function was setted, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_basic_t *p));
 
 /**
  * Send a message trough the channel ch
  *
- * ch : channel to be used
- * p : pointer to packet to be sent
- * return : 1 if the message was sent, 0 otherwise
+ * \param ch : channel to be used
+ * \param p : pointer to packet to be sent
+ * \return : 1 if the message was sent, 0 otherwise
  */
 int send_packet(channel_t *ch, packet_basic_t *p);
 
@@ -116,13 +113,14 @@ int send_packet(channel_t *ch, packet_basic_t *p);
  * is succesfull) the client/server read continously from channel.
  * (for STOP use stop())
  *
- * ch : channel to start
- * return : 1 if the thread was started, 0 otherwise
+ * \param ch : channel to start
+ * \return : 1 if the thread was started, 0 otherwise
  */
 int start_listener(channel_t *ch);
 
-/*
- * Stop the main and wait untill stop is called
+/**
+ * Stop the callee and wait untill stop is called
+ * \param ch : the chanal to wait
  */
 void wait_channel(channel_t *ch);
 
@@ -147,7 +145,7 @@ void stop_channel(channel_t *ch);
 packet_basic_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
 /**
- * Delete and free memory allocated by packet
+ * Deallocate memory allocated by packet
  * \param p : pointer to packet to free
  */
 void free_packet(packet_basic_t *p);

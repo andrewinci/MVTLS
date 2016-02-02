@@ -3,7 +3,7 @@
 //  TLSServer.c
 //
 //  Created on 30/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 
 #include "TLS.h"

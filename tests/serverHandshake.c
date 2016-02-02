@@ -3,7 +3,7 @@
 //  serverHandshake.h
 //
 //  Created on 24/12/15.
-//  Copyright © 2015 Mello, Darka. All rights reserved.
+//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 
 #include <stdio.h>
