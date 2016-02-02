@@ -7,7 +7,7 @@ OPENSSLINCLUDE ?= -I/usr/local/ssl/include -L/usr/local/ssl/lib
 OPENSSLFLAGS := -lssl -lcrypto -ldl
 OPENSSL := $(OPENSSLFLAGS) $(OPENSSLINCLUDE)
 LFLAGS := -pthread
-INC :=  -I include $(OPENSSL)
+INC :=  -I include
 GREEN=\033[0;32m
 RED=\033[0;31m
 NC=\033[0m # No Color
@@ -72,7 +72,7 @@ recordProtocol: transportProtocol
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientRecordProtocol.o $(SRCDIR)/ServerClientRecordProtocol.c
 
 transportProtocol:
-	@printf "${GREEN}** Make object code for basic protocol**${NC}\n"
+	@printf "${GREEN}** Make object code for transport protocol**${NC}\n"
 	@mkdir -p $(BUILDDIR)/
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/ServerClientTransportProtocol.o $(SRCDIR)/ServerClientTransportProtocol.c
 
