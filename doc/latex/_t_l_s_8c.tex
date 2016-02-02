@@ -6,32 +6,45 @@
 \item 
 void \hyperlink{_t_l_s_8c_a12a63a5becca8f85a59f6ac0f4d9c553}{backup\+\_\+handshake} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, \hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$h)
 \item 
+\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}{make\+\_\+client\+\_\+hello} (unsigned char $\ast$client\+\_\+random, \hyperlink{structcipher__suite__t}{cipher\+\_\+suite\+\_\+t} \hyperlink{_t_l_s_constants_8c_ace4b851fd953c51fe7b0ada522a95ae3}{cipher\+\_\+suite\+\_\+list}\mbox{[}$\,$\mbox{]}, int cipher\+\_\+suite\+\_\+len)
+\item 
+void \hyperlink{_t_l_s_8c_aef2a72a9807aac60336cd3febe51a130}{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, \hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex)
+\item 
+void \hyperlink{_t_l_s_8c_ace7876fa0df923e8b3c924a7a046a1ff}{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, \hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex)
+\item 
+void \hyperlink{_t_l_s_8c_a6f7128cf62e8491d70cf2585cf901c4c}{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, \hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex)
+\item 
+\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}{make\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, uint16\+\_\+t key\+\_\+ex\+\_\+alg)
+\item 
+\hyperlink{structrecord__t}{record\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a5bed323f749e27db36fd6ab2a3e64c4a}{make\+\_\+change\+\_\+cipher\+\_\+spec} ()
+\item 
+\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}{make\+\_\+finished\+\_\+message} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
+\item 
 \hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a035a830fd89c6c7af60809197d81ea29}{make\+\_\+server\+\_\+hello} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, \hyperlink{structserver__client__hello__t}{server\+\_\+client\+\_\+hello\+\_\+t} $\ast$client\+\_\+hello)
 \item 
 \hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a6fd919275c5d6d3e6578c480cc62a8ce}{make\+\_\+certificate} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
-\item 
-\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a902d940508d7080023ef072b2667a143}{make\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
 \item 
 \hyperlink{structdhe__server__key__exchange__t}{dhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a359e2b0b51c61744f7a70b5888d8c2db}{make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
 \item 
 \hyperlink{structecdhe__server__key__exchange__t}{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_ade6994e7ea30d8b5b89b2cd551101db4}{make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
 \item 
+\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a902d940508d7080023ef072b2667a143}{make\+\_\+server\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
+\item 
 \hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_af98aa49e2563d588c366ef1712de925a}{make\+\_\+server\+\_\+hello\+\_\+done} ()
-\item 
-\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}{make\+\_\+client\+\_\+hello} (unsigned char $\ast$client\+\_\+random, \hyperlink{structcipher__suite__t}{cipher\+\_\+suite\+\_\+t} \hyperlink{_t_l_s_constants_8c_ace4b851fd953c51fe7b0ada522a95ae3}{cipher\+\_\+suite\+\_\+list}\mbox{[}$\,$\mbox{]}, int cipher\+\_\+suite\+\_\+len)
-\item 
-\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}{make\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param}, uint16\+\_\+t key\+\_\+ex\+\_\+alg)
-\item 
-void \hyperlink{_t_l_s_8c_ad4f11c83fdb0f02c0a196716cc84ceec}{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex, \hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
-\item 
-void \hyperlink{_t_l_s_8c_ab1185c93c755acd8c556afc998d83ddc}{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex, \hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
-\item 
-void \hyperlink{_t_l_s_8c_a37fc03d2f3e46431aa0728c07b5e2c64}{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$client\+\_\+key\+\_\+ex, \hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
-\item 
-\hyperlink{structrecord__t}{record\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_a5bed323f749e27db36fd6ab2a3e64c4a}{make\+\_\+change\+\_\+cipher\+\_\+spec} ()
-\item 
-\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}{make\+\_\+finished\+\_\+message} (\hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} $\ast$\hyperlink{server_8c_aa8eef32066e04e25183a0cc549992c54}{T\+L\+S\+\_\+param})
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\+S\+L/\+T\+LS Project
+
+This file provide a set of function for the T\+LS handshake. The function are used for make T\+LS message for both server and client.
+
+\begin{DoxyDate}{Date}
+Created on 13/01/16. 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. 
+\end{DoxyCopyright}
 
 
 \subsection{Function Documentation}
@@ -43,6 +56,15 @@ void \hyperlink{_t_l_s_8c_a37fc03d2f3e46431aa0728c07b5e2c64}{make\+\_\+\+E\+C\+D
 \item[{{\bf handshake\+\_\+t} $\ast$}]{h}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a12a63a5becca8f85a59f6ac0f4d9c553}{}\label{_t_l_s_8c_a12a63a5becca8f85a59f6ac0f4d9c553}
+Append the handshake h to the handshake\+\_\+messages field of T\+L\+S\+\_\+param
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+\hline
+{\em h} & \+: the handshake to append \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
@@ -54,6 +76,16 @@ Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a6fd919275c5d6d3e6578c480cc62a8ce}{}\label{_t_l_s_8c_a6fd919275c5d6d3e6578c480cc62a8ce}
+Make the certificate message for the server. That message depends on the authentication algorithm hence we require the connection parameters. The function also sets the certificate in the connection parameters for feature uses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the certificate handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
@@ -65,6 +97,11 @@ Referenced by on\+Packet\+Receive().
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a5bed323f749e27db36fd6ab2a3e64c4a}{}\label{_t_l_s_8c_a5bed323f749e27db36fd6ab2a3e64c4a}
+Make the change cipher spec record message. This message is simple and doesn\textquotesingle{}t require any parameter.
+
+\begin{DoxyReturn}{Returns}
+the change cipher spec record 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
@@ -78,6 +115,20 @@ Referenced by on\+Packet\+Receive().
 \item[{int}]{cipher\+\_\+suite\+\_\+len}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}{}\label{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}
+Given an array of cipher suite make a client hello message. The function also fill the random field using the time stamp and a random generator(openssl)
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+random} & \+: the random setted in the client hello \\
+\hline
+{\em cipher\+\_\+suite\+\_\+list} & \+: an array of cipher suite to add in the client hello \\
+\hline
+{\em cipher\+\_\+suite\+\_\+len} & \+: the number of cipher suite in the list \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the hello client handshake message 
+\end{DoxyReturn}
 
 
 Referenced by do\+\_\+handshake().
@@ -90,18 +141,39 @@ Referenced by do\+\_\+handshake().
 \item[{uint16\+\_\+t}]{key\+\_\+ex\+\_\+alg}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}{}\label{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}
+Given the information in the T\+L\+S\+\_\+parameter and the key exchange algorithm return the handshake of the client key exchange. That include compute the pre-\/master key. It also compute the master secret and set in the T\+L\+S\+\_\+param.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: the parameters of the connection \\
+\hline
+{\em key\+\_\+ex\+\_\+alg} & \+: the key exchange algorithm of the handshake \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the client key exchange handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
 
 \index{T\+L\+S.\+c@{T\+L\+S.\+c}!make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange}}
 \index{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange}!T\+L\+S.\+c@{T\+L\+S.\+c}}
-\subsubsection[{\texorpdfstring{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex, T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param)}{make_DHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange (
+\subsubsection[{\texorpdfstring{make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(\+T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param, client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex)}{make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange (
 \begin{DoxyParamCaption}
-\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex, }
-\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
+\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param, }
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex}
 \end{DoxyParamCaption}
-)}\hypertarget{_t_l_s_8c_ab1185c93c755acd8c556afc998d83ddc}{}\label{_t_l_s_8c_ab1185c93c755acd8c556afc998d83ddc}
+)}\hypertarget{_t_l_s_8c_ace7876fa0df923e8b3c924a7a046a1ff}{}\label{_t_l_s_8c_ace7876fa0df923e8b3c924a7a046a1ff}
+Make the client key exchange message for D\+HE key exchange. This function is called from make\+\_\+client\+\_\+key\+\_\+exchange if the key exchange is D\+HE.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+\hline
+{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
@@ -113,18 +185,37 @@ Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a359e2b0b51c61744f7a70b5888d8c2db}{}\label{_t_l_s_8c_a359e2b0b51c61744f7a70b5888d8c2db}
+Make the server key exchange for D\+HE key exchange. It computes the DH parameters and save the message in the connection parameters T\+L\+S\+\_\+param.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the dhe\+\_\+server\+\_\+key\+\_\+exchange struct 
+\end{DoxyReturn}
 
 
 Referenced by make\+\_\+server\+\_\+key\+\_\+exchange().
 
 \index{T\+L\+S.\+c@{T\+L\+S.\+c}!make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange}}
 \index{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange}!T\+L\+S.\+c@{T\+L\+S.\+c}}
-\subsubsection[{\texorpdfstring{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex, T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param)}{make_ECDHE_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange (
+\subsubsection[{\texorpdfstring{make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(\+T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param, client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex)}{make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange (
 \begin{DoxyParamCaption}
-\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex, }
-\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
+\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param, }
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex}
 \end{DoxyParamCaption}
-)}\hypertarget{_t_l_s_8c_a37fc03d2f3e46431aa0728c07b5e2c64}{}\label{_t_l_s_8c_a37fc03d2f3e46431aa0728c07b5e2c64}
+)}\hypertarget{_t_l_s_8c_a6f7128cf62e8491d70cf2585cf901c4c}{}\label{_t_l_s_8c_a6f7128cf62e8491d70cf2585cf901c4c}
+Make the client key exchange message for E\+C\+D\+HE key exchange. This function is called from make\+\_\+client\+\_\+key\+\_\+exchange if the key exchange is E\+C\+D\+HE.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+\hline
+{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
@@ -136,6 +227,16 @@ Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_ade6994e7ea30d8b5b89b2cd551101db4}{}\label{_t_l_s_8c_ade6994e7ea30d8b5b89b2cd551101db4}
+Make the server key exchange for E\+C\+D\+HE key exchange. It computes the E\+C\+D\+HE parameters using the secp256k1 curve and save the message in the connection parameters T\+L\+S\+\_\+param.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the ecdhe\+\_\+server\+\_\+key\+\_\+exchange struct 
+\end{DoxyReturn}
 
 
 Referenced by make\+\_\+server\+\_\+key\+\_\+exchange().
@@ -147,18 +248,37 @@ Referenced by make\+\_\+server\+\_\+key\+\_\+exchange().
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}{}\label{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}
+Given the connection parameters compute the finished message. Note in the T\+LS protocol this message is encrypted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the finished handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
 
 \index{T\+L\+S.\+c@{T\+L\+S.\+c}!make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange}}
 \index{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange@{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange}!T\+L\+S.\+c@{T\+L\+S.\+c}}
-\subsubsection[{\texorpdfstring{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex, T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param)}{make_RSA_client_key_exchange(client_key_exchange_t *client_key_ex, TLS_parameters_t *TLS_param)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange (
+\subsubsection[{\texorpdfstring{make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(\+T\+L\+S\+\_\+parameters\+\_\+t $\ast$\+T\+L\+S\+\_\+param, client\+\_\+key\+\_\+exchange\+\_\+t $\ast$client\+\_\+key\+\_\+ex)}{make_RSA_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex)}}]{\setlength{\rightskip}{0pt plus 5cm}void make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange (
 \begin{DoxyParamCaption}
-\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex, }
-\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
+\item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param, }
+\item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+ex}
 \end{DoxyParamCaption}
-)}\hypertarget{_t_l_s_8c_ad4f11c83fdb0f02c0a196716cc84ceec}{}\label{_t_l_s_8c_ad4f11c83fdb0f02c0a196716cc84ceec}
+)}\hypertarget{_t_l_s_8c_aef2a72a9807aac60336cd3febe51a130}{}\label{_t_l_s_8c_aef2a72a9807aac60336cd3febe51a130}
+Make the client key exchange message for R\+SA key exchange. This function is called from make\+\_\+client\+\_\+key\+\_\+exchange if the key exchange is R\+SA.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+\hline
+{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
@@ -171,6 +291,18 @@ Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
 \item[{{\bf server\+\_\+client\+\_\+hello\+\_\+t} $\ast$}]{client\+\_\+hello}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a035a830fd89c6c7af60809197d81ea29}{}\label{_t_l_s_8c_a035a830fd89c6c7af60809197d81ea29}
+Given the client hello message the function makes the server hello. It choices a random cipher suite among the those provided by the client. The function also fill the random field using the time stamp and a random generator(openssl)
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+\hline
+{\em client\+\_\+hello} & \+: the received client hello. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the hello server handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
@@ -182,6 +314,11 @@ Referenced by on\+Packet\+Receive().
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_af98aa49e2563d588c366ef1712de925a}{}\label{_t_l_s_8c_af98aa49e2563d588c366ef1712de925a}
+Make the server hello done message. This message is simple and doesn\textquotesingle{}t require any parameter.
+
+\begin{DoxyReturn}{Returns}
+the server hello done handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().
@@ -193,6 +330,16 @@ Referenced by on\+Packet\+Receive().
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a902d940508d7080023ef072b2667a143}{}\label{_t_l_s_8c_a902d940508d7080023ef072b2667a143}
+Make the server key exchange handshake message. The function also sets the message in the connection parameters for compute the master key in the client key exchange message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the server key exchange handshake message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive().

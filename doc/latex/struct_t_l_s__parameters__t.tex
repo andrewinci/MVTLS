@@ -17,15 +17,15 @@ unsigned char \hyperlink{struct_t_l_s__parameters__t_adbdca8d573a8e073ef16bf1422
 \item 
 unsigned char \hyperlink{struct_t_l_s__parameters__t_a9159f146fbc286a8b55f4aa83396ae2f}{server\+\_\+random} \mbox{[}32\mbox{]}
 \item 
-void $\ast$ \hyperlink{struct_t_l_s__parameters__t_a8ca08ac851747e17048fddf461c65ec4}{server\+\_\+key\+\_\+ex}
+\hyperlink{_server_client_key_exchange_8h_a0e7e73056ef40d5a7b303b385dee59cd}{server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$ \hyperlink{struct_t_l_s__parameters__t_ad79527a4a6a3547cc16f0fb569767d9d}{server\+\_\+key\+\_\+ex}
 \item 
 unsigned char $\ast$ \hyperlink{struct_t_l_s__parameters__t_a68c2015df5cb7259aa1abdee33c8e6f3}{master\+\_\+secret}
 \item 
 int \hyperlink{struct_t_l_s__parameters__t_a7112487b636ca7921055d94ae02478fe}{master\+\_\+secret\+\_\+len}
 \item 
-int \hyperlink{struct_t_l_s__parameters__t_afbdbb7d32255aef8951f95ccc44957fc}{handshake\+\_\+messages\+\_\+len}
-\item 
 unsigned char $\ast$ \hyperlink{struct_t_l_s__parameters__t_ac6734c87e703c22f7d34f71ca116d005}{handshake\+\_\+messages}
+\item 
+int \hyperlink{struct_t_l_s__parameters__t_afbdbb7d32255aef8951f95ccc44957fc}{handshake\+\_\+messages\+\_\+len}
 \item 
 X509 $\ast$ \hyperlink{struct_t_l_s__parameters__t_a832ae425d6bb6330e1e5e825ab85ac31}{server\+\_\+certificate}
 \item 
@@ -33,88 +33,91 @@ B\+I\+G\+N\+UM $\ast$ \hyperlink{struct_t_l_s__parameters__t_aa7d109714bb4c1faa6
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Struct \hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} This struct contains all details about connection. It also contains data for complete the handshake. 
+
 \subsection{Field Documentation}
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!cipher\+\_\+suite@{cipher\+\_\+suite}}
 \index{cipher\+\_\+suite@{cipher\+\_\+suite}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{cipher\+\_\+suite}{cipher_suite}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t} cipher\+\_\+suite}\hypertarget{struct_t_l_s__parameters__t_af1d8ebe57a775be2b91550dbcacb2a58}{}\label{struct_t_l_s__parameters__t_af1d8ebe57a775be2b91550dbcacb2a58}
-
+The cipher suite used for handshake 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+server\+\_\+hello(), make\+\_\+server\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!client\+\_\+random@{client\+\_\+random}}
 \index{client\+\_\+random@{client\+\_\+random}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{client\+\_\+random}{client_random}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char client\+\_\+random\mbox{[}32\mbox{]}}\hypertarget{struct_t_l_s__parameters__t_adbdca8d573a8e073ef16bf14229fb4c9}{}\label{struct_t_l_s__parameters__t_adbdca8d573a8e073ef16bf14229fb4c9}
-
+Client random, include the unix time stamp 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!handshake\+\_\+messages@{handshake\+\_\+messages}}
 \index{handshake\+\_\+messages@{handshake\+\_\+messages}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{handshake\+\_\+messages}{handshake_messages}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ handshake\+\_\+messages}\hypertarget{struct_t_l_s__parameters__t_ac6734c87e703c22f7d34f71ca116d005}{}\label{struct_t_l_s__parameters__t_ac6734c87e703c22f7d34f71ca116d005}
-
+The backup of handshake messages exchanged during handshake 
 
 Referenced by backup\+\_\+handshake(), do\+\_\+handshake(), main(), and make\+\_\+finished\+\_\+message().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!handshake\+\_\+messages\+\_\+len@{handshake\+\_\+messages\+\_\+len}}
 \index{handshake\+\_\+messages\+\_\+len@{handshake\+\_\+messages\+\_\+len}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{handshake\+\_\+messages\+\_\+len}{handshake_messages_len}}]{\setlength{\rightskip}{0pt plus 5cm}int handshake\+\_\+messages\+\_\+len}\hypertarget{struct_t_l_s__parameters__t_afbdbb7d32255aef8951f95ccc44957fc}{}\label{struct_t_l_s__parameters__t_afbdbb7d32255aef8951f95ccc44957fc}
-
+Backup stream length 
 
 Referenced by backup\+\_\+handshake(), and make\+\_\+finished\+\_\+message().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!master\+\_\+secret@{master\+\_\+secret}}
 \index{master\+\_\+secret@{master\+\_\+secret}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{master\+\_\+secret}{master_secret}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ master\+\_\+secret}\hypertarget{struct_t_l_s__parameters__t_a68c2015df5cb7259aa1abdee33c8e6f3}{}\label{struct_t_l_s__parameters__t_a68c2015df5cb7259aa1abdee33c8e6f3}
-
+Session master secret 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), and make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!master\+\_\+secret\+\_\+len@{master\+\_\+secret\+\_\+len}}
 \index{master\+\_\+secret\+\_\+len@{master\+\_\+secret\+\_\+len}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{master\+\_\+secret\+\_\+len}{master_secret_len}}]{\setlength{\rightskip}{0pt plus 5cm}int master\+\_\+secret\+\_\+len}\hypertarget{struct_t_l_s__parameters__t_a7112487b636ca7921055d94ae02478fe}{}\label{struct_t_l_s__parameters__t_a7112487b636ca7921055d94ae02478fe}
-
+Master secret length 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), and make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!previous\+\_\+state@{previous\+\_\+state}}
 \index{previous\+\_\+state@{previous\+\_\+state}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{previous\+\_\+state}{previous_state}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t previous\+\_\+state}\hypertarget{struct_t_l_s__parameters__t_a7876cd7f12771bb13dfd180e2d74e02b}{}\label{struct_t_l_s__parameters__t_a7876cd7f12771bb13dfd180e2d74e02b}
-
+Store the previous state in the handshake 
 
 Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!private\+\_\+key@{private\+\_\+key}}
 \index{private\+\_\+key@{private\+\_\+key}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{private\+\_\+key}{private_key}}]{\setlength{\rightskip}{0pt plus 5cm}B\+I\+G\+N\+UM$\ast$ private\+\_\+key}\hypertarget{struct_t_l_s__parameters__t_aa7d109714bb4c1faa6aba18c0dd3dcae}{}\label{struct_t_l_s__parameters__t_aa7d109714bb4c1faa6aba18c0dd3dcae}
-
+The private key for the key exchange 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), and make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!server\+\_\+certificate@{server\+\_\+certificate}}
 \index{server\+\_\+certificate@{server\+\_\+certificate}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{server\+\_\+certificate}{server_certificate}}]{\setlength{\rightskip}{0pt plus 5cm}X509$\ast$ server\+\_\+certificate}\hypertarget{struct_t_l_s__parameters__t_a832ae425d6bb6330e1e5e825ab85ac31}{}\label{struct_t_l_s__parameters__t_a832ae425d6bb6330e1e5e825ab85ac31}
-
+The server certificate 
 
 Referenced by do\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!server\+\_\+key\+\_\+ex@{server\+\_\+key\+\_\+ex}}
 \index{server\+\_\+key\+\_\+ex@{server\+\_\+key\+\_\+ex}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
-\subsubsection[{\texorpdfstring{server\+\_\+key\+\_\+ex}{server_key_ex}}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ server\+\_\+key\+\_\+ex}\hypertarget{struct_t_l_s__parameters__t_a8ca08ac851747e17048fddf461c65ec4}{}\label{struct_t_l_s__parameters__t_a8ca08ac851747e17048fddf461c65ec4}
-
+\subsubsection[{\texorpdfstring{server\+\_\+key\+\_\+ex}{server_key_ex}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf server\+\_\+key\+\_\+exchange\+\_\+t}$\ast$ server\+\_\+key\+\_\+ex}\hypertarget{struct_t_l_s__parameters__t_ad79527a4a6a3547cc16f0fb569767d9d}{}\label{struct_t_l_s__parameters__t_ad79527a4a6a3547cc16f0fb569767d9d}
+Server key exchange message 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+server\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!server\+\_\+random@{server\+\_\+random}}
 \index{server\+\_\+random@{server\+\_\+random}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{server\+\_\+random}{server_random}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char server\+\_\+random\mbox{[}32\mbox{]}}\hypertarget{struct_t_l_s__parameters__t_a9159f146fbc286a8b55f4aa83396ae2f}{}\label{struct_t_l_s__parameters__t_a9159f146fbc286a8b55f4aa83396ae2f}
-
+Server random, include the unix time stamp 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+server\+\_\+hello(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!tls\+\_\+version@{tls\+\_\+version}}
 \index{tls\+\_\+version@{tls\+\_\+version}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{tls\+\_\+version}{tls_version}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t tls\+\_\+version}\hypertarget{struct_t_l_s__parameters__t_a8fd63193690a09b75e0aaf9b971ed3df}{}\label{struct_t_l_s__parameters__t_a8fd63193690a09b75e0aaf9b971ed3df}
-
+The T\+LS version 
 
 Referenced by make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 

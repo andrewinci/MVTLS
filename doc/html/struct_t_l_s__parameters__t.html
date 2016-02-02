@@ -102,22 +102,24 @@ Data Fields</h2></td></tr>
 <tr class="separator:adbdca8d573a8e073ef16bf14229fb4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9159f146fbc286a8b55f4aa83396ae2f"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#a9159f146fbc286a8b55f4aa83396ae2f">server_random</a> [32]</td></tr>
 <tr class="separator:a9159f146fbc286a8b55f4aa83396ae2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ca08ac851747e17048fddf461c65ec4"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#a8ca08ac851747e17048fddf461c65ec4">server_key_ex</a></td></tr>
-<tr class="separator:a8ca08ac851747e17048fddf461c65ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad79527a4a6a3547cc16f0fb569767d9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_server_client_key_exchange_8h.html#a0e7e73056ef40d5a7b303b385dee59cd">server_key_exchange_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#ad79527a4a6a3547cc16f0fb569767d9d">server_key_ex</a></td></tr>
+<tr class="separator:ad79527a4a6a3547cc16f0fb569767d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68c2015df5cb7259aa1abdee33c8e6f3"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#a68c2015df5cb7259aa1abdee33c8e6f3">master_secret</a></td></tr>
 <tr class="separator:a68c2015df5cb7259aa1abdee33c8e6f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7112487b636ca7921055d94ae02478fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#a7112487b636ca7921055d94ae02478fe">master_secret_len</a></td></tr>
 <tr class="separator:a7112487b636ca7921055d94ae02478fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbdbb7d32255aef8951f95ccc44957fc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#afbdbb7d32255aef8951f95ccc44957fc">handshake_messages_len</a></td></tr>
-<tr class="separator:afbdbb7d32255aef8951f95ccc44957fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6734c87e703c22f7d34f71ca116d005"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#ac6734c87e703c22f7d34f71ca116d005">handshake_messages</a></td></tr>
 <tr class="separator:ac6734c87e703c22f7d34f71ca116d005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbdbb7d32255aef8951f95ccc44957fc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#afbdbb7d32255aef8951f95ccc44957fc">handshake_messages_len</a></td></tr>
+<tr class="separator:afbdbb7d32255aef8951f95ccc44957fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a832ae425d6bb6330e1e5e825ab85ac31"><td class="memItemLeft" align="right" valign="top">X509 *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#a832ae425d6bb6330e1e5e825ab85ac31">server_certificate</a></td></tr>
 <tr class="separator:a832ae425d6bb6330e1e5e825ab85ac31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7d109714bb4c1faa6aba18c0dd3dcae"><td class="memItemLeft" align="right" valign="top">BIGNUM *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t_l_s__parameters__t.html#aa7d109714bb4c1faa6aba18c0dd3dcae">private_key</a></td></tr>
 <tr class="separator:aa7d109714bb4c1faa6aba18c0dd3dcae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Struct <a class="el" href="struct_t_l_s__parameters__t.html">TLS_parameters_t</a> This struct contains all details about connection. It also contains data for complete the handshake. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="af1d8ebe57a775be2b91550dbcacb2a58"></a>
 <div class="memitem">
 <div class="memproto">
@@ -127,8 +129,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The cipher suite used for handshake </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="_t_l_s_8h.html#ab3bb4e3f75fb84baa35cd0931381dfe0">make_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a902d940508d7080023ef072b2667a143">make_server_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="_t_l_s_8h.html#ab3bb4e3f75fb84baa35cd0931381dfe0">make_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a902d940508d7080023ef072b2667a143">make_server_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
 </div>
 </div>
@@ -141,8 +144,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Client random, include the unix time stamp </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>, and <a class="el" href="server_8c.html#acf4f7155469cbb30edfa846d620b099b">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>, and <a class="el" href="server_8c.html#acf4f7155469cbb30edfa846d620b099b">onPacketReceive()</a>.</p>
 
 </div>
 </div>
@@ -155,6 +159,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The backup of handshake messages exchanged during handshake </p>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a12a63a5becca8f85a59f6ac0f4d9c553">backup_handshake()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>, and <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>.</p>
 
@@ -169,6 +174,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Backup stream length </p>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a12a63a5becca8f85a59f6ac0f4d9c553">backup_handshake()</a>, and <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>.</p>
 
@@ -183,8 +189,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Session master secret </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, and <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, and <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>.</p>
 
 </div>
 </div>
@@ -197,8 +204,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Master secret length </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, and <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ae149244e09cbbd2180bc4c5fc6d0a924">make_finished_message()</a>, and <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>.</p>
 
 </div>
 </div>
@@ -211,6 +219,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Store the previous state in the handshake </p>
 
 <p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
@@ -225,8 +234,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The private key for the key exchange </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="_t_l_s_8h.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, and <a class="el" href="_t_l_s_8h.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, and <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>.</p>
 
 </div>
 </div>
@@ -239,22 +249,24 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The server certificate </p>
 
-<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8ca08ac851747e17048fddf461c65ec4"></a>
+<a class="anchor" id="ad79527a4a6a3547cc16f0fb569767d9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* server_key_ex</td>
+          <td class="memname"><a class="el" href="_server_client_key_exchange_8h.html#a0e7e73056ef40d5a7b303b385dee59cd">server_key_exchange_t</a>* server_key_ex</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Server key exchange message </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a902d940508d7080023ef072b2667a143">make_server_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a902d940508d7080023ef072b2667a143">make_server_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
 </div>
 </div>
@@ -267,8 +279,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Server random, include the unix time stamp </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8h.html#ab1185c93c755acd8c556afc998d83ddc">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a37fc03d2f3e46431aa0728c07b5e2c64">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e">compute_set_master_key_DHE()</a>, <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="server_8c.html#afd393872efb6c56e1f6ab8624978d430">compute_set_master_key_RSA()</a>, <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="_t_l_s_8c.html#ace7876fa0df923e8b3c924a7a046a1ff">make_DHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db">make_DHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
 </div>
 </div>
@@ -281,8 +294,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The TLS version </p>
 
-<p>Referenced by <a class="el" href="_t_l_s_8h.html#ad4f11c83fdb0f02c0a196716cc84ceec">make_RSA_client_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="_t_l_s_8c.html#aef2a72a9807aac60336cd3febe51a130">make_RSA_client_key_exchange()</a>, and <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>.</p>
 
 </div>
 </div>

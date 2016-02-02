@@ -12,7 +12,7 @@ var searchData=
   ['channel_5fdestination',['channel_destination',['../structchannel__t.html#a459138b7f05f5d080fa284cea148e1ea',1,'channel_t']]],
   ['channel_5fmode',['channel_mode',['../_t_l_s_constants_8h.html#af21001704588d21e61c566facf69ec3d',1,'TLSConstants.h']]],
   ['channel_5fsource',['channel_source',['../structchannel__t.html#a0a72aa1c901810c34da12df46f40041e',1,'channel_t']]],
-  ['channel_5ft',['channel_t',['../structchannel__t.html',1,'channel_t'],['../_server_client_basic_8h.html#a23109d98b407095c0ef9fd921ac30b81',1,'channel_t():&#160;ServerClientBasic.h']]],
+  ['channel_5ft',['channel_t',['../structchannel__t.html',1,'channel_t'],['../_server_client_transport_protocol_8h.html#a23109d98b407095c0ef9fd921ac30b81',1,'channel_t():&#160;ServerClientTransportProtocol.h']]],
   ['cipher_5fid',['cipher_id',['../structcipher__suite__t.html#abd7eac06ec5e8b636fe8916fff6c8dfa',1,'cipher_suite_t']]],
   ['cipher_5fsuite',['cipher_suite',['../struct_t_l_s__parameters__t.html#af1d8ebe57a775be2b91550dbcacb2a58',1,'TLS_parameters_t']]],
   ['cipher_5fsuite_5flen',['cipher_suite_len',['../structserver__client__hello__t.html#a706adb2fc3f8fa8fe9bdd5793f32183e',1,'server_client_hello_t']]],
@@ -31,8 +31,8 @@ var searchData=
   ['compute_5fset_5fmaster_5fkey_5fdhe',['compute_set_master_key_DHE',['../server_8c.html#a8337630d4c1e5160f86fdd3410b4cf9e',1,'server.c']]],
   ['compute_5fset_5fmaster_5fkey_5fecdhe',['compute_set_master_key_ECDHE',['../server_8c.html#acb45f08313e9bf87c80b222ae04434ca',1,'server.c']]],
   ['compute_5fset_5fmaster_5fkey_5frsa',['compute_set_master_key_RSA',['../server_8c.html#afd393872efb6c56e1f6ab8624978d430',1,'server.c']]],
-  ['create_5fchannel',['create_channel',['../_server_client_basic_8c.html#aaa07b9b9152780bcb7fbacf14efa7eda',1,'create_channel(char *fileName, char *channelFrom, char *channelTo):&#160;ServerClientBasic.c'],['../_server_client_basic_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda',1,'create_channel(char *fileName, char *channelFrom, char *channelTo):&#160;ServerClientBasic.c']]],
-  ['create_5fpacket',['create_packet',['../_server_client_basic_8c.html#a15f2b44261f5f05f631243058273ff80',1,'create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length):&#160;ServerClientBasic.c'],['../_server_client_basic_8h.html#a15f2b44261f5f05f631243058273ff80',1,'create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length):&#160;ServerClientBasic.c']]],
+  ['create_5fchannel',['create_channel',['../_server_client_transport_protocol_8c.html#aaa07b9b9152780bcb7fbacf14efa7eda',1,'create_channel(char *fileName, char *channelFrom, char *channelTo):&#160;ServerClientTransportProtocol.c'],['../_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda',1,'create_channel(char *fileName, char *channelFrom, char *channelTo):&#160;ServerClientTransportProtocol.c']]],
+  ['create_5fpacket',['create_packet',['../_server_client_transport_protocol_8c.html#a15f2b44261f5f05f631243058273ff80',1,'create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length):&#160;ServerClientTransportProtocol.c'],['../_server_client_transport_protocol_8h.html#a15f2b44261f5f05f631243058273ff80',1,'create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length):&#160;ServerClientTransportProtocol.c']]],
   ['crypto_2ec',['Crypto.c',['../_crypto_8c.html',1,'']]],
   ['crypto_2eh',['Crypto.h',['../_crypto_8h.html',1,'']]]
 ];
