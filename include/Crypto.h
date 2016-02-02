@@ -25,7 +25,7 @@
 #include "HandshakeMessages/ServerClientKeyExchange.h"
 #endif
 
-#endif /* Crypto_h */
+#endif
 
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result);
 

@@ -3,10 +3,10 @@
  *  \file TLSConstants.h
  *
  * 	This file contains a set of constants used in 
- * 	the handshake protocol and some function for manage 
+ * 	the handshake protocol and function interface for manage 
  *	the supported cipher suite.
  *
- *  \date  Created on 24/12/15.
+ *  \date Created on 24/12/15.
  *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  *
  */

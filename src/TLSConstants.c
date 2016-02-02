@@ -1,14 +1,21 @@
-//
-//  SSL/TLS Project
-//  handshakeConstants.c
-//
-//  Created on 07/01/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file TLSConstants.c
+ *
+ * 	This file contains a set of constants used in 
+ * 	the handshake protocol and function implementation 
+ *	for manage the supported cipher suite.
+ *
+ *  \date Created on 24/12/15.
+ *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *
+ */
 
 #include "TLSConstants.h"
-
+/** The number of supported cipher suite */
 const int NUM_CIPHER_SUITE = 62;
+
+/** List of supported cipher suite */
 cipher_suite_t cipher_suite_list[] ={
 	// RSA
 	{0x0001 , "TLS_RSA_WITH_NULL_MD5" , 1 , 1 , 0 , 1 },
@@ -80,6 +87,12 @@ cipher_suite_t cipher_suite_list[] ={
 	{0x0000 , NULL, -1, -1, -1, -1}
 };
 
+/**
+ * Get the hash algorithm starting from the hash id.
+ *
+ *	\param h : the hash algorithm used
+ *	\return an EVP_MD struct used for compute digest
+ */
 const EVP_MD *get_hash_function(hash_algorithm h){
 	switch (h) {
 		case SHA1_H:
@@ -105,6 +118,17 @@ const EVP_MD *get_hash_function(hash_algorithm h){
 	}
 }
 
+/**
+ * Fill array[] with all cipher suite that has key exchange kx, 
+ * hash algorithm h and authentication algorithm au.
+ * 
+ *
+ *	\param kx : the key exchange algorithm (if NONE_KX the function consider all key exchange algorithm)
+ *	\param h  : the hash algorithm  (if NONE_H the function consider all hash algorithm)
+ * 	\param au : the authentication algorithm (if NONE_AU the function consider all authentication algorithm)
+ *	\param array[] : an empty array of size NUM_CIPHER_SUITE.
+ *	\return the number of cipher suite loaded in array[]
+ */
 int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]){
 	int j = 0;
 	for(int i=0;i<NUM_CIPHER_SUITE;i++)
@@ -116,6 +140,12 @@ int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authenticatio
 	return j;
 }
 
+/**
+ * Given the cipher suite name return the cipher suite struct.
+ *
+ *	\param name : cipher suite name
+ *	\return cipher suite struct with name name
+*/
 cipher_suite_t get_cipher_suite_by_name(char *name){
 	int i=0;
 	for(; i<NUM_CIPHER_SUITE && strcmp(cipher_suite_list[i].name, name) != 0; i++);
@@ -123,6 +153,12 @@ cipher_suite_t get_cipher_suite_by_name(char *name){
 	return cipher_suite_list[i];
 }
 
+/**
+ * Given the id of a cipher suite return the cipher suite struct.
+ *
+ *	\param id : cipher suite id
+ *	\return cipher suite struct with id id
+ */
 cipher_suite_t get_cipher_suite_by_id(uint16_t id){
 	int i=0;
 	for(;i<NUM_CIPHER_SUITE && cipher_suite_list[i].cipher_id != id;i++);
