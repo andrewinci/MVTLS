@@ -1,5 +1,5 @@
-\hypertarget{_server_client_handshake_protocol_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Handshake\+Protocol.h File Reference}
-\label{_server_client_handshake_protocol_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Handshake\+Protocol.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Handshake\+Protocol.\+h}}
+\hypertarget{_server_client_handshake_protocol_8h}{}\section{include/\+Server\+Client\+Handshake\+Protocol.h File Reference}
+\label{_server_client_handshake_protocol_8h}\index{include/\+Server\+Client\+Handshake\+Protocol.\+h@{include/\+Server\+Client\+Handshake\+Protocol.\+h}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$stdint.\+h$>$}\\*
 {\ttfamily \#include $<$time.\+h$>$}\\*
@@ -10,6 +10,22 @@
 {\ttfamily \#include \char`\"{}Server\+Client\+Hello.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Certificate.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Handshake\+Protocol.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h__dep__incl}
+\end{center}
+\end{figure}
 \subsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
@@ -68,6 +84,17 @@ alloc and return an handshake struct
 
 Referenced by on\+Packet\+Receive().
 
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a9f902224a1dcf6201a60941914a0fb2d_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}!free\+\_\+handshake@{free\+\_\+handshake}}
 \index{free\+\_\+handshake@{free\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{free\+\_\+handshake(handshake\+\_\+t $\ast$h)}{free_handshake(handshake_t *h)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+handshake (
@@ -86,6 +113,17 @@ Delloc memory of handshake struct
 
 Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a5b7a13680988ecee1fd6c0a8dfe32eef_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}!print\+\_\+handshake@{print\+\_\+handshake}}
 \index{print\+\_\+handshake@{print\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{print\+\_\+handshake(handshake\+\_\+t $\ast$h, int verbosity, key\+\_\+exchange\+\_\+algorithm kx)}{print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+handshake (
@@ -95,13 +133,13 @@ Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 \item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e}{}\label{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e}
-Print an handshake struct
+Print the handshake struct
 
 
 \begin{DoxyParams}{Parameters}
 {\em h} & \+: handshake to print \\
 \hline
-{\em verobisty} & \+: how many detail to print (0 none, 1 the binary, 2 details) \\
+{\em verbosity} & \+: how many detail to print (0 none, 1 the binary, 2 details,3 record) \\
 \hline
 {\em kx} & \+: the key exchange algorithm, useful in key\+\_\+echange messages \\
 \hline
@@ -109,6 +147,28 @@ Print an handshake struct
 
 
 Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}!send\+\_\+handshake@{send\+\_\+handshake}}
 \index{send\+\_\+handshake@{send\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}}
@@ -134,6 +194,28 @@ Send an handshake through a channel
 
 Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a630be726ff62f89c4287fa0feb6e3801_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a630be726ff62f89c4287fa0feb6e3801_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}!serialize\+\_\+handshake@{serialize\+\_\+handshake}}
 \index{serialize\+\_\+handshake@{serialize\+\_\+handshake}!Server\+Client\+Handshake\+Protocol.\+h@{Server\+Client\+Handshake\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{serialize\+\_\+handshake(handshake\+\_\+t $\ast$h, unsigned char $\ast$$\ast$stream, uint32\+\_\+t $\ast$stream\+Len)}{serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+handshake (
@@ -157,4 +239,15 @@ Serialize a handshake into a byte stream
 
 
 Referenced by backup\+\_\+handshake(), make\+\_\+record(), and print\+\_\+handshake().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_handshake_protocol_8h_a1f9226db59b1fe4f860122d082429f78_icgraph}
+\end{center}
+\end{figure}
+
 

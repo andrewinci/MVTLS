@@ -1,8 +1,16 @@
-\hypertarget{client_8c}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.c File Reference}
-\label{client_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/client.\+c}}
+\hypertarget{client_8c}{}\section{src/\+Target/client.c File Reference}
+\label{client_8c}\index{src/\+Target/client.\+c@{src/\+Target/client.\+c}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$string.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S.\+h\char`\"{}}\\*
+Include dependency graph for client.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{client_8c__incl}
+\end{center}
+\end{figure}
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -11,7 +19,7 @@
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{client_8c_aa8faa003f922c3bb30adfd8952af808f}{on\+Packet\+Receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+void \hyperlink{client_8c_a779b051aa3cf19358f7177780ce60f11}{on\+Packet\+Receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__transport__t}{packet\+\_\+transport\+\_\+t} $\ast$p)
 \item 
 void \hyperlink{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95}{do\+\_\+handshake} (int to\+\_\+send\+\_\+cipher\+\_\+suite\+\_\+len, \hyperlink{structcipher__suite__t}{cipher\+\_\+suite\+\_\+t} to\+\_\+send\+\_\+cipher\+\_\+suite\mbox{[}$\,$\mbox{]})
 \item 
@@ -81,6 +89,28 @@ Referenced by main().
 
 Referenced by main().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{client_8c_aed2d0a7b3d9f68efed058f1bc0768e95_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{client.\+c@{client.\+c}!main@{main}}
 \index{main@{main}!client.\+c@{client.\+c}}
 \subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
@@ -89,17 +119,50 @@ Referenced by main().
 \item[{char $\ast$$\ast$}]{argv}
 \end{DoxyParamCaption}
 )}\hypertarget{client_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{client_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{client_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+
 \index{client.\+c@{client.\+c}!on\+Packet\+Receive@{on\+Packet\+Receive}}
 \index{on\+Packet\+Receive@{on\+Packet\+Receive}!client.\+c@{client.\+c}}
-\subsubsection[{\texorpdfstring{on\+Packet\+Receive(channel\+\_\+t $\ast$ch, packet\+\_\+basic\+\_\+t $\ast$p)}{onPacketReceive(channel_t *ch, packet_basic_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Packet\+Receive (
+\subsubsection[{\texorpdfstring{on\+Packet\+Receive(channel\+\_\+t $\ast$ch, packet\+\_\+transport\+\_\+t $\ast$p)}{onPacketReceive(channel_t *ch, packet_transport_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Packet\+Receive (
 \begin{DoxyParamCaption}
 \item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
-\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p}
+\item[{{\bf packet\+\_\+transport\+\_\+t} $\ast$}]{p}
 \end{DoxyParamCaption}
-)}\hypertarget{client_8c_aa8faa003f922c3bb30adfd8952af808f}{}\label{client_8c_aa8faa003f922c3bb30adfd8952af808f}
+)}\hypertarget{client_8c_a779b051aa3cf19358f7177780ce60f11}{}\label{client_8c_a779b051aa3cf19358f7177780ce60f11}
 
 
 Referenced by do\+\_\+handshake(), and set\+\_\+on\+\_\+receive().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{client_8c_a779b051aa3cf19358f7177780ce60f11_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{client_8c_a779b051aa3cf19358f7177780ce60f11_icgraph}
+\end{center}
+\end{figure}
+
 
 
 

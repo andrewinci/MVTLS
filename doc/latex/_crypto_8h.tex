@@ -1,5 +1,5 @@
-\hypertarget{_crypto_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.h File Reference}
-\label{_crypto_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Crypto.\+h}}
+\hypertarget{_crypto_8h}{}\section{include/\+Crypto.h File Reference}
+\label{_crypto_8h}\index{include/\+Crypto.\+h@{include/\+Crypto.\+h}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$stdlib.\+h$>$}\\*
 {\ttfamily \#include $<$string.\+h$>$}\\*
@@ -8,6 +8,22 @@
 {\ttfamily \#include $<$openssl/rsa.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
+Include dependency graph for Crypto.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h__dep__incl}
+\end{center}
+\end{figure}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -21,6 +37,19 @@ int \hyperlink{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}{sign\+\_\+\+E\+C\+D
 \item 
 int \hyperlink{_crypto_8h_a5de0523f653b00816828961ba5cc990b}{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign} (X509 $\ast$certificate, unsigned char $\ast$client\+\_\+random, unsigned char $\ast$server\+\_\+random, \hyperlink{structecdhe__server__key__exchange__t}{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t} $\ast$server\+\_\+key\+\_\+ex, \hyperlink{_t_l_s_constants_8h_a433e2522c8a62ae4d8b1c91badefef50}{authentication\+\_\+algorithm} au)
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\+S\+L/\+T\+LS Project
+
+P\+RF function and sign/verify function. The follow functions wrap openssl library for sign, verify.
+
+\begin{DoxyDate}{Date}
+Created on 27/12/15. 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. 
+\end{DoxyCopyright}
 
 
 \subsection{Function Documentation}
@@ -38,9 +67,41 @@ int \hyperlink{_crypto_8h_a5de0523f653b00816828961ba5cc990b}{verify\+\_\+\+E\+C\
 \item[{unsigned char $\ast$$\ast$}]{result}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d}{}\label{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d}
+Apply the P\+RF to a secret.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & \+: the hash to use in the hmac \\
+\hline
+{\em secret} & \+: the secret to process \\
+\hline
+{\em secret\+\_\+len} & \+: secrete length \\
+\hline
+{\em label} & \+: the label of the P\+RF computation \\
+\hline
+{\em seed} & \+: the seed for the computation \\
+\hline
+{\em seed\+\_\+len} & \+: seed length \\
+\hline
+{\em result} & \+: a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
+\hline
+{\em result\+\_\+len} & \+: the desired length of pseudo random stream. \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), and make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_a14bb82638713f9cf8778b58d6d64e33d_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Crypto.\+h@{Crypto.\+h}!sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}}
 \index{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}!Crypto.\+h@{Crypto.\+h}}
@@ -52,9 +113,44 @@ Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}{}\label{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}
+Sign the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, D\+SS.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+\hline
+{\em au} & \+: the authentication algorithm. \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Crypto.\+h@{Crypto.\+h}!sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}}
 \index{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex@{sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex}!Crypto.\+h@{Crypto.\+h}}
@@ -66,9 +162,44 @@ Referenced by make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}{}\label{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}
+Sign the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, E\+C\+D\+SA.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+\hline
+{\em au} & \+: the authentication algorithm. \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Crypto.\+h@{Crypto.\+h}!verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}}
 \index{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}!Crypto.\+h@{Crypto.\+h}}
@@ -81,9 +212,35 @@ Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange().
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_afbf202296205717442436cd3838d6df7}{}\label{_crypto_8h_afbf202296205717442436cd3838d6df7}
+Verify the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em certificate} & \+: the certificate to use for verify the signature \\
+\hline
+{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+\hline
+{\em au} & \+: the authentication algorithm. \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_afbf202296205717442436cd3838d6df7_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Crypto.\+h@{Crypto.\+h}!verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}}
 \index{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign@{verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign}!Crypto.\+h@{Crypto.\+h}}
@@ -96,7 +253,33 @@ Referenced by make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_a5de0523f653b00816828961ba5cc990b}{}\label{_crypto_8h_a5de0523f653b00816828961ba5cc990b}
+Verify the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em certificate} & \+: the certificate to use for verify the signature \\
+\hline
+{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+\hline
+{\em au} & \+: the authentication algorithm. \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_crypto_8h_a5de0523f653b00816828961ba5cc990b_icgraph}
+\end{center}
+\end{figure}
+
 

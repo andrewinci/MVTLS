@@ -1,0 +1,6 @@
+<map id="server_client_hello_t" name="server_client_hello_t">
+<area shape="rect" id="node2" href="$structcompression__methods__t.html" title="compression_methods_t" alt="" coords="5,5,171,32"/>
+<area shape="rect" id="node3" href="$structcipher__suite__t.html" title="cipher_suite_t" alt="" coords="199,5,304,32"/>
+<area shape="rect" id="node4" href="$structrandom__data__t.html" title="random_data_t" alt="" coords="329,5,441,32"/>
+<area shape="rect" id="node5" href="$structsession__id__t.html" title="session_id_t" alt="" coords="465,5,561,32"/>
+</map>

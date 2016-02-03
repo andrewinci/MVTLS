@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
-<title>Advanced Programming : TLS handshake: /Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/include/HandshakeMessages/Certificate.h File Reference</title>
+<title>Advanced Programming : TLS handshake: include/HandshakeMessages/Certificate.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,6 +97,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;openssl/x509.h&gt;</code><br />
 <code>#include &lt;openssl/pem.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_t_l_s_constants_8h_source.html">TLSConstants.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for Certificate.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h__incl.png" border="0" usemap="#include_2_handshake_messages_2_certificate_8h" alt=""/></div>
+<map name="include_2_handshake_messages_2_certificate_8h" id="include_2_handshake_messages_2_certificate_8h">
+<area shape="rect" id="node7" href="_t_l_s_constants_8h.html" title="TLSConstants.h" alt="" coords="161,96,279,123"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h__dep__incl.png" border="0" usemap="#include_2_handshake_messages_2_certificate_8hdep" alt=""/></div>
+<map name="include_2_handshake_messages_2_certificate_8hdep" id="include_2_handshake_messages_2_certificate_8hdep">
+<area shape="rect" id="node2" href="_certificate_8c.html" title="src/HandshakeMessages\l/Certificate.c" alt="" coords="5,97,176,138"/>
+<area shape="rect" id="node3" href="_server_client_handshake_protocol_8h.html" title="include/ServerClientHandshake\lProtocol.h" alt="" coords="201,97,409,138"/>
+<area shape="rect" id="node4" href="_server_client_handshake_protocol_8c.html" title="src/ServerClientHandshake\lProtocol.c" alt="" coords="129,187,313,229"/>
+<area shape="rect" id="node5" href="_t_l_s_8h.html" title="include/TLS.h" alt="" coords="337,195,441,221"/>
+<area shape="rect" id="node6" href="client_8c.html" title="src/Target/client.c" alt="" coords="171,277,297,304"/>
+<area shape="rect" id="node7" href="server_8c.html" title="src/Target/server.c" alt="" coords="323,277,456,304"/>
+<area shape="rect" id="node8" href="_t_l_s_8c.html" title="src/TLS.c" alt="" coords="481,277,559,304"/>
+</map>
+</div>
 </div>
 <p><a href="_certificate_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -116,7 +138,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a47cd7cd727cb5ed51f41bf165585a386"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_certificate_8h.html#a47cd7cd727cb5ed51f41bf165585a386">free_certificate_message</a> (<a class="el" href="structcertificate__message__t.html">certificate_message_t</a> *cert)</td></tr>
 <tr class="separator:a47cd7cd727cb5ed51f41bf165585a386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>SSL/TLS Project</p>
+<p>This file contains functions for manage the certificate message.</p>
+<dl class="section date"><dt>Date</dt><dd>Created on 28/12/15. </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a5eca0d90b55f94993347dcd06ca0328e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -140,8 +167,31 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Serialize a byte stream into a certificate_message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>: the byte stream to serialize </td></tr>
+    <tr><td class="paramname">len</td><td>: the byte stream length </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the certificate_message </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e_icgraph.png" border="0" usemap="#_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e_icgraph" alt=""/></div>
+<map name="_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e_icgraph" id="_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e_icgraph">
+<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="373,56,499,83"/>
+<area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="205,107,325,133"/>
+<area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="547,5,659,32"/>
+<area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="707,56,816,83"/>
+<area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="864,56,915,83"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -158,8 +208,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Delloc memory of certificate_message</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cert</td><td>: the certificate message to deallocate </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Referenced by <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386_icgraph.png" border="0" usemap="#_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386_icgraph" alt=""/></div>
+<map name="_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386_icgraph" id="_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce" title="make_certificate" alt="" coords="225,19,343,45"/>
+<area shape="rect" id="node6" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="392,95,517,121"/>
+<area shape="rect" id="node10" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="224,132,344,159"/>
+<area shape="rect" id="node3" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="392,12,517,39"/>
+<area shape="rect" id="node4" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="567,5,676,32"/>
+<area shape="rect" id="node5" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="755,5,805,32"/>
+<area shape="rect" id="node7" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="565,56,677,83"/>
+<area shape="rect" id="node8" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="725,107,835,133"/>
+<area shape="rect" id="node9" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="883,107,933,133"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -176,8 +251,29 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Given the certificate file name create a certificate message struct that encapsulate it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cert_file_name</td><td>: certificate file name including path </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the certificate message struct </dd></dl>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1_icgraph.png" border="0" usemap="#_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1_icgraph" alt=""/></div>
+<map name="_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1_icgraph" id="_certificate_8h_a1eb2ef0668ed7bc45a2416b5b6a707f1_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce" title="make_certificate" alt="" coords="235,5,354,32"/>
+<area shape="rect" id="node3" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="403,5,528,32"/>
+<area shape="rect" id="node4" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="576,5,685,32"/>
+<area shape="rect" id="node5" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="733,5,784,32"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -212,6 +308,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce">make_certificate()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d_icgraph.png" border="0" usemap="#_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d_icgraph" alt=""/></div>
+<map name="_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d_icgraph" id="_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce" title="make_certificate" alt="" coords="190,12,309,39"/>
+<area shape="rect" id="node3" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="357,12,483,39"/>
+<area shape="rect" id="node4" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="531,12,640,39"/>
+<area shape="rect" id="node5" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="688,12,739,39"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>

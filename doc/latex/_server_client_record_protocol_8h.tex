@@ -1,7 +1,23 @@
-\hypertarget{_server_client_record_protocol_8h}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.h File Reference}
-\label{_server_client_record_protocol_8h}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/include/\+Server\+Client\+Record\+Protocol.\+h}}
+\hypertarget{_server_client_record_protocol_8h}{}\section{include/\+Server\+Client\+Record\+Protocol.h File Reference}
+\label{_server_client_record_protocol_8h}\index{include/\+Server\+Client\+Record\+Protocol.\+h@{include/\+Server\+Client\+Record\+Protocol.\+h}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}Server\+Client\+Transport\+Protocol.\+h\char`\"{}}\\*
+Include dependency graph for Server\+Client\+Record\+Protocol.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h__dep__incl}
+\end{center}
+\end{figure}
 \subsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
@@ -80,7 +96,7 @@ A\+P\+P\+L\+I\+C\+A\+T\+I\+O\+N\+\_\+\+D\+A\+TA\hypertarget{_server_client_recor
 \subsubsection[{\texorpdfstring{deserialize\+\_\+record(unsigned char $\ast$message, uint32\+\_\+t message\+\_\+len)}{deserialize_record(unsigned char *message, uint32_t message_len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf record\+\_\+t}$\ast$ deserialize\+\_\+record (
 \begin{DoxyParamCaption}
 \item[{unsigned char $\ast$}]{message, }
-\item[{uint32\+\_\+t}]{message\+\_\+len}
+\item[{uint32\+\_\+t}]{message\+Len}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}{}\label{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19}
 De-\/serialize a byte stream message of length message\+\_\+len into a record struct.
@@ -99,6 +115,17 @@ record \+: the de-\/serialized record
 
 Referenced by on\+Packet\+Receive().
 
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_abb4c45954ce00d016a651588a179ff19_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!free\+\_\+record@{free\+\_\+record}}
 \index{free\+\_\+record@{free\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{free\+\_\+record(record\+\_\+t $\ast$r)}{free_record(record_t *r)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+\_\+record (
@@ -115,6 +142,17 @@ Deallocate memory pointed by r
 
 Referenced by on\+Packet\+Receive(), and send\+\_\+handshake().
 
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a9212df7db09a62df2f7d4a913f04defc_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!print\+\_\+record@{print\+\_\+record}}
 \index{print\+\_\+record@{print\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{print\+\_\+record(record\+\_\+t $\ast$r)}{print_record(record_t *r)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+record (
@@ -123,15 +161,42 @@ Referenced by on\+Packet\+Receive(), and send\+\_\+handshake().
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}{}\label{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c}
 Print a description of the record 
+\begin{DoxyParams}{Parameters}
+{\em r} & \+: record to print. \\
+\hline
+\end{DoxyParams}
 
-Referenced by on\+Packet\+Receive().
+
+Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a5029bcdf9f7eb874b25136b76e41963c_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!send\+\_\+record@{send\+\_\+record}}
 \index{send\+\_\+record@{send\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{send\+\_\+record(channel\+\_\+t $\ast$ch, record\+\_\+t $\ast$to\+\_\+send)}{send_record(channel_t *ch, record_t *to_send)}}]{\setlength{\rightskip}{0pt plus 5cm}int send\+\_\+record (
 \begin{DoxyParamCaption}
 \item[{{\bf channel\+\_\+t} $\ast$}]{ch, }
-\item[{{\bf record\+\_\+t} $\ast$}]{to\+\_\+send}
+\item[{{\bf record\+\_\+t} $\ast$}]{r}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0}{}\label{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0}
 Send record to\+\_\+send over the channel ch. Note \+:for send record is important to set \textquotesingle{}to\textquotesingle{} and \textquotesingle{}from\textquotesingle{} in the channel creation.
@@ -150,13 +215,35 @@ Send record to\+\_\+send over the channel ch. Note \+:for send record is importa
 
 Referenced by on\+Packet\+Receive(), and send\+\_\+handshake().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_a1ceb817bc488ec68b8abfd289dbbf6c0_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}!serialize\+\_\+record@{serialize\+\_\+record}}
 \index{serialize\+\_\+record@{serialize\+\_\+record}!Server\+Client\+Record\+Protocol.\+h@{Server\+Client\+Record\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{serialize\+\_\+record(record\+\_\+t $\ast$r, unsigned char $\ast$$\ast$message, uint16\+\_\+t $\ast$message\+\_\+len)}{serialize_record(record_t *r, unsigned char **message, uint16_t *message_len)}}]{\setlength{\rightskip}{0pt plus 5cm}void serialize\+\_\+record (
 \begin{DoxyParamCaption}
 \item[{{\bf record\+\_\+t} $\ast$}]{r, }
 \item[{unsigned char $\ast$$\ast$}]{message, }
-\item[{uint16\+\_\+t $\ast$}]{message\+\_\+len}
+\item[{uint16\+\_\+t $\ast$}]{message\+Len}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}{}\label{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c}
 Serialize record in a byte stream of length message\+\_\+len stored in message.
@@ -171,4 +258,15 @@ Serialize record in a byte stream of length message\+\_\+len stored in message.
 
 
 Referenced by print\+\_\+record(), and send\+\_\+record().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_client_record_protocol_8h_af6de1ff6a0b52cc2ad9224dbc4e9a14c_icgraph}
+\end{center}
+\end{figure}
+
 

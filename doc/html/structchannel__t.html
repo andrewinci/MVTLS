@@ -100,8 +100,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a25c8761bc1f523fe6a53db546ae83add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f8059414f0228f0256115e024eeed4b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchannel__t.html#a6f8059414f0228f0256115e024eeed4b">fd</a></td></tr>
 <tr class="separator:a6f8059414f0228f0256115e024eeed4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae391524520adf65e91f52efaffb033a5"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchannel__t.html#ae391524520adf65e91f52efaffb033a5">onPacketReceive</a> )(struct <a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__basic__t.html">packet_basic_t</a> *p)</td></tr>
-<tr class="separator:ae391524520adf65e91f52efaffb033a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26252193da2aaaaad1a401b6283d7736"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchannel__t.html#a26252193da2aaaaad1a401b6283d7736">onPacketReceive</a> )(struct <a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p)</td></tr>
+<tr class="separator:a26252193da2aaaaad1a401b6283d7736"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c56d01677044a9e8009acf457aa1a37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchannel__t.html#a5c56d01677044a9e8009acf457aa1a37">isEnabled</a></td></tr>
 <tr class="separator:a5c56d01677044a9e8009acf457aa1a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01f75a9ad916f63a94e06a27635ba278"><td class="memItemLeft" align="right" valign="top">pthread_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structchannel__t.html#a01f75a9ad916f63a94e06a27635ba278">thread</a></td></tr>
@@ -119,7 +119,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Channel destination name e.g. client </p>
 
-<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#a984177c20c9bdc900b4c1e2cb33165cb">send_packet()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#aaf312ea4a4b413a2bbad6f1cd180f4ac">send_packet()</a>.</p>
 
 </div>
 </div>
@@ -134,7 +134,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Channel source name e.g. server </p>
 
-<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#a984177c20c9bdc900b4c1e2cb33165cb">send_packet()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#aaf312ea4a4b413a2bbad6f1cd180f4ac">send_packet()</a>.</p>
 
 </div>
 </div>
@@ -149,7 +149,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Channel file descriptor </p>
 
-<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, <a class="el" href="_server_client_transport_protocol_8h.html#a984177c20c9bdc900b4c1e2cb33165cb">send_packet()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#aa8b8d9b75a74ccb0f6a701e16ae8999d">stop_channel()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, <a class="el" href="_server_client_transport_protocol_8h.html#aaf312ea4a4b413a2bbad6f1cd180f4ac">send_packet()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#aa8b8d9b75a74ccb0f6a701e16ae8999d">stop_channel()</a>.</p>
 
 </div>
 </div>
@@ -183,18 +183,18 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae391524520adf65e91f52efaffb033a5"></a>
+<a class="anchor" id="a26252193da2aaaaad1a401b6283d7736"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void(* onPacketReceive) (struct <a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__basic__t.html">packet_basic_t</a> *p)</td>
+          <td class="memname">void(* onPacketReceive) (struct <a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Function to be called when a packet is received </p>
 
-<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, <a class="el" href="_server_client_transport_protocol_8h.html#ab8b2348db6f622cb7334a743187f0ac0">set_on_receive()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#ac13189fb7b788d6f0360927759b95a8b">start_listener()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, <a class="el" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59">set_on_receive()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#ac13189fb7b788d6f0360927759b95a8b">start_listener()</a>.</p>
 
 </div>
 </div>
@@ -214,7 +214,7 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/include/<a class="el" href="_server_client_transport_protocol_8h_source.html">ServerClientTransportProtocol.h</a></li>
+<li>include/<a class="el" href="_server_client_transport_protocol_8h_source.html">ServerClientTransportProtocol.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,0 +1,6 @@
+<map id="serialize_server_key_exchange" name="serialize_server_key_exchange">
+<area shape="rect" id="node2" href="$_t_l_s_8h.html#a902d940508d7080023ef072b2667a143" title="make_server_key_exchange" alt="" coords="197,12,389,39"/>
+<area shape="rect" id="node3" href="$server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="437,12,563,39"/>
+<area shape="rect" id="node4" href="$server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="611,12,720,39"/>
+<area shape="rect" id="node5" href="$server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="768,12,819,39"/>
+</map>

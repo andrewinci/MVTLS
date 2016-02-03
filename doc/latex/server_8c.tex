@@ -1,7 +1,15 @@
-\hypertarget{server_8c}{}\section{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/server.c File Reference}
-\label{server_8c}\index{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/server.\+c@{/\+Users/\+Darka/\+Dropbox/\+U\+N\+I\+T\+N/\+Advanced\+Programming/\+Project/src/\+Target/server.\+c}}
+\hypertarget{server_8c}{}\section{src/\+Target/server.c File Reference}
+\label{server_8c}\index{src/\+Target/server.\+c@{src/\+Target/server.\+c}}
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S.\+h\char`\"{}}\\*
+Include dependency graph for server.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c__incl}
+\end{center}
+\end{figure}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -15,7 +23,7 @@ void \hyperlink{server_8c_a8337630d4c1e5160f86fdd3410b4cf9e}{compute\+\_\+set\+\
 \item 
 void \hyperlink{server_8c_acb45f08313e9bf87c80b222ae04434ca}{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE} (\hyperlink{structclient__key__exchange__t}{client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$cliet\+\_\+public)
 \item 
-void \hyperlink{server_8c_acf4f7155469cbb30edfa846d620b099b}{on\+Packet\+Receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$server2client, \hyperlink{structpacket__basic__t}{packet\+\_\+basic\+\_\+t} $\ast$p)
+void \hyperlink{server_8c_a98d326f448510d53d67b27e5cbbad82d}{on\+Packet\+Receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$server2client, \hyperlink{structpacket__transport__t}{packet\+\_\+transport\+\_\+t} $\ast$p)
 \item 
 void \hyperlink{server_8c_a92b39c23154f9435d52c1bd2babb4ad9}{do\+\_\+handshake} ()
 \item 
@@ -42,6 +50,28 @@ int \hyperlink{server_8c_ac8859e8c1ce357c4c8b37bbb1936ba1c}{v} = 0
 
 Referenced by on\+Packet\+Receive().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{server_8c_a8337630d4c1e5160f86fdd3410b4cf9e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c_a8337630d4c1e5160f86fdd3410b4cf9e_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{server.\+c@{server.\+c}!compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE@{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE}}
 \index{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE@{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE}!server.\+c@{server.\+c}}
 \subsubsection[{\texorpdfstring{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(client\+\_\+key\+\_\+exchange\+\_\+t $\ast$cliet\+\_\+public)}{compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public)}}]{\setlength{\rightskip}{0pt plus 5cm}void compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+HE (
@@ -52,6 +82,28 @@ Referenced by on\+Packet\+Receive().
 
 
 Referenced by on\+Packet\+Receive().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{server_8c_acb45f08313e9bf87c80b222ae04434ca_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c_acb45f08313e9bf87c80b222ae04434ca_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{server.\+c@{server.\+c}!compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+SA@{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+SA}}
 \index{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+SA@{compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+SA}!server.\+c@{server.\+c}}
@@ -64,6 +116,28 @@ Referenced by on\+Packet\+Receive().
 
 Referenced by on\+Packet\+Receive().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{server_8c_afd393872efb6c56e1f6ab8624978d430_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c_afd393872efb6c56e1f6ab8624978d430_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{server.\+c@{server.\+c}!do\+\_\+handshake@{do\+\_\+handshake}}
 \index{do\+\_\+handshake@{do\+\_\+handshake}!server.\+c@{server.\+c}}
 \subsubsection[{\texorpdfstring{do\+\_\+handshake()}{do_handshake()}}]{\setlength{\rightskip}{0pt plus 5cm}void do\+\_\+handshake (
@@ -75,6 +149,28 @@ Referenced by on\+Packet\+Receive().
 
 Referenced by main().
 
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{server_8c_a92b39c23154f9435d52c1bd2babb4ad9_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{server_8c_a92b39c23154f9435d52c1bd2babb4ad9_icgraph}
+\end{center}
+\end{figure}
+
+
 \index{server.\+c@{server.\+c}!main@{main}}
 \index{main@{main}!server.\+c@{server.\+c}}
 \subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
@@ -83,17 +179,50 @@ Referenced by main().
 \item[{char $\ast$$\ast$}]{argv}
 \end{DoxyParamCaption}
 )}\hypertarget{server_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{server_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{server_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+
 \index{server.\+c@{server.\+c}!on\+Packet\+Receive@{on\+Packet\+Receive}}
 \index{on\+Packet\+Receive@{on\+Packet\+Receive}!server.\+c@{server.\+c}}
-\subsubsection[{\texorpdfstring{on\+Packet\+Receive(channel\+\_\+t $\ast$server2client, packet\+\_\+basic\+\_\+t $\ast$p)}{onPacketReceive(channel_t *server2client, packet_basic_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Packet\+Receive (
+\subsubsection[{\texorpdfstring{on\+Packet\+Receive(channel\+\_\+t $\ast$server2client, packet\+\_\+transport\+\_\+t $\ast$p)}{onPacketReceive(channel_t *server2client, packet_transport_t *p)}}]{\setlength{\rightskip}{0pt plus 5cm}void on\+Packet\+Receive (
 \begin{DoxyParamCaption}
 \item[{{\bf channel\+\_\+t} $\ast$}]{server2client, }
-\item[{{\bf packet\+\_\+basic\+\_\+t} $\ast$}]{p}
+\item[{{\bf packet\+\_\+transport\+\_\+t} $\ast$}]{p}
 \end{DoxyParamCaption}
-)}\hypertarget{server_8c_acf4f7155469cbb30edfa846d620b099b}{}\label{server_8c_acf4f7155469cbb30edfa846d620b099b}
+)}\hypertarget{server_8c_a98d326f448510d53d67b27e5cbbad82d}{}\label{server_8c_a98d326f448510d53d67b27e5cbbad82d}
 
 
 Referenced by do\+\_\+handshake().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{server_8c_a98d326f448510d53d67b27e5cbbad82d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8c_a98d326f448510d53d67b27e5cbbad82d_icgraph}
+\end{center}
+\end{figure}
+
 
 \index{server.\+c@{server.\+c}!print\+\_\+master\+\_\+secret@{print\+\_\+master\+\_\+secret}}
 \index{print\+\_\+master\+\_\+secret@{print\+\_\+master\+\_\+secret}!server.\+c@{server.\+c}}

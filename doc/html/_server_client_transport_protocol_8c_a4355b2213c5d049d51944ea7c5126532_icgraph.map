@@ -1,0 +1,12 @@
+<map id="get_file_size" name="get_file_size">
+<area shape="rect" id="node2" href="$_server_client_transport_protocol_8c.html#a41dd4a03c0fcb9195dac633e86be6877" title="read_all_file" alt="" coords="152,5,245,32"/>
+<area shape="rect" id="node7" href="$_server_client_transport_protocol_8h.html#aaf312ea4a4b413a2bbad6f1cd180f4ac" title="send_packet" alt="" coords="150,56,247,83"/>
+<area shape="rect" id="node3" href="$_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e" title="reader" alt="" coords="314,5,374,32"/>
+<area shape="rect" id="node4" href="$_server_client_transport_protocol_8h.html#ac13189fb7b788d6f0360927759b95a8b" title="start_listener" alt="" coords="627,5,725,32"/>
+<area shape="rect" id="node5" href="$client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="947,68,1056,95"/>
+<area shape="rect" id="node6" href="$client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1104,68,1155,95"/>
+<area shape="rect" id="node8" href="$_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0" title="send_record" alt="" coords="296,56,392,83"/>
+<area shape="rect" id="node9" href="$client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="613,81,739,108"/>
+<area shape="rect" id="node11" href="$_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="441,107,565,133"/>
+<area shape="rect" id="node10" href="$_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="787,93,899,120"/>
+</map>

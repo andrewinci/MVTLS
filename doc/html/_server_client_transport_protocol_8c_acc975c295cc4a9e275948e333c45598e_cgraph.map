@@ -1,0 +1,7 @@
+<map id="reader" name="reader">
+<area shape="rect" id="node2" href="$_server_client_transport_protocol_8c.html#a41dd4a03c0fcb9195dac633e86be6877" title="read_all_file" alt="" coords="135,5,228,32"/>
+<area shape="rect" id="node4" href="$_server_client_transport_protocol_8c.html#ad5ca31599ddc0387256db843d883cf32" title="deserialize_packet" alt="" coords="115,56,247,83"/>
+<area shape="rect" id="node6" href="$_server_client_transport_protocol_8c.html#a52cb1d528c2a550d4d440abeb90e1ea7" title="free_packet" alt="" coords="135,107,227,133"/>
+<area shape="rect" id="node3" href="$_server_client_transport_protocol_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="301,5,397,32"/>
+<area shape="rect" id="node5" href="$_server_client_transport_protocol_8c.html#ab900c15a013c9cb71d24f3e7f5479822" title="create_packet" alt="" coords="297,56,402,83"/>
+</map>

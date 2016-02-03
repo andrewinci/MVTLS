@@ -1,0 +1,4 @@
+<map id="send_packet" name="send_packet">
+<area shape="rect" id="node2" href="$_server_client_transport_protocol_8c.html#afbd56244da58120495a233d0fc080223" title="serialize_packet" alt="" coords="152,5,269,32"/>
+<area shape="rect" id="node3" href="$_server_client_transport_protocol_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="163,56,259,83"/>
+</map>

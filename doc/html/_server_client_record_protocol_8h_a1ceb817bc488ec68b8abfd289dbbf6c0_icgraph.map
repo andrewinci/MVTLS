@@ -1,0 +1,7 @@
+<map id="send_record" name="send_record">
+<area shape="rect" id="node2" href="$client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="323,56,448,83"/>
+<area shape="rect" id="node6" href="$_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="150,107,274,133"/>
+<area shape="rect" id="node3" href="$_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="496,5,608,32"/>
+<area shape="rect" id="node4" href="$client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="656,56,765,83"/>
+<area shape="rect" id="node5" href="$client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="813,56,864,83"/>
+</map>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
-<title>Advanced Programming : TLS handshake: /Users/Darka/Dropbox/UNITN/AdvancedProgramming/Project/include/HandshakeMessages/ServerClientHello.h File Reference</title>
+<title>Advanced Programming : TLS handshake: include/HandshakeMessages/ServerClientHello.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,6 +98,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &lt;openssl/rand.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="_t_l_s_constants_8h_source.html">TLSConstants.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for ServerClientHello.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h__incl.png" border="0" usemap="#include_2_handshake_messages_2_server_client_hello_8h" alt=""/></div>
+<map name="include_2_handshake_messages_2_server_client_hello_8h" id="include_2_handshake_messages_2_server_client_hello_8h">
+<area shape="rect" id="node8" href="_t_l_s_constants_8h.html" title="TLSConstants.h" alt="" coords="161,96,279,123"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h__dep__incl.png" border="0" usemap="#include_2_handshake_messages_2_server_client_hello_8hdep" alt=""/></div>
+<map name="include_2_handshake_messages_2_server_client_hello_8hdep" id="include_2_handshake_messages_2_server_client_hello_8hdep">
+<area shape="rect" id="node2" href="_server_client_hello_8c.html" title="src/HandshakeMessages\l/ServerClientHello.c" alt="" coords="5,97,176,138"/>
+<area shape="rect" id="node3" href="_server_client_handshake_protocol_8h.html" title="include/ServerClientHandshake\lProtocol.h" alt="" coords="201,97,409,138"/>
+<area shape="rect" id="node4" href="_server_client_handshake_protocol_8c.html" title="src/ServerClientHandshake\lProtocol.c" alt="" coords="129,187,313,229"/>
+<area shape="rect" id="node5" href="_t_l_s_8h.html" title="include/TLS.h" alt="" coords="337,195,441,221"/>
+<area shape="rect" id="node6" href="client_8c.html" title="src/Target/client.c" alt="" coords="171,277,297,304"/>
+<area shape="rect" id="node7" href="server_8c.html" title="src/Target/server.c" alt="" coords="323,277,456,304"/>
+<area shape="rect" id="node8" href="_t_l_s_8c.html" title="src/TLS.c" alt="" coords="481,277,559,304"/>
+</map>
+</div>
 </div>
 <p><a href="_server_client_hello_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -156,7 +178,31 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_cgraph.png" border="0" usemap="#_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_cgraph" alt=""/></div>
+<map name="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_cgraph" id="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_cgraph">
+<area shape="rect" id="node2" href="_t_l_s_constants_8c.html#a7f66c07120c851032c213bdadcff2009" title="get_cipher_suite_by_id" alt="" coords="179,12,338,39"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph.png" border="0" usemap="#_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph" alt=""/></div>
+<map name="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph" id="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph">
+<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="347,56,472,83"/>
+<area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="179,107,299,133"/>
+<area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="520,5,632,32"/>
+<area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="680,56,789,83"/>
+<area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="837,56,888,83"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -174,7 +220,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#aa8faa003f922c3bb30adfd8952af808f">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph.png" border="0" usemap="#_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph" alt=""/></div>
+<map name="_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph" id="_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e" title="make_client_hello" alt="" coords="318,56,447,83"/>
+<area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="134,5,269,32"/>
+<area shape="rect" id="node9" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="320,157,445,184"/>
+<area shape="rect" id="node11" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="141,107,261,133"/>
+<area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="656,132,765,159"/>
+<area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="813,132,864,159"/>
+<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="320,5,445,32"/>
+<area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="497,5,607,32"/>
+<area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="685,5,736,32"/>
+<area shape="rect" id="node10" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="496,157,608,184"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -194,6 +259,22 @@ Functions</h2></td></tr>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, and <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>.</p>
 
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_a095e7c0597d66b5e4eb2097b8f28474a_icgraph.png" border="0" usemap="#_server_client_hello_8h_a095e7c0597d66b5e4eb2097b8f28474a_icgraph" alt=""/></div>
+<map name="_server_client_hello_8h_a095e7c0597d66b5e4eb2097b8f28474a_icgraph" id="_server_client_hello_8h_a095e7c0597d66b5e4eb2097b8f28474a_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e" title="make_client_hello" alt="" coords="147,5,277,32"/>
+<area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="145,56,279,83"/>
+<area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="336,5,445,32"/>
+<area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="531,5,581,32"/>
+<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="328,56,453,83"/>
+<area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="501,56,611,83"/>
+<area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="659,56,709,83"/>
+</map>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="aff8bed251595f5c51c0d1755799909ae"></a>
@@ -211,6 +292,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph.png" border="0" usemap="#_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph" alt=""/></div>
+<map name="_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph" id="_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph">
+<area shape="rect" id="node2" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="139,5,259,32"/>
+<area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="640,31,749,57"/>
+<area shape="rect" id="node5" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="307,31,432,57"/>
+<area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="797,31,848,57"/>
+<area shape="rect" id="node6" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="480,81,592,108"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>
@@ -251,6 +346,22 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, and <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>.</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="_server_client_hello_8h_a5d76fe55dc16550edc3604fcde33b8d0_icgraph.png" border="0" usemap="#_server_client_hello_8h_a5d76fe55dc16550edc3604fcde33b8d0_icgraph" alt=""/></div>
+<map name="_server_client_hello_8h_a5d76fe55dc16550edc3604fcde33b8d0_icgraph" id="_server_client_hello_8h_a5d76fe55dc16550edc3604fcde33b8d0_icgraph">
+<area shape="rect" id="node2" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e" title="make_client_hello" alt="" coords="211,5,341,32"/>
+<area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="209,56,343,83"/>
+<area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="400,5,509,32"/>
+<area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="595,5,645,32"/>
+<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="392,56,517,83"/>
+<area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="565,56,675,83"/>
+<area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="723,56,773,83"/>
+</map>
+</div>
+</p>
 
 </div>
 </div>

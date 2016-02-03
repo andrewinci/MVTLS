@@ -20,5 +20,5 @@ var searchData=
   ['master_5fsecret',['master_secret',['../struct_t_l_s__parameters__t.html#a68c2015df5cb7259aa1abdee33c8e6f3',1,'TLS_parameters_t']]],
   ['master_5fsecret_5flen',['master_secret_len',['../struct_t_l_s__parameters__t.html#a7112487b636ca7921055d94ae02478fe',1,'TLS_parameters_t']]],
   ['md5_5fh',['MD5_H',['../_t_l_s_constants_8h.html#a0f89141ac474c59cb87d2eb5e16a598fa3d5dd00a9e85fda90862297578ecb61f',1,'TLSConstants.h']]],
-  ['message',['message',['../structhandshake__t.html#abb13456032cf48eaa794391b6ed937c7',1,'handshake_t::message()'],['../structrecord__t.html#abb13456032cf48eaa794391b6ed937c7',1,'record_t::message()'],['../structpacket__basic__t.html#abb13456032cf48eaa794391b6ed937c7',1,'packet_basic_t::message()']]]
+  ['message',['message',['../structhandshake__t.html#abb13456032cf48eaa794391b6ed937c7',1,'handshake_t::message()'],['../structrecord__t.html#abb13456032cf48eaa794391b6ed937c7',1,'record_t::message()'],['../structpacket__transport__t.html#abb13456032cf48eaa794391b6ed937c7',1,'packet_transport_t::message()']]]
 ];

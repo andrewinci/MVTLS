@@ -8,5 +8,5 @@ var searchData=
   ['sign_5fhash_5falg',['sign_hash_alg',['../structecdhe__server__key__exchange__t.html#a07ea01aadbb81f38a9a27e324d11f54e',1,'ecdhe_server_key_exchange_t::sign_hash_alg()'],['../structdhe__server__key__exchange__t.html#a07ea01aadbb81f38a9a27e324d11f54e',1,'dhe_server_key_exchange_t::sign_hash_alg()']]],
   ['signature',['signature',['../structecdhe__server__key__exchange__t.html#a775505f2a74638cda44fdd79c4e07993',1,'ecdhe_server_key_exchange_t::signature()'],['../structdhe__server__key__exchange__t.html#a775505f2a74638cda44fdd79c4e07993',1,'dhe_server_key_exchange_t::signature()']]],
   ['signature_5flength',['signature_length',['../structecdhe__server__key__exchange__t.html#a23a683d5129246d9adbd0029612d06a8',1,'ecdhe_server_key_exchange_t::signature_length()'],['../structdhe__server__key__exchange__t.html#a23a683d5129246d9adbd0029612d06a8',1,'dhe_server_key_exchange_t::signature_length()']]],
-  ['source',['source',['../structpacket__basic__t.html#aee6937c81d468a0915308234d09d212c',1,'packet_basic_t']]]
+  ['source',['source',['../structpacket__transport__t.html#aee6937c81d468a0915308234d09d212c',1,'packet_transport_t']]]
 ];
