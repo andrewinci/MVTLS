@@ -7,6 +7,7 @@
  *  \date Created on 28/12/15.
  *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */  
+ 
 #ifdef MAKEFILE
 #include "HandshakeMessages/Certificate.h"
 #else
@@ -14,7 +15,7 @@
 #endif
 
 /**
- * Given the certificate file name create an certificate message struct
+ * Given the certificate file name create a certificate message struct
  * that encapsulate it.
  *
  *	\param cert_file_name : certificate file name including path
@@ -49,8 +50,8 @@ certificate_message_t *make_certificate_message(char *cert_file_name){
 	return result;
 }
 
-/*
- * Serialization the certificate message into a byte stream
+/**
+ * Serialize the certificate message into a byte stream
  *
  *	\param cert : the message to serialize
  *	\param stream : the return stream. Must point to NULL.
@@ -91,9 +92,9 @@ void serialize_certificate_message(certificate_message_t *cert, unsigned char **
 }
 
 /**
- * Serialize a byte stream into a certificate_message.
+ * De-serialize a byte stream into a certificate_message.
  *
- *	\param stream : the byte stream to serialize
+ *	\param stream : the byte stream to de-serialize
  *	\param len : the byte stream length
  *	\return the certificate_message
  */

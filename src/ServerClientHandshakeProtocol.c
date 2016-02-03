@@ -76,7 +76,7 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
  *
  *	\param message : the serialized handshake 
  *	\param messageLen : the message length
- *	\return alloc and return an handshake struct
+ *	\return return the de-serialized handshake message
  */
 handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 	handshake_t *h = malloc(sizeof(handshake_t));

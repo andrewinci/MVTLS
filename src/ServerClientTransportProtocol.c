@@ -284,11 +284,11 @@ uint32_t read_all_file(int fd, unsigned char **p){
 /********* Serialization, deserialization *********/
 
 /**
- * Serialize message into packet
+ * De-serialize message into a transport packet
  *
  *	\param str : string received
  *	\param fileLen : received string length
- *	\return the serialized message as transport struct
+ *	\return the de-serialized message as transport struct
  */
 packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 

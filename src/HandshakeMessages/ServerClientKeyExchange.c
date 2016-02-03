@@ -1,17 +1,28 @@
-//
-//  SSL/TLS Project
-//  ServerClientKeyExchange.c
-//
-//  Created on 6/01/16.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file ServerClientKeyExchange.c
+ *	
+ *  This file contains functions for manage the server/client key exchange
+ *	and respective structs.
+ *
+ *  \date Created on 06/12/15.
+ *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientKeyExchange.h"
 #else
 #include "ServerClientKeyExchange.h"
 #endif
-
+ 				/******* SERVER KEY EXCHANGE *******/
+/**
+ * Serialize a server key exchange message into a byte stream.
+ * 
+ *	\param server_key_exchange : the message to serialize
+ *	\param stream : a pointer to NULL. Will contain the serialization result
+ *	\param streamLen : the serialization result length
+ *	\param kx : the key exchange method of the handshake
+ */
 void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx){
 
 	unsigned char *result;
@@ -94,6 +105,15 @@ void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, u
 	}
 }
 
+/**
+ * De-serialize a server key exchange byte stream message into the appropriate 
+ * server_key_excahnge message(DHE,ECDHE)
+ *
+ *	\param message : the byte stream message to de-serialize
+ *	\param message_len : the byte stream length
+ *	\param kx : the key exchange method of the handshake
+ *	\return the de-serialized server_key_excahnge message.
+ */
 server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, uint32_t message_len, key_exchange_algorithm kx){
 	if(kx == DHE_KX){
 		dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
@@ -159,33 +179,12 @@ server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, u
 	return NULL;
 }
 
-void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
-	// The first 2 message byte are the key length
-	unsigned char *buff = malloc(sizeof(unsigned char)*(client_key_exchange->key_length+2));
-	*stream = buff;
-	// Add lenght
-	uint16_t temp = REV16(client_key_exchange->key_length);
-	memcpy(buff, &temp, 2);
-	buff+=2;
-	// Add key
-	memcpy(buff, client_key_exchange->key, client_key_exchange->key_length);
-	*streamLen=client_key_exchange->key_length+2;
-}
-
-client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len){
-	client_key_exchange_t *rsa_server_key_ex = malloc(sizeof(client_key_exchange_t));
-	memcpy(&(rsa_server_key_ex->key_length), message, 2);
-	message+=2;
-
-	rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
-
-	unsigned char *buff = malloc(sizeof(unsigned char)*rsa_server_key_ex->key_length);
-	rsa_server_key_ex->key = buff;
-	memcpy(buff, message, rsa_server_key_ex->key_length);
-
-	return rsa_server_key_ex;
-}
-
+/**
+ * Print details about the server key exchange message
+ *
+ *	\param server_key_ex : the message to print
+ *	\param kx : the key exchange method of the handshake
+ */
 void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx){
 
 	char *pubkey_char = NULL;
@@ -235,13 +234,12 @@ void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_e
 	OPENSSL_free(pubkey_char);
 }
 
-void print_client_key_exchange(client_key_exchange_t *client_key_exchange){
-	printf(" Public key: ");
-	for(int i = 0; i<client_key_exchange->key_length; i++)
-		printf("%02X ",client_key_exchange->key[i]);
-	printf("\n");
-}
-
+/**
+ * Delloc memory of server key exchange.
+ * 
+ *	\param server_key_ex : the server key exchange message to deallocate
+ *	\param kx : the key exchange method of the handshake
+ */
 void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx){
 	if(server_key_ex != NULL && kx == DHE_KX){
 		dhe_server_key_exchange_t *params = (dhe_server_key_exchange_t*)server_key_ex;
@@ -258,7 +256,68 @@ void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange
 		free(server_key_ex);
 	}
 }
+				/******* CLIENT KEY EXCHANGE *******/
 
+/**
+ * Serialize a client key exchange message into a byte stream.
+ * 
+ *	\param client_key_exchange : the message to serialize
+ *	\param stream : a pointer to NULL. Will contain the serialization result
+ *	\param streamLen : the serialization result length
+ */
+void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen){
+	// The first 2 message byte are the key length
+	unsigned char *buff = malloc(sizeof(unsigned char)*(client_key_exchange->key_length+2));
+	*stream = buff;
+	// Add lenght
+	uint16_t temp = REV16(client_key_exchange->key_length);
+	memcpy(buff, &temp, 2);
+	buff+=2;
+	// Add key
+	memcpy(buff, client_key_exchange->key, client_key_exchange->key_length);
+	*streamLen=client_key_exchange->key_length+2;
+}
+
+/**
+ * De-serialize a client key exchange byte stream message into the appropriate 
+ * server_key_excahnge message(DHE,ECDHE)
+ *
+ *	\param message : the byte stream message to de-serialize
+ *	\param message_len : the byte stream length
+ *	\return the de-serialized client key exchange message
+ */
+client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len){
+	client_key_exchange_t *rsa_server_key_ex = malloc(sizeof(client_key_exchange_t));
+	memcpy(&(rsa_server_key_ex->key_length), message, 2);
+	message+=2;
+
+	rsa_server_key_ex->key_length = REV16(rsa_server_key_ex->key_length);
+
+	unsigned char *buff = malloc(sizeof(unsigned char)*rsa_server_key_ex->key_length);
+	rsa_server_key_ex->key = buff;
+	memcpy(buff, message, rsa_server_key_ex->key_length);
+
+	return rsa_server_key_ex;
+}
+
+/**
+ * Print details about the client key exchange message
+ *
+ *	\param client_key_ex : the message to print
+ *	\param kx : the key exchange method of the handshake
+ */
+void print_client_key_exchange(client_key_exchange_t *client_key_exchange){
+	printf(" Public key: ");
+	for(int i = 0; i<client_key_exchange->key_length; i++)
+		printf("%02X ",client_key_exchange->key[i]);
+	printf("\n");
+}
+
+/**
+ * Delloc memory of client key exchange.
+ * 
+ *	\param client_key_ex : the client key exchange message to deallocate
+ */
 void free_client_key_exchange(client_key_exchange_t *client_key_exchange){
 	free(client_key_exchange->key);
 	free(client_key_exchange);

@@ -63,7 +63,7 @@ typedef struct{
 
 #endif /*TLS_h*/
 
-			/*** CLIENT ***/
+				/*** CLIENT ***/
 
 /* Functions to make message*/
 
@@ -107,7 +107,7 @@ record_t * make_change_cipher_spec();
 handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) ;
 
 
-			/**** SERVER ****/
+				/**** SERVER ****/
 
 /**
  * Given the client hello message the function makes the server hello.
