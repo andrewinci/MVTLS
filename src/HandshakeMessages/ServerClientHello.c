@@ -184,7 +184,7 @@ server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, ui
 
 void print_hello(server_client_hello_t *h){
 
-	printf("\n TLS version: %d\n",h->TLS_version);
+	printf("\n TLS version: %04X\n",h->TLS_version);
 	printf("\n UNIX time stamp: %d\n", h->random.UNIX_time);
 	printf("\n Random bytes (28): ");
 	for(int i=0;i<28;i++)
@@ -196,7 +196,7 @@ void print_hello(server_client_hello_t *h){
 	printf("\n Cipher suites: \n");
 	for(int i=0;i<h->cipher_suite_len/2;i++)
 		printf("id: %04X name: %s\n", h->cipher_suites[i].cipher_id ,h->cipher_suites[i].name);
-	printf(" \n No compression (not implemented yet)\n");
+	printf(" \n No compression\n");
 }
 
 void free_hello(server_client_hello_t *h){

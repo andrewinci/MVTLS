@@ -83,7 +83,6 @@ void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, u
 		result+=BN_num_bytes(server_key_ex->pub_key);
 
 		// Add signature
-
 		memcpy(result, &(server_key_ex->sign_hash_alg), 2);
 		result+=2;
 

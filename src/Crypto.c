@@ -64,7 +64,7 @@ int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, uns
 	// Get private key for sign
 	FILE *private_key_file = fopen("../certificates/serverDSA.key", "r");
 	if (!private_key_file) {
-		fprintf(stderr, "unable to open DSA private key file, store it in : certificates/serverDSA.key\n");
+		fprintf(stderr, "Unable to open DSA private key file, store it in ../certificates/serverDSA.key\n");
 		exit(-1);
 	}
 
@@ -100,7 +100,7 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
 	if((fp= fopen("../certificates/serverRSA.key", "r"))  != NULL){
 		rsa_private=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
 		if(rsa_private==NULL){
-			printf("\nunable to open RSA private key, store it in : ../certificates/serverRSA.key\n");
+			printf("\nUnable to open RSA private key, store it in ../certificates/serverRSA.key\n");
 			exit(-1);
 		}
 	}
@@ -132,7 +132,7 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, u
 	// Get private key for sign
 	FILE *private_key_file = fopen("../certificates/serverECDSA.key", "r");
 	if (!private_key_file) {
-		fprintf(stderr, "unable to open ECDSA private key file, store it in : certificates/serverECDSA.key\n");
+		fprintf(stderr, "\nUnable to open ECDSA private key file, store it in ../certificates/serverECDSA.key\n");
 		exit(-1);
 	}
 
@@ -202,7 +202,6 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
 		default:
 			printf("\nError in recognize hash for signature or too low level of security in server_key_ex\n");
 			exit(-1);
-			break;
 	}
 
 	// Compute hash
@@ -229,7 +228,7 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
 			break;
 		default:
 			printf("\nError in sign_DHE_server_key_ex\n");
-			break;
+			exit(-1);
 	}
 
 	free(p);
@@ -288,7 +287,6 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
 		default:
 			printf("\nError in recognize hash for signature or too low level of security in server_key_ex\n");
 			exit(-1);
-			break;
 	}
 
 	// Compute hash
@@ -376,7 +374,6 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
 		default:
 			printf("\nError in recognize hash for signature or too low level of security in server_key_ex\n");
 			exit(-1);
-			break;
 	}
 
 	// Compute hash
@@ -446,7 +443,6 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
 		default:
 			printf("\nError in recognize hash for signature or too low level of security in server_key_ex\n");
 			exit(-1);
-			break;
 	}
 
 	// Compute hash

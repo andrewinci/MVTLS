@@ -154,8 +154,10 @@ void make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchan
 	DH *dh_key = DH_new();
 	dh_key->g = BN_dup(server_key_exchange->g);
 	dh_key->p = BN_dup(server_key_exchange->p);
-	if(DH_generate_key(dh_key) != 1)
+	if(DH_generate_key(dh_key) != 1){
 		printf("\nError in DH_generate_key\n");
+		exit(-1);
+	}
 
 	// Initialize pre master key
 	unsigned char *pre_master_key = malloc(DH_size(dh_key));
@@ -205,8 +207,10 @@ void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exch
 
 	// Initialize and set elliptic curve Diffie-Hellman parameters
 	EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
-	if(EC_KEY_generate_key(key) != 1)
+	if(EC_KEY_generate_key(key) != 1){
 		printf("\nError in make_ECDHE_client_key_exchange, EC_KEY_generate\n");
+		exit(-1);
+	}
 	EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), server_key_exchange->pub_key, NULL, NULL);
 
 	// Initialize pre master secret
@@ -259,34 +263,33 @@ void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exch
  *	\return the client key exchange handshake message 
  */
 handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key_ex_alg){
-    
-    // Initialize handshake packet and client key exchange message
-    handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
-    client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
-    client_key_exchange_t *client_key_exchange = malloc(sizeof(client_key_exchange_t));
-    
-    switch (TLS_param->cipher_suite.kx){
-        case RSA_KX:
-            make_RSA_client_key_exchange(TLS_param, client_key_exchange);
-            break;
-        case DHE_KX:
-            make_DHE_client_key_exchange(TLS_param, client_key_exchange);
-            break;
-        case ECDHE_KX:
-            make_ECDHE_client_key_exchange(TLS_param, client_key_exchange);
-            break;
-        default:
-            printf("\nError in make_client_key_exchange\n");
-            exit(-1);
-            break;
-    }
-    
-    serialize_client_key_exchange(client_key_exchange, &(client_key_exchange_h->message), (&client_key_exchange_h->length));
-    
-    // Clean up
-    free_client_key_exchange(client_key_exchange);
-    
-    return client_key_exchange_h;
+
+	// Initialize handshake packet and client key exchange message
+	handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
+	client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
+	client_key_exchange_t *client_key_exchange = malloc(sizeof(client_key_exchange_t));
+
+	switch (TLS_param->cipher_suite.kx){
+		case RSA_KX:
+			make_RSA_client_key_exchange(TLS_param, client_key_exchange);
+			break;
+		case DHE_KX:
+			make_DHE_client_key_exchange(TLS_param, client_key_exchange);
+			break;
+		case ECDHE_KX:
+			make_ECDHE_client_key_exchange(TLS_param, client_key_exchange);
+			break;
+		default:
+			printf("\nError in make_client_key_exchange\n");
+			exit(-1);
+	}
+
+	serialize_client_key_exchange(client_key_exchange, &(client_key_exchange_h->message), (&client_key_exchange_h->length));
+
+	// Clean up
+	free_client_key_exchange(client_key_exchange);
+
+	return client_key_exchange_h;
 }
 
 /**
@@ -365,8 +368,8 @@ handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello
 	int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2);
 	cipher_suite_t choosen_suite = get_cipher_suite_by_id(client_hello->cipher_suites[choosen_suite_num].cipher_id);
 
-    server_hello->cipher_suite_len = 2; 
-    
+	server_hello->cipher_suite_len = 2; 
+
 	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
 	*(server_hello->cipher_suites) = choosen_suite;
 
@@ -416,8 +419,7 @@ handshake_t * make_certificate(TLS_parameters_t *TLS_param){
 			break;
 		default:
 			printf("\nError in make_certificate_message");
-		exit(-1);
-			break;
+			exit(-1);
 	}
 
 	// Insert certificate message into handshake packet
@@ -444,42 +446,50 @@ handshake_t * make_certificate(TLS_parameters_t *TLS_param){
  *	\return the dhe_server_key_exchange struct
  */
 dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_param){
-    
-    // Diffie-Hellman server key exchange
-    // Generate ephemeral Diffie-Hellman parameters
-    DH *privkey;
-    int codes;
-    if((privkey = DH_new()) == NULL)
-        printf("\nError in DH_new\n");
-    if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1){
-        printf("\nError in DH_generate_parameters\n");
-        exit(-1);
-    }
-    if(DH_check(privkey, &codes) != 1)
-        printf("\nError in DH_check\n");
-    if(codes != 0)
-        printf("\nDH_check failed\n");
-    // Generate the public and private keys pair
-    if(DH_generate_key(privkey) != 1)
-        printf("\nError in DH_generate_key\n");
-    
-    // Set server key exchange parameters
-    dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
-    server_key_ex->g = BN_dup(privkey->g);
-    server_key_ex->p = BN_dup(privkey->p);
-    server_key_ex->pubKey = BN_dup(privkey->pub_key);
-    
-    // Add signature and set hash algorithm
-    sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
-    
-    // Save parameters
-    TLS_param->server_key_ex = server_key_ex;
-    TLS_param->private_key = BN_dup(privkey->priv_key);
-    
-    // Clean up
-    DH_free(privkey);
-    
-    return server_key_ex;
+
+	// Diffie-Hellman server key exchange
+	// Generate ephemeral Diffie-Hellman parameters
+	DH *privkey;
+	int codes;
+	if((privkey = DH_new()) == NULL){
+		printf("\nError in DH_new\n");
+		exit(-1);
+	}
+	if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1){
+		printf("\nError in DH_generate_parameters\n");
+		exit(-1);
+	}
+	if(DH_check(privkey, &codes) != 1){
+		printf("\nError in DH_check\n");
+		exit(-1);
+	}
+	if(codes != 0){
+		printf("\nDH_check failed\n");
+		exit(-1);
+		}
+	// Generate the public and private keys pair
+	if(DH_generate_key(privkey) != 1){
+		printf("\nError in DH_generate_key\n");
+		exit(-1);
+	}
+
+	// Set server key exchange parameters
+	dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
+	server_key_ex->g = BN_dup(privkey->g);
+	server_key_ex->p = BN_dup(privkey->p);
+	server_key_ex->pubKey = BN_dup(privkey->pub_key);
+
+	// Add signature and set hash algorithm
+	sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+
+	// Save parameters
+	TLS_param->server_key_ex = server_key_ex;
+	TLS_param->private_key = BN_dup(privkey->priv_key);
+
+	// Clean up
+	DH_free(privkey);
+
+	return server_key_ex;
 }
 
 /**
@@ -491,35 +501,39 @@ dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_p
  *	\return the ecdhe_server_key_exchange struct
  */
 ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *TLS_param){
-    
-    // Elliptic cruve Diffie-Hellman server key exchange
-    // Generate ephemeral Diffie-Hellman parameters
-    EC_KEY *key;
-    uint16_t curve_name = NID_secp256k1;
-    // Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve
-    if((key = EC_KEY_new_by_curve_name(curve_name)) == NULL)
-        printf("\nError setting  EC parameters\n");
-    // Generate the private and public keys
-    if(EC_KEY_generate_key(key) != 1)
-        printf("\nError in generate EC keys\n");
-    
-    // Set server key exchange parameters
-    ecdhe_server_key_exchange_t *server_key_ex = malloc(sizeof(ecdhe_server_key_exchange_t));
-    server_key_ex->named_curve = curve_name;
-    server_key_ex->pub_key = BN_new();
-    EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
-    
-    // Add signature
-    sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
-    
-    // Save parameters
-    TLS_param->server_key_ex = server_key_ex;
-    TLS_param->private_key = BN_dup(EC_KEY_get0_private_key(key));
-    
-    // Clean up
-    EC_KEY_free(key);
-    
-    return server_key_ex;
+
+	// Elliptic cruve Diffie-Hellman server key exchange
+	// Generate ephemeral Diffie-Hellman parameters
+	EC_KEY *key;
+	uint16_t curve_name = NID_secp256k1;
+	// Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve
+	if((key = EC_KEY_new_by_curve_name(curve_name)) == NULL){
+		printf("\nError setting  EC parameters\n");
+		exit(-1);
+	}
+	// Generate the private and public keys
+	if(EC_KEY_generate_key(key) != 1){
+		printf("\nError in generate EC keys\n");
+		exit(-1);
+	}
+
+	// Set server key exchange parameters
+	ecdhe_server_key_exchange_t *server_key_ex = malloc(sizeof(ecdhe_server_key_exchange_t));
+	server_key_ex->named_curve = curve_name;
+	server_key_ex->pub_key = BN_new();
+	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
+
+	// Add signature
+	sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+
+	// Save parameters
+	TLS_param->server_key_ex = server_key_ex;
+	TLS_param->private_key = BN_dup(EC_KEY_get0_private_key(key));
+
+	// Clean up
+	EC_KEY_free(key);
+
+	return server_key_ex;
 }
 
 /**
@@ -544,11 +558,11 @@ handshake_t * make_server_key_exchange(TLS_parameters_t *TLS_param){
 			server_key_ex = (ecdhe_server_key_exchange_t *)make_ECDHE_server_key_exchange(TLS_param);
 			break;
 		default:
-			printf("\nError in make_server_key_exchange, key excahnge algorithm not recognized\n");
-			break;
+			printf("\nError in make_server_key_exchange, key exchange algorithm not recognized\n");
+			exit(-1);
 	}
-    
-    // Insert server key exchange into handshake packet
+
+	// Insert server key exchange into handshake packet
 	handshake_t *server_key_ex_h = malloc(sizeof(handshake_t));
 	server_key_ex_h->type = SERVER_KEY_EXCHANGE;
 	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, TLS_param->cipher_suite.kx);

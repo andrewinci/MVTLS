@@ -99,12 +99,26 @@ handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
  * Print the handshake struct
  *
  *	\param h : handshake to print
- *	\param verbosity : how many detail to print (0 none, 1 the binary, 2 details,3 record)
+ *	\param verbosity : how many detail to print (0 none, 1 the binary, 2 details, 3 record)
  *	\param kx : the key exchange algorithm, useful in key_echange messages
  */
 void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 
-	if(verbosity == 2){
+	if(verbosity == 1){
+		unsigned char *message = NULL;
+		uint32_t messageLen = 0;
+		serialize_handshake(h, &message, &messageLen);
+		if(message != NULL){
+			for(int i=0; i<messageLen; i++){
+				if(i%9 == 0)
+					printf("\n");
+				printf("%02x ", *(message+i));
+			}
+			printf("\n");
+			free(message);
+		}
+	}
+	else if(verbosity == 2){
 		if (h->type == CLIENT_HELLO){
 			server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 			print_hello(client_hello);
@@ -131,36 +145,21 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 			free_client_key_exchange(client_key_exchange);
 		}
 	}
-	if(verbosity > 1 && verbosity < 3){
-		unsigned char *message = NULL;
-		uint32_t messageLen = 0;
-		serialize_handshake(h, &message, &messageLen);
-		printf("\n");
-		if(message != NULL){
-			for(int i=0; i<messageLen; i++){
-				if(i%9 == 0)
-					printf("\n");
-				printf("%02x ", *(message+i));
-			}
-			printf("\n");
-			free(message);
-		}
+	else if (verbosity == 3){
+		record_t *r = malloc(sizeof(record_t));
+		r->type = HANDSHAKE;
+		r->version = TLS1_2;
+		uint32_t len = 0;
+		serialize_handshake(h, &r->message, &len);
+		r->length = (uint16_t)len;
+		print_record(r);
 	}
-    if (verbosity == 3) {
-        record_t *r = malloc(sizeof(record_t));
-        r->type = HANDSHAKE;
-        r->version = TLS1_2;
-        uint32_t len = 0;
-        serialize_handshake(h, &r->message, &len);
-        r->length = (uint16_t)len;
-        print_record(r);
-    }
 }
 
 /**
- * Delloc memory of handshake struct
+ * Dealloc memory of handshake struct
  * 
- *	\param h : the handshake to free
+ *	\param h : the handshake to be freed
  */
 void free_handshake(handshake_t *h){
 	if(h==NULL)

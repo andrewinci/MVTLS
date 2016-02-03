@@ -29,13 +29,13 @@ certificate_message_t *make_certificate_message(char *cert_file_name){
 	FILE *fp = fopen(cert_file_name, "r");
 
 	if (!fp) {
-		fprintf(stderr, "unable to open: %s\n", cert_file_name);
+		fprintf(stderr, "\nUnable to open %s\n", cert_file_name);
 		exit(-1);
 	}
 
 	x = PEM_read_X509(fp, NULL, NULL, NULL);
 	if (!x) {
-		fprintf(stderr, "unable to parse certificate in: %s\n", cert_file_name);
+		fprintf(stderr, "\nUnable to parse certificate in: %s\n", cert_file_name);
 		fclose(fp);
 		exit(-1);
 	}

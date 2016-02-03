@@ -117,7 +117,7 @@ int start_listener(channel_t *ch){
 	ch->isEnabled = 1;
 	int rc = pthread_create(&thread, &attr, (void *)&reader, (void *)ch);
 	if (rc){
-		printf("ERROR; return code from pthread_create() is %d\n", rc);
+		printf("\nError: return code from pthread_create() is %d\n", rc);
 		exit(-1);
 	}
 	ch->thread = thread;
@@ -191,7 +191,7 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 int send_packet(channel_t *ch, packet_transport_t *p){
 
 	if(ch == NULL){
-		printf("Error ch is null");
+		printf("Error: no channel is avaible (ch == NULL)");
 		return -1;
 	}
 	if(ch->fd == -1)
@@ -212,7 +212,7 @@ int send_packet(channel_t *ch, packet_transport_t *p){
 
 	serialize_packet(p, &message, &strLen);
 	if(message == NULL){
-		printf("\nerror in send packet\n");
+		printf("\nError in send_packet\n");
 		exit(-1);
 	}
 
@@ -270,7 +270,7 @@ long long get_file_size(int fd){
 uint32_t read_all_file(int fd, unsigned char **p){
 	long long fileSize = get_file_size(fd);
 	if(fileSize>UINT32_MAX){
-		printf("\nThe message is too long, something went wrong\n");
+		printf("\nThe message is too long\n");
 		exit(-1);
 	}
 	unsigned char *temp = calloc(sizeof(unsigned char),fileSize);

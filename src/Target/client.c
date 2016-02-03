@@ -28,7 +28,7 @@
 				"    -a  --auth_algorithm  (RSA|DSS|ECDSA) \n"\
 				" \n"\
 				"  Specify verbosity \n"\
-				"    -v     0 default (1|2) \n"\
+				"    -v     0 default (1|2|3) \n"\
 				" \n"\
 				"  Specify hash algorithm \n"\
 				"    -h  --hash_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \n"\
@@ -55,85 +55,106 @@ int main(int argc, char **argv) {
 	key_exchange_algorithm kx = NONE_KX;
 	authentication_algorithm au = NONE_AU;
 	hash_algorithm ha = NONE_H;
-	for(int i=1;i<argc;i+=2){
-		if(strcmp(argv[i], "-c")==0 || strcmp(argv[i], "--cipher_id")==0){
+	for(int i=1; i<argc; i+=2){
+		if(strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--cipher_id") == 0){
 			cipher_suite_t c = get_cipher_suite_by_id(atoi(argv[i+1]));
-			if(c.name!=NULL){
-			to_send_cipher_suite[to_send_cipher_suite_len] = c;
-			to_send_cipher_suite_len++;
-			}
-			else
-				printf("cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
-		}
-		else if(strcmp(argv[i], "-n")==0 || strcmp(argv[i], "--name")==0){
-			cipher_suite_t c = get_cipher_suite_by_name(argv[i+1]);
-			if(c.name!=NULL){
+			if(c.name != NULL){
 				to_send_cipher_suite[to_send_cipher_suite_len] = c;
-			to_send_cipher_suite_len++;
+				to_send_cipher_suite_len++;
 			}
-			else
-				printf("cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
+			else{
+				printf("Cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
+				return -1;
+			}
 		}
-		else if(strcmp(argv[i], "-x")==0 || strcmp(argv[i], "--key_exchange")==0){
-			if(strcmp("RSA", argv[i+1])==0)
+		else if(strcmp(argv[i], "-n") == 0 || strcmp(argv[i], "--name") == 0){
+			cipher_suite_t c = get_cipher_suite_by_name(argv[i+1]);
+			if(c.name != NULL){
+				to_send_cipher_suite[to_send_cipher_suite_len] = c;
+				to_send_cipher_suite_len++;
+			}
+			else{
+				printf("Cannot parse %s %s or the requested cipher suite is not supported yet.\n",argv[i],argv[i+1]);
+				return -1;
+			}
+		}
+		else if(strcmp(argv[i], "-x") == 0 || strcmp(argv[i], "--key_exchange") == 0){
+			if(strcmp("RSA", argv[i+1]) == 0)
 				kx = RSA_KX;
-			else if(strcmp("DHE", argv[i+1])==0)
+			else if(strcmp("DHE", argv[i+1]) == 0)
 				kx = DHE_KX;
-			else if(strcmp("ECDHE", argv[i+1])==0)
+			else if(strcmp("ECDHE", argv[i+1]) == 0)
 				kx = ECDHE_KX;
+			else{
+				printf("Cannot parse %s %s or the requested key exchange is not supported yet.\n",argv[i],argv[i+1]);
+				return -1;
+			}
 		}
-		else if(strcmp(argv[i], "-a")==0 || strcmp(argv[i], "--auth_algorithm")==0){
-			if(strcmp("RSA", argv[i+1])==0)
+		else if(strcmp(argv[i], "-a") == 0 || strcmp(argv[i], "--auth_algorithm") == 0){
+			if(strcmp("RSA", argv[i+1]) == 0)
 				au = RSA_AU;
-			else if(strcmp("DSS", argv[i+1])==0)
+			else if(strcmp("DSS", argv[i+1]) == 0)
 				au = DSS_AU;
-			else if(strcmp("ECDSA", argv[i+1])==0)
+			else if(strcmp("ECDSA", argv[i+1]) == 0)
 				au = ECDSA_AU;
+			else{
+				printf("Cannot parse %s %s or the requested authentication algorithm is not supported yet.\n",argv[i],argv[i+1]);
+				return -1;
+			}
 		}
-		else if(strcmp(argv[i], "-h")==0 || strcmp(argv[i], "--hash_algorithm")==0){
-			if(strcmp("MD5", argv[i+1])==0)
+		else if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--hash_algorithm") == 0){
+			if(strcmp("MD5", argv[i+1]) == 0)
 				ha = MD5_H;
-			else if(strcmp("SHA1", argv[i+1])==0)
+			else if(strcmp("SHA1", argv[i+1]) == 0)
 				ha = SHA1_H;
-			else if(strcmp("SHA224", argv[i+1])==0)
+			else if(strcmp("SHA224", argv[i+1]) == 0)
 				ha = SHA224_H;
-			else if(strcmp("SHA256", argv[i+1])==0)
+			else if(strcmp("SHA256", argv[i+1]) == 0)
 				ha = SHA256_H;
-			else if(strcmp("SHA384", argv[i+1])==0)
+			else if(strcmp("SHA384", argv[i+1]) == 0)
 				ha = SHA384_H;
-			else if(strcmp("SHA512", argv[i+1])==0)
+			else if(strcmp("SHA512", argv[i+1]) == 0)
 				ha = SHA512_H;
+			else{
+				printf("Cannot parse %s %s or the requested hash function is not supported yet.\n",argv[i],argv[i+1]);
+				return -1;
+			}
 		}
-		else if(strcmp(argv[i], "-v")==0 ){
+		else if(strcmp(argv[i], "-v") == 0 ){
 			v = atoi(argv[i+1]);
 		}
-		else if(argc == 2 && strcmp(argv[i], "--help")==0){
-			printf("%s",USAGE);
+		else if(argc == 2 && strcmp(argv[i], "--help") == 0){
+			printf("%s", USAGE);
 			return 0;
 		}
-		else if( argc == 2 && (strcmp(argv[i], "-l")==0 || strcmp(argv[i], "--list")==0)){
+		else if(argc == 2 && (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0)){
 			int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-			printf("Supported cipher suite are the follows:\n");
-			for(int i=0;i<num_added;i++)
-				printf("%s\n",to_send_cipher_suite[i].name);
+			printf("Supported cipher suite are the following:\n");
+			for(int i = 0; i<num_added; i++)
+				printf("%s\n", to_send_cipher_suite[i].name);
 			return 0;
+		}
+		else{
+			printf("Invalid option '%s'\n",argv[i]);
+			printf("Try '--help' for more information.\n");
+			return -1;
 		}
 	}
-    // If no option is passed, load all cipher suite
+	// If no option is set, load all cipher suite
 	if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
 		to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
 
-		printf("All supported cipher suite are loaded\n");
-		printf("use --help for show the help\n");
+		printf("All supported cipher suite are loaded.\n");
+		printf("use --help for more information.\n");
 	}
 	else if (to_send_cipher_suite_len == 0){
 		int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
 		to_send_cipher_suite_len+=num_added;
 		if(to_send_cipher_suite_len == 0){
-			printf("No supported cipher suite with the selected arguments\n");
-			printf("%s",USAGE);
-			return 0;
-		}            
+			printf("No supported cipher suite with the selected arguments.\n");
+			printf("%s", USAGE);
+			return -1;
+		}
 	}
 	TLS_param.handshake_messages = NULL;
 
