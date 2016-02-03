@@ -48,14 +48,10 @@ typedef struct{
 	*/
 	uint8_t type;
 
-	/**
-		Message length
-	*/
+	/** Message length*/
 	uint32_t length;  
 
-	/**
-		Handshake binary message
-	*/
+	/** Handshake binary message*/
     unsigned char *message;
 }handshake_t;
 
@@ -87,10 +83,10 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
 handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen);
 
 /**
- * Print an handshake struct
+ * Print the handshake struct
  *
  *	\param h : handshake to print
- *	\param verobisty : how many detail to print (0 none, 1 the binary, 2 details)
+ *	\param verbosity : how many detail to print (0 none, 1 the binary, 2 details,3 record)
  *	\param kx : the key exchange algorithm, useful in key_echange messages
  */
 void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx);

@@ -1,13 +1,23 @@
-//
-//  SSL/TLS Project
-//  ServerClientHandshakeProtocol.h
-//
-//  Created on 24/12/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file ServerClientHandshakeProtocol.h
+ *
+ *	This file is used to mange the handshake protocol
+ *
+ *  \date Created on 27/12/15.
+ *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *
+ */
 
 #include "ServerClientHandshakeProtocol.h"
 
+/**
+ * Given an handshake encapsulate it in an record packet of type
+ * HANDSHAKE and version TLS1_2.
+ *
+ *	\param h : handshake to encapsulate
+ *	\return the record that encapsulate h
+ */
 record_t *make_record(handshake_t *h) {
 	unsigned char *message = NULL;
 	uint32_t messageLen = 0;
@@ -23,6 +33,13 @@ record_t *make_record(handshake_t *h) {
 	return to_send;
 }
 
+/**
+* Send an handshake through a channel
+* 
+*	\param ch : the channel to use
+*	\param h :	the handshake to send
+*	\return 1 if the send is success, 0 otherwise
+*/
 int send_handshake(channel_t *ch, handshake_t *h){
 	record_t *to_send;
 	to_send = make_record(h);
@@ -33,6 +50,13 @@ int send_handshake(channel_t *ch, handshake_t *h){
 	return result;
 }
 
+/**
+ * Serialize a handshake into a byte stream
+ *
+ *	\param h : the handshake to serialize
+ *	\param stream : a pointer to NULL, it will filled with the serialized handshake
+ *	\param streamLen : the length of the serialized message
+ */
 void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen){
 	unsigned char *buff = malloc(sizeof(unsigned char)*(h->length+4));
 	*stream = buff;
@@ -48,6 +72,13 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
 	*streamLen = h->length+4;
 }
 
+/**
+ * De-serialize a stream of byte into an handshake. 
+ *
+ *	\param message : the serialized handshake 
+ *	\param messageLen : the message length
+ *	\return alloc and return an handshake struct
+ */
 handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 	handshake_t *h = malloc(sizeof(handshake_t));
 	h->type = *message;
@@ -65,6 +96,13 @@ handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
 	return h;
 }
 
+/**
+ * Print the handshake struct
+ *
+ *	\param h : handshake to print
+ *	\param verbosity : how many detail to print (0 none, 1 the binary, 2 details,3 record)
+ *	\param kx : the key exchange algorithm, useful in key_echange messages
+ */
 void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 
 	if(verbosity == 2){
@@ -120,6 +158,11 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
     }
 }
 
+/**
+ * Delloc memory of handshake struct
+ * 
+ *	\param h : the handshake to free
+ */
 void free_handshake(handshake_t *h){
 	if(h==NULL)
 		return;
