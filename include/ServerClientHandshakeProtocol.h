@@ -6,7 +6,6 @@
  *
  *  \date Created on 27/12/15.
  *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
- *
  */
 
 #ifndef ServerClientHandshakeProtocol_h
