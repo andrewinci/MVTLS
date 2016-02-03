@@ -1,13 +1,23 @@
-//
-//  SSL/TLS Project
-//  ServerClientRecordProtocol.c
-//
-//  Created on 23/12/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *  SSL/TLS Project
+ *  \file ServerClientRecordProtocol.c
+ *	This file is an interface to the record protocol.
+ *	Provide function and struct for modelling and manage record messages.
+ *
+ *  \date Created on 23/12/15.
+ *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *
+ */
 
 #include "ServerClientRecordProtocol.h"
 
+/**
+ * Serialize record in a byte stream of length message_len stored in 
+ * message.
+ *
+ * \param message : pointer to null (the function allocate space for you)
+ * \param messageLen : pointer to integer (will contains the message length)
+ */
 void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
 
 	*messageLen = r->length;
@@ -20,6 +30,14 @@ void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen
 	*messageLen+=5;
 }
 
+/**
+ * De-serialize a byte stream message of length message_len into 
+ * a record struct.
+ *
+ * \param message : message received
+ * \param messageLen : message length
+ * \return record : the de-serialized record
+ */
 record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
 	record_t *result = malloc(sizeof(record_t));
 
@@ -34,6 +52,14 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
 	return result;
 }
 
+/**
+ * Send record to_send over the channel ch.
+ * Note :for send record is important to set 'to' and 'from' in the channel creation.
+ *
+ * \param ch : channel to use
+ * \param to_send  : record to send
+ * \return 1 if the message was successfully sent, 0 otherwise
+ */
 int send_record(channel_t *ch, record_t *r){
 	unsigned char *message = NULL;
 	uint16_t messageLen;
@@ -48,6 +74,10 @@ int send_record(channel_t *ch, record_t *r){
 	return result;
 }
 
+/**
+ * Print a description of the record
+ *	\param r : record to print.
+ */
 void print_record(record_t *r){
 	unsigned char *message;
 	uint16_t len;
@@ -61,6 +91,10 @@ void print_record(record_t *r){
 	free(message);
 }
 
+/**
+ * Deallocate memory pointed by r
+ * \param r : pointer to record to free
+ */
 void free_record(record_t *r){
 	if(r == NULL)
 		return;

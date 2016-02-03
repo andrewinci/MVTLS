@@ -81,6 +81,7 @@ void serialize_record(record_t *r, unsigned char **message, uint16_t *message_le
 
 /**
  * Print a description of the record
+ *	\param r : record to print.
  */
 void print_record(record_t *r);
 
