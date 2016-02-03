@@ -11,14 +11,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ServerClientBasic.h"
+#include "ServerClientTransportProtocol.h"
 
-void onPacketReceive(channel *ch, packet_basic *p);
+void onPacketReceive(channel_t *ch, packet_transport_t *p);
 
 int main(int argc, char **argv){
     char *fileName = "channel.txt";
     char *clientName = "Client";
-    channel *client = create_channel(fileName, clientName, NULL, CLIENT);
+    channel_t *client = create_channel(fileName, clientName, "Server");
     set_on_receive(client, &onPacketReceive);
     start_listener(client);
     printf("*** Client is start ***\n");
@@ -29,7 +29,7 @@ int main(int argc, char **argv){
     char to[] = "Server\0";
     printf("Client send: %c \n",*message);
     
-    packet_basic *p = create_packet(NULL, to, message, 1);
+    packet_transport_t *p = create_packet(NULL, to, message, 1);
     free(message);
     send_packet(client, p);
     free_packet(p);
@@ -37,19 +37,19 @@ int main(int argc, char **argv){
     free(client);
 }
 
-void onPacketReceive(channel *ch, packet_basic *p){
+void onPacketReceive(channel_t *ch, packet_transport_t *p){
     
     //print received message
     printf("message from: %s\n", p->source);
-    printf("message len: %d\n", p->messageLen);
-    printf("message:\n%.*s\n\n",p->messageLen, p->message);
+    printf("message len: %d\n", p->length);
+    printf("message:\n%.*s\n\n",p->length, p->message);
     
     //prepare new packet to be send
     //if the 'from' field is NULL it will be autofill
     
     if(*(p->message)<'8'){
         (*(p->message))++;
-        packet_basic *packet = create_packet(NULL, p->source, p->message, 1);
+        packet_transport_t *packet = create_packet(NULL, p->source, p->message, 1);
         
         if(send_packet(ch, packet))
             printf("\nPacket sent correctly\n\n");

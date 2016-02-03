@@ -10,24 +10,24 @@
 
 #include "ServerClientRecordProtocol.h"
 
-void onPacketReceive(channel *ch, packet_basic *p);
+void onPacketReceive(channel_t *ch, packet_transport_t *p);
 
 int main(int argc, const char * argv[]) {
     //setting up the channel
     char *fileName = "channelRecord.txt";
     char *channelFrom = "Client";
     char *channelTo = "Server";
-    channel *client = create_channel(fileName, channelFrom, channelTo, CLIENT);
+    channel_t *client = create_channel(fileName, channelFrom, channelTo);
     
     set_on_receive(client, &onPacketReceive);
     //star channel and listener to new message
     start_listener(client);
     printf("*** Record client is start ***\n\n");
     
-    record *r = malloc(sizeof(record));
+    record_t *r = malloc(sizeof(record_t));
     r->type = HANDSHAKE;
-    r->version = TLS1_2;
-    r->lenght = 0x01;
+    r->version = 0x0303;
+    r->length = 0x01;
     r->message = malloc(1*sizeof(unsigned char));
     *(r->message)='\x31';
     
@@ -37,21 +37,21 @@ int main(int argc, const char * argv[]) {
     free(client);
 }
 
-void onPacketReceive(channel *ch, packet_basic *p){
+void onPacketReceive(channel_t *ch, packet_transport_t *p){
     
     //get record
-    record *r = deserialize_record(p->message, p->messageLen);
+    record_t *r = deserialize_record(p->message, p->length);
     
     //print received message
-    printf("**Basic**\n");
+    printf("**Transport**\n");
     printf("message from: %s\n", p->source);
-    printf("message len: %d\n", p->messageLen);
+    printf("message len: %d\n", p->length);
     printf("****Record****\n");
     printf("type : %02x\n",r->type);
     printf("version : %04x\n",r->version);
-    printf("record message:\n%.*s\n",r->lenght, r->message);
+    printf("record message:\n%.*s\n",r->length, r->message);
     printf("hex : \n");
-    for(int i=0;i<p->messageLen;i++)
+    for(int i=0;i<p->length;i++)
         printf("%02x ",*(p->message+i));
     printf("\n");
     

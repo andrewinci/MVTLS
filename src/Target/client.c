@@ -39,7 +39,7 @@
 				"  Show this help \n"\
 				"    --help \n\n"
 
-void onPacketReceive(channel_t *ch, packet_basic_t *p);
+void onPacketReceive(channel_t *ch, packet_transport_t *p);
 void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);
 
 // Set default verbosity to zero
@@ -200,7 +200,7 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
  * Function called from basic protocol
  * when a message is received
  */
-void onPacketReceive(channel_t *client2server, packet_basic_t *p){
+void onPacketReceive(channel_t *client2server, packet_transport_t *p){
 
 	// Get record and print
 	record_t *r = deserialize_record(p->message, p->length);

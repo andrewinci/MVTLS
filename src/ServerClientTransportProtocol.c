@@ -10,11 +10,11 @@
 #include "ServerClientTransportProtocol.h"
 
 
-void free_packet(packet_basic_t *p);
+void free_packet(packet_transport_t *p);
 long long get_file_size(int fd);
 uint32_t read_all_file(int fd, unsigned char **p);
-packet_basic_t *deserialize_packet(unsigned char *str, uint32_t fileLen);
-void serialize_packet(packet_basic_t *p, unsigned char **str, uint32_t *strLen);
+packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen);
+void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen);
 
 
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
@@ -29,7 +29,7 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 	return ch;
 }
 
-int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_basic_t *p)){
+int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p)){
 	if(ch->onPacketReceive == NULL){
 		// Check if the packet is for the channel owner
 		ch->onPacketReceive = onPacketReceive; 
@@ -47,7 +47,7 @@ void reader(void *data){
 		uint32_t fileLen = read_all_file(ch->fd, &str);
 		if(fileLen>=16){
 			// The file is not empty
-			packet_basic_t *received = deserialize_packet(str, fileLen); 
+			packet_transport_t *received = deserialize_packet(str, fileLen); 
 			free(str);
 			if(received!=NULL && strcmp(received->destination, ch->channel_source) == 0){
 				// Blank the file
@@ -93,8 +93,8 @@ void wait_channel(channel_t *ch){
 	pthread_join(ch->thread, NULL);
 }
 
-packet_basic_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
-	packet_basic_t *result = malloc(sizeof(packet_basic_t));    
+packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
+	packet_transport_t *result = malloc(sizeof(packet_transport_t));    
 
 	if(source != NULL){
 		result->source = calloc(8,1);
@@ -120,7 +120,7 @@ packet_basic_t *create_packet(char *source, char *destination, unsigned char *me
 	return result;
 }
 
-int send_packet(channel_t *ch, packet_basic_t *p){
+int send_packet(channel_t *ch, packet_transport_t *p){
 
 	if(ch == NULL){
 		printf("Error ch is null");
@@ -159,7 +159,7 @@ int send_packet(channel_t *ch, packet_basic_t *p){
 	return 0;
 }
 
-void free_packet(packet_basic_t *p){
+void free_packet(packet_transport_t *p){
 	if(p == NULL)
 		return;
 
@@ -213,7 +213,7 @@ uint32_t read_all_file(int fd, unsigned char **p){
  * str : string received
  * fileLen : received string length
  */
-packet_basic_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
+packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 
 	char *from = calloc(8, 1);
 	char *to = calloc(8, 1);
@@ -235,7 +235,7 @@ packet_basic_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 		return NULL;
 	}
 
-	packet_basic_t *result = create_packet(from, to, message, packLen-20);
+	packet_transport_t *result = create_packet(from, to, message, packLen-20);
 
 	// Clean up
 	free(from);
@@ -251,7 +251,7 @@ packet_basic_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
  * str : pointer to a null string (used for return the stream)
  * strlen : pointer to stream length (used for return the stream length)
  */
-void serialize_packet(packet_basic_t *p, unsigned char **str, uint32_t *strLen){
+void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen){
 	if(p->source == NULL || p->destination == NULL ){
 		*str = NULL;
 		*strLen = 0;

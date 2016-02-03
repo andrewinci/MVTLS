@@ -13,14 +13,14 @@
 #include "ServerClientRecordProtocol.h"
 
 
-void onPacketReceive(channel *ch, packet_basic *p);
+void onPacketReceive(channel_t *ch, packet_transport_t *p);
 
 int main() {
     //setting up the channel
     char *fileName = "channelHandshake.txt";
     char *channelFrom = "Server";
     char *channelTo = "Client";
-    channel *server = create_channel(fileName, channelFrom, channelTo, SERVER);
+    channel_t *server = create_channel(fileName, channelFrom, channelTo);
     
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
@@ -31,15 +31,15 @@ int main() {
     free(server);
 }
 
-void onPacketReceive(channel *ch, packet_basic *p){
+void onPacketReceive(channel_t *ch, packet_transport_t *p){
 
     //get record
-    record *r = deserialize_record(p->message, p->messageLen);
+    record_t *r = deserialize_record(p->message, p->length);
     if(r->type == HANDSHAKE){
-        handshake *h = deserialize_handshake(r->message, r->lenght);
-        print_handshake(h);
+        handshake_t *h = deserialize_handshake(r->message, r->length);
+        print_handshake(h,2,0);
         if(h->type == CLIENT_HELLO){
-            handshake_hello *hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
+            server_client_hello_t *hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
             print_hello(hello);
 			free_hello(hello);
 			

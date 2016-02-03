@@ -10,7 +10,7 @@
 
 #include "ServerClientRecordProtocol.h"
 
-void onPacketReceive(channel *ch, packet_basic *p);
+void onPacketReceive(channel_t *ch, packet_transport_t *p);
 
 int main(int argc, const char * argv[]) {
     //setting up the channel
@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     char *channelTo = "Client";
 
     //starting the channel between client and server
-    channel *server = create_channel(fileName, channelFrom, channelTo, SERVER);
+    channel_t *server = create_channel(fileName, channelFrom, channelTo);
     
     set_on_receive(server, &onPacketReceive);
     //star channel and listener to new message
@@ -30,20 +30,20 @@ int main(int argc, const char * argv[]) {
     free(server);
 }
 
-void onPacketReceive(channel *ch, packet_basic *p){
+void onPacketReceive(channel_t *ch, packet_transport_t *p){
     
     //get record
-    record *r = deserialize_record(p->message, p->messageLen);
+    record_t *r = deserialize_record(p->message, p->length);
     //print received message
-    printf("**Basic**\n");
+    printf("**Transport**\n");
     printf("message from: %s\n", p->source);
-    printf("message len: %d\n", p->messageLen);
+    printf("message len: %d\n", p->length);
     printf("****Record****\n");
     printf("type : %02x\n",r->type);
     printf("version : %04x\n",r->version);
-    printf("record message:\n%.*s\n",r->lenght, r->message);
+    printf("record message:\n%.*s\n",r->length, r->message);
     printf("hex : \n");
-    for(int i=0;i<p->messageLen;i++)
+    for(int i=0;i<p->length;i++)
         printf("%02x ",*(p->message+i));
     printf("\n");
     

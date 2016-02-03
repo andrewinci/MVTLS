@@ -14,24 +14,24 @@ int main() {
     char *fileName = "channelHandshake.txt";
     char *channelFrom = "Client";
     char *channelTo = "Server";
-    channel *client = create_channel(fileName, channelFrom, channelTo, CLIENT);
+    channel_t *client = create_channel(fileName, channelFrom, channelTo);
 
     printf("*** Handshake client is start ***\n\n");
     
     //make client hello without session
-    session_id session;
+    session_id_t session;
     session.session_lenght =0x00;
     session.session_id = NULL;
-    handshake_hello *client_hello = make_hello(session);
+    server_client_hello_t *client_hello = make_hello(session);
     client_hello->TLS_version = TLS1_2;
 
     //make handshake
-    handshake h;
+    handshake_t h;
     h.type = CLIENT_HELLO;
     serialize_client_server_hello(client_hello, &h.message, &h.length, CLIENT_MODE);
     
     printf("\n***Sending message***\n");
-    print_handshake(&h);
+    print_handshake(&h,2, 0x00);
     print_hello(client_hello);
     send_handshake(client, &h);
     
@@ -41,6 +41,5 @@ int main() {
     free(h.message);
 
 	//wait_channel(client);
-	fclose(client->file);
 	free(client);
 }

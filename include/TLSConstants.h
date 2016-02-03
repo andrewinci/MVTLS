@@ -106,7 +106,7 @@ typedef enum{
 
 /**
  *	\enum handshake_type    
- *	Types of handshake packet
+ *	Types of handshake message
  */
 enum {
 	HELLO_REQUEST			= 0x00,

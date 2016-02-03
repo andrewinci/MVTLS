@@ -38,7 +38,7 @@ int send_record(channel_t *ch, record_t *r){
 	unsigned char *message = NULL;
 	uint16_t messageLen;
 	serialize_record(r, &message, &messageLen);
-	packet_basic_t *tosend = create_packet(NULL, NULL, message, messageLen); 
+	packet_transport_t *tosend = create_packet(NULL, NULL, message, messageLen); 
 	int result = send_packet(ch, tosend);
 
 	// Clean up

@@ -1,8 +1,7 @@
-CC := gcc # This is the main compiler
-#CC := clang --analyze # and comment out the linker last line for sanity
+CC := gcc
 SRCDIR := src
 BUILDDIR := build
-CFLAGS := -g -Wall -std=gnu99 -D MAKEFILE 
+CFLAGS := -O3 -Wall -std=gnu99 -D MAKEFILE 
 OPENSSLINCLUDE ?= -I/usr/local/ssl/include -L/usr/local/ssl/lib
 OPENSSLFLAGS := -lssl -lcrypto -ldl
 OPENSSL := $(OPENSSLFLAGS) $(OPENSSLINCLUDE)
@@ -23,11 +22,7 @@ clientServer: TLS
 
 # Tests
 
-tests: testCertificate testBasic testRecord testHandshake
-
-testCertificate:
-	$(CC) $(CFLAGS) tests/testCertificate.c $(INC) -o bin/testCertificate $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS) $(OPENSSL)
-
+tests: testTransport testRecord testHandshake
 
 testHandshake: TEST_NAME=Handshake
 testHandshake: handshakeProtocol
@@ -40,15 +35,15 @@ testRecord: TEST_NAME=Record
 testRecord: recordProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
-	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientTransportProtocol.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientTransportProtocol.o $(BUILDDIR)/ServerClientRecordProtocol.o $(LFLAGS)
 
-testBasic: TEST_NAME=Basic
-testBasic: basicProtocol
+testTransport: TEST_NAME=Transport
+testTransport: transportProtocol
 	@printf "${GREEN}** Make test for $(TEST_NAME) **${NC}\n"
 	@mkdir -p bin/test$(TEST_NAME)
-	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o -pthread
-	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientBasic.o -pthread
+	$(CC) $(CFLAGS) tests/client$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/client$(TEST_NAME) $(BUILDDIR)/ServerClientTransportProtocol.o -pthread
+	$(CC) $(CFLAGS) tests/server$(TEST_NAME).c $(INC) -o bin/test$(TEST_NAME)/server$(TEST_NAME) $(BUILDDIR)/ServerClientTransportProtocol.o -pthread
 
 # Protocols
 TLS: handshakeProtocol

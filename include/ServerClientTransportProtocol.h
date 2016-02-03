@@ -49,7 +49,7 @@ typedef struct{
 
 	/** Message byte stream of lenght lenght*/
 	unsigned char *message;
-}packet_basic_t;
+}packet_transport_t;
 
 /** \struct channel 
 * Struct for model and manage a file channel
@@ -70,7 +70,7 @@ typedef struct channel_t{
 	int fd;
 
 	/** Function to be called when a packet is received */
-	void (*onPacketReceive)(struct channel_t *ch, packet_basic_t *p);
+	void (*onPacketReceive)(struct channel_t *ch, packet_transport_t *p);
 
 	/** If the listener is running it is setted to 1 otherwise it is 0*/
 	int isEnabled;
@@ -96,7 +96,7 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
  * \param onPacketReceive : pointer to the function
  * \return : 1 if the function was setted, 0 otherwise
  */
-int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_basic_t *p));
+int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p));
 
 /**
  * Send a message trough the channel ch
@@ -105,7 +105,7 @@ int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_
  * \param p : pointer to packet to be sent
  * \return : 1 if the message was sent, 0 otherwise
  */
-int send_packet(channel_t *ch, packet_basic_t *p);
+int send_packet(channel_t *ch, packet_transport_t *p);
 
 /**
  * Start the channel. We open another thread for the reading
@@ -142,10 +142,10 @@ void stop_channel(channel_t *ch);
  * \param message_length: message lenght
  * \return a pointer to a builded packet
  */
-packet_basic_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
+packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
 /**
  * Deallocate memory allocated by packet
  * \param p : pointer to packet to free
  */
-void free_packet(packet_basic_t *p);
+void free_packet(packet_transport_t *p);

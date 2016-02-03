@@ -14,7 +14,7 @@ void print_master_secret();
 void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange);
 void compute_set_master_key_DHE(client_key_exchange_t *cliet_public);
 void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public);
-void onPacketReceive(channel_t *server2client, packet_basic_t *p);
+void onPacketReceive(channel_t *server2client, packet_transport_t *p);
 void do_handshake();
 
 // Set default verbosity to zero
@@ -77,7 +77,7 @@ void do_handshake() {
  * Function called from basic protocol
  * when a message is received
  */
-void onPacketReceive(channel_t *server2client, packet_basic_t *p){
+void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 
 	// Get record and print
 	record_t *r = deserialize_record(p->message, p->length);
