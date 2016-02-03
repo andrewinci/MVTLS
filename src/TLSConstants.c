@@ -1,21 +1,21 @@
 /**
- *  SSL/TLS Project
- *  \file TLSConstants.c
+ *	SSL/TLS Project
+ *	\file TLSConstants.c
  *
  * 	This file contains a set of constants used in 
  * 	the handshake protocol and function implementation 
- *	for manage the supported cipher suite.
+ *	to manage the supported cipher suite.
  *
- *  \date Created on 24/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 24/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  *
  */
 
 #include "TLSConstants.h"
-/** The number of supported cipher suite */
+/** The number of supported cipher suites */
 const int NUM_CIPHER_SUITE = 62;
 
-/** List of supported cipher suite */
+/** List of supported cipher suites */
 cipher_suite_t cipher_suite_list[] ={
 	// RSA
 	{0x0001 , "TLS_RSA_WITH_NULL_MD5" , 1 , 1 , 0 , 1 },
@@ -90,8 +90,8 @@ cipher_suite_t cipher_suite_list[] ={
 /**
  * Get the hash algorithm starting from the hash id.
  *
- *	\param h : the hash algorithm used
- *	\return an EVP_MD struct used for compute digest
+ *	\param h: the hash algorithm used
+ *	\return an EVP_MD struct used to compute digest
  */
 const EVP_MD *get_hash_function(hash_algorithm h){
 	switch (h) {
@@ -119,20 +119,20 @@ const EVP_MD *get_hash_function(hash_algorithm h){
 }
 
 /**
- * Fill array[] with all cipher suite that has key exchange kx, 
+ * Fill array[] with all cipher suites that has key exchange kx, 
  * hash algorithm h and authentication algorithm au.
  * 
  *
- *	\param kx : the key exchange algorithm (if NONE_KX the function consider all key exchange algorithm)
- *	\param h  : the hash algorithm  (if NONE_H the function consider all hash algorithm)
- * 	\param au : the authentication algorithm (if NONE_AU the function consider all authentication algorithm)
- *	\param array[] : an empty array of size NUM_CIPHER_SUITE.
- *	\return the number of cipher suite loaded in array[]
+ *	\param kx: the key exchange algorithm (if NONE_KX the function consider all key exchange algorithms)
+ *	\param h: the hash algorithm (if NONE_H the function consider all hash algorithms)
+ * 	\param au: the authentication algorithm (if NONE_AU the function consider all authentication algorithms)
+ *	\param array[]: an empty array of size NUM_CIPHER_SUITE.
+ *	\return the number of cipher suites loaded in array[]
  */
 int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]){
 	int j = 0;
 	for(int i=0;i<NUM_CIPHER_SUITE;i++)
-		if( (kx == NONE_KX || cipher_suite_list[i].kx == kx) && (h == NONE_H     || cipher_suite_list[i].hash == h) && (au == NONE_AU || cipher_suite_list[i].au == au)){
+		if( (kx == NONE_KX || cipher_suite_list[i].kx == kx) && (h == NONE_H || cipher_suite_list[i].hash == h) && (au == NONE_AU || cipher_suite_list[i].au == au)){
 			array[j] = cipher_suite_list[i];
 			j++;
 		}
@@ -143,7 +143,7 @@ int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authenticatio
 /**
  * Given the cipher suite name return the cipher suite struct.
  *
- *	\param name : cipher suite name
+ *	\param name: cipher suite name
  *	\return cipher suite struct with name name
 */
 cipher_suite_t get_cipher_suite_by_name(char *name){
@@ -156,7 +156,7 @@ cipher_suite_t get_cipher_suite_by_name(char *name){
 /**
  * Given the id of a cipher suite return the cipher suite struct.
  *
- *	\param id : cipher suite id
+ *	\param id: cipher suite id
  *	\return cipher suite struct with id id
  */
 cipher_suite_t get_cipher_suite_by_id(uint16_t id){

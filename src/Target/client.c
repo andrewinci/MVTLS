@@ -1,9 +1,9 @@
 //
-//  client.c
-//  SSLXcodeProject
+//	client.c
+//	SSLXcodeProject
 //
-//  Created by Darka on 12/01/16.
-//  Copyright © 2016 Darka. All rights reserved.
+//	Created by Darka on 12/01/16.
+//	Copyright © 2016 Darka. All rights reserved.
 //
 
 #include <stdio.h>
@@ -11,33 +11,33 @@
 #include "TLS.h"
 #define USAGE 	"TLSClient: TLS1.2 version handshake\n"\
 				"\n"\
-				"Usage:  \n"\
-				"  TLSClient [args] \n"\
-				" \n"\
+				"Usage:\n"\
+				" TLSClient [args]\n"\
+				"\n"\
 				"Options: \n"\
-				"  Specify cipher suite id (not hex) \n"\
-				"    -c  --cipher_id        [id]\n"\
-				"   \n"\
-				"  Cipher suite name     \n"\
-				"    -n  --name             [name]\n"\
-				"   \n"\
-				"  Specify key exchange    \n"\
-				"    -x  --key_exchange    (RSA|DHE|ECDHE)  \n"\
-				"   \n"\
-				"  Specify authentication algorithm \n"\
-				"    -a  --auth_algorithm  (RSA|DSS|ECDSA) \n"\
-				" \n"\
-				"  Specify verbosity \n"\
-				"    -v     0 default (1|2|3) \n"\
-				" \n"\
-				"  Specify hash algorithm \n"\
-				"    -h  --hash_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \n"\
-				" \n"\
-				"  Show supported cipher suites \n"\
-				"    -l --list\n"\
-				" \n"\
-				"  Show this help \n"\
-				"    --help \n\n"
+				" Specify cipher suite id (not hex)\n"\
+				"	-c	--cipher_id		[id]\n"\
+				"\n"\
+				" Cipher suite name\n"\
+				"	-n	--name			[name]\n"\
+				"\n"\
+				" Specify key exchange\n"\
+				"	-x	--key_exchange		(RSA|DHE|ECDHE)\n"\
+				"\n"\
+				" Specify authentication algorithm\n"\
+				"	-a	--auth_algorithm	(RSA|DSS|ECDSA)\n"\
+				"\n"\
+				" Set verbosity\n"\
+				"	-v				(0 default |1|2|3)\n"\
+				"\n"\
+				" Specify hash algorithm\n"\
+				"	-h	--hash_algorithm	(MD5|SHA1|SHA224|SHA256|SHA384|SHA512)\n"\
+				"\n"\
+				" Show supported cipher suites\n"\
+				"	-l	--list\n"\
+				"\n"\
+				" Show this help\n"\
+				"	--help\n\n"
 
 void onPacketReceive(channel_t *ch, packet_transport_t *p);
 void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);

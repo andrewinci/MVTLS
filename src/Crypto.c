@@ -1,12 +1,12 @@
 /**
- *  SSL/TLS Project
- *  \file Crypto.c
+ *	SSL/TLS Project
+ *	\file Crypto.c
  *
  * 	PRF function and sign/verify function. 
  *	The follow functions wrap openssl library for sign, verify.
  * 
- *  \date Created on 27/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 27/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
 #include "Crypto.h"
@@ -14,14 +14,14 @@
 /**
  * Apply the PRF to a secret.
  *
- *	\param hash : the hash to use in the hmac
- *	\param secret : the secret to process
- *	\param secret_len : secrete length
- *	\param label : the label of the PRF computation
- *	\param seed : the seed for the computation
- *	\param seed_len : seed length
- *	\param result : a pointer to char, will contain the result after computation. Must point to NULL
- *	\param result_len : the desired length of pseudo random stream.
+ *	\param hash: the hash to use in the hmac
+ *	\param secret: the secret to process
+ *	\param secret_len: secret length
+ *	\param label: the label of the PRF computation
+ *	\param seed: the seed for the computation
+ *	\param seed_len: seed length
+ *	\param result: a pointer to char, will contain the result after computation. Must point to NULL
+ *	\param result_len: the desired length of pseudo random stream.
  */
 void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label, unsigned char *seed, int seed_len, int result_len, unsigned char **result){
 	int buffer_size = ((1+result_len/hash->md_size)*hash->md_size);
@@ -51,14 +51,14 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
 }
 
 /**
- * Use the private key ../certificates/serverDSA.key for sign a message
+ * Use the private key ../certificates/serverDSA.key to sign a message
  *
- *	\param signature : a pointer to NULL, will return the computed signature
- *	\param signature_lenght : return the signature length
- *	\param to_sign_len : the message length to sign
- *	\param to_sign : the message to sign
- *	\param sign_type : specify the message type. (for openssl support)
- *	\return 1 if the sign success. -1 if an error occurs.
+ *	\param signature: a pointer to NULL, will return the computed signature
+ *	\param signature_lenght: return the signature length
+ *	\param to_sign_len: the message length to sign
+ *	\param to_sign: the message to sign
+ *	\param sign_type: specify the message type (for OpenSSL support)
+ *	\return 1 if the sign succeeded, -1 if an error occurred
  */
 int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign, int sign_type){
 	// Get private key for sign
@@ -82,14 +82,14 @@ int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, uns
 }
 
 /**
- * Use the private key ../certificates/serverRSA.key for sign a message
+ * Use the private key ../certificates/serverRSA.key to sign a message
  *
- *	\param signature : a pointer to NULL, will return the computed signature
- *	\param signature_lenght : return the signature length
- *	\param to_sign_len : the message length to sign
- *	\param to_sign : the message to sign
- *	\param sign_type : specify the message type. (for openssl support)
- *	\return 1 if the sign success. -1 if an error occurs.
+ *	\param signature: a pointer to NULL, will return the computed signature
+ *	\param signature_lenght: return the signature length
+ *	\param to_sign_len: the message length to sign
+ *	\param to_sign: the message to sign
+ *	\param sign_type: specify the message type (for OpenSSL support)
+ *	\return 1 if the sign succeeded, -1 if an error occurred
  */
 int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign, int sign_type) {
 	// Get private key from file
@@ -97,7 +97,7 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
 	RSA *rsa_private = NULL;
 	FILE *fp;
 
-	if((fp= fopen("../certificates/serverRSA.key", "r"))  != NULL){
+	if((fp= fopen("../certificates/serverRSA.key", "r")) != NULL){
 		rsa_private=PEM_read_RSAPrivateKey(fp,NULL,NULL,NULL);
 		if(rsa_private==NULL){
 			printf("\nUnable to open RSA private key, store it in ../certificates/serverRSA.key\n");
@@ -117,14 +117,14 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
 }
 
 /**
- * Use the private key ../certificates/serverECDSA.key for sign a message
+ * Use the private key ../certificates/serverECDSA.key to sign a message
  *
- *	\param signature : a pointer to NULL, will return the computed signature
- *	\param signature_lenght : return the signature length
- *	\param to_sign_len : the message length to sign
- *	\param to_sign : the message to sign
- *	\param sign_type : specify the message type. (for openssl support)
- *	\return 1 if the sign success. -1 if an error occurs.
+ *	\param signature: a pointer to NULL, will return the computed signature
+ *	\param signature_lenght: return the signature length
+ *	\param to_sign_len: the message length to sign
+ *	\param to_sign: the message to sign
+ *	\param sign_type: specify the message type (for OpenSSL support)
+ *	\return 1 if the sign succeeced, -1 if an error occurred
  */
 int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, unsigned int to_sign_len, unsigned char *to_sign, int sign_type){
 	int res;
@@ -152,13 +152,13 @@ int sign_with_ECDSA(unsigned char **signature, unsigned int *signature_length, u
 
 /**
  * Sign the server_key_exchange message for a DHE key exchange.
- * The function choice an arbitrary hash algorithm for the signature (except md5,sha1).
- * It take private key in ../certificates/ folder with name serverA.key wher A can be RSA, DSS.
+ * The function chooses an arbitrary hash algorithm for the signature (except MD5, SHA-1).
+ * It takes private key in ../certificates/ folder with name serverA.key where A can be RSA, DSS.
  *
- *	\param client_random : the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random : the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex : the server key exchange message to sign.
- *	\param au : the authentication algorithm.
+ *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
+ *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
+ *	\param server_key_ex: the server key exchange message to sign.
+ *	\param au: the authentication algorithm.
  */
 int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au) {
 
@@ -241,11 +241,11 @@ int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_r
 /**
  * Verify the server_key_exchange message for a DHE key exchange.
  *
- *	\param certificate : the certificate to use for verify the signature
- *	\param client_random : the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random : the random sent by the server in the server hello. Must point to 32 byte stream
-  *	\param server_key_ex : the server key exchange message to verify.
- *	\param au : the authentication algorithm.
+ *	\param certificate: the certificate to use to verify the signature
+ *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
+ *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
+ *	\param server_key_ex: the server key exchange message to verify.
+ *	\param au: the authentication algorithm.
  */
 int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au) {
 
@@ -316,7 +316,7 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
 		EVP_PKEY *pubkey = NULL;
 		DSA *dsa = NULL;
 		pubkey = X509_get_pubkey(certificate);
-		dsa = EVP_PKEY_get1_DSA(pubkey);        
+		dsa = EVP_PKEY_get1_DSA(pubkey);
 		result = DSA_verify(sign_type, hash_digest, hash->md_size, server_key_ex->signature, server_key_ex->signature_length, dsa);
 		EVP_PKEY_free(pubkey);
 		DSA_free(dsa);
@@ -332,13 +332,13 @@ int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_rando
 
 /**
  * Sign the server_key_exchange message for a ECDHE key exchange.
- * The function choice an arbitrary hash algorithm for the signature (except md5,sha1).
- * It take private key in ../certificates/ folder with name serverA.key wher A can be RSA, ECDSA.
+ * The function chooses an arbitrary hash algorithm for the signature (except MD5, SHA-1).
+ * It takes private key in ../certificates/ folder with name serverA.key where A can be RSA, ECDSA.
  *
- *	\param client_random : the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random : the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex : the server key exchange message to sign.
- *	\param au : the authentication algorithm.
+ *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
+ *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
+ *	\param server_key_ex: the server key exchange message to sign.
+ *	\param au: the authentication algorithm.
  */
 int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au){
 
@@ -407,11 +407,11 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
 /**
  * Verify the server_key_exchange message for a ECDHE key exchange.
  *
- *	\param certificate : the certificate to use for verify the signature
- *	\param client_random : the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random : the random sent by the server in the server hello. Must point to 32 byte stream
-  *	\param server_key_ex : the server key exchange message to verify.
- *	\param au : the authentication algorithm.
+ *	\param certificate: the certificate to use for verify the signature
+ *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
+ *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
+ *	\param server_key_ex: the server key exchange message to verify.
+ *	\param au: the authentication algorithm.
  */
 int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au){
 
@@ -459,7 +459,7 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
 	int result = 0;
 	if(au == RSA_AU){
 		EVP_PKEY *pubkey = NULL;
-		RSA *rsa = NULL;        
+		RSA *rsa = NULL;
 		pubkey = X509_get_pubkey(certificate);
 		rsa = EVP_PKEY_get1_RSA(pubkey);
 		result = RSA_verify(sign_type, hash_digest, hash->md_size, server_key_ex->signature, server_key_ex->signature_length, rsa);
@@ -468,7 +468,7 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
 	}
 	else if(au == ECDSA_AU){
 		EVP_PKEY *pubkey = NULL;
-		EC_KEY *ecdsa = NULL;        
+		EC_KEY *ecdsa = NULL;
 		pubkey = X509_get_pubkey(certificate);
 		ecdsa = EVP_PKEY_get1_EC_KEY(pubkey);
 		result = ECDSA_verify(sign_type, hash_digest, hash->md_size, server_key_ex->signature, server_key_ex->signature_length, ecdsa);

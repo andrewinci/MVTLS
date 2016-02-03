@@ -1,12 +1,12 @@
 /**
- *  SSL/TLS Project
- *  \file TLS.c
+ *	SSL/TLS Project
+ *	\file TLS.c
  *	This file provide a set of function for the TLS
- *	handshake. The function are used for make TLS message
+ *	handshake. The function are used to make TLS message
  *	for both server and client.
- *	
- *  \date Created on 13/01/16.
- *  \copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *
+ *	\date Created on 13/01/16.
+ *	\copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  *
  */
 
@@ -14,9 +14,9 @@
 
 /**
  * Append the handshake h to the handshake_messages field of TLS_param
- *	
- *	\param TLS_param : connection parameters
- *	\param h : the handshake to append
+ *
+ *	\param TLS_param: connection parameters
+ *	\param h: the handshake to append
  */
 void backup_handshake(TLS_parameters_t *TLS_param, handshake_t *h){
 
@@ -42,13 +42,13 @@ void backup_handshake(TLS_parameters_t *TLS_param, handshake_t *h){
 			/*** CLIENT ***/
 
 /**
- * Given an array of cipher suite make a client hello message. 
- * The function also fill the random field using the time stamp and a random generator(openssl)
+ * Given an array of cipher suites, make a client hello message. 
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
  *
- *	\param client_random : the random setted in the client hello
- *	\param cipher_suite_list : an array of cipher suite to add in the client hello
- *	\param cipher_suite_len	: the number of cipher suite in the list
- *	\return the hello client handshake message
+ *	\param client_random: the random set in the client hello
+ *	\param cipher_suite_list: an array of cipher suites to add to the client hello
+ *	\param cipher_suite_len: the number of cipher suites in the list
+ *	\return the client hello handshake message
  */
 handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
 
@@ -84,8 +84,8 @@ handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cip
  * Make the client key exchange message for RSA key exchange.
  * This function is called from make_client_key_exchange if the key exchange is RSA.
  *
- *	\param client_key_ex : the client key exchange message
- *	\param TLS_param : the connection parameters
+ *	\param client_key_ex: the client key exchange message
+ *	\param TLS_param: the connection parameters
  */
 void make_RSA_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
@@ -135,8 +135,8 @@ void make_RSA_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchan
  * Make the client key exchange message for DHE key exchange.
  * This function is called from make_client_key_exchange if the key exchange is DHE.
  *
- *	\param client_key_ex : the client key exchange message
- *	\param TLS_param : the connection parameters
+ *	\param client_key_ex: the client key exchange message
+ *	\param TLS_param: the connection parameters
  */
 void make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
@@ -190,8 +190,8 @@ void make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchan
  * Make the client key exchange message for ECDHE key exchange.
  * This function is called from make_client_key_exchange if the key exchange is ECDHE.
  *
- *	\param client_key_ex : the client key exchange message
- *	\param TLS_param : the connection parameters
+ *	\param client_key_ex: the client key exchange message
+ *	\param TLS_param: the connection parameters
  */
 void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
 
@@ -254,12 +254,12 @@ void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exch
 }
 
 /**
- * Given the information in the TLS_parameter and the key exchange algorithm
- * return the handshake of the client key exchange. That include compute the 
- * pre-master key. It also compute the master secret and set in the TLS_param.
+ * Given the information in TLS_parameter and the key exchange algorithm
+ * return the handshake of the client key exchange. That includes to compute the 
+ * pre-master key. It also computes the master secret and set it in TLS_param.
  *
- *	\param TLS_param : the parameters of the connection
- *	\param key_ex_alg : the key exchange algorithm of the handshake
+ *	\param TLS_param: the parameters of the connection
+ *	\param key_ex_alg: the key exchange algorithm of the handshake
  *	\return the client key exchange handshake message 
  */
 handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key_ex_alg){
@@ -313,9 +313,9 @@ record_t * make_change_cipher_spec() {
 
 /**
  * Given the connection parameters compute the finished message.
- * Note in the TLS protocol this message is encrypted.
+ * Note: TLS protocol requires this message to be encrypted.
  *
- *	\param TLS_param : the connection parameters 
+ *	\param TLS_param: the connection parameters 
  *	\return the finished handshake message
  */
 handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) {
@@ -347,16 +347,16 @@ handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) {
 			/*** SERVER ***/
 /**
  * Given the client hello message the function makes the server hello.
- * It choices a random cipher suite among the those provided by the client. 
- * The function also fill the random field using the time stamp and a random generator(openssl)
+ * It chooses a random cipher suite among those provided by the client. 
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
  *
- *	\param TLS_param : the connection parameters
- *	\param client_hello : the received client hello.
+ *	\param TLS_param: the connection parameters
+ *	\param client_hello: the received client hello.
  *	\return the hello server handshake message
  */
 handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello_t *client_hello){
 
-	// Initialize  server hello (without SessionID)
+	// Initialize server hello (without SessionID)
 	session_id_t *session= malloc(sizeof(session_id_t));
 	session->session_lenght = 0x00;
 	session->session_id = NULL;
@@ -396,9 +396,9 @@ handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello
  * Make the certificate message for the server.
  * That message depends on the authentication algorithm hence we require the connection
  * parameters. The function also sets the certificate in the connection parameters for
- * feature uses.
+ * further uses.
  *
- *	\param TLS_param : connection parameters
+ *	\param TLS_param: connection parameters
  *	\return the certificate handshake message
  */
 handshake_t * make_certificate(TLS_parameters_t *TLS_param){
@@ -442,7 +442,7 @@ handshake_t * make_certificate(TLS_parameters_t *TLS_param){
  * It computes the DH parameters and save the message in the 
  * connection parameters TLS_param.
  *
- *	\param TLS_param : connection parameters
+ *	\param TLS_param: connection parameters
  *	\return the dhe_server_key_exchange struct
  */
 dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_param){
@@ -497,7 +497,7 @@ dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_p
  * It computes the ECDHE parameters using the secp256k1 curve and save the message in the 
  * connection parameters TLS_param.
  *
- *	\param TLS_param : connection parameters
+ *	\param TLS_param: connection parameters
  *	\return the ecdhe_server_key_exchange struct
  */
 ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *TLS_param){
@@ -508,7 +508,7 @@ ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *T
 	uint16_t curve_name = NID_secp256k1;
 	// Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve
 	if((key = EC_KEY_new_by_curve_name(curve_name)) == NULL){
-		printf("\nError setting  EC parameters\n");
+		printf("\nError in setting EC parameters\n");
 		exit(-1);
 	}
 	// Generate the private and public keys
@@ -539,9 +539,9 @@ ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *T
 /**
  * Make the server key exchange handshake message. 
  * The function also sets the message in the connection parameters
- * for compute the master key in the client key exchange message.
+ * to compute the master key in the client key exchange message.
  *
- *	\param TLS_param : connection parameters
+ *	\param TLS_param: connection parameters
  *	\return the server key exchange handshake message
  */
 handshake_t * make_server_key_exchange(TLS_parameters_t *TLS_param){
@@ -549,7 +549,7 @@ handshake_t * make_server_key_exchange(TLS_parameters_t *TLS_param){
 	// Initialize server key exchange
 	void *server_key_ex = NULL;
 
-	// Make  server key exchange packet
+	// Make server key exchange packet
 	switch (TLS_param->cipher_suite.kx){
 		case DHE_KX:
 			server_key_ex = (dhe_server_key_exchange_t *)make_DHE_server_key_exchange(TLS_param);

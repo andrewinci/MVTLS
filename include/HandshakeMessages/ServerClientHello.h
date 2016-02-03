@@ -1,12 +1,11 @@
 //
-//  SSL/TLS Project
-//  ServerClientHello.h
+//	SSL/TLS Project
+//	ServerClientHello.h
 //
-//  Created on 24/12/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+//	Created on 24/12/15.
+//	Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
-// This file is used to manade the client/server hello message
-// of the handshake protocol
+//	This file is used to manade the client/server hello message of the handshake protocol
 //
 #ifndef ServerClientHello_h
 #define ServerClientHello_h
@@ -51,7 +50,7 @@ typedef struct{
 
 /*
  * Make a client hello message
- * session : session id to recover
+ * session: session id to recover
  * return the handshake, it has to be deallocated
  */
 server_client_hello_t *make_hello(session_id_t session);
@@ -63,9 +62,9 @@ void serialize_client_server_hello(server_client_hello_t *hello, unsigned char *
 
 /*
  * Build an handshake type from a byte stream
- * stream    : poiter to the byte stream
- * streamLen : stream length
- * mode : define if clientHello or serverHello (differenze in the lenght)
+ * stream: poiter to the byte stream
+ * streamLen: stream length
+ * mode: define if clientHello or serverHello (differenze in the lenght)
  */
 server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode);
 

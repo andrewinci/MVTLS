@@ -11,7 +11,7 @@
  *	4 byte for packet length
  *	message
  *
- *	both server and client after read a message they blank the file
+ *	Both server and client, after reading a message, blank the file
  *	both server and client cannot write if the file is not blank, they wait
  *
  *
@@ -33,19 +33,19 @@
 #include <pthread.h>
 #include <time.h>
 
-/** \def DELAY_TIME the time to wait between 2 read of the file.
-	Important for don't use to much CPU.
+/** \def DELAY_TIME the time to wait between 2 readings of the file.
+	Important to don't use too much CPU.
 */
 #define DELAY_TIME 50
 
 /** \struct packet_basic
- * This struct substitute the transport layer in our implementation 
+ * This struct substitutes the transport layer in our implementation
  */
 typedef struct{
-	/** Packet source name, 8 Byte length*/
+	/** Packet source name, 8 bytes length*/
 	char *source;
 
-	/** Packet destination name, 8 Byte length*/
+	/** Packet destination name, 8 bytes length*/
 	char *destination;
 
 	/** Message to send length*/
@@ -56,7 +56,7 @@ typedef struct{
 }packet_transport_t;
 
 /** \struct channel 
-* Struct for model and manage a file channel
+* Struct to model and manage a file channel
 * between client and server
 */
 typedef struct channel_t{
@@ -66,7 +66,7 @@ typedef struct channel_t{
 	/** Channel destination name e.g. client*/
 	char *channel_destination;
 
-	/** File to use for exchange messages,
+	/** File to use to exchange messages,
 	the channel between client and server */
 	char *fileName;
 
@@ -76,7 +76,7 @@ typedef struct channel_t{
 	/** Function to be called when a packet is received */
 	void (*onPacketReceive)(struct channel_t *ch, packet_transport_t *p);
 
-	/** If the listener is running it is setted to 1 otherwise it is 0*/
+	/** If the listener is running it is set to 1, otherwise it is 0*/
 	int isEnabled;
 
 	/** Secondary thread for reading/writing */
@@ -87,8 +87,8 @@ typedef struct channel_t{
 /**
  * Create a server/client channel using the fileName as comunication channel
  *
- * \param fileName : file name of the channel
- * \param serverName : name of the server/client
+ * \param fileName: file name of the channel
+ * \param serverName: name of the server/client
  * \return the created channel
  */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
@@ -96,42 +96,42 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
 /**
  * Set the function to be called when a message is received
  *
- * \param ch : channel interested
- * \param onPacketReceive : pointer to the function to be called
- * \return : 1 if the function was setted, 0 otherwise
+ * \param ch: channel interested
+ * \param onPacketReceive: pointer to the function to be called
+ * \return: 1 if the function was set, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p));
 
 /**
- * Send a message trough the channel ch
+ * Send a message through the channel ch
  *
- * \param ch : channel to be used
- * \param p : pointer to packet to be sent
- * \return : 1 if the message was sent, 0 otherwise
+ * \param ch: channel to be used
+ * \param p: pointer to packet to be sent
+ * \return: 1 if the message was sent, 0 otherwise
  */
 int send_packet(channel_t *ch, packet_transport_t *p);
 
 /**
  * Start the channel. We open another thread for the reading
  * and the current thread for writing. From now on (if the operation
- * is succesfull) the client/server read continously from channel.
- * (for STOP use stop())
+ * is successful) the client/server read continously from channel.
+ * (to STOP use stop())
  *
- * \param ch : channel to start
- * \return : 1 if the thread was started, 0 otherwise
+ * \param ch: channel to start
+ * \return: 1 if the thread was started, 0 otherwise
  */
 int start_listener(channel_t *ch);
 
 /**
- * Stop the callee and wait untill stop is called
- * \param ch : the chanal to wait
+ * Stop the caller and wait until stop() is called
+ * \param ch: the channel to wait
  */
 void wait_channel(channel_t *ch);
 
 /**
- * Stop the reading/write thread and the channel.
+ * Stop the reading/writing thread and the channel.
  * Note: the function doesn't free the channel.
- * \param ch : channel to stop
+ * \param ch: channel to stop
  */
 void stop_channel(channel_t *ch);
 
@@ -139,17 +139,16 @@ void stop_channel(channel_t *ch);
  * Create a packet starting from a byte stream 
  * source and destination
  *
- * \param source        : packet source
- * \param destination   : packet receiver
- * \param message       : message stream to be 
-                        encapsulate into packet
+ * \param source: packet source
+ * \param destination: packet receiver
+ * \param message: message stream to be encapsulate into packet
  * \param message_length: message lenght
- * \return a pointer to a builded packet
+ * \return a pointer to a built packet
  */
 packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
 /**
  * Deallocate memory allocated by packet
- * \param p : pointer to packet to free
+ * \param p: pointer to packet to free
  */
 void free_packet(packet_transport_t *p);

@@ -1,9 +1,9 @@
 //
-//  SSL/TLS Project
-//  serverClientHello.h
+//	SSL/TLS Project
+//	serverClientHello.h
 //
-//  Created on 24/12/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+//	Created on 24/12/15.
+//	Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
 //
 
 #ifdef MAKEFILE
@@ -174,7 +174,7 @@ server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, ui
 		cmethods.compression_id = malloc(sizeof(uint8_t)*cmethods.length);
 		memcpy(cmethods.compression_id,stream,cmethods.length);
 	}
-    else
+	else
 		cmethods.compression_id = NULL;
 
 	result->compression_methods = cmethods;

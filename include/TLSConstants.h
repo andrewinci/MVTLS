@@ -1,13 +1,13 @@
 /**
- *  SSL/TLS Project
- *  \file TLSConstants.h
+ *	SSL/TLS Project
+ *	\file TLSConstants.h
  *
  * 	This file contains a set of constants used in 
- * 	the handshake protocol and function interface for manage 
- *	the supported cipher suite.
+ * 	the handshake protocol and function interface to manage 
+ *	the supported cipher suites.
  *
- *  \date Created on 24/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 24/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  *
  */
 
@@ -45,14 +45,14 @@ typedef enum{
 
 /**
  * \enum key_exchange_algorithm
- * Different type of key exchange algorithm
+ * Different types of key exchange algorithm
  */
 typedef enum{
 	/** No algorithm */
 	NONE_KX = -1,
 	/** RSA algorithm */
 	RSA_KX = 1,
-	/** Ephemeral Diffie Hellman*/  
+	/** Ephemeral Diffie Hellman*/
 	DHE_KX = 2,
 	/** Ephemeral Diffie Hellman over elliptic curve*/
 	ECDHE_KX = 3
@@ -60,7 +60,7 @@ typedef enum{
 
 /**
  *	\enum authentication_algorithm
- *	Different type of authentication algorithm
+ *	Different types of authentication algorithm
  */
 typedef enum{
 	/** No algorithm*/
@@ -75,7 +75,7 @@ typedef enum{
 
 /**
  *	\enum hash_algorithm
- *	Different type of hash algorithm
+ *	Different types of hash algorithm
  */
 typedef enum{
 	/** No hash */
@@ -96,7 +96,7 @@ typedef enum{
 
 /**
  *	\enum channel_mode
- *	Enum used for set the packet mode
+ *	Enum used to set the packet mode
  *	e.g. server_hello, client_hello
  */
 typedef enum{
@@ -105,20 +105,20 @@ typedef enum{
 }channel_mode;
 
 /**
- *	\enum handshake_type    
+ *	\enum handshake_type
  *	Types of handshake message
  */
 enum {
 	HELLO_REQUEST			= 0x00,
-	CLIENT_HELLO			= 0x01,
-	SERVER_HELLO			= 0x02,
-	CERTIFICATE				= 0x0B,
-	SERVER_KEY_EXCHANGE     = 0x0C,
+	CLIENT_HELLO				= 0x01,
+	SERVER_HELLO				= 0x02,
+	CERTIFICATE					= 0x0B,
+	SERVER_KEY_EXCHANGE	= 0x0C,
 	CERTIFICATE_REQUEST		= 0x0D,
 	SERVER_DONE				= 0x0E,
 	CERTIFICATE_VERIFY		= 0x0F,
 	CLIENT_KEY_EXCHANGE		= 0x10,
-	FINISHED				= 0x14
+	FINISHED						= 0x14
 };
 
 /**
@@ -143,21 +143,21 @@ typedef struct{
 
 #endif
 
-/** The number of supported cipher suite */
+/** The number of supported cipher suites */
 extern const int NUM_CIPHER_SUITE;
 
 /**
  * Get the hash algorithm starting from the hash id.
  *
- *	\param h : the hash algorithm used
- *	\return an EVP_MD struct used for compute digest
+ *	\param h: the hash algorithm used
+ *	\return an EVP_MD struct used to compute digest
  */
 const EVP_MD *get_hash_function(hash_algorithm h);
 
 /**
  * Given the id of a cipher suite return the cipher suite struct.
  *
- *	\param id : cipher suite id
+ *	\param id: cipher suite id
  *	\return cipher suite struct with id id
  */
 cipher_suite_t get_cipher_suite_by_id(uint16_t id);
@@ -165,20 +165,20 @@ cipher_suite_t get_cipher_suite_by_id(uint16_t id);
 /**
  * Given the cipher suite name return the cipher suite struct.
  *
- *	\param name : cipher suite name
+ *	\param name: cipher suite name
  *	\return cipher suite struct with name name
 */
 cipher_suite_t get_cipher_suite_by_name(char *name);
 
 /**
- * Fill array[] with all cipher suite that has key exchange kx, 
+ * Fill array[] with all cipher suites that has key exchange kx, 
  * hash algorithm h and authentication algorithm au.
  * 
  *
- *	\param kx : the key exchange algorithm (if NONE_KX the function consider all key exchange algorithm)
- *	\param h  : the hash algorithm  (if NONE_H the function consider all hash algorithm)
- * 	\param au : the authentication algorithm (if NONE_AU the function consider all authentication algorithm)
- *	\param array[] : an empty array of size NUM_CIPHER_SUITE.
- *	\return the number of cipher suite loaded in array[]
+ *	\param kx: the key exchange algorithm (if NONE_KX the function consider all key exchange algorithms)
+ *	\param h: the hash algorithm (if NONE_H the function consider all hash algorithms)
+ * 	\param au: the authentication algorithm (if NONE_AU the function consider all authentication algorithms)
+ *	\param array[]: an empty array of size NUM_CIPHER_SUITE.
+ *	\return the number of cipher suites loaded in array[]
  */
 int get_cipher_suites(key_exchange_algorithm kx, hash_algorithm h, authentication_algorithm au, cipher_suite_t array[]);

@@ -1,11 +1,11 @@
 /**
- *  SSL/TLS Project
- *  \file ServerClientRecordProtocol.c
+ *	SSL/TLS Project
+ *	\file ServerClientRecordProtocol.c
  *	This file is an interface to the record protocol.
  *	Provide function and struct for modelling and manage record messages.
  *
- *  \date Created on 23/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 23/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  *
  */
 
@@ -15,8 +15,8 @@
  * Serialize record in a byte stream of length message_len stored in 
  * message.
  *
- * \param message : pointer to null (the function allocate space for you)
- * \param messageLen : pointer to integer (will contains the message length)
+ * \param message: pointer to NULL (the function itself allocates space)
+ * \param messageLen: pointer to integer (will contains the message length)
  */
 void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
 
@@ -34,9 +34,9 @@ void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen
  * De-serialize a byte stream message of length message_len into 
  * a record struct.
  *
- * \param message : message received
- * \param messageLen : message length
- * \return record : the de-serialized record
+ * \param message: message received
+ * \param messageLen: message length
+ * \return record: the de-serialized record
  */
 record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
 	record_t *result = malloc(sizeof(record_t));
@@ -54,10 +54,10 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
 
 /**
  * Send record to_send over the channel ch.
- * Note :for send record is important to set 'to' and 'from' in the channel creation.
+ * Note: to send record is important to set 'to' and 'from' in the channel creation.
  *
- * \param ch : channel to use
- * \param to_send  : record to send
+ * \param ch: channel to use
+ * \param to_send: record to send
  * \return 1 if the message was successfully sent, 0 otherwise
  */
 int send_record(channel_t *ch, record_t *r){
@@ -76,7 +76,7 @@ int send_record(channel_t *ch, record_t *r){
 
 /**
  * Print a description of the record
- *	\param r : record to print.
+ *	\param r: record to print.
  */
 void print_record(record_t *r){
 	unsigned char *message;
@@ -93,7 +93,7 @@ void print_record(record_t *r){
 
 /**
  * Deallocate memory pointed by r
- * \param r : pointer to record to free
+ * \param r: pointer to record to free
  */
 void free_record(record_t *r){
 	if(r == NULL)

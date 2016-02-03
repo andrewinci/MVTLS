@@ -1,12 +1,12 @@
 /**
- *  SSL/TLS Project
- *  \file ServerClientKeyExchange.h
- *	
- *  This file contains functions for manage the server/client key exchange
+ *	SSL/TLS Project
+ *	\file ServerClientKeyExchange.h
+ *
+ *	This file contains functions for manage the server/client key exchange
  *	and respective structs.
  *
- *  \date Created on 06/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 06/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
 #ifndef ServerClientKeyExchange_h
@@ -29,20 +29,20 @@
 	The named curve mode is the only used.
  */
 typedef struct{
-	/** curve name*/
+	/** Curve name*/
 	uint16_t named_curve;
 
-	/** public key*/
+	/** Public key*/
 	BIGNUM *pub_key;
 
-	/** first byte for specify the signature algorithm
-		second byte for specify the hash algorithm */
+	/** First byte to specify the signature algorithm
+		second byte to specify the hash algorithm */
 	uint16_t sign_hash_alg; 
 
-	/** signature length*/
+	/** Signature length*/
 	unsigned int signature_length;
 
-	/** signature byte stream*/
+	/** Signature byte stream*/
 	unsigned char *signature;
 
 }ecdhe_server_key_exchange_t;
@@ -53,23 +53,23 @@ typedef struct{
  */
 typedef struct{
 
-	/** field prime */
+	/** Prime field */
 	BIGNUM *p;
 
-	/** field generator*/
+	/** Field generator*/
 	BIGNUM *g;
 
 	/** DH public key. pubkey = (g^k mod p) where k is the private key*/
 	BIGNUM *pubKey;
 
-	/** first byte for specify the signature algorithm
-	second byte for specify the hash algorithm */
+	/** First byte to specify the signature algorithm
+	second byte to specify the hash algorithm */
 	uint16_t sign_hash_alg; 
 
-	/** signature length*/
+	/** Signature length*/
 	unsigned int signature_length;
 
-	/** signature byte stream*/
+	/** Signature byte stream*/
 	unsigned char *signature;
 
 }dhe_server_key_exchange_t;
@@ -80,10 +80,10 @@ typedef struct{
  */
 typedef struct{
 
-	/** key length */
+	/** Key length */
 	uint16_t key_length;
 
-	/** key byte stream */
+	/** Key byte stream */
 	unsigned char *key;
 
 }client_key_exchange_t;
@@ -91,7 +91,7 @@ typedef struct{
 /**
 	\def server_key_exchange_t
 	The general server key exchange message. 
-	It can be ecdhe or dhe, for this reason we ask for key exchange algorithm 
+	It can be ECDHE or DHE, for this reason we ask for key exchange algorithm 
 	each time that we use that type.
 */
 typedef void server_key_exchange_t;
@@ -101,20 +101,20 @@ typedef void server_key_exchange_t;
 /**
  * Serialize a server key exchange message into a byte stream.
  * 
- *	\param server_key_exchange : the message to serialize
- *	\param stream : a pointer to NULL. Will contain the serialization result
- *	\param streamLen : the serialization result length
- *	\param kx : the key exchange method of the handshake
+ *	\param server_key_exchange: the message to serialize
+ *	\param stream: a pointer to NULL. Will contain the serialization result
+ *	\param streamLen: the serialization result length
+ *	\param kx: the key exchange method of the handshake
  */
 void serialize_server_key_exchange(server_key_exchange_t *server_key_exchange, unsigned char **stream, uint32_t *streamLen, key_exchange_algorithm kx);
 
 /**
  * De-serialize a server key exchange byte stream message into the appropriate 
- * server_key_excahnge message(DHE,ECDHE)
+ * server_key_excahnge message (DHE, ECDHE)
  *
- *	\param message : the byte stream message to de-serialize
- *	\param message_len : the byte stream length
- *	\param kx : the key exchange method of the handshake
+ *	\param message: the byte stream message to de-serialize
+ *	\param message_len: the byte stream length
+ *	\param kx: the key exchange method of the handshake
  *	\return the de-serialized server_key_excahnge message.
  */
 server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, uint32_t message_len, key_exchange_algorithm kx);
@@ -122,16 +122,16 @@ server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, u
 /**
  * Print details about the server key exchange message
  *
- *	\param server_key_ex : the message to print
- *	\param kx : the key exchange method of the handshake
+ *	\param server_key_ex: the message to print
+ *	\param kx: the key exchange method of the handshake
  */
 void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx);
 
 /**
- * Delloc memory of server key exchange.
+ * Dealloc memory of server key exchange.
  * 
- *	\param server_key_ex : the server key exchange message to deallocate
- *	\param kx : the key exchange method of the handshake
+ *	\param server_key_ex: the server key exchange message to deallocate
+ *	\param kx: the key exchange method of the handshake
  */
 void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx);
 
@@ -140,18 +140,18 @@ void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange
 /**
  * Serialize a client key exchange message into a byte stream.
  * 
- *	\param client_key_exchange : the message to serialize
- *	\param stream : a pointer to NULL. Will contain the serialization result
- *	\param streamLen : the serialization result length
+ *	\param client_key_exchange: the message to serialize
+ *	\param stream: a pointer to NULL. Will contain the serialization result
+ *	\param streamLen: the serialization result length
  */
 void serialize_client_key_exchange(client_key_exchange_t *client_key_exchange, unsigned char **stream, uint32_t *streamLen);
 
 /**
  * De-serialize a client key exchange byte stream message into the appropriate 
- * server_key_excahnge message(DHE,ECDHE)
+ * server_key_excahnge message (DHE, ECDHE)
  *
- *	\param message : the byte stream message to de-serialize
- *	\param message_len : the byte stream length
+ *	\param message: the byte stream message to de-serialize
+ *	\param message_len: the byte stream length
  *	\return the de-serialized client key exchange message
  */
 client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, uint32_t message_len);
@@ -159,14 +159,14 @@ client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, u
 /**
  * Print details about the client key exchange message
  *
- *	\param client_key_ex : the message to print
- *	\param kx : the key exchange method of the handshake
+ *	\param client_key_ex: the message to print
+ *	\param kx: the key exchange method of the handshake
  */
 void print_client_key_exchange(client_key_exchange_t *client_key_exchange);
 
 /**
  * Delloc memory of client key exchange.
  * 
- *	\param client_key_ex : the client key exchange message to deallocate
+ *	\param client_key_ex: the client key exchange message to deallocate
  */
 void free_client_key_exchange(client_key_exchange_t *client_key_exchange);

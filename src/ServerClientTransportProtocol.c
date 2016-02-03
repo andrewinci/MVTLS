@@ -11,8 +11,8 @@
  *	4 byte for packet length
  *	message
  *
- *	both server and client after read a message they blank the file
- *	both server and client cannot write if the file is not blank, they wait
+ *	Both server and client, after reading a message, blank the file
+ *	Both server and client cannot write if the file is not blank, they wait
  *
  *
  *	\date Created on 22/12/15.
@@ -31,8 +31,8 @@ void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strL
 /**
  * Create a server/client channel using the fileName as comunication channel
  *
- * \param fileName : file name of the channel
- * \param serverName : name of the server/client
+ * \param fileName: file name of the channel
+ * \param serverName: name of the server/client
  * \return the created channel
  */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
@@ -50,9 +50,9 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 /**
  * Set the function to be called when a message is received
  *
- * \param ch : channel interested
- * \param onPacketReceive : pointer to the function to be called
- * \return : 1 if the function was setted, 0 otherwise
+ * \param ch: channel interested
+ * \param onPacketReceive: pointer to the function to call
+ * \return: 1 if the function was set, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p)){
 	if(ch->onPacketReceive == NULL){
@@ -69,7 +69,7 @@ int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_
  * until the message is for the channel owner. The cycle halt when the 
  * stop_channel function is called and start with start_listener.
  *
- *	\param data : a pointer to the channel.
+ *	\param data: a pointer to the channel.
  */
 void reader(void *data){
 	channel_t *ch;
@@ -101,10 +101,10 @@ void reader(void *data){
  * Start the channel. We open another thread for the reading
  * and the current thread for writing. From now on (if the operation
  * is succesfull) the client/server read continously from channel.
- * (for STOP use stop())
+ * (to STOP use stop())
  *
- * \param ch : channel to start
- * \return : 1 if the thread was started, 0 otherwise
+ * \param ch: channel to start
+ * \return: 1 if the thread was started, 0 otherwise
  */
 int start_listener(channel_t *ch){
 	if(ch->onPacketReceive==NULL)
@@ -125,9 +125,9 @@ int start_listener(channel_t *ch){
 }
 
 /**
- * Stop the reading/write thread and the channel.
+ * Stop the reading/writing thread and the channel.
  * Note: the function doesn't free the channel.
- * \param ch : channel to stop
+ * \param ch: channel to stop
  */
 void stop_channel(channel_t *ch){
 	ch->isEnabled = 0;
@@ -136,8 +136,8 @@ void stop_channel(channel_t *ch){
 }
 
 /**
- * Stop the callee and wait untill stop is called
- * \param ch : the chanal to wait
+ * Stop the caller and wait until stop() is called
+ * \param ch: the channel to wait
  */
 void wait_channel(channel_t *ch){
 	pthread_join(ch->thread, NULL);
@@ -147,15 +147,14 @@ void wait_channel(channel_t *ch){
  * Create a packet starting from a byte stream 
  * source and destination
  *
- * \param source        : packet source
- * \param destination   : packet receiver
- * \param message       : message stream to be 
-                        encapsulate into packet
+ * \param source: packet source
+ * \param destination: packet receiver
+ * \param message: message stream to be encapsulated into packet
  * \param message_length: message lenght
- * \return a pointer to a builded packet
+ * \return a pointer to a built packet
  */
 packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
-	packet_transport_t *result = malloc(sizeof(packet_transport_t));    
+	packet_transport_t *result = malloc(sizeof(packet_transport_t));
 
 	if(source != NULL){
 		result->source = calloc(8,1);
@@ -164,7 +163,7 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 	else
 		result->source = NULL;
 
-    if(destination != NULL){
+	if(destination != NULL){
 		result->destination = calloc(8,1);
 		memcpy(result->destination, destination, 8);
 	}
@@ -182,11 +181,11 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 }
 
 /**
- * Send a message trough the channel ch
+ * Send a message through the channel ch
  *
- * \param ch : channel to be used
- * \param p : pointer to packet to be sent
- * \return : 1 if the message was sent, 0 otherwise
+ * \param ch: channel to be used
+ * \param p: pointer to packet to be sent
+ * \return: 1 if the message was sent, 0 otherwise
  */
 int send_packet(channel_t *ch, packet_transport_t *p){
 
@@ -230,7 +229,7 @@ int send_packet(channel_t *ch, packet_transport_t *p){
 
 /**
  * Deallocate memory allocated by packet
- * \param p : pointer to packet to free
+ * \param p: pointer to packet to free
  */
 void free_packet(packet_transport_t *p){
 	if(p == NULL)
@@ -247,8 +246,8 @@ void free_packet(packet_transport_t *p){
 /**
  * Compute the byte size of a file
  * 
- *	\param f : file descriptor
- *	\return  the length of the file in byte
+ *	\param f: file descriptor
+ *	\return the length of the file in byte
  */
 long long get_file_size(int fd){
 	struct stat *info;
@@ -261,10 +260,10 @@ long long get_file_size(int fd){
 }
 
 /**
- * Reading the entire file and store in the provided pointer
+ * Read the entire file and store it in the provided pointer
  * 
- *	\param fd : file descriptor
- *	\param p : return pointer
+ *	\param fd: file descriptor
+ *	\param p: return pointer
  *	\return the file size
  */
 uint32_t read_all_file(int fd, unsigned char **p){
@@ -286,8 +285,8 @@ uint32_t read_all_file(int fd, unsigned char **p){
 /**
  * De-serialize message into a transport packet
  *
- *	\param str : string received
- *	\param fileLen : received string length
+ *	\param str: string received
+ *	\param fileLen: received string length
  *	\return the de-serialized message as transport struct
  */
 packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
@@ -325,9 +324,9 @@ packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 /**
  * Serialize the packet into a byte stream
  *
- *	\param p : packet to serialize
- *	\param str : pointer to a null string (used for return the stream)
- *	\param strlen : pointer to stream length (used for return the stream length)
+ *	\param p: packet to serialize
+ *	\param str: pointer to a null string (used to return the stream)
+ *	\param strlen: pointer to stream length (used to return the stream length)
  */
 void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen){
 	if(p->source == NULL || p->destination == NULL ){

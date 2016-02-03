@@ -1,9 +1,9 @@
 //
-//  server.c
-//  SSLXcodeProject
+//	server.c
+//	SSLXcodeProject
 //
-//  Created by Darka on 12/01/16.
-//  Copyright © 2016 Darka. All rights reserved.
+//	Created by Darka on 12/01/16.
+//	Copyright © 2016 Darka. All rights reserved.
 //
 
 #include <stdio.h>
@@ -74,7 +74,7 @@ void do_handshake() {
 }
 
 /*
- * Function called from basic protocol
+ * Function called from transport protocol
  * when a message is received
  */
 void onPacketReceive(channel_t *server2client, packet_transport_t *p){
@@ -216,7 +216,7 @@ void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
 	RSA *privateKey = NULL;
 	FILE *fp;
 
-	if((fp= fopen("../certificates/serverRSA.key", "r"))  != NULL){
+	if((fp= fopen("../certificates/serverRSA.key", "r")) != NULL){
 		privateKey = PEM_read_RSAPrivateKey(fp, NULL, NULL, NULL);
 		if(privateKey == NULL){
 			printf("\nError in retrieve private key");
