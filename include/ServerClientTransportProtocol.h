@@ -1,21 +1,22 @@
 /**
- *  SSL/TLS Project
- *  \file ServerClientTransportProtocol.h
- *  Basic client/server communication through file.
+ *	SSL/TLS Project
+ *	\file ServerClientTransportProtocol.h
+ *	Basic client/server communication through file. 
+ *	It substitutes the transport layer in OSI stack.
  *
- *  PROTOCOL:
- *  The protocol is very simple
- *  8 byte for source
- *  8 byte for receiver
- *  4 byte for packet length
- *  message
+ *	PROTOCOL:
+ *	The protocol is very simple
+ *	8 byte for source
+ *	8 byte for receiver
+ *	4 byte for packet length
+ *	message
  *
- *  both server and client after read a message they blank the file
- *  both server and client cannot write if the file is not blank, they wait
+ *	both server and client after read a message they blank the file
+ *	both server and client cannot write if the file is not blank, they wait
  *
  *
- *  \date Created on 22/12/15.
- *  \copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ *	\date Created on 22/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
 #ifndef ServerClientTransportProtocol_h
@@ -32,6 +33,9 @@
 #include <pthread.h>
 #include <time.h>
 
+/** \def DELAY_TIME the time to wait between 2 read of the file.
+	Important for don't use to much CPU.
+*/
 #define DELAY_TIME 50
 
 /** \struct packet_basic
@@ -81,7 +85,7 @@ typedef struct channel_t{
 #endif
 
 /**
- * Create a server/client using the fileName as comunication channel
+ * Create a server/client channel using the fileName as comunication channel
  *
  * \param fileName : file name of the channel
  * \param serverName : name of the server/client
@@ -93,7 +97,7 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
  * Set the function to be called when a message is received
  *
  * \param ch : channel interested
- * \param onPacketReceive : pointer to the function
+ * \param onPacketReceive : pointer to the function to be called
  * \return : 1 if the function was setted, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p));

@@ -1,11 +1,23 @@
-//
-//  SSL/TLS Project
-//  ServerClientTransportProtocol.c
-//
-//
-//  Created on 22/12/15.
-//  Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *	SSL/TLS Project
+ *	\file ServerClientTransportProtocol.c
+ *	Basic client/server communication through file. 
+ *	It substitutes the transport layer in OSI stack.
+ *
+ *	PROTOCOL:
+ *	The protocol is very simple
+ *	8 byte for source
+ *	8 byte for receiver
+ *	4 byte for packet length
+ *	message
+ *
+ *	both server and client after read a message they blank the file
+ *	both server and client cannot write if the file is not blank, they wait
+ *
+ *
+ *	\date Created on 22/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
 
 #include "ServerClientTransportProtocol.h"
 
@@ -16,7 +28,13 @@ uint32_t read_all_file(int fd, unsigned char **p);
 packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen);
 void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen);
 
-
+/**
+ * Create a server/client channel using the fileName as comunication channel
+ *
+ * \param fileName : file name of the channel
+ * \param serverName : name of the server/client
+ * \return the created channel
+ */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 	channel_t *ch = malloc(sizeof(channel_t));
 	ch->channel_source = channelFrom;
@@ -29,6 +47,13 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 	return ch;
 }
 
+/**
+ * Set the function to be called when a message is received
+ *
+ * \param ch : channel interested
+ * \param onPacketReceive : pointer to the function to be called
+ * \return : 1 if the function was setted, 0 otherwise
+ */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p)){
 	if(ch->onPacketReceive == NULL){
 		// Check if the packet is for the channel owner
@@ -39,6 +64,13 @@ int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_
 	return 0;
 }
 
+/**
+ * Listener on the file. This function continuously read the entire file
+ * until the message is for the channel owner. The cycle halt when the 
+ * stop_channel function is called and start with start_listener.
+ *
+ *	\param data : a pointer to the channel.
+ */
 void reader(void *data){
 	channel_t *ch;
 	ch = (channel_t*)data;
@@ -65,6 +97,15 @@ void reader(void *data){
 	}
 }
 
+/**
+ * Start the channel. We open another thread for the reading
+ * and the current thread for writing. From now on (if the operation
+ * is succesfull) the client/server read continously from channel.
+ * (for STOP use stop())
+ *
+ * \param ch : channel to start
+ * \return : 1 if the thread was started, 0 otherwise
+ */
 int start_listener(channel_t *ch){
 	if(ch->onPacketReceive==NULL)
 		return 0;
@@ -83,16 +124,36 @@ int start_listener(channel_t *ch){
 	return 1;
 }
 
+/**
+ * Stop the reading/write thread and the channel.
+ * Note: the function doesn't free the channel.
+ * \param ch : channel to stop
+ */
 void stop_channel(channel_t *ch){
 	ch->isEnabled = 0;
 	close(ch->fd);
 	pthread_exit(NULL);
 }
 
+/**
+ * Stop the callee and wait untill stop is called
+ * \param ch : the chanal to wait
+ */
 void wait_channel(channel_t *ch){
 	pthread_join(ch->thread, NULL);
 }
 
+/**
+ * Create a packet starting from a byte stream 
+ * source and destination
+ *
+ * \param source        : packet source
+ * \param destination   : packet receiver
+ * \param message       : message stream to be 
+                        encapsulate into packet
+ * \param message_length: message lenght
+ * \return a pointer to a builded packet
+ */
 packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
 	packet_transport_t *result = malloc(sizeof(packet_transport_t));    
 
@@ -120,6 +181,13 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 	return result;
 }
 
+/**
+ * Send a message trough the channel ch
+ *
+ * \param ch : channel to be used
+ * \param p : pointer to packet to be sent
+ * \return : 1 if the message was sent, 0 otherwise
+ */
 int send_packet(channel_t *ch, packet_transport_t *p){
 
 	if(ch == NULL){
@@ -159,6 +227,11 @@ int send_packet(channel_t *ch, packet_transport_t *p){
 	return 0;
 }
 
+
+/**
+ * Deallocate memory allocated by packet
+ * \param p : pointer to packet to free
+ */
 void free_packet(packet_transport_t *p){
 	if(p == NULL)
 		return;
@@ -171,10 +244,11 @@ void free_packet(packet_transport_t *p){
 
 /********* Utilities function for file managing *********/
 
-/*
+/**
  * Compute the byte size of a file
- * f : file indentificator
- * return : the lenght of the file in byte
+ * 
+ *	\param f : file descriptor
+ *	\return  the length of the file in byte
  */
 long long get_file_size(int fd){
 	struct stat *info;
@@ -186,11 +260,12 @@ long long get_file_size(int fd){
 	return res;
 }
 
-/*
- * Reading the entire file
- * f : file identificator
- * p : return pointer
- * return : the file size
+/**
+ * Reading the entire file and store in the provided pointer
+ * 
+ *	\param fd : file descriptor
+ *	\param p : return pointer
+ *	\return the file size
  */
 uint32_t read_all_file(int fd, unsigned char **p){
 	long long fileSize = get_file_size(fd);
@@ -208,10 +283,12 @@ uint32_t read_all_file(int fd, unsigned char **p){
 
 /********* Serialization, deserialization *********/
 
-/*
- * Parse the message into packet
- * str : string received
- * fileLen : received string length
+/**
+ * Serialize message into packet
+ *
+ *	\param str : string received
+ *	\param fileLen : received string length
+ *	\return the serialized message as transport struct
  */
 packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 
@@ -245,11 +322,12 @@ packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
 	return result;
 }
 
-/*
+/**
  * Serialize the packet into a byte stream
- * p : pacjet to serialize
- * str : pointer to a null string (used for return the stream)
- * strlen : pointer to stream length (used for return the stream length)
+ *
+ *	\param p : packet to serialize
+ *	\param str : pointer to a null string (used for return the stream)
+ *	\param strlen : pointer to stream length (used for return the stream length)
  */
 void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen){
 	if(p->source == NULL || p->destination == NULL ){
