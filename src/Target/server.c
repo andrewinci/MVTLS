@@ -1,14 +1,18 @@
-//
-//	server.c
-//	SSLXcodeProject
-//
-//	Created by Darka on 12/01/16.
-//	Copyright © 2016 Darka. All rights reserved.
-//
-
+/**
+ *	SSL/TLS Project
+ * 	\file client.c
+ *
+ *	Emulate a server during a TLS connection.
+ *
+ *	\date Created on 12/01/16.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
 #include <stdio.h>
 #include "TLS.h"
 
+/** \def USAGE 
+ * String with program arguments
+ */
 #define USAGE 	"TLSClient: TLS1.2 version handshake\n"\
 				"\n"\
 				"Usage:\n"\
@@ -27,21 +31,23 @@
 void print_random();
 void print_master_secret();
 void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange);
-void compute_set_master_key_DHE(client_key_exchange_t *cliet_public);
-void compute_set_master_key_ECDHE(client_key_exchange_t *cliet_public);
-void onPacketReceive(channel_t *server2client, packet_transport_t *p);
+void compute_set_master_key_DHE(client_key_exchange_t *client_key_exchange);
+void compute_set_master_key_ECDHE(client_key_exchange_t *client_key_exchange);
+void onPacketReceive(channel_t *channel, packet_transport_t *p);
 void do_handshake();
 
-// Set default verbosity to zero
-int v = 0;
+/** verbosity of the output */
+int verbosity = 0;
+
+/** connection parameters */
 TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv){
 	if(argc == 3 && strcmp(argv[1], "-v")==0 ){
         argv[2][0]+=0x01;
-        v = atoi(argv[2]);
-        v--;
-        if(v<0 || v>3){
+        verbosity = atoi(argv[2]);
+        verbosity--;
+        if(verbosity<0 || verbosity>3){
             printf("Invalid option -v can be only 1 2 or 3\n");
             printf("Try '--help' for more information.\n");
             return -1;
@@ -59,6 +65,9 @@ int main(int argc, char **argv){
 	do_handshake();
 }
 
+/**
+ * Do the handshake 
+ */
 void do_handshake() {
 	// Setup the channel
 	char *fileName = "TLSchannel.txt";
@@ -104,17 +113,21 @@ void do_handshake() {
 	CRYPTO_cleanup_all_ex_data();
 }
 
-/*
+
+/**
  * Function called from transport protocol
  * when a message is received
+ *
+ *	\param channel: the communication channel 
+ *	\param p: the received packet
  */
-void onPacketReceive(channel_t *server2client, packet_transport_t *p){
+void onPacketReceive(channel_t *channel, packet_transport_t *p){
 
 	// Get record and print
 	record_t *r = deserialize_record(p->message, p->length);
 	if(r->type == CHANGE_CIPHER_SPEC){
 		printf("\n<<< Change CipherSpec\n");
-		if(v>1)
+		if(verbosity>1)
 			print_record(r);
 
 		// Clean up
@@ -136,7 +149,7 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 
 					printf("\n<<< Client Hello\n");
-					print_handshake(h, v, TLS_param.cipher_suite.kx);
+					print_handshake(h, verbosity, TLS_param.cipher_suite.kx);
 
 					// Save client random
 					memcpy(TLS_param.client_random, &(client_hello->random.UNIX_time), 4);
@@ -145,8 +158,8 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					// Choose a cipher suite and send server hello
 					printf("\n>>> Server Hello\n");
 					handshake_t * server_hello = make_server_hello(&TLS_param, client_hello);
-					print_handshake(server_hello, v, TLS_param.cipher_suite.kx);
-					send_handshake(server2client, server_hello);
+					print_handshake(server_hello, verbosity, TLS_param.cipher_suite.kx);
+					send_handshake(channel, server_hello);
 					backup_handshake(&TLS_param, server_hello);
 					free_handshake(server_hello);
 					free_hello(client_hello);
@@ -154,8 +167,8 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					// Retrieve and send certificate
 					printf("\n>>> Certificate\n");
 					handshake_t *certificate = make_certificate(&TLS_param);
-					print_handshake(certificate, v, TLS_param.cipher_suite.kx);
-					send_handshake(server2client, certificate);
+					print_handshake(certificate, verbosity, TLS_param.cipher_suite.kx);
+					send_handshake(channel, certificate);
 					backup_handshake(&TLS_param, certificate);
 					free_handshake(certificate);
 
@@ -163,8 +176,8 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					if(TLS_param.cipher_suite.kx == DHE_KX || TLS_param.cipher_suite.kx == ECDHE_KX){
 						handshake_t *server_key_exchange = make_server_key_exchange(&TLS_param);
 						printf("\n>>> Server key exchange\n");
-						print_handshake(server_key_exchange, v, TLS_param.cipher_suite.kx);
-						send_handshake(server2client, server_key_exchange);
+						print_handshake(server_key_exchange, verbosity, TLS_param.cipher_suite.kx);
+						send_handshake(channel, server_key_exchange);
 						backup_handshake(&TLS_param, server_key_exchange);
 						free_handshake(server_key_exchange);
 					}
@@ -172,8 +185,8 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					// Make and send server hello done
 					printf("\n>>> Server hello done\n");
 					handshake_t * server_hello_done = make_server_hello_done();
-					print_handshake(server_hello_done, v, TLS_param.cipher_suite.kx);
-					send_handshake(server2client, server_hello_done);
+					print_handshake(server_hello_done, verbosity, TLS_param.cipher_suite.kx);
+					send_handshake(channel, server_hello_done);
 					backup_handshake(&TLS_param, server_hello_done);
 					free_handshake(server_hello_done);
 
@@ -187,7 +200,7 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					// Compute master key
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Client Key Exchange\n");
-					print_handshake(h, v, TLS_param.cipher_suite.kx);
+					print_handshake(h, verbosity, TLS_param.cipher_suite.kx);
 					client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
 					switch (TLS_param.cipher_suite.kx) {
 						case RSA_KX:
@@ -211,25 +224,25 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 					// Receive Finished
 					backup_handshake(&TLS_param, h);
 					printf("\n<<< Finished\n");
-					print_handshake(h,v,TLS_param.cipher_suite.kx);
+					print_handshake(h,verbosity,TLS_param.cipher_suite.kx);
 					free_handshake(h);
 
 					// Send ChangeCipherSpec
 					printf("\n>>> Change CipherSpec\n");
 					record_t* change_cipher_spec = make_change_cipher_spec();
-					send_record(server2client, change_cipher_spec);
-					if(v>1)
+					send_record(channel, change_cipher_spec);
+					if(verbosity>1)
 						print_record(change_cipher_spec);
 					free_record(change_cipher_spec);
 
 					// Send Finished
 					printf("\n>>> Finished\n");
 					handshake_t *finished = make_finished_message(&TLS_param);
-					send_handshake(server2client, finished);
-					print_handshake(finished,v,TLS_param.cipher_suite.kx);
+					send_handshake(channel, finished);
+					print_handshake(finished,verbosity,TLS_param.cipher_suite.kx);
 					free_handshake(finished);
 
-					stop_channel(server2client);
+					stop_channel(channel);
 				}
 				break;
 
@@ -241,7 +254,13 @@ void onPacketReceive(channel_t *server2client, packet_transport_t *p){
 	}
 }
 
-
+/**
+ * Compute the master key for RSA using the previous server key exchange stored in TLS_param
+ * and the client key exchange. The master key, master key length is stored also in 
+ * TLS_param.
+ *
+ *	\param client_key_exchange: the client key exchange sent by client
+ */
 void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
 	// Get private key from file
 	RSA *privateKey = NULL;
@@ -276,7 +295,14 @@ void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
 	free(pre_master_key);
 }
 
-void compute_set_master_key_DHE(client_key_exchange_t *client_public){
+/**
+ * Compute the master key for DHE using the previous server key exchange stored in TLS_param
+ * and the client key exchange. The master key, master key length is stored also in 
+ * TLS_param.
+ *
+ *	\param client_key_exchange: the client key exchange sent by client
+ */
+void compute_set_master_key_DHE(client_key_exchange_t *client_key_exchange){
 	DH *privkey = DH_new();
 	dhe_server_key_exchange_t *server_key_exchange = TLS_param.server_key_ex;
 
@@ -285,7 +311,7 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_public){
 	privkey->p = BN_dup(server_key_exchange->p);
 	privkey->priv_key = BN_dup(TLS_param.private_key);
 	privkey->pub_key = NULL;
-	privkey->pub_key = BN_bin2bn(client_public->key, client_public->key_length, NULL);
+	privkey->pub_key = BN_bin2bn(client_key_exchange->key, client_key_exchange->key_length, NULL);
 
 	// Make pre master key
 	unsigned char *pre_master_key = malloc(DH_size(privkey));
@@ -306,12 +332,19 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_public){
 	free(pre_master_key);
 }
 
-void compute_set_master_key_ECDHE(client_key_exchange_t *client_public){
+/**
+ * Compute the master key for ECDHE using the previous server key exchange stored in TLS_param
+ * and the client key exchange. The master key, master key length is stored also in 
+ * TLS_param.
+ *
+ *	\param client_key_exchange: the client key exchange sent by client
+ */
+void compute_set_master_key_ECDHE(client_key_exchange_t *client_key_exchange){
 	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t *) TLS_param.server_key_ex;
 	EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
 
 	// Get public key
-	BIGNUM *pub_key = BN_bin2bn(client_public->key, client_public->key_length, NULL);
+	BIGNUM *pub_key = BN_bin2bn(client_key_exchange->key, client_key_exchange->key_length, NULL);
 	EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), pub_key, NULL, NULL);
 	EC_KEY_set_public_key(key, pub_key_point);
 	EC_POINT_free(pub_key_point);
