@@ -43,20 +43,20 @@ B\+I\+G\+N\+UM $\ast$ \hyperlink{struct_t_l_s__parameters__t_aa7d109714bb4c1faa6
 
 
 \subsection{Detailed Description}
-Struct \hyperlink{struct_t_l_s__parameters__t}{T\+L\+S\+\_\+parameters\+\_\+t} This struct contains all details about connection. It also contains data for complete the handshake. 
+This struct contains all details about connection. It also contains data to complete the handshake. 
 
 \subsection{Field Documentation}
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!cipher\+\_\+suite@{cipher\+\_\+suite}}
 \index{cipher\+\_\+suite@{cipher\+\_\+suite}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{cipher\+\_\+suite}{cipher_suite}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t} cipher\+\_\+suite}\hypertarget{struct_t_l_s__parameters__t_af1d8ebe57a775be2b91550dbcacb2a58}{}\label{struct_t_l_s__parameters__t_af1d8ebe57a775be2b91550dbcacb2a58}
-The cipher suite used for handshake 
+The cipher suite used chosen in the handshake 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+certificate(), make\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+finished\+\_\+message(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+server\+\_\+hello(), make\+\_\+server\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!client\+\_\+random@{client\+\_\+random}}
 \index{client\+\_\+random@{client\+\_\+random}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{client\+\_\+random}{client_random}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char client\+\_\+random\mbox{[}32\mbox{]}}\hypertarget{struct_t_l_s__parameters__t_adbdca8d573a8e073ef16bf14229fb4c9}{}\label{struct_t_l_s__parameters__t_adbdca8d573a8e073ef16bf14229fb4c9}
-Client random, include the unix time stamp 
+Client random, include the U\+N\+IX time stamp 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), and on\+Packet\+Receive().
 
@@ -119,7 +119,7 @@ Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\
 \index{T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}!server\+\_\+random@{server\+\_\+random}}
 \index{server\+\_\+random@{server\+\_\+random}!T\+L\+S\+\_\+parameters\+\_\+t@{T\+L\+S\+\_\+parameters\+\_\+t}}
 \subsubsection[{\texorpdfstring{server\+\_\+random}{server_random}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char server\+\_\+random\mbox{[}32\mbox{]}}\hypertarget{struct_t_l_s__parameters__t_a9159f146fbc286a8b55f4aa83396ae2f}{}\label{struct_t_l_s__parameters__t_a9159f146fbc286a8b55f4aa83396ae2f}
-Server random, include the unix time stamp 
+Server random, include the U\+N\+IX time stamp 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+R\+S\+A(), do\+\_\+handshake(), make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+R\+S\+A\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+server\+\_\+hello(), and on\+Packet\+Receive().
 

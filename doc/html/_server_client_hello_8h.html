@@ -142,12 +142,17 @@ Functions</h2></td></tr>
 <tr class="separator:a5d76fe55dc16550edc3604fcde33b8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaae83df7b184359cdb8f7f06931e7ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structserver__client__hello__t.html">server_client_hello_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello</a> (unsigned char *stream, uint32_t streamLen, <a class="el" href="_t_l_s_constants_8h.html#af21001704588d21e61c566facf69ec3d">channel_mode</a> mode)</td></tr>
 <tr class="separator:aaae83df7b184359cdb8f7f06931e7ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec7721cdc08398302cd7435054202117"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello</a> (<a class="el" href="structserver__client__hello__t.html">server_client_hello_t</a> *h)</td></tr>
-<tr class="separator:aec7721cdc08398302cd7435054202117"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff8bed251595f5c51c0d1755799909ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello</a> (<a class="el" href="structserver__client__hello__t.html">server_client_hello_t</a> *h)</td></tr>
 <tr class="separator:aff8bed251595f5c51c0d1755799909ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec7721cdc08398302cd7435054202117"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello</a> (<a class="el" href="structserver__client__hello__t.html">server_client_hello_t</a> *h)</td></tr>
+<tr class="separator:aec7721cdc08398302cd7435054202117"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>SSL/TLS Project</p>
+<p>This file is used to manage the client/server hello message of the handshake protocol</p>
+<dl class="section date"><dt>Date</dt><dd>Created on 24/12/15. </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="aaae83df7b184359cdb8f7f06931e7ad5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -177,8 +182,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>De-serialize a byte stream into a server_client_hello struct.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>the stream to de-serialize. </td></tr>
+    <tr><td class="paramname">streamLen</td><td>the stream length </td></tr>
+    <tr><td class="paramname">mode</td><td>set SERVER_MODE for a server hello message, CLIENT_MODE for client hello message </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -195,7 +209,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph.png" border="0" usemap="#_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph" alt=""/></div>
 <map name="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph" id="_server_client_hello_8h_aaae83df7b184359cdb8f7f06931e7ad5_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="347,56,472,83"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="347,56,472,83"/>
 <area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="179,107,299,133"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="520,5,632,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="680,56,789,83"/>
@@ -219,8 +233,15 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Delloc memory of server_client_hello.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>the struct to deallocate </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -229,11 +250,11 @@ Here is the caller graph for this function:</div>
 <map name="_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph" id="_server_client_hello_8h_aec7721cdc08398302cd7435054202117_icgraph">
 <area shape="rect" id="node2" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e" title="make_client_hello" alt="" coords="318,56,447,83"/>
 <area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="134,5,269,32"/>
-<area shape="rect" id="node9" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="320,157,445,184"/>
+<area shape="rect" id="node9" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="320,157,445,184"/>
 <area shape="rect" id="node11" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="141,107,261,133"/>
 <area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="656,132,765,159"/>
 <area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="813,132,864,159"/>
-<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="320,5,445,32"/>
+<area shape="rect" id="node6" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="320,5,445,32"/>
 <area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="497,5,607,32"/>
 <area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="685,5,736,32"/>
 <area shape="rect" id="node10" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="496,157,608,184"/>
@@ -256,6 +277,14 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Make a client hello message. The function set the unix time stamp, random and the session, if given.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">session</td><td>session id to recover </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the handshake, it has to be deallocated </dd></dl>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, and <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>.</p>
 
@@ -268,7 +297,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="145,56,279,83"/>
 <area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="336,5,445,32"/>
 <area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="531,5,581,32"/>
-<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="328,56,453,83"/>
+<area shape="rect" id="node6" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="328,56,453,83"/>
 <area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="501,56,611,83"/>
 <area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="659,56,709,83"/>
 </map>
@@ -290,6 +319,20 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Print details about the server/client hello.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>the server client struct to print</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Print details about the server/client hello</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">h</td><td>the server client struct to print </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Referenced by <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
 
@@ -300,7 +343,7 @@ Here is the caller graph for this function:</div>
 <map name="_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph" id="_server_client_hello_8h_aff8bed251595f5c51c0d1755799909ae_icgraph">
 <area shape="rect" id="node2" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="139,5,259,32"/>
 <area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="640,31,749,57"/>
-<area shape="rect" id="node5" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="307,31,432,57"/>
+<area shape="rect" id="node5" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="307,31,432,57"/>
 <area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="797,31,848,57"/>
 <area shape="rect" id="node6" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="480,81,592,108"/>
 </map>
@@ -344,6 +387,16 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Serialize a server_hello struct into a byte stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hello</td><td>struct to serialize </td></tr>
+    <tr><td class="paramname">stream</td><td>a pointer to NULL. Will return the stream byte. </td></tr>
+    <tr><td class="paramname">streamLen</td><td>the return stream length </td></tr>
+    <tr><td class="paramname">mode</td><td>set SERVER_MODE for a server hello message, CLIENT_MODE for client hello message </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Referenced by <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, and <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>.</p>
 
@@ -356,7 +409,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" id="node5" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29" title="make_server_hello" alt="" coords="209,56,343,83"/>
 <area shape="rect" id="node3" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="400,5,509,32"/>
 <area shape="rect" id="node4" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="595,5,645,32"/>
-<area shape="rect" id="node6" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="392,56,517,83"/>
+<area shape="rect" id="node6" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="392,56,517,83"/>
 <area shape="rect" id="node7" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="565,56,675,83"/>
 <area shape="rect" id="node8" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="723,56,773,83"/>
 </map>

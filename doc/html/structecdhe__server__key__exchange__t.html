@@ -103,7 +103,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a775505f2a74638cda44fdd79c4e07993"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structecdhe__server__key__exchange__t.html#a775505f2a74638cda44fdd79c4e07993">signature</a></td></tr>
 <tr class="separator:a775505f2a74638cda44fdd79c4e07993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Model the ECDHE server key exchange message of the handshake protocol. The named curve mode is the only used. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a5754cc60d6f7a74a313db0e4bc607b07"></a>
 <div class="memitem">
 <div class="memproto">
@@ -113,8 +115,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Curve name </p>
 
-<p>Referenced by <a class="el" href="server_8c.html#acb45f08313e9bf87c80b222ae04434ca">compute_set_master_key_ECDHE()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#ad16c20492f567102f074f1f22116cc52">compute_set_master_key_ECDHE()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
 
 </div>
 </div>
@@ -127,6 +130,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Public key </p>
 
 <p>Referenced by <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a65291857fa8a23542435005375c86a20">free_server_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#a6f7128cf62e8491d70cf2585cf901c4c">make_ECDHE_client_key_exchange()</a>, <a class="el" href="_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4">make_ECDHE_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
 
@@ -141,6 +145,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>First byte to specify the signature algorithm second byte to specify the hash algorithm </p>
 
 <p>Referenced by <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
 
@@ -155,6 +160,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Signature byte stream </p>
 
 <p>Referenced by <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a65291857fa8a23542435005375c86a20">free_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
 
@@ -169,6 +175,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Signature length </p>
 
 <p>Referenced by <a class="el" href="_server_client_key_exchange_8h.html#a25e978e5b5d2fc430d4c8f841b2901b3">deserialize_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a642a719366693ae25cf8bc7538f5c5c6">print_server_key_exchange()</a>, <a class="el" href="_server_client_key_exchange_8h.html#a8cb71f83bed21f1dd9bb8cdb9dca1e5f">serialize_server_key_exchange()</a>, <a class="el" href="_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d">sign_ECDHE_server_key_ex()</a>, and <a class="el" href="_crypto_8h.html#a5de0523f653b00816828961ba5cc990b">verify_ECDHE_server_key_ex_sign()</a>.</p>
 

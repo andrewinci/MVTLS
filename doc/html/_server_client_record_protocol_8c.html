@@ -146,21 +146,21 @@ Functions</h2></td></tr>
 <p>De-serialize a byte stream message of length message_len into a record struct.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>: message received </td></tr>
-    <tr><td class="paramname">messageLen</td><td>: message length </td></tr>
+    <tr><td class="paramname">message</td><td>message received </td></tr>
+    <tr><td class="paramname">messageLen</td><td>message length </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>record : the de-serialized record </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>record: the de-serialized record </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_record_protocol_8c_ae84b228db8fb2f706c75f1e8d41a06b2_icgraph.png" border="0" usemap="#_server_client_record_protocol_8c_ae84b228db8fb2f706c75f1e8d41a06b2_icgraph" alt=""/></div>
 <map name="_server_client_record_protocol_8c_ae84b228db8fb2f706c75f1e8d41a06b2_icgraph" id="_server_client_record_protocol_8c_ae84b228db8fb2f706c75f1e8d41a06b2_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="184,31,309,57"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="184,31,309,57"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="357,5,469,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="517,31,627,57"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="675,31,725,57"/>
@@ -185,19 +185,19 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Deallocate memory pointed by r </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>: pointer to record to free </td></tr>
+    <tr><td class="paramname">r</td><td>pointer to record to free </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801">send_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801">send_handshake()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_record_protocol_8c_a9212df7db09a62df2f7d4a913f04defc_icgraph.png" border="0" usemap="#_server_client_record_protocol_8c_a9212df7db09a62df2f7d4a913f04defc_icgraph" alt=""/></div>
 <map name="_server_client_record_protocol_8c_a9212df7db09a62df2f7d4a913f04defc_icgraph" id="_server_client_record_protocol_8c_a9212df7db09a62df2f7d4a913f04defc_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="317,56,443,83"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="317,56,443,83"/>
 <area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="145,107,269,133"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="491,5,603,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="651,56,760,83"/>
@@ -223,12 +223,12 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Print a description of the record </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>: record to print. </td></tr>
+    <tr><td class="paramname">r</td><td>record to print. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e">print_handshake()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -245,7 +245,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_record_protocol_8c_a5029bcdf9f7eb874b25136b76e41963c_icgraph.png" border="0" usemap="#_server_client_record_protocol_8c_a5029bcdf9f7eb874b25136b76e41963c_icgraph" alt=""/></div>
 <map name="_server_client_record_protocol_8c_a5029bcdf9f7eb874b25136b76e41963c_icgraph" id="_server_client_record_protocol_8c_a5029bcdf9f7eb874b25136b76e41963c_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="315,56,440,83"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="315,56,440,83"/>
 <area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="147,107,267,133"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="488,5,600,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="648,56,757,83"/>
@@ -279,17 +279,17 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Send record to_send over the channel ch. Note :for send record is important to set 'to' and 'from' in the channel creation.</p>
+<p>Send record to_send over the channel ch. Note: to send record is important to set 'to' and 'from' in the channel creation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: channel to use </td></tr>
-    <tr><td class="paramname">to_send</td><td>: record to send </td></tr>
+    <tr><td class="paramname">ch</td><td>channel to use </td></tr>
+    <tr><td class="paramname">r</td><td>record to send </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if the message was successfully sent, 0 otherwise </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801">send_handshake()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, and <a class="el" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801">send_handshake()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -311,7 +311,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_record_protocol_8c_af6d567da41101c7003cb9277aba9ec4e_icgraph.png" border="0" usemap="#_server_client_record_protocol_8c_af6d567da41101c7003cb9277aba9ec4e_icgraph" alt=""/></div>
 <map name="_server_client_record_protocol_8c_af6d567da41101c7003cb9277aba9ec4e_icgraph" id="_server_client_record_protocol_8c_af6d567da41101c7003cb9277aba9ec4e_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="323,56,448,83"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="323,56,448,83"/>
 <area shape="rect" id="node6" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="150,107,274,133"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="496,5,608,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="656,56,765,83"/>
@@ -354,13 +354,14 @@ Here is the caller graph for this function:</div>
 <p>Serialize record in a byte stream of length message_len stored in message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>: pointer to null (the function allocate space for you) </td></tr>
-    <tr><td class="paramname">messageLen</td><td>: pointer to integer (will contains the message length) </td></tr>
+    <tr><td class="paramname">r</td><td>record to serialize </td></tr>
+    <tr><td class="paramname">message</td><td>pointer to NULL (the function itself allocates space) </td></tr>
+    <tr><td class="paramname">messageLen</td><td>pointer to integer (will contains the message length) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="_server_client_record_protocol_8h.html#a5029bcdf9f7eb874b25136b76e41963c">print_record()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0">send_record()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_record_protocol_8h.html#a5029bcdf9f7eb874b25136b76e41963c">print_record()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e">send_record()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -368,8 +369,8 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="_server_client_record_protocol_8c_af281a53bbcd83ad0887baf01e13a752e_icgraph.png" border="0" usemap="#_server_client_record_protocol_8c_af281a53bbcd83ad0887baf01e13a752e_icgraph" alt=""/></div>
 <map name="_server_client_record_protocol_8c_af281a53bbcd83ad0887baf01e13a752e_icgraph" id="_server_client_record_protocol_8c_af281a53bbcd83ad0887baf01e13a752e_icgraph">
 <area shape="rect" id="node2" href="_server_client_record_protocol_8h.html#a5029bcdf9f7eb874b25136b76e41963c" title="print_record" alt="" coords="172,56,265,83"/>
-<area shape="rect" id="node8" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0" title="send_record" alt="" coords="171,107,267,133"/>
-<area shape="rect" id="node3" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="488,81,613,108"/>
+<area shape="rect" id="node8" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e" title="send_record" alt="" coords="171,107,267,133"/>
+<area shape="rect" id="node3" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="488,81,613,108"/>
 <area shape="rect" id="node7" href="_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="317,5,437,32"/>
 <area shape="rect" id="node4" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="661,107,773,133"/>
 <area shape="rect" id="node5" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="821,81,931,108"/>

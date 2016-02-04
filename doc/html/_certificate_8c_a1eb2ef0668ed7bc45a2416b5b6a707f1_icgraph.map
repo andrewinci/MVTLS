@@ -1,6 +1,6 @@
 <map id="make_certificate_message" name="make_certificate_message">
 <area shape="rect" id="node2" href="$_t_l_s_8h.html#a6fd919275c5d6d3e6578c480cc62a8ce" title="make_certificate" alt="" coords="235,5,354,32"/>
-<area shape="rect" id="node3" href="$server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="403,5,528,32"/>
+<area shape="rect" id="node3" href="$server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="403,5,528,32"/>
 <area shape="rect" id="node4" href="$server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="576,5,685,32"/>
 <area shape="rect" id="node5" href="$server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="733,5,784,32"/>
 </map>

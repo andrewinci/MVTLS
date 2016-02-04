@@ -19,39 +19,42 @@ unsigned char $\ast$ \hyperlink{structecdhe__server__key__exchange__t_a775505f2a
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Model the E\+C\+D\+HE server key exchange message of the handshake protocol. The named curve mode is the only used. 
+
 \subsection{Field Documentation}
 \index{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}!named\+\_\+curve@{named\+\_\+curve}}
 \index{named\+\_\+curve@{named\+\_\+curve}!ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}}
 \subsubsection[{\texorpdfstring{named\+\_\+curve}{named_curve}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t named\+\_\+curve}\hypertarget{structecdhe__server__key__exchange__t_a5754cc60d6f7a74a313db0e4bc607b07}{}\label{structecdhe__server__key__exchange__t_a5754cc60d6f7a74a313db0e4bc607b07}
-
+Curve name 
 
 Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+E\+C\+D\+H\+E(), deserialize\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), print\+\_\+server\+\_\+key\+\_\+exchange(), serialize\+\_\+server\+\_\+key\+\_\+exchange(), sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign().
 
 \index{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}!pub\+\_\+key@{pub\+\_\+key}}
 \index{pub\+\_\+key@{pub\+\_\+key}!ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}}
 \subsubsection[{\texorpdfstring{pub\+\_\+key}{pub_key}}]{\setlength{\rightskip}{0pt plus 5cm}B\+I\+G\+N\+UM$\ast$ pub\+\_\+key}\hypertarget{structecdhe__server__key__exchange__t_aad713005343ebfb84e09a7441d655802}{}\label{structecdhe__server__key__exchange__t_aad713005343ebfb84e09a7441d655802}
-
+Public key 
 
 Referenced by deserialize\+\_\+server\+\_\+key\+\_\+exchange(), free\+\_\+server\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange(), make\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+exchange(), print\+\_\+server\+\_\+key\+\_\+exchange(), serialize\+\_\+server\+\_\+key\+\_\+exchange(), sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign().
 
 \index{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}!sign\+\_\+hash\+\_\+alg@{sign\+\_\+hash\+\_\+alg}}
 \index{sign\+\_\+hash\+\_\+alg@{sign\+\_\+hash\+\_\+alg}!ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}}
 \subsubsection[{\texorpdfstring{sign\+\_\+hash\+\_\+alg}{sign_hash_alg}}]{\setlength{\rightskip}{0pt plus 5cm}uint16\+\_\+t sign\+\_\+hash\+\_\+alg}\hypertarget{structecdhe__server__key__exchange__t_a07ea01aadbb81f38a9a27e324d11f54e}{}\label{structecdhe__server__key__exchange__t_a07ea01aadbb81f38a9a27e324d11f54e}
-
+First byte to specify the signature algorithm second byte to specify the hash algorithm 
 
 Referenced by deserialize\+\_\+server\+\_\+key\+\_\+exchange(), print\+\_\+server\+\_\+key\+\_\+exchange(), serialize\+\_\+server\+\_\+key\+\_\+exchange(), sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign().
 
 \index{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}!signature@{signature}}
 \index{signature@{signature}!ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}}
 \subsubsection[{\texorpdfstring{signature}{signature}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ signature}\hypertarget{structecdhe__server__key__exchange__t_a775505f2a74638cda44fdd79c4e07993}{}\label{structecdhe__server__key__exchange__t_a775505f2a74638cda44fdd79c4e07993}
-
+Signature byte stream 
 
 Referenced by deserialize\+\_\+server\+\_\+key\+\_\+exchange(), free\+\_\+server\+\_\+key\+\_\+exchange(), print\+\_\+server\+\_\+key\+\_\+exchange(), serialize\+\_\+server\+\_\+key\+\_\+exchange(), sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign().
 
 \index{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}!signature\+\_\+length@{signature\+\_\+length}}
 \index{signature\+\_\+length@{signature\+\_\+length}!ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t@{ecdhe\+\_\+server\+\_\+key\+\_\+exchange\+\_\+t}}
 \subsubsection[{\texorpdfstring{signature\+\_\+length}{signature_length}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int signature\+\_\+length}\hypertarget{structecdhe__server__key__exchange__t_a23a683d5129246d9adbd0029612d06a8}{}\label{structecdhe__server__key__exchange__t_a23a683d5129246d9adbd0029612d06a8}
-
+Signature length 
 
 Referenced by deserialize\+\_\+server\+\_\+key\+\_\+exchange(), print\+\_\+server\+\_\+key\+\_\+exchange(), serialize\+\_\+server\+\_\+key\+\_\+exchange(), sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and verify\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex\+\_\+sign().
 

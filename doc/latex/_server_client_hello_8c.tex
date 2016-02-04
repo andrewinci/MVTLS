@@ -1,8 +1,7 @@
 \hypertarget{_server_client_hello_8c}{}\section{src/\+Handshake\+Messages/\+Server\+Client\+Hello.c File Reference}
 \label{_server_client_hello_8c}\index{src/\+Handshake\+Messages/\+Server\+Client\+Hello.\+c@{src/\+Handshake\+Messages/\+Server\+Client\+Hello.\+c}}
 {\ttfamily \#include \char`\"{}Server\+Client\+Hello.\+h\char`\"{}}\\*
-Include dependency graph for Server\+Client\+Hello.\+c\+:
-\nopagebreak
+Include dependency graph for Server\+Client\+Hello.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,6 +23,19 @@ void \hyperlink{_server_client_hello_8c_aec7721cdc08398302cd7435054202117}{free\
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+S\+S\+L/\+T\+LS Project
+
+This file is used to manage the client/server hello message of the handshake protocol
+
+\begin{DoxyDate}{Date}
+Created on 24/12/15. 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. 
+\end{DoxyCopyright}
+
+
 \subsection{Function Documentation}
 \index{Server\+Client\+Hello.\+c@{Server\+Client\+Hello.\+c}!deserialize\+\_\+client\+\_\+server\+\_\+hello@{deserialize\+\_\+client\+\_\+server\+\_\+hello}}
 \index{deserialize\+\_\+client\+\_\+server\+\_\+hello@{deserialize\+\_\+client\+\_\+server\+\_\+hello}!Server\+Client\+Hello.\+c@{Server\+Client\+Hello.\+c}}
@@ -34,6 +46,17 @@ void \hyperlink{_server_client_hello_8c_aec7721cdc08398302cd7435054202117}{free\
 \item[{{\bf channel\+\_\+mode}}]{mode}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_hello_8c_aaae83df7b184359cdb8f7f06931e7ad5}{}\label{_server_client_hello_8c_aaae83df7b184359cdb8f7f06931e7ad5}
+De-\/serialize a byte stream into a server\+\_\+client\+\_\+hello struct.
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & the stream to de-\/serialize. \\
+\hline
+{\em stream\+Len} & the stream length \\
+\hline
+{\em mode} & set S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE for a server hello message, C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE for client hello message \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
@@ -51,7 +74,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -67,13 +91,21 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf server\+\_\+client\+\_\+hello\+\_\+t} $\ast$}]{h}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_hello_8c_aec7721cdc08398302cd7435054202117}{}\label{_server_client_hello_8c_aec7721cdc08398302cd7435054202117}
+Delloc memory of server\+\_\+client\+\_\+hello.
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & the struct to deallocate \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+hello(), make\+\_\+server\+\_\+hello(), on\+Packet\+Receive(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -89,13 +121,24 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf session\+\_\+id\+\_\+t}}]{session}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_hello_8c_a095e7c0597d66b5e4eb2097b8f28474a}{}\label{_server_client_hello_8c_a095e7c0597d66b5e4eb2097b8f28474a}
+Make a client hello message. The function set the unix time stamp, random and the session, if given.
+
+
+\begin{DoxyParams}{Parameters}
+{\em session} & session id to recover \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the handshake, it has to be deallocated 
+\end{DoxyReturn}
 
 
 Referenced by make\+\_\+client\+\_\+hello(), and make\+\_\+server\+\_\+hello().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -111,13 +154,21 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf server\+\_\+client\+\_\+hello\+\_\+t} $\ast$}]{h}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_hello_8c_aff8bed251595f5c51c0d1755799909ae}{}\label{_server_client_hello_8c_aff8bed251595f5c51c0d1755799909ae}
+Print details about the server/client hello
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & the server client struct to print \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -136,13 +187,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf channel\+\_\+mode}}]{mode}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_hello_8c_a5d76fe55dc16550edc3604fcde33b8d0}{}\label{_server_client_hello_8c_a5d76fe55dc16550edc3604fcde33b8d0}
+Serialize a server\+\_\+hello struct into a byte stream.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hello} & struct to serialize \\
+\hline
+{\em stream} & a pointer to N\+U\+LL. Will return the stream byte. \\
+\hline
+{\em stream\+Len} & the return stream length \\
+\hline
+{\em mode} & set S\+E\+R\+V\+E\+R\+\_\+\+M\+O\+DE for a server hello message, C\+L\+I\+E\+N\+T\+\_\+\+M\+O\+DE for client hello message \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+hello(), and make\+\_\+server\+\_\+hello().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

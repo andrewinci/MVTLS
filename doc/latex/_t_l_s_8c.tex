@@ -1,8 +1,7 @@
 \hypertarget{_t_l_s_8c}{}\section{src/\+T\+LS.c File Reference}
 \label{_t_l_s_8c}\index{src/\+T\+L\+S.\+c@{src/\+T\+L\+S.\+c}}
 {\ttfamily \#include \char`\"{}T\+L\+S.\+h\char`\"{}}\\*
-Include dependency graph for T\+L\+S.\+c\+:
-\nopagebreak
+Include dependency graph for T\+L\+S.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -45,7 +44,7 @@ void \hyperlink{_t_l_s_8c_a6f7128cf62e8491d70cf2585cf901c4c}{make\+\_\+\+E\+C\+D
 \subsection{Detailed Description}
 S\+S\+L/\+T\+LS Project
 
-This file provide a set of function for the T\+LS handshake. The function are used for make T\+LS message for both server and client.
+This file provide a set of function for the T\+LS handshake. The function are used to make T\+LS message for both server and client.
 
 \begin{DoxyDate}{Date}
 Created on 13/01/16. 
@@ -68,9 +67,9 @@ Append the handshake h to the handshake\+\_\+messages field of T\+L\+S\+\_\+para
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+{\em T\+L\+S\+\_\+param} & connection parameters \\
 \hline
-{\em h} & \+: the handshake to append \\
+{\em h} & the handshake to append \\
 \hline
 \end{DoxyParams}
 
@@ -90,7 +89,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -106,11 +106,11 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a6fd919275c5d6d3e6578c480cc62a8ce}{}\label{_t_l_s_8c_a6fd919275c5d6d3e6578c480cc62a8ce}
-Make the certificate message for the server. That message depends on the authentication algorithm hence we require the connection parameters. The function also sets the certificate in the connection parameters for feature uses.
+Make the certificate message for the server. That message depends on the authentication algorithm hence we require the connection parameters. The function also sets the certificate in the connection parameters for further uses.
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+{\em T\+L\+S\+\_\+param} & connection parameters \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -133,7 +133,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -160,7 +161,8 @@ Referenced by on\+Packet\+Receive().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -178,19 +180,19 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{int}]{cipher\+\_\+suite\+\_\+len}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}{}\label{_t_l_s_8c_a7c6bc0a015a0a78cb508614995b9172e}
-Given an array of cipher suite make a client hello message. The function also fill the random field using the time stamp and a random generator(openssl)
+Given an array of cipher suites, make a client hello message. The function also fills the random field using the time stamp and a random generator (Open\+S\+SL)
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+random} & \+: the random setted in the client hello \\
+{\em client\+\_\+random} & the random set in the client hello \\
 \hline
-{\em cipher\+\_\+suite\+\_\+list} & \+: an array of cipher suite to add in the client hello \\
+{\em cipher\+\_\+suite\+\_\+list} & an array of cipher suites to add to the client hello \\
 \hline
-{\em cipher\+\_\+suite\+\_\+len} & \+: the number of cipher suite in the list \\
+{\em cipher\+\_\+suite\+\_\+len} & the number of cipher suites in the list \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-the hello client handshake message 
+the client hello handshake message 
 \end{DoxyReturn}
 
 
@@ -226,13 +228,13 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{uint16\+\_\+t}]{key\+\_\+ex\+\_\+alg}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}{}\label{_t_l_s_8c_ab3bb4e3f75fb84baa35cd0931381dfe0}
-Given the information in the T\+L\+S\+\_\+parameter and the key exchange algorithm return the handshake of the client key exchange. That include compute the pre-\/master key. It also compute the master secret and set in the T\+L\+S\+\_\+param.
+Given the information in T\+L\+S\+\_\+parameter and the key exchange algorithm return the handshake of the client key exchange. That includes to compute the pre-\/master key. It also computes the master secret and set it in T\+L\+S\+\_\+param.
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: the parameters of the connection \\
+{\em T\+L\+S\+\_\+param} & the parameters of the connection \\
 \hline
-{\em key\+\_\+ex\+\_\+alg} & \+: the key exchange algorithm of the handshake \\
+{\em key\+\_\+ex\+\_\+alg} & the key exchange algorithm of the handshake \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -255,7 +257,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -276,9 +279,9 @@ Make the client key exchange message for D\+HE key exchange. This function is ca
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+{\em client\+\_\+key\+\_\+ex} & the client key exchange message \\
 \hline
-{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+{\em T\+L\+S\+\_\+param} & the connection parameters \\
 \hline
 \end{DoxyParams}
 
@@ -298,7 +301,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -318,7 +322,7 @@ Make the server key exchange for D\+HE key exchange. It computes the DH paramete
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+{\em T\+L\+S\+\_\+param} & connection parameters \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -341,7 +345,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -362,9 +367,9 @@ Make the client key exchange message for E\+C\+D\+HE key exchange. This function
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+{\em client\+\_\+key\+\_\+ex} & the client key exchange message \\
 \hline
-{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+{\em T\+L\+S\+\_\+param} & the connection parameters \\
 \hline
 \end{DoxyParams}
 
@@ -384,7 +389,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -404,7 +410,7 @@ Make the server key exchange for E\+C\+D\+HE key exchange. It computes the E\+C\
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+{\em T\+L\+S\+\_\+param} & connection parameters \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -427,7 +433,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -443,11 +450,11 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}{}\label{_t_l_s_8c_ae149244e09cbbd2180bc4c5fc6d0a924}
-Given the connection parameters compute the finished message. Note in the T\+LS protocol this message is encrypted.
+Given the connection parameters compute the finished message. Note\+: T\+LS protocol requires this message to be encrypted.
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+{\em T\+L\+S\+\_\+param} & the connection parameters \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -470,7 +477,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -491,9 +499,9 @@ Make the client key exchange message for R\+SA key exchange. This function is ca
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+key\+\_\+ex} & \+: the client key exchange message \\
+{\em client\+\_\+key\+\_\+ex} & the client key exchange message \\
 \hline
-{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+{\em T\+L\+S\+\_\+param} & the connection parameters \\
 \hline
 \end{DoxyParams}
 
@@ -513,7 +521,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -530,13 +539,13 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf server\+\_\+client\+\_\+hello\+\_\+t} $\ast$}]{client\+\_\+hello}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a035a830fd89c6c7af60809197d81ea29}{}\label{_t_l_s_8c_a035a830fd89c6c7af60809197d81ea29}
-Given the client hello message the function makes the server hello. It choices a random cipher suite among the those provided by the client. The function also fill the random field using the time stamp and a random generator(openssl)
+Given the client hello message the function makes the server hello. It chooses a random cipher suite among those provided by the client. The function also fills the random field using the time stamp and a random generator (Open\+S\+SL)
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: the connection parameters \\
+{\em T\+L\+S\+\_\+param} & the connection parameters \\
 \hline
-{\em client\+\_\+hello} & \+: the received client hello. \\
+{\em client\+\_\+hello} & the received client hello. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -559,7 +568,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -586,7 +596,8 @@ Referenced by on\+Packet\+Receive().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -602,11 +613,11 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf T\+L\+S\+\_\+parameters\+\_\+t} $\ast$}]{T\+L\+S\+\_\+param}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_8c_a902d940508d7080023ef072b2667a143}{}\label{_t_l_s_8c_a902d940508d7080023ef072b2667a143}
-Make the server key exchange handshake message. The function also sets the message in the connection parameters for compute the master key in the client key exchange message.
+Make the server key exchange handshake message. The function also sets the message in the connection parameters to compute the master key in the client key exchange message.
 
 
 \begin{DoxyParams}{Parameters}
-{\em T\+L\+S\+\_\+param} & \+: connection parameters \\
+{\em T\+L\+S\+\_\+param} & connection parameters \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -629,7 +640,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

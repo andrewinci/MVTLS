@@ -10,16 +10,14 @@
 {\ttfamily \#include $<$sys/stat.\+h$>$}\\*
 {\ttfamily \#include $<$pthread.\+h$>$}\\*
 {\ttfamily \#include $<$time.\+h$>$}\\*
-Include dependency graph for Server\+Client\+Transport\+Protocol.\+h\+:
-\nopagebreak
+Include dependency graph for Server\+Client\+Transport\+Protocol.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{_server_client_transport_protocol_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -48,7 +46,7 @@ typedef struct \hyperlink{structchannel__t}{channel\+\_\+t} \hyperlink{_server_c
 \item 
 \hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ \hyperlink{_server_client_transport_protocol_8h_aaa07b9b9152780bcb7fbacf14efa7eda}{create\+\_\+channel} (char $\ast$file\+Name, char $\ast$channel\+From, char $\ast$channel\+To)
 \item 
-int \hyperlink{_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59}{set\+\_\+on\+\_\+receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, void($\ast$\hyperlink{server_8c_a98d326f448510d53d67b27e5cbbad82d}{on\+Packet\+Receive})(\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__transport__t}{packet\+\_\+transport\+\_\+t} $\ast$p))
+int \hyperlink{_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59}{set\+\_\+on\+\_\+receive} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, void($\ast$\hyperlink{server_8c_a48f2c3c739d443cf2dd46c01a7136674}{on\+Packet\+Receive})(\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__transport__t}{packet\+\_\+transport\+\_\+t} $\ast$p))
 \item 
 int \hyperlink{_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac}{send\+\_\+packet} (\hyperlink{structchannel__t}{channel\+\_\+t} $\ast$ch, \hyperlink{structpacket__transport__t}{packet\+\_\+transport\+\_\+t} $\ast$p)
 \item 
@@ -71,7 +69,7 @@ Basic client/server communication through file. It substitutes the transport lay
 
 P\+R\+O\+T\+O\+C\+OL\+: The protocol is very simple 8 byte for source 8 byte for receiver 4 byte for packet length message
 
-both server and client after read a message they blank the file both server and client cannot write if the file is not blank, they wait
+Both server and client, after reading a message, blank the file both server and client cannot write if the file is not blank, they wait
 
 \begin{DoxyDate}{Date}
 Created on 22/12/15. 
@@ -85,7 +83,7 @@ Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserve
 \index{Server\+Client\+Transport\+Protocol.\+h@{Server\+Client\+Transport\+Protocol.\+h}!D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME@{D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME}}
 \index{D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME@{D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME}!Server\+Client\+Transport\+Protocol.\+h@{Server\+Client\+Transport\+Protocol.\+h}}
 \subsubsection[{\texorpdfstring{D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME}{DELAY_TIME}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+L\+A\+Y\+\_\+\+T\+I\+ME~50}\hypertarget{_server_client_transport_protocol_8h_a898f8c58e7f9295dcd48d081926f82ca}{}\label{_server_client_transport_protocol_8h_a898f8c58e7f9295dcd48d081926f82ca}
-
+the time to wait between 2 readings of the file. Important to don\textquotesingle{}t use too much C\+PU. 
 
 Referenced by reader().
 
@@ -107,13 +105,15 @@ Referenced by reader().
 \item[{char $\ast$}]{channel\+To}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_transport_protocol_8h_aaa07b9b9152780bcb7fbacf14efa7eda}{}\label{_server_client_transport_protocol_8h_aaa07b9b9152780bcb7fbacf14efa7eda}
-Create a server/client channel using the file\+Name as comunication channel
+Create a server/client channel using the file\+Name as communication channel
 
 
 \begin{DoxyParams}{Parameters}
-{\em file\+Name} & \+: file name of the channel \\
+{\em file\+Name} & file name of the channel \\
 \hline
-{\em server\+Name} & \+: name of the server/client \\
+{\em channel\+From} & name of the channel owner \\
+\hline
+{\em channel\+To} & name of the other peer \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -148,17 +148,33 @@ Create a packet starting from a byte stream source and destination
 
 
 \begin{DoxyParams}{Parameters}
-{\em source} & \+: packet source \\
+{\em source} & packet source \\
 \hline
-{\em destination} & \+: packet receiver \\
+{\em destination} & packet receiver \\
 \hline
-{\em message} & \+: message stream to be encapsulate into packet \\
+{\em message} & message stream to be encapsulate into packet \\
 \hline
 {\em message\+\_\+length} & message lenght \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-a pointer to a builded packet 
+a pointer to a built packet
+\end{DoxyReturn}
+Create a packet starting from a byte stream source and destination
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & packet source \\
+\hline
+{\em destination} & packet receiver \\
+\hline
+{\em message} & message stream to be encapsulated into packet \\
+\hline
+{\em message\+\_\+length} & message lenght \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to a built packet 
 \end{DoxyReturn}
 
 
@@ -166,7 +182,8 @@ Referenced by deserialize\+\_\+packet(), and send\+\_\+record().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -184,7 +201,7 @@ Here is the caller graph for this function\+:\nopagebreak
 )}\hypertarget{_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7}{}\label{_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7}
 Deallocate memory allocated by packet 
 \begin{DoxyParams}{Parameters}
-{\em p} & \+: pointer to packet to free \\
+{\em p} & pointer to packet to free \\
 \hline
 \end{DoxyParams}
 
@@ -193,7 +210,8 @@ Referenced by on\+Packet\+Receive(), reader(), and send\+\_\+record().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -210,13 +228,13 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf packet\+\_\+transport\+\_\+t} $\ast$}]{p}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac}{}\label{_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac}
-Send a message trough the channel ch
+Send a message through the channel ch
 
 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: channel to be used \\
+{\em ch} & channel to be used \\
 \hline
-{\em p} & \+: pointer to packet to be sent \\
+{\em p} & pointer to packet to be sent \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -239,7 +257,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -260,13 +279,25 @@ Set the function to be called when a message is received
 
 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: channel interested \\
+{\em ch} & channel interested \\
 \hline
-{\em on\+Packet\+Receive} & \+: pointer to the function to be called \\
+{\em on\+Packet\+Receive} & pointer to the function to be called \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-\+: 1 if the function was setted, 0 otherwise 
+\+: 1 if the function was set, 0 otherwise
+\end{DoxyReturn}
+Set the function to be called when a message is received
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & channel interested \\
+\hline
+{\em on\+Packet\+Receive} & pointer to the function to call \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 1 if the function was set, 0 otherwise 
 \end{DoxyReturn}
 
 
@@ -274,7 +305,8 @@ Referenced by do\+\_\+handshake().
 
 
 
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -301,11 +333,21 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf channel\+\_\+t} $\ast$}]{ch}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_transport_protocol_8h_ac13189fb7b788d6f0360927759b95a8b}{}\label{_server_client_transport_protocol_8h_ac13189fb7b788d6f0360927759b95a8b}
-Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is succesfull) the client/server read continously from channel. (for S\+T\+OP use stop())
+Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is successful) the client/server read continously from channel. (to S\+T\+OP use stop())
 
 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: channel to start \\
+{\em ch} & channel to start \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: 1 if the thread was started, 0 otherwise
+\end{DoxyReturn}
+Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is succesfull) the client/server read continously from channel. (to S\+T\+OP use stop())
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & channel to start \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -344,9 +386,9 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf channel\+\_\+t} $\ast$}]{ch}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d}{}\label{_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d}
-Stop the reading/write thread and the channel. Note\+: the function doesn\textquotesingle{}t free the channel. 
+Stop the reading/writing thread and the channel. Note\+: the function doesn\textquotesingle{}t free the channel. 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: channel to stop \\
+{\em ch} & channel to stop \\
 \hline
 \end{DoxyParams}
 
@@ -355,7 +397,8 @@ Referenced by on\+Packet\+Receive().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -371,9 +414,9 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf channel\+\_\+t} $\ast$}]{ch}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_transport_protocol_8h_a771a2acdb87f3679abacac37706d65d7}{}\label{_server_client_transport_protocol_8h_a771a2acdb87f3679abacac37706d65d7}
-Stop the callee and wait untill stop is called 
+Stop the caller and wait until stop() is called 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: the chanal to wait \\
+{\em ch} & the channel to wait \\
 \hline
 \end{DoxyParams}
 

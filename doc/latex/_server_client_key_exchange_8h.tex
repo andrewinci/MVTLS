@@ -5,16 +5,14 @@
 {\ttfamily \#include $<$string.\+h$>$}\\*
 {\ttfamily \#include $<$openssl/hmac.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
-Include dependency graph for Server\+Client\+Key\+Exchange.\+h\+:
-\nopagebreak
+Include dependency graph for Server\+Client\+Key\+Exchange.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{_server_client_key_exchange_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -56,6 +54,19 @@ void \hyperlink{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+S\+S\+L/\+T\+LS Project
+
+This file contains functions for manage the server/client key exchange and respective structs.
+
+\begin{DoxyDate}{Date}
+Created on 06/12/15. 
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. 
+\end{DoxyCopyright}
+
+
 \subsection{Typedef Documentation}
 \index{Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}!server\+\_\+key\+\_\+exchange\+\_\+t@{server\+\_\+key\+\_\+exchange\+\_\+t}}
 \index{server\+\_\+key\+\_\+exchange\+\_\+t@{server\+\_\+key\+\_\+exchange\+\_\+t}!Server\+Client\+Key\+Exchange.\+h@{Server\+Client\+Key\+Exchange.\+h}}
@@ -71,13 +82,26 @@ void \hyperlink{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a
 \item[{uint32\+\_\+t}]{message\+\_\+len}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_adedc3876e814faf9f270bf832bda1813}{}\label{_server_client_key_exchange_8h_adedc3876e814faf9f270bf832bda1813}
+De-\/serialize a client key exchange byte stream message into the appropriate server\+\_\+key\+\_\+excahnge message (D\+HE, E\+C\+D\+HE)
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & the byte stream message to de-\/serialize \\
+\hline
+{\em message\+\_\+len} & the byte stream length \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the de-\/serialized client key exchange message 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -95,13 +119,42 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a25e978e5b5d2fc430d4c8f841b2901b3}{}\label{_server_client_key_exchange_8h_a25e978e5b5d2fc430d4c8f841b2901b3}
+De-\/serialize a server key exchange byte stream message into the appropriate server\+\_\+key\+\_\+excahnge message (D\+HE, E\+C\+D\+HE)
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & the byte stream message to de-\/serialize \\
+\hline
+{\em message\+\_\+len} & the byte stream length \\
+\hline
+{\em kx} & the key exchange method of the handshake \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the de-\/serialized server\+\_\+key\+\_\+excahnge message.
+\end{DoxyReturn}
+De-\/serialize a server key exchange byte stream message into the appropriate server\+\_\+key\+\_\+excahnge message (D\+HE, E\+C\+D\+HE)
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & the byte stream message to de-\/serialize \\
+\hline
+{\em message\+\_\+len} & the byte stream length \\
+\hline
+{\em kx} & the key exchange method of the handshake \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the de-\/serialized server\+\_\+key\+\_\+exchange message. 
+\end{DoxyReturn}
 
 
 Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -117,13 +170,28 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+exchange}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a}{}\label{_server_client_key_exchange_8h_a29fa41af46ce9681a0fea1921f61a34a}
+Delloc memory of client key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+exchange} & the client key exchange message to deallocate\\
+\hline
+\end{DoxyParams}
+Dealloc memory of client key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+exchange} & the client key exchange message to deallocate \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+key\+\_\+exchange(), on\+Packet\+Receive(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -140,13 +208,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a65291857fa8a23542435005375c86a20}{}\label{_server_client_key_exchange_8h_a65291857fa8a23542435005375c86a20}
+Dealloc memory of server key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to deallocate \\
+\hline
+{\em kx} & the key exchange method of the handshake \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by do\+\_\+handshake(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -162,13 +240,21 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf client\+\_\+key\+\_\+exchange\+\_\+t} $\ast$}]{client\+\_\+key\+\_\+exchange}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a6a413a5d722f256d016581158220834f}{}\label{_server_client_key_exchange_8h_a6a413a5d722f256d016581158220834f}
+Print details about the client key exchange message
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+exchange} & the message to print \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -185,13 +271,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a642a719366693ae25cf8bc7538f5c5c6}{}\label{_server_client_key_exchange_8h_a642a719366693ae25cf8bc7538f5c5c6}
+Print details about the server key exchange message
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+\_\+key\+\_\+exchange} & the message to print \\
+\hline
+{\em kx} & the key exchange method of the handshake \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -209,13 +305,25 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{uint32\+\_\+t $\ast$}]{stream\+Len}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_ae993e656dc83c25c3d5b952471a77d7d}{}\label{_server_client_key_exchange_8h_ae993e656dc83c25c3d5b952471a77d7d}
+Serialize a client key exchange message into a byte stream.
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+\_\+key\+\_\+exchange} & the message to serialize \\
+\hline
+{\em stream} & a pointer to N\+U\+LL. Will contain the serialization result \\
+\hline
+{\em stream\+Len} & the serialization result length \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+client\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -234,13 +342,27 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf key\+\_\+exchange\+\_\+algorithm}}]{kx}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_key_exchange_8h_a8cb71f83bed21f1dd9bb8cdb9dca1e5f}{}\label{_server_client_key_exchange_8h_a8cb71f83bed21f1dd9bb8cdb9dca1e5f}
+Serialize a server key exchange message into a byte stream.
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+\_\+key\+\_\+exchange} & the message to serialize \\
+\hline
+{\em stream} & a pointer to N\+U\+LL. Will contain the serialization result \\
+\hline
+{\em stream\+Len} & the serialization result length \\
+\hline
+{\em kx} & the key exchange method of the handshake \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+server\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

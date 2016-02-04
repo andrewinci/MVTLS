@@ -8,16 +8,14 @@
 {\ttfamily \#include $<$openssl/rsa.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
-Include dependency graph for Crypto.\+h\+:
-\nopagebreak
+Include dependency graph for Crypto.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{_crypto_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -71,21 +69,42 @@ Apply the P\+RF to a secret.
 
 
 \begin{DoxyParams}{Parameters}
-{\em hash} & \+: the hash to use in the hmac \\
+{\em hash} & the hash to use in the hmac \\
 \hline
-{\em secret} & \+: the secret to process \\
+{\em secret} & the secret to process \\
 \hline
-{\em secret\+\_\+len} & \+: secrete length \\
+{\em secret\+\_\+len} & secrete length \\
 \hline
-{\em label} & \+: the label of the P\+RF computation \\
+{\em label} & the label of the P\+RF computation \\
 \hline
-{\em seed} & \+: the seed for the computation \\
+{\em seed} & the seed for the computation \\
 \hline
-{\em seed\+\_\+len} & \+: seed length \\
+{\em seed\+\_\+len} & seed length \\
 \hline
-{\em result} & \+: a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
+{\em result} & a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
 \hline
-{\em result\+\_\+len} & \+: the desired length of pseudo random stream. \\
+{\em result\+\_\+len} & the desired length of pseudo random stream.\\
+\hline
+\end{DoxyParams}
+Apply the P\+RF to a secret.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & the hash to use in the hmac \\
+\hline
+{\em secret} & the secret to process \\
+\hline
+{\em secret\+\_\+len} & secret length \\
+\hline
+{\em label} & the label of the P\+RF computation \\
+\hline
+{\em seed} & the seed for the computation \\
+\hline
+{\em seed\+\_\+len} & seed length \\
+\hline
+{\em result} & a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
+\hline
+{\em result\+\_\+len} & the desired length of pseudo random stream. \\
 \hline
 \end{DoxyParams}
 
@@ -94,7 +113,8 @@ Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -113,17 +133,17 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}{}\label{_crypto_8h_aebef13db99f3bbd7e9e2c55df1aa65c9}
-Sign the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, D\+SS.
+Sign the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange. The function chooses an arbitrary hash algorithm for the signature (except M\+D5, S\+H\+A-\/1). It takes private key in ../certificates/ folder with name server\+A.\+key where A can be R\+SA, D\+SS.
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to sign. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -143,7 +163,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -162,17 +183,17 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}{}\label{_crypto_8h_abe36fc162d9170d061024842f7ec6b9d}
-Sign the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, E\+C\+D\+SA.
+Sign the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange. The function chooses an arbitrary hash algorithm for the signature (except M\+D5, S\+H\+A-\/1). It takes private key in ../certificates/ folder with name server\+A.\+key where A can be R\+SA, E\+C\+D\+SA.
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to sign. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -192,7 +213,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -216,15 +238,15 @@ Verify the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange.
 
 
 \begin{DoxyParams}{Parameters}
-{\em certificate} & \+: the certificate to use for verify the signature \\
+{\em certificate} & the certificate to use to verify the signature \\
 \hline
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to verify. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -233,7 +255,8 @@ Referenced by make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -257,15 +280,30 @@ Verify the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange.
 
 
 \begin{DoxyParams}{Parameters}
-{\em certificate} & \+: the certificate to use for verify the signature \\
+{\em certificate} & the certificate to use to verify the signature \\
 \hline
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to verify. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm.\\
+\hline
+\end{DoxyParams}
+Verify the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange.
+
+
+\begin{DoxyParams}{Parameters}
+{\em certificate} & the certificate to use for verify the signature \\
+\hline
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
+\hline
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to verify. \\
+\hline
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -274,7 +312,8 @@ Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

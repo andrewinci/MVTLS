@@ -119,8 +119,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a779b051aa3cf19358f7177780ce60f11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive</a> (<a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p)</td></tr>
-<tr class="separator:a779b051aa3cf19358f7177780ce60f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f2c3c739d443cf2dd46c01a7136674"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive</a> (<a class="el" href="structchannel__t.html">channel_t</a> *<a class="el" href="structchannel.html">channel</a>, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p)</td></tr>
+<tr class="separator:a48f2c3c739d443cf2dd46c01a7136674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed2d0a7b3d9f68efed058f1bc0768e95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake</a> (int to_send_cipher_suite_len, <a class="el" href="structcipher__suite__t.html">cipher_suite_t</a> to_send_cipher_suite[])</td></tr>
 <tr class="separator:aed2d0a7b3d9f68efed058f1bc0768e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
@@ -128,12 +128,21 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac8859e8c1ce357c4c8b37bbb1936ba1c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#ac8859e8c1ce357c4c8b37bbb1936ba1c">v</a> = 0</td></tr>
-<tr class="separator:ac8859e8c1ce357c4c8b37bbb1936ba1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bdcfae3209cbd96db35a2ae356fa15e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#a1bdcfae3209cbd96db35a2ae356fa15e">verbosity</a> = 0</td></tr>
+<tr class="separator:a1bdcfae3209cbd96db35a2ae356fa15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8eef32066e04e25183a0cc549992c54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_t_l_s__parameters__t.html">TLS_parameters_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_8c.html#aa8eef32066e04e25183a0cc549992c54">TLS_param</a></td></tr>
 <tr class="separator:aa8eef32066e04e25183a0cc549992c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>SSL/TLS Project</p>
+<p>Emulate a client during a TLS connection.</p>
+<dl class="section date"><dt>Date</dt><dd>Created on 12/01/16. </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.</dd></dl>
+<p>SSL/TLS Project</p>
+<p>Emulate a server during a TLS connection.</p>
+<dl class="section date"><dt>Date</dt><dd>Created on 12/01/16. </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a56fe9bff0a1be75aae2da3e593053e2c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -143,7 +152,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="stringliteral">&quot;TLSClient: TLS1.2 version handshake\n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;\n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;Usage:  \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  TLSClient [args] \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot; \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;Options: \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Specify cipher suite id (not hex) \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -c  --cipher_id        [id]\n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;   \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Cipher suite name     \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -n  --name             [name]\n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;   \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Specify key exchange    \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -x  --key_exchange    (RSA|DHE|ECDHE)  \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;   \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Specify authentication algorithm \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -a  --auth_algorithm  (RSA|DSS|ECDSA) \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot; \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Specify verbosity \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -v     0 default (1|2) \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot; \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Specify hash algorithm \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -h  --hash_algorithm  (MD5|SHA1|SHA224|SHA256|SHA384|SHA512) \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot; \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Show supported cipher suites \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    -l --list\n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot; \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;  Show this help \n&quot;</span>\</div><div class="line">                <span class="stringliteral">&quot;    --help \n\n&quot;</span></div></div><!-- fragment -->
+<p>String with program arguments </p>
+
 <p>Referenced by <a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
 
 </div>
@@ -172,6 +182,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Do the handshake.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">to_send_cipher_suite_len</td><td>the number of cipher suite to add in the client hello </td></tr>
+    <tr><td class="paramname">to_send_cipher_suite</td><td>contains the cipher suite chosen for the client hello </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Referenced by <a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>.</p>
 
@@ -182,7 +200,7 @@ Here is the call graph for this function:</div>
 <map name="client_8c_aed2d0a7b3d9f68efed058f1bc0768e95_cgraph" id="client_8c_aed2d0a7b3d9f68efed058f1bc0768e95_cgraph">
 <area shape="rect" id="node2" href="_server_client_transport_protocol_8c.html#aaa07b9b9152780bcb7fbacf14efa7eda" title="create_channel" alt="" coords="171,232,285,259"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8c.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="172,916,284,943"/>
-<area shape="rect" id="node4" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="356,840,481,867"/>
+<area shape="rect" id="node4" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="356,840,481,867"/>
 <area shape="rect" id="node13" href="_server_client_handshake_protocol_8c.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="577,384,697,411"/>
 <area shape="rect" id="node20" href="_server_client_key_exchange_8c.html#a65291857fa8a23542435005375c86a20" title="free_server_key_exchange" alt="" coords="781,5,963,32"/>
 <area shape="rect" id="node25" href="_t_l_s_8c.html#a12a63a5becca8f85a59f6ac0f4d9c553" title="backup_handshake" alt="" coords="569,1245,706,1272"/>
@@ -280,7 +298,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" id="node5" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="141,477,251,504"/>
 <area shape="rect" id="node6" href="_server_client_transport_protocol_8c.html#aaa07b9b9152780bcb7fbacf14efa7eda" title="create_channel" alt="" coords="345,933,458,960"/>
 <area shape="rect" id="node7" href="_server_client_transport_protocol_8c.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="345,553,457,580"/>
-<area shape="rect" id="node8" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="529,553,655,580"/>
+<area shape="rect" id="node8" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="529,553,655,580"/>
 <area shape="rect" id="node16" href="_server_client_handshake_protocol_8c.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="751,325,871,352"/>
 <area shape="rect" id="node23" href="_server_client_key_exchange_8c.html#a65291857fa8a23542435005375c86a20" title="free_server_key_exchange" alt="" coords="954,716,1137,743"/>
 <area shape="rect" id="node28" href="_t_l_s_8c.html#a12a63a5becca8f85a59f6ac0f4d9c553" title="backup_handshake" alt="" coords="742,173,879,200"/>
@@ -329,7 +347,7 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a class="anchor" id="a779b051aa3cf19358f7177780ce60f11"></a>
+<a class="anchor" id="a48f2c3c739d443cf2dd46c01a7136674"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -337,7 +355,7 @@ Here is the call graph for this function:</div>
           <td class="memname">void onPacketReceive </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structchannel__t.html">channel_t</a> *&#160;</td>
-          <td class="paramname"><em>ch</em>, </td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -352,14 +370,22 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Function called from transport protocol when a message is received</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>the communication channel </td></tr>
+    <tr><td class="paramname">p</td><td>the received packet </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, and <a class="el" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59">set_on_receive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="client_8c_a779b051aa3cf19358f7177780ce60f11_cgraph.png" border="0" usemap="#client_8c_a779b051aa3cf19358f7177780ce60f11_cgraph" alt=""/></div>
-<map name="client_8c_a779b051aa3cf19358f7177780ce60f11_cgraph" id="client_8c_a779b051aa3cf19358f7177780ce60f11_cgraph">
+<div class="center"><img src="client_8c_a48f2c3c739d443cf2dd46c01a7136674_cgraph.png" border="0" usemap="#client_8c_a48f2c3c739d443cf2dd46c01a7136674_cgraph" alt=""/></div>
+<map name="client_8c_a48f2c3c739d443cf2dd46c01a7136674_cgraph" id="client_8c_a48f2c3c739d443cf2dd46c01a7136674_cgraph">
 <area shape="rect" id="node2" href="_server_client_record_protocol_8c.html#ae84b228db8fb2f706c75f1e8d41a06b2" title="deserialize_record" alt="" coords="207,5,337,32"/>
 <area shape="rect" id="node3" href="_server_client_record_protocol_8c.html#a5029bcdf9f7eb874b25136b76e41963c" title="print_record" alt="" coords="460,259,553,285"/>
 <area shape="rect" id="node5" href="_server_client_record_protocol_8c.html#a9212df7db09a62df2f7d4a913f04defc" title="free_record" alt="" coords="461,208,552,235"/>
@@ -408,8 +434,8 @@ Here is the call graph for this function:</div>
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="client_8c_a779b051aa3cf19358f7177780ce60f11_icgraph.png" border="0" usemap="#client_8c_a779b051aa3cf19358f7177780ce60f11_icgraph" alt=""/></div>
-<map name="client_8c_a779b051aa3cf19358f7177780ce60f11_icgraph" id="client_8c_a779b051aa3cf19358f7177780ce60f11_icgraph">
+<div class="center"><img src="client_8c_a48f2c3c739d443cf2dd46c01a7136674_icgraph.png" border="0" usemap="#client_8c_a48f2c3c739d443cf2dd46c01a7136674_icgraph" alt=""/></div>
+<map name="client_8c_a48f2c3c739d443cf2dd46c01a7136674_icgraph" id="client_8c_a48f2c3c739d443cf2dd46c01a7136674_icgraph">
 <area shape="rect" id="node2" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="339,5,448,32"/>
 <area shape="rect" id="node4" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="179,31,291,57"/>
 <area shape="rect" id="node3" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="496,5,547,32"/>
@@ -429,20 +455,22 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>connection parameters </p>
 
 </div>
 </div>
-<a class="anchor" id="ac8859e8c1ce357c4c8b37bbb1936ba1c"></a>
+<a class="anchor" id="a1bdcfae3209cbd96db35a2ae356fa15e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int v = 0</td>
+          <td class="memname">int verbosity = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>verbosity of the output </p>
 
-<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>, and <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, <a class="el" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main()</a>, and <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 </div>
 </div>

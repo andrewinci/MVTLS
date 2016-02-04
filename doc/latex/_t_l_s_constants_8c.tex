@@ -1,8 +1,7 @@
 \hypertarget{_t_l_s_constants_8c}{}\section{src/\+T\+L\+S\+Constants.c File Reference}
 \label{_t_l_s_constants_8c}\index{src/\+T\+L\+S\+Constants.\+c@{src/\+T\+L\+S\+Constants.\+c}}
 {\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
-Include dependency graph for T\+L\+S\+Constants.\+c\+:
-\nopagebreak
+Include dependency graph for T\+L\+S\+Constants.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -32,7 +31,7 @@ const int \hyperlink{_t_l_s_constants_8c_a9dabc5b9445bb0547de6bec83d9cdc3e}{N\+U
 \subsection{Detailed Description}
 S\+S\+L/\+T\+LS Project
 
-This file contains a set of constants used in the handshake protocol and function implementation for manage the supported cipher suite.
+This file contains a set of constants used in the handshake protocol and function implementation to manage the supported cipher suite.
 
 \begin{DoxyDate}{Date}
 Created on 24/12/15. 
@@ -54,7 +53,7 @@ Given the id of a cipher suite return the cipher suite struct.
 
 
 \begin{DoxyParams}{Parameters}
-{\em id} & \+: cipher suite id \\
+{\em id} & cipher suite id \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -66,7 +65,8 @@ Referenced by deserialize\+\_\+client\+\_\+server\+\_\+hello(), main(), and make
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -86,7 +86,7 @@ Given the cipher suite name return the cipher suite struct.
 
 
 \begin{DoxyParams}{Parameters}
-{\em name} & \+: cipher suite name \\
+{\em name} & cipher suite name \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -117,21 +117,21 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf cipher\+\_\+suite\+\_\+t}}]{array\mbox{[}$\,$\mbox{]}}
 \end{DoxyParamCaption}
 )}\hypertarget{_t_l_s_constants_8c_ae63f6745a9c92927fc9d574d40262ac3}{}\label{_t_l_s_constants_8c_ae63f6745a9c92927fc9d574d40262ac3}
-Fill array\mbox{[}\mbox{]} with all cipher suite that has key exchange kx, hash algorithm h and authentication algorithm au.
+Fill array\mbox{[}\mbox{]} with all cipher suites that has key exchange kx, hash algorithm h and authentication algorithm au.
 
 
 \begin{DoxyParams}{Parameters}
-{\em kx} & \+: the key exchange algorithm (if N\+O\+N\+E\+\_\+\+KX the function consider all key exchange algorithm) \\
+{\em kx} & the key exchange algorithm (if N\+O\+N\+E\+\_\+\+KX the function consider all key exchange algorithms) \\
 \hline
-{\em h} & \+: the hash algorithm (if N\+O\+N\+E\+\_\+H the function consider all hash algorithm) \\
+{\em h} & the hash algorithm (if N\+O\+N\+E\+\_\+H the function consider all hash algorithms) \\
 \hline
-{\em au} & \+: the authentication algorithm (if N\+O\+N\+E\+\_\+\+AU the function consider all authentication algorithm) \\
+{\em au} & the authentication algorithm (if N\+O\+N\+E\+\_\+\+AU the function consider all authentication algorithms) \\
 \hline
-{\em array\mbox{[}$\,$\mbox{]}} & \+: an empty array of size N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE. \\
+{\em array\mbox{[}$\,$\mbox{]}} & an empty array of size N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-the number of cipher suite loaded in array\mbox{[}\mbox{]} 
+the number of cipher suites loaded in array\mbox{[}\mbox{]} 
 \end{DoxyReturn}
 
 
@@ -159,11 +159,11 @@ Get the hash algorithm starting from the hash id.
 
 
 \begin{DoxyParams}{Parameters}
-{\em h} & \+: the hash algorithm used \\
+{\em h} & the hash algorithm used \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-an E\+V\+P\+\_\+\+MD struct used for compute digest 
+an E\+V\+P\+\_\+\+MD struct used to compute digest 
 \end{DoxyReturn}
 
 
@@ -171,7 +171,8 @@ Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -186,10 +187,10 @@ Here is the caller graph for this function\+:\nopagebreak
 \index{T\+L\+S\+Constants.\+c@{T\+L\+S\+Constants.\+c}!cipher\+\_\+suite\+\_\+list@{cipher\+\_\+suite\+\_\+list}}
 \index{cipher\+\_\+suite\+\_\+list@{cipher\+\_\+suite\+\_\+list}!T\+L\+S\+Constants.\+c@{T\+L\+S\+Constants.\+c}}
 \subsubsection[{\texorpdfstring{cipher\+\_\+suite\+\_\+list}{cipher_suite_list}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf cipher\+\_\+suite\+\_\+t} cipher\+\_\+suite\+\_\+list\mbox{[}$\,$\mbox{]}}\hypertarget{_t_l_s_constants_8c_ace4b851fd953c51fe7b0ada522a95ae3}{}\label{_t_l_s_constants_8c_ace4b851fd953c51fe7b0ada522a95ae3}
-List of supported cipher suite \index{T\+L\+S\+Constants.\+c@{T\+L\+S\+Constants.\+c}!N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE@{N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE}}
+List of supported cipher suites \index{T\+L\+S\+Constants.\+c@{T\+L\+S\+Constants.\+c}!N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE@{N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE}}
 \index{N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE@{N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE}!T\+L\+S\+Constants.\+c@{T\+L\+S\+Constants.\+c}}
 \subsubsection[{\texorpdfstring{N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE}{NUM_CIPHER_SUITE}}]{\setlength{\rightskip}{0pt plus 5cm}const int N\+U\+M\+\_\+\+C\+I\+P\+H\+E\+R\+\_\+\+S\+U\+I\+TE = 62}\hypertarget{_t_l_s_constants_8c_a9dabc5b9445bb0547de6bec83d9cdc3e}{}\label{_t_l_s_constants_8c_a9dabc5b9445bb0547de6bec83d9cdc3e}
-The number of supported cipher suite 
+The number of supported cipher suites 
 
 Referenced by get\+\_\+cipher\+\_\+suite\+\_\+by\+\_\+id(), get\+\_\+cipher\+\_\+suite\+\_\+by\+\_\+name(), get\+\_\+cipher\+\_\+suites(), and main().
 

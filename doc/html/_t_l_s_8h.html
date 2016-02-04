@@ -152,7 +152,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SSL/TLS Project</p>
-<p>This file provide a set of function for the TLS handshake. The function are used for make TLS message for both server and client.</p>
+<p>This file provide a set of function for the TLS handshake. The function are used to make TLS message for both server and client.</p>
 <dl class="section date"><dt>Date</dt><dd>Created on 13/01/16. </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -182,13 +182,13 @@ Functions</h2></td></tr>
 <p>Append the handshake h to the handshake_messages field of TLS_param</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: connection parameters </td></tr>
-    <tr><td class="paramname">h</td><td>: the handshake to append </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>connection parameters </td></tr>
+    <tr><td class="paramname">h</td><td>the handshake to append </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, and <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>, and <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -206,7 +206,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="_t_l_s_8h_a12a63a5becca8f85a59f6ac0f4d9c553_icgraph.png" border="0" usemap="#_t_l_s_8h_a12a63a5becca8f85a59f6ac0f4d9c553_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_a12a63a5becca8f85a59f6ac0f4d9c553_icgraph" id="_t_l_s_8h_a12a63a5becca8f85a59f6ac0f4d9c553_icgraph">
 <area shape="rect" id="node2" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="525,31,635,57"/>
-<area shape="rect" id="node4" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="192,31,317,57"/>
+<area shape="rect" id="node4" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="192,31,317,57"/>
 <area shape="rect" id="node3" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="683,31,733,57"/>
 <area shape="rect" id="node5" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="365,81,477,108"/>
 </map>
@@ -228,16 +228,16 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Make the certificate message for the server. That message depends on the authentication algorithm hence we require the connection parameters. The function also sets the certificate in the connection parameters for feature uses.</p>
+<p>Make the certificate message for the server. That message depends on the authentication algorithm hence we require the connection parameters. The function also sets the certificate in the connection parameters for further uses.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: connection parameters </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>connection parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the certificate handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -256,7 +256,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_a6fd919275c5d6d3e6578c480cc62a8ce_icgraph.png" border="0" usemap="#_t_l_s_8h_a6fd919275c5d6d3e6578c480cc62a8ce_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_a6fd919275c5d6d3e6578c480cc62a8ce_icgraph" id="_t_l_s_8h_a6fd919275c5d6d3e6578c480cc62a8ce_icgraph">
-<area shape="rect" id="node2" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="173,5,299,32"/>
+<area shape="rect" id="node2" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="173,5,299,32"/>
 <area shape="rect" id="node3" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="347,5,456,32"/>
 <area shape="rect" id="node4" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="504,5,555,32"/>
 </map>
@@ -280,14 +280,14 @@ Here is the caller graph for this function:</div>
 <p>Make the change cipher spec record message. This message is simple and doesn't require any parameter.</p>
 <dl class="section return"><dt>Returns</dt><dd>the change cipher spec record </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_a5bed323f749e27db36fd6ab2a3e64c4a_icgraph.png" border="0" usemap="#_t_l_s_8h_a5bed323f749e27db36fd6ab2a3e64c4a_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_a5bed323f749e27db36fd6ab2a3e64c4a_icgraph" id="_t_l_s_8h_a5bed323f749e27db36fd6ab2a3e64c4a_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="240,31,365,57"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="240,31,365,57"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="413,5,525,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="573,31,683,57"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="731,31,781,57"/>
@@ -326,16 +326,26 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Given an array of cipher suite make a client hello message. The function also fill the random field using the time stamp and a random generator(openssl)</p>
+<p>Given an array of cipher suites make a client hello message. The function also fills the random field using the UNIX time stamp and a random generator (OpenSSL)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">client_random</td><td>: the random setted in the client hello </td></tr>
-    <tr><td class="paramname">cipher_suite_list</td><td>: an array of cipher suite to add in the client hello </td></tr>
-    <tr><td class="paramname">cipher_suite_len</td><td>: the number of cipher suite in the list </td></tr>
+    <tr><td class="paramname">client_random</td><td>the random set in the client hello </td></tr>
+    <tr><td class="paramname">cipher_suite_list</td><td>an array of cipher suites to add in the client hello </td></tr>
+    <tr><td class="paramname">cipher_suite_len</td><td>the number of cipher suites in the list </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the hello client handshake message </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the hello client handshake message</dd></dl>
+<p>Given an array of cipher suites, make a client hello message. The function also fills the random field using the time stamp and a random generator (OpenSSL)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client_random</td><td>the random set in the client hello </td></tr>
+    <tr><td class="paramname">cipher_suite_list</td><td>an array of cipher suites to add to the client hello </td></tr>
+    <tr><td class="paramname">cipher_suite_len</td><td>the number of cipher suites in the list </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the client hello handshake message </dd></dl>
 
 <p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>.</p>
 
@@ -387,17 +397,26 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Given the information in the TLS_parameter and the key exchange algorithm return the handshake of the client key exchange. That include compute the pre-master key. It also compute the master secret and set in the TLS_param.</p>
+<p>Given the information in TLS_parameter and the key exchange algorithm return the handshake of the client key exchange. That includes to compute the pre-master key. It also computes the master secret and set in TLS_param.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: the parameters of the connection </td></tr>
-    <tr><td class="paramname">key_ex_alg</td><td>: the key exchange algorithm of the handshake </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>the parameters of the connection </td></tr>
+    <tr><td class="paramname">key_ex_alg</td><td>the key exchange algorithm of the handshake </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the client key exchange handshake message</dd></dl>
+<p>Given the information in TLS_parameter and the key exchange algorithm return the handshake of the client key exchange. That includes to compute the pre-master key. It also computes the master secret and set it in TLS_param.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TLS_param</td><td>the parameters of the connection </td></tr>
+    <tr><td class="paramname">key_ex_alg</td><td>the key exchange algorithm of the handshake </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the client key exchange handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -422,7 +441,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_ab3bb4e3f75fb84baa35cd0931381dfe0_icgraph.png" border="0" usemap="#_t_l_s_8h_ab3bb4e3f75fb84baa35cd0931381dfe0_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_ab3bb4e3f75fb84baa35cd0931381dfe0_icgraph" id="_t_l_s_8h_ab3bb4e3f75fb84baa35cd0931381dfe0_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="240,31,365,57"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="240,31,365,57"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="413,5,525,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="573,31,683,57"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="731,31,781,57"/>
@@ -445,16 +464,16 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Given the connection parameters compute the finished message. Note in the TLS protocol this message is encrypted.</p>
+<p>Given the connection parameters compute the finished message. Note: TLS protocol requires this message to be encrypted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: the connection parameters </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>the connection parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the finished handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -472,7 +491,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_ae149244e09cbbd2180bc4c5fc6d0a924_icgraph.png" border="0" usemap="#_t_l_s_8h_ae149244e09cbbd2180bc4c5fc6d0a924_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_ae149244e09cbbd2180bc4c5fc6d0a924_icgraph" id="_t_l_s_8h_ae149244e09cbbd2180bc4c5fc6d0a924_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="224,31,349,57"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="224,31,349,57"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="397,5,509,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="557,31,667,57"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="715,31,765,57"/>
@@ -505,17 +524,26 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Given the client hello message the function makes the server hello. It choices a random cipher suite among the those provided by the client. The function also fill the random field using the time stamp and a random generator(openssl)</p>
+<p>Given the client hello message the function makes the server hello. It chooses a random cipher suite among those provided by the client. The function also fills the random field using the UNIX time stamp and a random generator (OpenSSL)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: the connection parameters </td></tr>
-    <tr><td class="paramname">client_hello</td><td>: the received client hello. </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>the connection parameters </td></tr>
+    <tr><td class="paramname">client_hello</td><td>the received client hello. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the hello server handshake message</dd></dl>
+<p>Given the client hello message the function makes the server hello. It chooses a random cipher suite among those provided by the client. The function also fills the random field using the time stamp and a random generator (OpenSSL)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TLS_param</td><td>the connection parameters </td></tr>
+    <tr><td class="paramname">client_hello</td><td>the received client hello. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the hello server handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -535,7 +563,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_a035a830fd89c6c7af60809197d81ea29_icgraph.png" border="0" usemap="#_t_l_s_8h_a035a830fd89c6c7af60809197d81ea29_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_a035a830fd89c6c7af60809197d81ea29_icgraph" id="_t_l_s_8h_a035a830fd89c6c7af60809197d81ea29_icgraph">
-<area shape="rect" id="node2" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="189,5,315,32"/>
+<area shape="rect" id="node2" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="189,5,315,32"/>
 <area shape="rect" id="node3" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="363,5,472,32"/>
 <area shape="rect" id="node4" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="520,5,571,32"/>
 </map>
@@ -559,14 +587,14 @@ Here is the caller graph for this function:</div>
 <p>Make the server hello done message. This message is simple and doesn't require any parameter.</p>
 <dl class="section return"><dt>Returns</dt><dd>the server hello done handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_af98aa49e2563d588c366ef1712de925a_icgraph.png" border="0" usemap="#_t_l_s_8h_af98aa49e2563d588c366ef1712de925a_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_af98aa49e2563d588c366ef1712de925a_icgraph" id="_t_l_s_8h_af98aa49e2563d588c366ef1712de925a_icgraph">
-<area shape="rect" id="node2" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="227,5,352,32"/>
+<area shape="rect" id="node2" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="227,5,352,32"/>
 <area shape="rect" id="node3" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="400,5,509,32"/>
 <area shape="rect" id="node4" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="557,5,608,32"/>
 </map>
@@ -588,16 +616,16 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Make the server key exchange handshake message. The function also sets the message in the connection parameters for compute the master key in the client key exchange message.</p>
+<p>Make the server key exchange handshake message. The function also sets the message in the connection parameters to compute the master key in the client key exchange message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">TLS_param</td><td>: connection parameters </td></tr>
+    <tr><td class="paramname">TLS_param</td><td>connection parameters </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the server key exchange handshake message </dd></dl>
 
-<p>Referenced by <a class="el" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -621,7 +649,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_t_l_s_8h_a902d940508d7080023ef072b2667a143_icgraph.png" border="0" usemap="#_t_l_s_8h_a902d940508d7080023ef072b2667a143_icgraph" alt=""/></div>
 <map name="_t_l_s_8h_a902d940508d7080023ef072b2667a143_icgraph" id="_t_l_s_8h_a902d940508d7080023ef072b2667a143_icgraph">
-<area shape="rect" id="node2" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d" title="onPacketReceive" alt="" coords="245,5,371,32"/>
+<area shape="rect" id="node2" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="245,5,371,32"/>
 <area shape="rect" id="node3" href="server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="419,5,528,32"/>
 <area shape="rect" id="node4" href="server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="576,5,627,32"/>
 </map>

@@ -6,16 +6,14 @@
 {\ttfamily \#include $<$openssl/x509.\+h$>$}\\*
 {\ttfamily \#include $<$openssl/pem.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}T\+L\+S\+Constants.\+h\char`\"{}}\\*
-Include dependency graph for Certificate.\+h\+:
-\nopagebreak
+Include dependency graph for Certificate.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{_certificate_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -43,7 +41,7 @@ void \hyperlink{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}{free\+\_\+cer
 \subsection{Detailed Description}
 S\+S\+L/\+T\+LS Project
 
-This file contains functions for manage the certificate message.
+This file contains functions to manage the certificate message.
 
 \begin{DoxyDate}{Date}
 Created on 28/12/15. 
@@ -62,13 +60,13 @@ Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserve
 \item[{uint32\+\_\+t}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e}{}\label{_certificate_8h_a5eca0d90b55f94993347dcd06ca0328e}
-Serialize a byte stream into a certificate\+\_\+message.
+De-\/serialize a byte stream into a certificate\+\_\+message.
 
 
 \begin{DoxyParams}{Parameters}
-{\em stream} & \+: the byte stream to serialize \\
+{\em stream} & the byte stream to de-\/serialize \\
 \hline
-{\em len} & \+: the byte stream length \\
+{\em len} & the byte stream length \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -80,7 +78,8 @@ Referenced by on\+Packet\+Receive(), and print\+\_\+handshake().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -96,11 +95,11 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf certificate\+\_\+message\+\_\+t} $\ast$}]{cert}
 \end{DoxyParamCaption}
 )}\hypertarget{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}{}\label{_certificate_8h_a47cd7cd727cb5ed51f41bf165585a386}
-Delloc memory of certificate\+\_\+message
+Dealloc memory of certificate\+\_\+message
 
 
 \begin{DoxyParams}{Parameters}
-{\em cert} & \+: the certificate message to deallocate \\
+{\em cert} & the certificate message to deallocate \\
 \hline
 \end{DoxyParams}
 
@@ -109,7 +108,8 @@ Referenced by make\+\_\+certificate(), on\+Packet\+Receive(), and print\+\_\+han
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -129,7 +129,7 @@ Given the certificate file name create a certificate message struct that encapsu
 
 
 \begin{DoxyParams}{Parameters}
-{\em cert\+\_\+file\+\_\+name} & \+: certificate file name including path \\
+{\em cert\+\_\+file\+\_\+name} & certificate file name including path \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -141,7 +141,8 @@ Referenced by make\+\_\+certificate().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -159,13 +160,36 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{uint32\+\_\+t $\ast$}]{len}
 \end{DoxyParamCaption}
 )}\hypertarget{_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d}{}\label{_certificate_8h_a0939aba653417f0b516a6d6a2a102b3d}
+Serialize the certificate message into a byte stream
+
+
+\begin{DoxyParams}{Parameters}
+{\em cert} & the message to serialize \\
+\hline
+{\em stream} & the return stream. Must point to N\+U\+LL. \\
+\hline
+{\em len} & the stream length\\
+\hline
+\end{DoxyParams}
+Serialize the certificate message into a byte stream
+
+
+\begin{DoxyParams}{Parameters}
+{\em cert} & the message to serialize \\
+\hline
+{\em stream} & the return stream. Must point to N\+U\+LL \\
+\hline
+{\em len} & the stream length \\
+\hline
+\end{DoxyParams}
 
 
 Referenced by make\+\_\+certificate().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

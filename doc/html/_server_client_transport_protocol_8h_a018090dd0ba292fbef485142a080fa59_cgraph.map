@@ -1,5 +1,5 @@
 <map id="set_on_receive" name="set_on_receive">
-<area shape="rect" id="node2" href="$client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="165,747,291,773"/>
+<area shape="rect" id="node2" href="$client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="165,747,291,773"/>
 <area shape="rect" id="node3" href="$_server_client_record_protocol_8c.html#ae84b228db8fb2f706c75f1e8d41a06b2" title="deserialize_record" alt="" coords="367,5,497,32"/>
 <area shape="rect" id="node4" href="$_server_client_record_protocol_8c.html#a5029bcdf9f7eb874b25136b76e41963c" title="print_record" alt="" coords="620,259,713,285"/>
 <area shape="rect" id="node6" href="$_server_client_record_protocol_8c.html#a9212df7db09a62df2f7d4a913f04defc" title="free_record" alt="" coords="621,208,712,235"/>

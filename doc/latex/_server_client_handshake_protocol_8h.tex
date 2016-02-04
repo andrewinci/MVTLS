@@ -10,16 +10,14 @@
 {\ttfamily \#include \char`\"{}Server\+Client\+Hello.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Certificate.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Server\+Client\+Key\+Exchange.\+h\char`\"{}}\\*
-Include dependency graph for Server\+Client\+Handshake\+Protocol.\+h\+:
-\nopagebreak
+Include dependency graph for Server\+Client\+Handshake\+Protocol.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{_server_client_handshake_protocol_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:
-\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,7 +38,7 @@ void \hyperlink{_server_client_handshake_protocol_8h_a1f9226db59b1fe4f860122d082
 \item 
 \hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$ \hyperlink{_server_client_handshake_protocol_8h_a9f902224a1dcf6201a60941914a0fb2d}{deserialize\+\_\+handshake} (unsigned char $\ast$message, uint32\+\_\+t message\+Len)
 \item 
-void \hyperlink{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e}{print\+\_\+handshake} (\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$h, int verbosity, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
+void \hyperlink{_server_client_handshake_protocol_8h_a17a2f489bf364bdd80fbd20d186f927e}{print\+\_\+handshake} (\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$h, int \hyperlink{server_8c_a1bdcfae3209cbd96db35a2ae356fa15e}{verbosity}, \hyperlink{_t_l_s_constants_8h_a7203e83530e35d8ed2f3300ba0408a54}{key\+\_\+exchange\+\_\+algorithm} kx)
 \item 
 void \hyperlink{_server_client_handshake_protocol_8h_a5b7a13680988ecee1fd6c0a8dfe32eef}{free\+\_\+handshake} (\hyperlink{structhandshake__t}{handshake\+\_\+t} $\ast$h)
 \end{DoxyCompactItemize}
@@ -72,13 +70,25 @@ De-\/serialize a stream of byte into an handshake.
 
 
 \begin{DoxyParams}{Parameters}
-{\em message} & \+: the serialized handshake \\
+{\em message} & the serialized handshake \\
 \hline
-{\em message\+Len} & \+: the message length \\
+{\em message\+Len} & the message length \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-alloc and return an handshake struct 
+alloc and return a handshake struct
+\end{DoxyReturn}
+De-\/serialize a stream of byte into an handshake.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & the serialized handshake \\
+\hline
+{\em message\+Len} & the message length \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the de-\/serialized handshake message 
 \end{DoxyReturn}
 
 
@@ -86,7 +96,8 @@ Referenced by on\+Packet\+Receive().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -102,11 +113,18 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf handshake\+\_\+t} $\ast$}]{h}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_handshake_protocol_8h_a5b7a13680988ecee1fd6c0a8dfe32eef}{}\label{_server_client_handshake_protocol_8h_a5b7a13680988ecee1fd6c0a8dfe32eef}
-Delloc memory of handshake struct
+Dealloc memory of handshake struct
 
 
 \begin{DoxyParams}{Parameters}
-{\em h} & \+: the handshake to free \\
+{\em h} & the handshake to free\\
+\hline
+\end{DoxyParams}
+Dealloc memory of handshake struct
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & the handshake to be freed \\
 \hline
 \end{DoxyParams}
 
@@ -115,7 +133,8 @@ Referenced by do\+\_\+handshake(), and on\+Packet\+Receive().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -137,11 +156,22 @@ Print the handshake struct
 
 
 \begin{DoxyParams}{Parameters}
-{\em h} & \+: handshake to print \\
+{\em h} & handshake to print \\
 \hline
-{\em verbosity} & \+: how many detail to print (0 none, 1 the binary, 2 details,3 record) \\
+{\em verbosity} & how many details to print (0 none, 1 the binary, 2 details,3 record) \\
 \hline
-{\em kx} & \+: the key exchange algorithm, useful in key\+\_\+echange messages \\
+{\em kx} & the key exchange algorithm, useful in key\+\_\+echange messages\\
+\hline
+\end{DoxyParams}
+Print the handshake struct
+
+
+\begin{DoxyParams}{Parameters}
+{\em h} & handshake to print \\
+\hline
+{\em verbosity} & how many details to print (0 none, 1 the binary, 2 details, 3 record) \\
+\hline
+{\em kx} & the key exchange algorithm, useful in key\+\_\+exchange messages \\
 \hline
 \end{DoxyParams}
 
@@ -161,7 +191,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -178,17 +209,29 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf handshake\+\_\+t} $\ast$}]{h}
 \end{DoxyParamCaption}
 )}\hypertarget{_server_client_handshake_protocol_8h_a630be726ff62f89c4287fa0feb6e3801}{}\label{_server_client_handshake_protocol_8h_a630be726ff62f89c4287fa0feb6e3801}
+Send a handshake through a channel
+
+
+\begin{DoxyParams}{Parameters}
+{\em ch} & the channel to use \\
+\hline
+{\em h} & the handshake to send \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the send is succeeded, 0 otherwise
+\end{DoxyReturn}
 Send an handshake through a channel
 
 
 \begin{DoxyParams}{Parameters}
-{\em ch} & \+: the channel to use \\
+{\em ch} & the channel to use \\
 \hline
-{\em h} & \+: the handshake to send \\
+{\em h} & the handshake to send \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the send is success, 0 otherwise 
+1 if the send is succeeded, 0 otherwise 
 \end{DoxyReturn}
 
 
@@ -207,7 +250,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -229,11 +273,11 @@ Serialize a handshake into a byte stream
 
 
 \begin{DoxyParams}{Parameters}
-{\em h} & \+: the handshake to serialize \\
+{\em h} & the handshake to serialize \\
 \hline
-{\em stream} & \+: a pointer to N\+U\+LL, it will filled with the serialized handshake \\
+{\em stream} & a pointer to N\+U\+LL, it will filled with the serialized handshake \\
 \hline
-{\em stream\+Len} & \+: the length of the serialized message \\
+{\em stream\+Len} & the length of the serialized message \\
 \hline
 \end{DoxyParams}
 
@@ -242,7 +286,8 @@ Referenced by backup\+\_\+handshake(), make\+\_\+record(), and print\+\_\+handsh
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

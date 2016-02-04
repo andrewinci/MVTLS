@@ -1,8 +1,7 @@
 \hypertarget{_crypto_8c}{}\section{src/\+Crypto.c File Reference}
 \label{_crypto_8c}\index{src/\+Crypto.\+c@{src/\+Crypto.\+c}}
 {\ttfamily \#include \char`\"{}Crypto.\+h\char`\"{}}\\*
-Include dependency graph for Crypto.\+c\+:
-\nopagebreak
+Include dependency graph for Crypto.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -62,21 +61,21 @@ Apply the P\+RF to a secret.
 
 
 \begin{DoxyParams}{Parameters}
-{\em hash} & \+: the hash to use in the hmac \\
+{\em hash} & the hash to use in the hmac \\
 \hline
-{\em secret} & \+: the secret to process \\
+{\em secret} & the secret to process \\
 \hline
-{\em secret\+\_\+len} & \+: secrete length \\
+{\em secret\+\_\+len} & secret length \\
 \hline
-{\em label} & \+: the label of the P\+RF computation \\
+{\em label} & the label of the P\+RF computation \\
 \hline
-{\em seed} & \+: the seed for the computation \\
+{\em seed} & the seed for the computation \\
 \hline
-{\em seed\+\_\+len} & \+: seed length \\
+{\em seed\+\_\+len} & seed length \\
 \hline
-{\em result} & \+: a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
+{\em result} & a pointer to char, will contain the result after computation. Must point to N\+U\+LL \\
 \hline
-{\em result\+\_\+len} & \+: the desired length of pseudo random stream. \\
+{\em result\+\_\+len} & the desired length of pseudo random stream. \\
 \hline
 \end{DoxyParams}
 
@@ -85,7 +84,8 @@ Referenced by compute\+\_\+set\+\_\+master\+\_\+key\+\_\+\+D\+H\+E(), compute\+\
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -104,17 +104,17 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8c_aebef13db99f3bbd7e9e2c55df1aa65c9}{}\label{_crypto_8c_aebef13db99f3bbd7e9e2c55df1aa65c9}
-Sign the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, D\+SS.
+Sign the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange. The function chooses an arbitrary hash algorithm for the signature (except M\+D5, S\+H\+A-\/1). It takes private key in ../certificates/ folder with name server\+A.\+key where A can be R\+SA, D\+SS.
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to sign. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -134,7 +134,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -153,17 +154,17 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{{\bf authentication\+\_\+algorithm}}]{au}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8c_abe36fc162d9170d061024842f7ec6b9d}{}\label{_crypto_8c_abe36fc162d9170d061024842f7ec6b9d}
-Sign the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange. The function choice an arbitrary hash algorithm for the signature (except md5,sha1). It take private key in ../certificates/ folder with name server\+A.\+key wher A can be R\+SA, E\+C\+D\+SA.
+Sign the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange. The function chooses an arbitrary hash algorithm for the signature (except M\+D5, S\+H\+A-\/1). It takes private key in ../certificates/ folder with name server\+A.\+key where A can be R\+SA, E\+C\+D\+SA.
 
 
 \begin{DoxyParams}{Parameters}
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to sign. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to sign. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -183,7 +184,8 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -203,23 +205,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{int}]{sign\+\_\+type}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8c_a5c701b627116ed4a23b7aeb18617d550}{}\label{_crypto_8c_a5c701b627116ed4a23b7aeb18617d550}
-Use the private key ../certificates/server\+D\+SA.key for sign a message
+Use the private key ../certificates/server\+D\+SA.key to sign a message
 
 
 \begin{DoxyParams}{Parameters}
-{\em signature} & \+: a pointer to N\+U\+LL, will return the computed signature \\
+{\em signature} & a pointer to N\+U\+LL, will return the computed signature \\
 \hline
-{\em signature\+\_\+lenght} & \+: return the signature length \\
+{\em signature\+\_\+length} & return the signature length \\
 \hline
-{\em to\+\_\+sign\+\_\+len} & \+: the message length to sign \\
+{\em to\+\_\+sign\+\_\+len} & the message length to sign \\
 \hline
-{\em to\+\_\+sign} & \+: the message to sign \\
+{\em to\+\_\+sign} & the message to sign \\
 \hline
-{\em sign\+\_\+type} & \+: specify the message type. (for openssl support) \\
+{\em sign\+\_\+type} & specify the message type (for Open\+S\+SL support) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the sign success. -\/1 if an error occurs. 
+1 if the sign succeeded, -\/1 if an error occurred 
 \end{DoxyReturn}
 
 
@@ -227,7 +229,8 @@ Referenced by sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -247,23 +250,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{int}]{sign\+\_\+type}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8c_a0dd93ef4efe1bae339c50df2b284f3f8}{}\label{_crypto_8c_a0dd93ef4efe1bae339c50df2b284f3f8}
-Use the private key ../certificates/server\+E\+C\+D\+SA.key for sign a message
+Use the private key ../certificates/server\+E\+C\+D\+SA.key to sign a message
 
 
 \begin{DoxyParams}{Parameters}
-{\em signature} & \+: a pointer to N\+U\+LL, will return the computed signature \\
+{\em signature} & a pointer to N\+U\+LL, will return the computed signature \\
 \hline
-{\em signature\+\_\+lenght} & \+: return the signature length \\
+{\em signature\+\_\+length} & return the signature length \\
 \hline
-{\em to\+\_\+sign\+\_\+len} & \+: the message length to sign \\
+{\em to\+\_\+sign\+\_\+len} & the message length to sign \\
 \hline
-{\em to\+\_\+sign} & \+: the message to sign \\
+{\em to\+\_\+sign} & the message to sign \\
 \hline
-{\em sign\+\_\+type} & \+: specify the message type. (for openssl support) \\
+{\em sign\+\_\+type} & specify the message type (for Open\+S\+SL support) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the sign success. -\/1 if an error occurs. 
+1 if the sign succeeced, -\/1 if an error occurred 
 \end{DoxyReturn}
 
 
@@ -271,7 +274,8 @@ Referenced by sign\+\_\+\+E\+C\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -291,23 +295,23 @@ Here is the caller graph for this function\+:\nopagebreak
 \item[{int}]{sign\+\_\+type}
 \end{DoxyParamCaption}
 )}\hypertarget{_crypto_8c_a31cb61fd4a97cf2156245c8c240dd102}{}\label{_crypto_8c_a31cb61fd4a97cf2156245c8c240dd102}
-Use the private key ../certificates/server\+R\+SA.key for sign a message
+Use the private key ../certificates/server\+R\+SA.key to sign a message
 
 
 \begin{DoxyParams}{Parameters}
-{\em signature} & \+: a pointer to N\+U\+LL, will return the computed signature \\
+{\em signature} & a pointer to N\+U\+LL, will return the computed signature \\
 \hline
-{\em signature\+\_\+lenght} & \+: return the signature length \\
+{\em signature\+\_\+length} & return the signature length \\
 \hline
-{\em to\+\_\+sign\+\_\+len} & \+: the message length to sign \\
+{\em to\+\_\+sign\+\_\+len} & the message length to sign \\
 \hline
-{\em to\+\_\+sign} & \+: the message to sign \\
+{\em to\+\_\+sign} & the message to sign \\
 \hline
-{\em sign\+\_\+type} & \+: specify the message type. (for openssl support) \\
+{\em sign\+\_\+type} & specify the message type (for Open\+S\+SL support) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 if the sign success. -\/1 if an error occurs. 
+1 if the sign succeeded, -\/1 if an error occurred 
 \end{DoxyReturn}
 
 
@@ -315,7 +319,8 @@ Referenced by sign\+\_\+\+D\+H\+E\+\_\+server\+\_\+key\+\_\+ex(), and sign\+\_\+
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -339,15 +344,15 @@ Verify the server\+\_\+key\+\_\+exchange message for a D\+HE key exchange.
 
 
 \begin{DoxyParams}{Parameters}
-{\em certificate} & \+: the certificate to use for verify the signature \\
+{\em certificate} & the certificate to use to verify the signature \\
 \hline
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to verify. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -356,7 +361,8 @@ Referenced by make\+\_\+\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -380,15 +386,15 @@ Verify the server\+\_\+key\+\_\+exchange message for a E\+C\+D\+HE key exchange.
 
 
 \begin{DoxyParams}{Parameters}
-{\em certificate} & \+: the certificate to use for verify the signature \\
+{\em certificate} & the certificate to use for verify the signature \\
 \hline
-{\em client\+\_\+random} & \+: the random sent by the client in the client hello. Must point to 32 byte stream \\
+{\em client\+\_\+random} & the random sent by the client in the client hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+random} & \+: the random sent by the server in the server hello. Must point to 32 byte stream \\
+{\em server\+\_\+random} & the random sent by the server in the server hello. Must point to 32 byte stream \\
 \hline
-{\em server\+\_\+key\+\_\+ex} & \+: the server key exchange message to verify. \\
+{\em server\+\_\+key\+\_\+ex} & the server key exchange message to verify. \\
 \hline
-{\em au} & \+: the authentication algorithm. \\
+{\em au} & the authentication algorithm. \\
 \hline
 \end{DoxyParams}
 
@@ -397,7 +403,8 @@ Referenced by make\+\_\+\+E\+C\+D\+H\+E\+\_\+client\+\_\+key\+\_\+exchange().
 
 
 
-Here is the caller graph for this function\+:\nopagebreak
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

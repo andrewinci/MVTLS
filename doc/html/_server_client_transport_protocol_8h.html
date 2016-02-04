@@ -107,8 +107,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Include dependency graph for ServerClientTransportProtocol.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_transport_protocol_8h__incl.png" border="0" usemap="#include_2_server_client_transport_protocol_8h" alt=""/></div>
-<map name="include_2_server_client_transport_protocol_8h" id="include_2_server_client_transport_protocol_8h">
-</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -150,7 +148,7 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:aaa07b9b9152780bcb7fbacf14efa7eda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structchannel__t.html">channel_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_transport_protocol_8h.html#aaa07b9b9152780bcb7fbacf14efa7eda">create_channel</a> (char *fileName, char *channelFrom, char *channelTo)</td></tr>
 <tr class="separator:aaa07b9b9152780bcb7fbacf14efa7eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a018090dd0ba292fbef485142a080fa59"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59">set_on_receive</a> (<a class="el" href="structchannel__t.html">channel_t</a> *ch, void(*<a class="el" href="server_8c.html#a98d326f448510d53d67b27e5cbbad82d">onPacketReceive</a>)(<a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p))</td></tr>
+<tr class="memitem:a018090dd0ba292fbef485142a080fa59"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59">set_on_receive</a> (<a class="el" href="structchannel__t.html">channel_t</a> *ch, void(*<a class="el" href="server_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive</a>)(<a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p))</td></tr>
 <tr class="separator:a018090dd0ba292fbef485142a080fa59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf312ea4a4b413a2bbad6f1cd180f4ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_server_client_transport_protocol_8h.html#aaf312ea4a4b413a2bbad6f1cd180f4ac">send_packet</a> (<a class="el" href="structchannel__t.html">channel_t</a> *ch, <a class="el" href="structpacket__transport__t.html">packet_transport_t</a> *p)</td></tr>
 <tr class="separator:aaf312ea4a4b413a2bbad6f1cd180f4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,7 +167,7 @@ Functions</h2></td></tr>
 <div class="textblock"><p>SSL/TLS Project</p>
 <p>Basic client/server communication through file. It substitutes the transport layer in OSI stack.</p>
 <p>PROTOCOL: The protocol is very simple 8 byte for source 8 byte for receiver 4 byte for packet length message</p>
-<p>both server and client after read a message they blank the file both server and client cannot write if the file is not blank, they wait</p>
+<p>Both server and client, after reading a message, blank the file both server and client cannot write if the file is not blank, they wait</p>
 <dl class="section date"><dt>Date</dt><dd>Created on 22/12/15. </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved. </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -182,6 +180,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>the time to wait between 2 readings of the file. Important to don't use too much CPU. </p>
 
 <p>Referenced by <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>.</p>
 
@@ -230,11 +229,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a server/client channel using the fileName as comunication channel</p>
+<p>Create a server/client channel using the fileName as communication channel</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fileName</td><td>: file name of the channel </td></tr>
-    <tr><td class="paramname">serverName</td><td>: name of the server/client </td></tr>
+    <tr><td class="paramname">fileName</td><td>file name of the channel </td></tr>
+    <tr><td class="paramname">channelFrom</td><td>name of the channel owner </td></tr>
+    <tr><td class="paramname">channelTo</td><td>name of the other peer </td></tr>
   </table>
   </dd>
 </dl>
@@ -293,16 +293,27 @@ Here is the caller graph for this function:</div>
 <p>Create a packet starting from a byte stream source and destination</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>: packet source </td></tr>
-    <tr><td class="paramname">destination</td><td>: packet receiver </td></tr>
-    <tr><td class="paramname">message</td><td>: message stream to be encapsulate into packet </td></tr>
+    <tr><td class="paramname">source</td><td>packet source </td></tr>
+    <tr><td class="paramname">destination</td><td>packet receiver </td></tr>
+    <tr><td class="paramname">message</td><td>message stream to be encapsulate into packet </td></tr>
     <tr><td class="paramname">message_length</td><td>message lenght </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>a pointer to a builded packet </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to a built packet</dd></dl>
+<p>Create a packet starting from a byte stream source and destination</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>packet source </td></tr>
+    <tr><td class="paramname">destination</td><td>packet receiver </td></tr>
+    <tr><td class="paramname">message</td><td>message stream to be encapsulated into packet </td></tr>
+    <tr><td class="paramname">message_length</td><td>message lenght </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to a built packet </dd></dl>
 
-<p>Referenced by <a class="el" href="_server_client_transport_protocol_8c.html#ad5ca31599ddc0387256db843d883cf32">deserialize_packet()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0">send_record()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_transport_protocol_8c.html#ad5ca31599ddc0387256db843d883cf32">deserialize_packet()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e">send_record()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -310,12 +321,12 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="_server_client_transport_protocol_8h_ab900c15a013c9cb71d24f3e7f5479822_icgraph.png" border="0" usemap="#_server_client_transport_protocol_8h_ab900c15a013c9cb71d24f3e7f5479822_icgraph" alt=""/></div>
 <map name="_server_client_transport_protocol_8h_ab900c15a013c9cb71d24f3e7f5479822_icgraph" id="_server_client_transport_protocol_8h_ab900c15a013c9cb71d24f3e7f5479822_icgraph">
 <area shape="rect" id="node2" href="_server_client_transport_protocol_8c.html#ad5ca31599ddc0387256db843d883cf32" title="deserialize_packet" alt="" coords="161,27,293,53"/>
-<area shape="rect" id="node7" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0" title="send_record" alt="" coords="179,80,275,107"/>
+<area shape="rect" id="node7" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e" title="send_record" alt="" coords="179,80,275,107"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e" title="reader" alt="" coords="374,20,434,47"/>
 <area shape="rect" id="node4" href="_server_client_transport_protocol_8h.html#ac13189fb7b788d6f0360927759b95a8b" title="start_listener" alt="" coords="695,5,793,32"/>
 <area shape="rect" id="node5" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="848,81,957,108"/>
 <area shape="rect" id="node6" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1005,81,1056,108"/>
-<area shape="rect" id="node8" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="515,81,640,108"/>
+<area shape="rect" id="node8" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="515,81,640,108"/>
 <area shape="rect" id="node10" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="342,131,466,157"/>
 <area shape="rect" id="node9" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="688,107,800,133"/>
 </map>
@@ -339,21 +350,21 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 <p>Deallocate memory allocated by packet </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p</td><td>: pointer to packet to free </td></tr>
+    <tr><td class="paramname">p</td><td>pointer to packet to free </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0">send_record()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, <a class="el" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e">reader()</a>, and <a class="el" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e">send_record()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7_icgraph.png" border="0" usemap="#_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7_icgraph" alt=""/></div>
 <map name="_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7_icgraph" id="_server_client_transport_protocol_8h_a52cb1d528c2a550d4d440abeb90e1ea7_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="464,107,589,133"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="464,107,589,133"/>
 <area shape="rect" id="node6" href="_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e" title="reader" alt="" coords="323,5,383,32"/>
-<area shape="rect" id="node8" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0" title="send_record" alt="" coords="147,107,243,133"/>
+<area shape="rect" id="node8" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e" title="send_record" alt="" coords="147,107,243,133"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="637,107,749,133"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="797,81,907,108"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="955,81,1005,108"/>
@@ -388,17 +399,17 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Send a message trough the channel ch</p>
+<p>Send a message through the channel ch</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: channel to be used </td></tr>
-    <tr><td class="paramname">p</td><td>: pointer to packet to be sent </td></tr>
+    <tr><td class="paramname">ch</td><td>channel to be used </td></tr>
+    <tr><td class="paramname">p</td><td>pointer to packet to be sent </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>: 1 if the message was sent, 0 otherwise </dd></dl>
 
-<p>Referenced by <a class="el" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0">send_record()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e">send_record()</a>.</p>
 
 <p><div class="dynheader">
 Here is the call graph for this function:</div>
@@ -416,8 +427,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac_icgraph.png" border="0" usemap="#_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac_icgraph" alt=""/></div>
 <map name="_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac_icgraph" id="_server_client_transport_protocol_8h_aaf312ea4a4b413a2bbad6f1cd180f4ac_icgraph">
-<area shape="rect" id="node2" href="_server_client_record_protocol_8h.html#a1ceb817bc488ec68b8abfd289dbbf6c0" title="send_record" alt="" coords="152,81,248,108"/>
-<area shape="rect" id="node3" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="469,56,595,83"/>
+<area shape="rect" id="node2" href="_server_client_record_protocol_8h.html#af6d567da41101c7003cb9277aba9ec4e" title="send_record" alt="" coords="152,81,248,108"/>
+<area shape="rect" id="node3" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="469,56,595,83"/>
 <area shape="rect" id="node7" href="_server_client_handshake_protocol_8h.html#a630be726ff62f89c4287fa0feb6e3801" title="send_handshake" alt="" coords="297,107,421,133"/>
 <area shape="rect" id="node4" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="643,5,755,32"/>
 <area shape="rect" id="node5" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="803,56,912,83"/>
@@ -454,12 +465,21 @@ Here is the caller graph for this function:</div>
 <p>Set the function to be called when a message is received</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: channel interested </td></tr>
-    <tr><td class="paramname">onPacketReceive</td><td>: pointer to the function to be called </td></tr>
+    <tr><td class="paramname">ch</td><td>channel interested </td></tr>
+    <tr><td class="paramname">onPacketReceive</td><td>pointer to the function to be called </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>: 1 if the function was setted, 0 otherwise </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>: 1 if the function was set, 0 otherwise</dd></dl>
+<p>Set the function to be called when a message is received</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>channel interested </td></tr>
+    <tr><td class="paramname">onPacketReceive</td><td>pointer to the function to call </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>: 1 if the function was set, 0 otherwise </dd></dl>
 
 <p>Referenced by <a class="el" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95">do_handshake()</a>.</p>
 
@@ -468,7 +488,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59_cgraph.png" border="0" usemap="#_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59_cgraph" alt=""/></div>
 <map name="_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59_cgraph" id="_server_client_transport_protocol_8h_a018090dd0ba292fbef485142a080fa59_cgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="165,747,291,773"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="165,747,291,773"/>
 <area shape="rect" id="node3" href="_server_client_record_protocol_8c.html#ae84b228db8fb2f706c75f1e8d41a06b2" title="deserialize_record" alt="" coords="367,5,497,32"/>
 <area shape="rect" id="node4" href="_server_client_record_protocol_8c.html#a5029bcdf9f7eb874b25136b76e41963c" title="print_record" alt="" coords="620,259,713,285"/>
 <area shape="rect" id="node6" href="_server_client_record_protocol_8c.html#a9212df7db09a62df2f7d4a913f04defc" title="free_record" alt="" coords="621,208,712,235"/>
@@ -540,10 +560,18 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is succesfull) the client/server read continously from channel. (for STOP use stop())</p>
+<p>Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is successful) the client/server read continously from channel. (to STOP use stop())</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: channel to start </td></tr>
+    <tr><td class="paramname">ch</td><td>channel to start </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>: 1 if the thread was started, 0 otherwise</dd></dl>
+<p>Start the channel. We open another thread for the reading and the current thread for writing. From now on (if the operation is succesfull) the client/server read continously from channel. (to STOP use stop())</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>channel to start </td></tr>
   </table>
   </dd>
 </dl>
@@ -592,21 +620,21 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop the reading/write thread and the channel. Note: the function doesn't free the channel. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Stop the reading/writing thread and the channel. Note: the function doesn't free the channel. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: channel to stop </td></tr>
+    <tr><td class="paramname">ch</td><td>channel to stop </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>.</p>
+<p>Referenced by <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>.</p>
 
 <p><div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d_icgraph.png" border="0" usemap="#_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d_icgraph" alt=""/></div>
 <map name="_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d_icgraph" id="_server_client_transport_protocol_8h_aa8b8d9b75a74ccb0f6a701e16ae8999d_icgraph">
-<area shape="rect" id="node2" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11" title="onPacketReceive" alt="" coords="155,31,280,57"/>
+<area shape="rect" id="node2" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="155,31,280,57"/>
 <area shape="rect" id="node3" href="_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="328,5,440,32"/>
 <area shape="rect" id="node4" href="client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="488,31,597,57"/>
 <area shape="rect" id="node5" href="client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="645,31,696,57"/>
@@ -629,9 +657,9 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop the callee and wait untill stop is called </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Stop the caller and wait until stop() is called </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ch</td><td>: the chanal to wait </td></tr>
+    <tr><td class="paramname">ch</td><td>the channel to wait </td></tr>
   </table>
   </dd>
 </dl>

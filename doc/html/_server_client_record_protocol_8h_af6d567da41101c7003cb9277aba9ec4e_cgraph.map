@@ -1,0 +1,8 @@
+<map id="send_record" name="send_record">
+<area shape="rect" id="node2" href="$_server_client_record_protocol_8c.html#af281a53bbcd83ad0887baf01e13a752e" title="serialize_record" alt="" coords="150,5,266,32"/>
+<area shape="rect" id="node3" href="$_server_client_transport_protocol_8c.html#ab900c15a013c9cb71d24f3e7f5479822" title="create_packet" alt="" coords="155,56,261,83"/>
+<area shape="rect" id="node4" href="$_server_client_transport_protocol_8c.html#aaf312ea4a4b413a2bbad6f1cd180f4ac" title="send_packet" alt="" coords="159,107,257,133"/>
+<area shape="rect" id="node7" href="$_server_client_transport_protocol_8c.html#a52cb1d528c2a550d4d440abeb90e1ea7" title="free_packet" alt="" coords="162,157,254,184"/>
+<area shape="rect" id="node5" href="$_server_client_transport_protocol_8c.html#afbd56244da58120495a233d0fc080223" title="serialize_packet" alt="" coords="315,81,432,108"/>
+<area shape="rect" id="node6" href="$_server_client_transport_protocol_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="325,132,421,159"/>
+</map>

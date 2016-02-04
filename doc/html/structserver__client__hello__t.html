@@ -109,14 +109,16 @@ Data Fields</h2></td></tr>
 <tr class="separator:aefaae3d96978baaa21b9445a5728b4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74379b0c9faddd3c3481e648a4ba2356"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsession__id__t.html">session_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver__client__hello__t.html#a74379b0c9faddd3c3481e648a4ba2356">session_id</a></td></tr>
 <tr class="separator:a74379b0c9faddd3c3481e648a4ba2356"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706adb2fc3f8fa8fe9bdd5793f32183e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver__client__hello__t.html#a706adb2fc3f8fa8fe9bdd5793f32183e">cipher_suite_len</a></td></tr>
-<tr class="separator:a706adb2fc3f8fa8fe9bdd5793f32183e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a545e2b09874bc2250aed603ef61820a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcipher__suite__t.html">cipher_suite_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver__client__hello__t.html#a545e2b09874bc2250aed603ef61820a6">cipher_suites</a></td></tr>
 <tr class="separator:a545e2b09874bc2250aed603ef61820a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a706adb2fc3f8fa8fe9bdd5793f32183e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver__client__hello__t.html#a706adb2fc3f8fa8fe9bdd5793f32183e">cipher_suite_len</a></td></tr>
+<tr class="separator:a706adb2fc3f8fa8fe9bdd5793f32183e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08a470f144044c5ea244590f9ead8165"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcompression__methods__t.html">compression_methods_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structserver__client__hello__t.html#a08a470f144044c5ea244590f9ead8165">compression_methods</a></td></tr>
 <tr class="separator:a08a470f144044c5ea244590f9ead8165"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Model a server/client hello message with all his field. Extension are not implemented yet. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a706adb2fc3f8fa8fe9bdd5793f32183e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -126,6 +128,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The space in byte used by the cipher suites. Each cipher suite need 2 byte for his id. </p>
 
 <p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
@@ -140,8 +143,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>For the client hello this is list of supported cipher suite by client. For server hello it contains only one cipher suite. </p>
 
-<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
 </div>
 </div>
@@ -154,6 +158,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Compression struct </p>
 
 <p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello()</a>, <a class="el" href="_server_client_hello_8h.html#a095e7c0597d66b5e4eb2097b8f28474a">make_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
@@ -168,8 +173,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Random struct: UNIX timestamp, random stream </p>
 
-<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_server_client_hello_8h.html#a095e7c0597d66b5e4eb2097b8f28474a">make_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_server_client_hello_8h.html#a095e7c0597d66b5e4eb2097b8f28474a">make_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
 </div>
 </div>
@@ -182,6 +188,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Session struct: session id, session length </p>
 
 <p>Referenced by <a class="el" href="_server_client_hello_8h.html#aec7721cdc08398302cd7435054202117">free_hello()</a>, <a class="el" href="_server_client_hello_8h.html#a095e7c0597d66b5e4eb2097b8f28474a">make_hello()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
@@ -196,8 +203,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>TLS version </p>
 
-<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a779b051aa3cf19358f7177780ce60f11">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
+<p>Referenced by <a class="el" href="_server_client_hello_8h.html#aaae83df7b184359cdb8f7f06931e7ad5">deserialize_client_server_hello()</a>, <a class="el" href="_t_l_s_8h.html#a7c6bc0a015a0a78cb508614995b9172e">make_client_hello()</a>, <a class="el" href="_t_l_s_8h.html#a035a830fd89c6c7af60809197d81ea29">make_server_hello()</a>, <a class="el" href="client_8c.html#a48f2c3c739d443cf2dd46c01a7136674">onPacketReceive()</a>, <a class="el" href="_server_client_hello_8h.html#aff8bed251595f5c51c0d1755799909ae">print_hello()</a>, and <a class="el" href="_server_client_hello_8h.html#a5d76fe55dc16550edc3604fcde33b8d0">serialize_client_server_hello()</a>.</p>
 
 </div>
 </div>
