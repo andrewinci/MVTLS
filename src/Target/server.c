@@ -9,6 +9,21 @@
 #include <stdio.h>
 #include "TLS.h"
 
+#define USAGE 	"TLSClient: TLS1.2 version handshake\n"\
+				"\n"\
+				"Usage:\n"\
+				" TLSServer [args]\n"\
+				"\n"\
+				"Options: \n"\
+				" Set verbosity\n"\
+				"	-v				(0 default only handshake name \n"\
+				"					|1 handshake binary\n"\
+				"					|2 handshake binary and mesages description\n"\
+				"					|3 record bynary and messages description)\n"\
+				"\n"\
+				" Show this help\n"\
+				"	--help\n\n"
+
 void print_random();
 void print_master_secret();
 void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange);
@@ -22,8 +37,24 @@ int v = 0;
 TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv){
-	if(argc>1 && strcmp(argv[1], "-v")==0 ){
-		v = atoi(argv[2]);
+	if(argc == 3 && strcmp(argv[1], "-v")==0 ){
+        argv[2][0]+=0x01;
+        v = atoi(argv[2]);
+        v--;
+        if(v<0 || v>3){
+            printf("Invalid option -v can be only 1 2 or 3\n");
+            printf("Try '--help' for more information.\n");
+            return -1;
+        }
+	}
+	else if(argc == 2 && strcmp(argv[1], "--help") == 0){
+		printf("%s", USAGE);
+		return 0;
+	}
+    else if (argc > 1){
+		printf("Invalid option '%s'\n",argv[1]);
+		printf("Try '--help' for more information.\n");
+		return -1;
 	}
 	do_handshake();
 }

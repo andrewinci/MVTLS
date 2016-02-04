@@ -225,7 +225,7 @@ void print_hello(server_client_hello_t *h){
 
 	printf("\n Cipher suites: \n");
 	for(int i=0;i<h->cipher_suite_len/2;i++)
-		printf("id: %04X name: %s\n", h->cipher_suites[i].cipher_id ,h->cipher_suites[i].name);
+		printf("  id: %04X name: %s\n", h->cipher_suites[i].cipher_id ,h->cipher_suites[i].name);
 	printf(" \n No compression\n");
 }
 

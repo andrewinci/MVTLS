@@ -104,21 +104,7 @@ handshake_t *deserialize_handshake(unsigned char *message, uint32_t messageLen){
  */
 void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 
-	if(verbosity == 1){
-		unsigned char *message = NULL;
-		uint32_t messageLen = 0;
-		serialize_handshake(h, &message, &messageLen);
-		if(message != NULL){
-			for(int i=0; i<messageLen; i++){
-				if(i%9 == 0)
-					printf("\n");
-				printf("%02x ", *(message+i));
-			}
-			printf("\n");
-			free(message);
-		}
-	}
-	else if(verbosity == 2){
+	if(verbosity == 2 || verbosity == 3){
 		if (h->type == CLIENT_HELLO){
 			server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
 			print_hello(client_hello);
@@ -144,7 +130,22 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 			print_client_key_exchange(client_key_exchange);
 			free_client_key_exchange(client_key_exchange);
 		}
+        printf("\n");
 	}
+    if(verbosity == 1 || verbosity == 2){
+        unsigned char *message = NULL;
+        uint32_t messageLen = 0;
+        serialize_handshake(h, &message, &messageLen);
+        if(message != NULL){
+            for(int i=0; i<messageLen; i++){
+                if(i%9 == 0)
+                    printf("\n");
+                printf("%02x ", *(message+i));
+            }
+            printf("\n");
+            free(message);
+        }
+    }
 	else if (verbosity == 3){
 		record_t *r = malloc(sizeof(record_t));
 		r->type = HANDSHAKE;
