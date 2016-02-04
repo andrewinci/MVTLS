@@ -18,18 +18,19 @@
 #include "ServerClientRecordProtocol.h"
 #include "Crypto.h"
 
-/** Struct TLS_parameters_t 
+/** \struct TLS_parameters_t 
  *	This struct contains all details about connection.
  *	It also contains data to complete the handshake.
  */
 typedef struct{
+
 	/** The TLS version*/
 	uint16_t tls_version;
 
 	/** Store the previous state in the handshake*/
 	uint16_t previous_state;
 	
-	/** The cipher suite used choosen in the handshake*/
+	/** The cipher suite used chosen in the handshake*/
 	cipher_suite_t cipher_suite;
 
 	/** Client random, include the UNIX time stamp */
@@ -64,8 +65,6 @@ typedef struct{
 #endif /*TLS_h*/
 
 				/*** CLIENT ***/
-
-/* Functions to make message*/
 
 /**
  * Given an array of cipher suites make a client hello message. 

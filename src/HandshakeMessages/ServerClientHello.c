@@ -1,10 +1,13 @@
-//
-//	SSL/TLS Project
-//	serverClientHello.h
-//
-//	Created on 24/12/15.
-//	Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
-//
+/**
+ *	SSL/TLS Project
+ *	\file ServerClientHello.c
+ *
+ *	This file is used to manage the client/server hello message of the handshake protocol
+ *
+ *	\date Created on 24/12/15.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
+
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"
@@ -12,6 +15,13 @@
 #include "ServerClientHello.h"
 #endif
 
+/**
+ * Make a client hello message.
+ * The function set the unix time stamp, random and the session, if given. 
+ *
+ * \param session: session id to recover
+ * \return the handshake, it has to be deallocated
+ */
 server_client_hello_t *make_hello(session_id_t session){
 
 	server_client_hello_t *hello = malloc(sizeof(server_client_hello_t));
@@ -34,6 +44,14 @@ server_client_hello_t *make_hello(session_id_t session){
 	return hello;
 }
 
+/**
+ * Serialize a server_hello struct into a byte stream.
+ *
+ *	\param hello: struct to serialize
+ *	\param stream: a pointer to NULL. Will return the stream byte.
+ *	\param streamLen: the return stream length
+ *	\param mode: set SERVER_MODE for a server hello message, CLIENT_MODE for client hello message
+ */
 void serialize_client_server_hello(server_client_hello_t *hello, unsigned char **stream, uint32_t *streamLen, channel_mode mode){
 
 	// Compute the lenght
@@ -101,6 +119,13 @@ void serialize_client_server_hello(server_client_hello_t *hello, unsigned char *
 	}
 }
 
+/**
+ * De-serialize a byte stream into a server_client_hello struct.
+ *
+ *	\param stream: the stream to de-serialize.
+ *	\param streamLen: the stream length
+ *	\param mode: set SERVER_MODE for a server hello message, CLIENT_MODE for client hello message
+ */
 server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, uint32_t streamLen, channel_mode mode){
 
 	server_client_hello_t *result = malloc(sizeof(server_client_hello_t));
@@ -182,6 +207,11 @@ server_client_hello_t *deserialize_client_server_hello(unsigned char *stream, ui
 	return result;
 }
 
+/**
+ * Print details about the server/client hello
+ *
+ *	\param h: the server client struct to print
+ */
 void print_hello(server_client_hello_t *h){
 
 	printf("\n TLS version: %04X\n",h->TLS_version);
@@ -199,6 +229,11 @@ void print_hello(server_client_hello_t *h){
 	printf(" \n No compression\n");
 }
 
+/**
+ * Delloc memory of server_client_hello.
+ * 
+ *	\param h: the struct to deallocate
+ */
 void free_hello(server_client_hello_t *h){
 	free(h->compression_methods.compression_id);
 	free(h->cipher_suites);

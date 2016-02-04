@@ -15,6 +15,7 @@
  * Serialize record in a byte stream of length message_len stored in 
  * message.
  *
+ * \param r: record to serialize
  * \param message: pointer to NULL (the function itself allocates space)
  * \param messageLen: pointer to integer (will contains the message length)
  */
@@ -57,7 +58,7 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
  * Note: to send record is important to set 'to' and 'from' in the channel creation.
  *
  * \param ch: channel to use
- * \param to_send: record to send
+ * \param r: record to send
  * \return 1 if the message was successfully sent, 0 otherwise
  */
 int send_record(channel_t *ch, record_t *r){

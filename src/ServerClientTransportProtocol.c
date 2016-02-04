@@ -29,11 +29,12 @@ packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen);
 void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen);
 
 /**
- * Create a server/client channel using the fileName as comunication channel
+ * Create a server/client channel using the fileName as communication channel
  *
- * \param fileName: file name of the channel
- * \param serverName: name of the server/client
- * \return the created channel
+ *	\param fileName: file name of the channel
+ * 	\param channelFrom: name of the channel owner
+ *	\param channelTo: name of the other peer
+ * 	\return the created channel
  */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 	channel_t *ch = malloc(sizeof(channel_t));
@@ -50,9 +51,9 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo){
 /**
  * Set the function to be called when a message is received
  *
- * \param ch: channel interested
- * \param onPacketReceive: pointer to the function to call
- * \return: 1 if the function was set, 0 otherwise
+ *	\param ch: channel interested
+ * 	\param onPacketReceive: pointer to the function to call
+ * 	\return: 1 if the function was set, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p)){
 	if(ch->onPacketReceive == NULL){
@@ -246,7 +247,7 @@ void free_packet(packet_transport_t *p){
 /**
  * Compute the byte size of a file
  * 
- *	\param f: file descriptor
+ *	\param fd: file descriptor
  *	\return the length of the file in byte
  */
 long long get_file_size(int fd){
@@ -326,7 +327,7 @@ packet_transport_t *deserialize_packet(unsigned char *str, uint32_t fileLen){
  *
  *	\param p: packet to serialize
  *	\param str: pointer to a null string (used to return the stream)
- *	\param strlen: pointer to stream length (used to return the stream length)
+ *	\param strLen: pointer to stream length (used to return the stream length)
  */
 void serialize_packet(packet_transport_t *p, unsigned char **str, uint32_t *strLen){
 	if(p->source == NULL || p->destination == NULL ){

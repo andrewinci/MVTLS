@@ -29,7 +29,7 @@
 #define REV32(value)({(value & 0x000000FFU) << 24 | (value & 0x0000FF00U) << 8 |(value & 0x00FF0000U) >> 8 | (value & 0xFF000000U) >> 24;})
 
 /**
- * \enum TLS_Version
+ * \enum TLS_version
  * Identify the TLS version
  */
 typedef enum{
@@ -105,7 +105,7 @@ typedef enum{
 }channel_mode;
 
 /**
- *	\enum handshake_type
+ *	\enum
  *	Types of handshake message
  */
 enum {

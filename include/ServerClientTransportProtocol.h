@@ -33,9 +33,10 @@
 #include <pthread.h>
 #include <time.h>
 
-/** \def DELAY_TIME the time to wait between 2 readings of the file.
-	Important to don't use too much CPU.
-*/
+/** \def DELAY_TIME 
+ *	the time to wait between 2 readings of the file.
+ *	Important to don't use too much CPU.
+ */
 #define DELAY_TIME 50
 
 /** \struct packet_basic
@@ -85,11 +86,12 @@ typedef struct channel_t{
 #endif
 
 /**
- * Create a server/client channel using the fileName as comunication channel
+ * Create a server/client channel using the fileName as communication channel
  *
- * \param fileName: file name of the channel
- * \param serverName: name of the server/client
- * \return the created channel
+ *	\param fileName: file name of the channel
+ * 	\param channelFrom: name of the channel owner
+ *	\param channelTo: name of the other peer
+ * 	\return the created channel
  */
 channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
 

@@ -50,7 +50,7 @@ typedef struct{
 	/** Message length*/
 	uint32_t length;
 
-	/** Handshake binary message*/
+	/** Handshake binary message */
 	unsigned char *message;
 }handshake_t;
 

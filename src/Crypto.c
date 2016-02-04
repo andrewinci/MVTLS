@@ -54,7 +54,7 @@ void PRF(const EVP_MD *hash, unsigned char *secret, int secret_len, char *label,
  * Use the private key ../certificates/serverDSA.key to sign a message
  *
  *	\param signature: a pointer to NULL, will return the computed signature
- *	\param signature_lenght: return the signature length
+ *	\param signature_length: return the signature length
  *	\param to_sign_len: the message length to sign
  *	\param to_sign: the message to sign
  *	\param sign_type: specify the message type (for OpenSSL support)
@@ -85,7 +85,7 @@ int sign_with_DSS(unsigned char **signature, unsigned int *signature_length, uns
  * Use the private key ../certificates/serverRSA.key to sign a message
  *
  *	\param signature: a pointer to NULL, will return the computed signature
- *	\param signature_lenght: return the signature length
+ *	\param signature_length: return the signature length
  *	\param to_sign_len: the message length to sign
  *	\param to_sign: the message to sign
  *	\param sign_type: specify the message type (for OpenSSL support)
@@ -120,7 +120,7 @@ int sign_with_RSA(unsigned char **signature, unsigned int *signature_length, uns
  * Use the private key ../certificates/serverECDSA.key to sign a message
  *
  *	\param signature: a pointer to NULL, will return the computed signature
- *	\param signature_lenght: return the signature length
+ *	\param signature_length: return the signature length
  *	\param to_sign_len: the message length to sign
  *	\param to_sign: the message to sign
  *	\param sign_type: specify the message type (for OpenSSL support)

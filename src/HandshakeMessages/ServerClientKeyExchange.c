@@ -182,7 +182,7 @@ server_key_exchange_t *deserialize_server_key_exchange(unsigned char *message, u
 /**
  * Print details about the server key exchange message
  *
- *	\param server_key_ex: the message to print
+ *	\param server_key_exchange: the message to print
  *	\param kx: the key exchange method of the handshake
  */
 void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_exchange_algorithm kx){
@@ -303,8 +303,7 @@ client_key_exchange_t *deserialize_client_key_exchange(unsigned char *message, u
 /**
  * Print details about the client key exchange message
  *
- *	\param client_key_ex: the message to print
- *	\param kx: the key exchange method of the handshake
+ *	\param client_key_exchange: the message to print
  */
 void print_client_key_exchange(client_key_exchange_t *client_key_exchange){
 	printf(" Public key: ");
@@ -316,7 +315,7 @@ void print_client_key_exchange(client_key_exchange_t *client_key_exchange){
 /**
  * Dealloc memory of client key exchange.
  * 
- *	\param client_key_ex: the client key exchange message to deallocate
+ *	\param client_key_exchange: the client key exchange message to deallocate
  */
 void free_client_key_exchange(client_key_exchange_t *client_key_exchange){
 	free(client_key_exchange->key);

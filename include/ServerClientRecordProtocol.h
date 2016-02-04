@@ -50,14 +50,14 @@ typedef struct{
 #endif
 
 /**
- * Send record to_send over the channel ch.
+ * Send record r over the channel ch.
  * Note: to send record is important to set 'to' and 'from' in the channel creation.
  *
  * \param ch: channel to use
- * \param to_send: record to send
+ * \param r: record to send
  * \return 1 if the message was successfully sent, 0 otherwise
  */
-int send_record(channel_t *ch, record_t *to_send);
+int send_record(channel_t *ch, record_t *r);
 
 /**
  * De-serialize a byte stream message of length message_len into 
@@ -73,6 +73,7 @@ record_t *deserialize_record(unsigned char *message, uint32_t message_len);
  * Serialize record in a byte stream of length message_len stored in 
  * message.
  *
+ * \param r: record to serialize
  * \param message: pointer to NULL (the function itself allocates space)
  * \param messageLen: pointer to integer (will contains the message length)
  */
