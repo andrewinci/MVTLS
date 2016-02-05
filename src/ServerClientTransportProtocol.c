@@ -82,7 +82,7 @@ void reader(void *data){
 			// The file is not empty
 			packet_transport_t *received = deserialize_packet(str, fileLen); 
 			free(str);
-			if(received!=NULL && strcmp(received->destination, ch->channel_source) == 0){
+			if(received != NULL && strcmp(received->destination, ch->channel_source) == 0){
 				// Blank the file
 				truncate(ch->fileName, 0);
 				// Fire event

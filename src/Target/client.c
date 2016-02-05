@@ -35,9 +35,9 @@
 				"\n"\
 				" Set verbosity\n"\
 				"	-v				(0 default only handshake name \n"\
-                "					|1 handshake binary\n"\
-                "					|2 handshake binary and mesages description\n"\
-                "					|3 record bynary and messages description)\n"\
+			"					|1 handshake binary\n"\
+			"					|2 handshake binary and mesages description\n"\
+			"					|3 record bynary and messages description)\n"\
 				"\n"\
 				" Specify hash algorithm\n"\
 				"	-h	--hash_algorithm	(MD5|SHA1|SHA224|SHA256|SHA384|SHA512)\n"\
@@ -131,14 +131,14 @@ int main(int argc, char **argv) {
 			}
 		}
 		else if(strcmp(argv[i], "-v") == 0 ){
-            argv[i+1][0]+=0x01;
+			argv[i+1][0]+=0x01;
 			verbosity = atoi(argv[i+1]);
-            verbosity--;
-            if(verbosity<0 || verbosity>3){
-                printf("Invalid option -v can be only 1 2 or 3\n");
-                printf("Try '--help' for more information.\n");
-                return -1;
-            }
+			verbosity--;
+		if(verbosity<0 || verbosity>3){
+			printf("Invalid option -v can be only 1 2 or 3\n");
+			printf("Try '--help' for more information.\n");
+			return -1;
+		}
 		}
 		else if(argc == 2 && strcmp(argv[i], "--help") == 0){
 			printf("%s", USAGE);

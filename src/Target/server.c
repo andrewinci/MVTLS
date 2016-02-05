@@ -43,21 +43,21 @@ int verbosity = 0;
 TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv){
-	if(argc == 3 && strcmp(argv[1], "-v")==0 ){
-        argv[2][0]+=0x01;
-        verbosity = atoi(argv[2]);
-        verbosity--;
-        if(verbosity<0 || verbosity>3){
-            printf("Invalid option -v can be only 1 2 or 3\n");
-            printf("Try '--help' for more information.\n");
-            return -1;
-        }
+	if(argc == 3 && strcmp(argv[1], "-v") == 0 {
+		argv[2][0]+=0x01;
+		verbosity = atoi(argv[2]);
+		verbosity--;
+	if(verbosity<0 || verbosity>3){
+			printf("Invalid option -v can be only 1 2 or 3\n");
+			printf("Try '--help' for more information.\n");
+			return -1;
+	}
 	}
 	else if(argc == 2 && strcmp(argv[1], "--help") == 0){
 		printf("%s", USAGE);
 		return 0;
 	}
-    else if (argc > 1){
+	else if (argc > 1){
 		printf("Invalid option '%s'\n",argv[1]);
 		printf("Try '--help' for more information.\n");
 		return -1;
