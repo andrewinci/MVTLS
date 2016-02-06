@@ -2,7 +2,7 @@
  *	SSL/TLS Project
  *	\file ServerClientHandshakeProtocol.h
  *
- *	This file is used to mange the handshake protocol
+ *	This file is used to manage the handshake protocol
  *
  *	\date Created on 27/12/15.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
