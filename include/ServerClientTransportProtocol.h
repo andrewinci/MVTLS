@@ -39,7 +39,7 @@
  */
 #define DELAY_TIME 50
 
-/** \struct packet_basic
+/** \struct packet_transport_t
  * This struct substitutes the transport layer in our implementation
  */
 typedef struct{
@@ -56,7 +56,7 @@ typedef struct{
 	unsigned char *message;
 }packet_transport_t;
 
-/** \struct channel 
+/** \struct channel_t
 * Struct to model and manage a file channel
 * between client and server
 */
@@ -98,18 +98,18 @@ channel_t *create_channel(char *fileName, char *channelFrom, char *channelTo);
 /**
  * Set the function to be called when a message is received
  *
- * \param ch: channel interested
- * \param onPacketReceive: pointer to the function to be called
- * \return: 1 if the function was set, 0 otherwise
+ *  \param ch: channel interested
+ *  \param onPacketReceive: pointer to the function to be called
+ *  \return: 1 if the function was set, 0 otherwise
  */
 int set_on_receive(channel_t *ch, void (*onPacketReceive)(channel_t *ch, packet_transport_t *p));
 
 /**
  * Send a message through the channel ch
  *
- * \param ch: channel to be used
- * \param p: pointer to packet to be sent
- * \return: 1 if the message was sent, 0 otherwise
+ *  \param ch: channel to be used
+ *  \param p: pointer to packet to be sent
+ *  \return: 1 if the message was sent, 0 otherwise
  */
 int send_packet(channel_t *ch, packet_transport_t *p);
 
@@ -119,21 +119,23 @@ int send_packet(channel_t *ch, packet_transport_t *p);
  * is successful) the client/server read continously from channel.
  * (to STOP use stop())
  *
- * \param ch: channel to start
- * \return: 1 if the thread was started, 0 otherwise
+ *  \param ch: channel to start
+ *  \return: 1 if the thread was started, 0 otherwise
  */
 int start_listener(channel_t *ch);
 
 /**
  * Stop the caller and wait until stop() is called
- * \param ch: the channel to wait
+ *
+ *  \param ch: the channel to wait
  */
 void wait_channel(channel_t *ch);
 
 /**
  * Stop the reading/writing thread and the channel.
  * Note: the function doesn't free the channel.
- * \param ch: channel to stop
+ *
+ *  \param ch: channel to stop
  */
 void stop_channel(channel_t *ch);
 
@@ -141,16 +143,17 @@ void stop_channel(channel_t *ch);
  * Create a packet starting from a byte stream 
  * source and destination
  *
- * \param source: packet source
- * \param destination: packet receiver
- * \param message: message stream to be encapsulate into packet
- * \param message_length: message lenght
- * \return a pointer to a built packet
+ *  \param source: packet source
+ *  \param destination: packet receiver
+ *  \param message: message stream to be encapsulate into packet
+ *  \param message_length: message lenght
+ *  \return a pointer to a built packet
  */
 packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length);
 
 /**
  * Deallocate memory allocated by packet
- * \param p: pointer to packet to free
+ *
+ *  \param p: pointer to packet to free
  */
 void free_packet(packet_transport_t *p);

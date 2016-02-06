@@ -104,8 +104,8 @@ void reader(void *data){
  * is succesfull) the client/server read continously from channel.
  * (to STOP use stop())
  *
- * \param ch: channel to start
- * \return: 1 if the thread was started, 0 otherwise
+ *  \param ch: channel to start
+ *  \return: 1 if the thread was started, 0 otherwise
  */
 int start_listener(channel_t *ch){
 	if(ch->onPacketReceive==NULL)
@@ -128,7 +128,8 @@ int start_listener(channel_t *ch){
 /**
  * Stop the reading/writing thread and the channel.
  * Note: the function doesn't free the channel.
- * \param ch: channel to stop
+ *
+ *  \param ch: channel to stop
  */
 void stop_channel(channel_t *ch){
 	ch->isEnabled = 0;
@@ -138,7 +139,8 @@ void stop_channel(channel_t *ch){
 
 /**
  * Stop the caller and wait until stop() is called
- * \param ch: the channel to wait
+ *
+ *  \param ch: the channel to wait
  */
 void wait_channel(channel_t *ch){
 	pthread_join(ch->thread, NULL);
@@ -148,11 +150,11 @@ void wait_channel(channel_t *ch){
  * Create a packet starting from a byte stream 
  * source and destination
  *
- * \param source: packet source
- * \param destination: packet receiver
- * \param message: message stream to be encapsulated into packet
- * \param message_length: message lenght
- * \return a pointer to a built packet
+ *  \param source: packet source
+ *  \param destination: packet receiver
+ *  \param message: message stream to be encapsulated into packet
+ *  \param message_length: message lenght
+ *  \return a pointer to a built packet
  */
 packet_transport_t *create_packet(char *source, char *destination, unsigned char *message, uint32_t message_length){
 	packet_transport_t *result = malloc(sizeof(packet_transport_t));
@@ -184,9 +186,9 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 /**
  * Send a message through the channel ch
  *
- * \param ch: channel to be used
- * \param p: pointer to packet to be sent
- * \return: 1 if the message was sent, 0 otherwise
+ *  \param ch: channel to be used
+ *  \param p: pointer to packet to be sent
+ *  \return: 1 if the message was sent, 0 otherwise
  */
 int send_packet(channel_t *ch, packet_transport_t *p){
 
@@ -230,7 +232,8 @@ int send_packet(channel_t *ch, packet_transport_t *p){
 
 /**
  * Deallocate memory allocated by packet
- * \param p: pointer to packet to free
+ *
+ *  \param p: pointer to packet to free
  */
 void free_packet(packet_transport_t *p){
 	if(p == NULL)

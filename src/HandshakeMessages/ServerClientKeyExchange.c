@@ -14,6 +14,7 @@
 #else
 #include "ServerClientKeyExchange.h"
 #endif
+
 				/******* SERVER KEY EXCHANGE *******/
 /**
  * Serialize a server key exchange message into a byte stream.
@@ -256,6 +257,7 @@ void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange
 		free(server_key_ex);
 	}
 }
+
 				/******* CLIENT KEY EXCHANGE *******/
 
 /**
