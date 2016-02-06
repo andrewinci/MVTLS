@@ -11,45 +11,6 @@
 #include "ServerClientHandshakeProtocol.h"
 
 /**
- * Given an handshake encapsulate it in an record packet of type
- * HANDSHAKE and version TLS1_2.
- *
- *	\param h: handshake to encapsulate
- *	\return the record that encapsulate h
- */
-record_t *make_record(handshake_t *h) {
-	unsigned char *message = NULL;
-	uint32_t messageLen = 0;
-	serialize_handshake(h, &message, &messageLen);
-
-	// Make record
-	record_t *to_send = malloc(sizeof(record_t));
-	to_send->type = HANDSHAKE;
-	to_send->version = TLS1_2;
-	to_send->length = messageLen;
-	to_send->message = message;
-
-	return to_send;
-}
-
-/**
-* Send an handshake through a channel
-* 
-*	\param ch: the channel to use
-*	\param h: the handshake to send
-*	\return 1 if the send is succeeded, 0 otherwise
-*/
-int send_handshake(channel_t *ch, handshake_t *h){
-	record_t *to_send;
-	to_send = make_record(h);
-
-	int result = send_record(ch, to_send);
-	free_record(to_send);
-
-	return result;
-}
-
-/**
  * Serialize a handshake into a byte stream
  *
  *	\param h: the handshake to serialize
@@ -69,6 +30,29 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
 	memcpy(buff, h->message, h->length);
 
 	*streamLen = h->length+4;
+}
+
+/**
+ * Send an handshake through a channel
+ *
+ *	\param ch: the channel to use
+ *	\param h: the handshake to send
+ *	\return 1 if the send is succeeded, 0 otherwise
+ */
+int send_handshake(channel_t *ch, handshake_t *h){
+    record_t *to_send;
+    uint32_t serialized_handshake_len;
+    unsigned char *serialized_handshake;
+    serialize_handshake(h, &serialized_handshake, &serialized_handshake_len);
+    
+    to_send = make_record(serialized_handshake, serialized_handshake_len, HANDSHAKE, TLS1_2);
+    
+    int result = send_record(ch, to_send);
+    
+    free(serialized_handshake);
+    free_record(to_send);
+    
+    return result;
 }
 
 /**

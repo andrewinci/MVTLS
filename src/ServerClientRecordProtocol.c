@@ -12,6 +12,27 @@
 #include "ServerClientRecordProtocol.h"
 
 /**
+ * Make a record starting from message, type and tls version.
+ *
+ *	\param message: the message to incapsulate into the resulting record
+ *  \param message_len: the message length
+ *  \param r_type: the record type
+ *  \param tls_version: the tls version
+ *	\return the record that encapsulate h
+ */
+record_t *make_record(unsigned char *message, uint16_t message_len, record_type r_type, uint16_t tls_version){
+    // Make record
+    record_t *to_send = malloc(sizeof(record_t));
+    to_send->type = r_type;
+    to_send->version = tls_version;
+    to_send->length = message_len;
+    to_send->message = malloc(sizeof(unsigned char)*message_len);
+    memcpy(to_send->message, message, message_len);
+    
+    return to_send;
+}
+
+/**
  * Serialize record in a byte stream of length message_len stored in 
  * message.
  *
@@ -57,9 +78,9 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
  * Send record to_send over the channel ch.
  * Note: to send record is important to set 'to' and 'from' in the channel creation.
  *
- * \param ch: channel to use
- * \param r: record to send
- * \return 1 if the message was successfully sent, 0 otherwise
+ *  \param ch: channel to use
+ *  \param r: record to send
+ *  \return 1 if the message was successfully sent, 0 otherwise
  */
 int send_record(channel_t *ch, record_t *r){
 	unsigned char *message = NULL;
