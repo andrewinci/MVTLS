@@ -210,20 +210,20 @@ void do_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_su
 	wait_channel(client2server);
 
 	// Print details about connection
-	printf("\n Server random:\n");
+	printf("\nServer random:\n");
 	for(int i=0;i<32;i++)
 		printf("%02x ",TLS_param.server_random[i]);
-	printf("\n Client random:\n");
+	printf("\nClient random:\n");
 	for(int i=0;i<32;i++)
 		printf("%02x ",TLS_param.client_random[i]);
 	printf("\n");
 
-	printf("\n Certificate details:\n");
+	printf("\nCertificate details:\n");
 	printf("%s",TLS_param.server_certificate->name);
 
-	printf("\n Cipher suite: %s",TLS_param.cipher_suite.name);
+	printf("\nCipher suite: %s",TLS_param.cipher_suite.name);
 
-	printf("\n Master key: \n");
+	printf("\nMaster key: \n");
 	for(int i=0;i<TLS_param.master_secret_len;i++)
 		printf("%02X ",TLS_param.master_secret[i]);
 	printf("\n");
