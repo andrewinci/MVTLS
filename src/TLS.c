@@ -54,7 +54,7 @@ handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cip
 
 	// Initialize client hello (without SessionID)
 	session_id_t *session= malloc(sizeof(session_id_t));
-	session->session_lenght =0x00;
+	session->session_lenght = 0x00;
 	session->session_id = NULL;
 	server_client_hello_t *client_hello = make_hello(*session);
 	client_hello->TLS_version = TLS1_2;
@@ -64,7 +64,7 @@ handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cip
 	for(int i=0;i<cipher_suite_len;i++)
 		client_hello->cipher_suites[i]=cipher_suite_list[i];
 
-	// Insert server hello into handshake packet
+	// Insert client hello into handshake packet
 	handshake_t *client_hello_h = malloc(sizeof(handshake_t));
 	client_hello_h->type = CLIENT_HELLO;
 	serialize_client_server_hello(client_hello, &(client_hello_h->message), &(client_hello_h->length), CLIENT_MODE);
