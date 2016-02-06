@@ -15,9 +15,9 @@
  * Make a record starting from message, type and tls version.
  *
  *	\param message: the message to incapsulate into the resulting record
- *  \param message_len: the message length
- *  \param r_type: the record type
- *  \param tls_version: the tls version
+ *	\param message_len: the message length
+ *	\param r_type: the record type
+ *	\param tls_version: the tls version
  *	\return the record that encapsulate h
  */
 record_t *make_record(unsigned char *message, uint16_t message_len, record_type r_type, uint16_t tls_version){
@@ -36,9 +36,9 @@ record_t *make_record(unsigned char *message, uint16_t message_len, record_type 
  * Serialize record in a byte stream of length message_len stored in 
  * message.
  *
- * \param r: record to serialize
- * \param message: pointer to NULL (the function itself allocates space)
- * \param messageLen: pointer to integer (will contains the message length)
+ *	\param r: record to serialize
+ *	\param message: pointer to NULL (the function itself allocates space)
+ *	\param messageLen: pointer to integer (will contains the message length)
  */
 void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen){
 
@@ -56,9 +56,9 @@ void serialize_record(record_t *r, unsigned char **message, uint16_t *messageLen
  * De-serialize a byte stream message of length message_len into 
  * a record struct.
  *
- * \param message: message received
- * \param messageLen: message length
- * \return record: the de-serialized record
+ *	\param message: message received
+ *	\param messageLen: message length
+ *	\return record: the de-serialized record
  */
 record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
 	record_t *result = malloc(sizeof(record_t));
@@ -78,9 +78,9 @@ record_t *deserialize_record(unsigned char *message, uint32_t messageLen){
  * Send record to_send over the channel ch.
  * Note: to send record is important to set 'to' and 'from' in the channel creation.
  *
- *  \param ch: channel to use
- *  \param r: record to send
- *  \return 1 if the message was successfully sent, 0 otherwise
+ *	\param ch: channel to use
+ *	\param r: record to send
+ *	\return 1 if the message was successfully sent, 0 otherwise
  */
 int send_record(channel_t *ch, record_t *r){
 	unsigned char *message = NULL;
@@ -98,6 +98,7 @@ int send_record(channel_t *ch, record_t *r){
 
 /**
  * Print a description of the record
+ *
  *	\param r: record to print.
  */
 void print_record(record_t *r){
@@ -115,7 +116,8 @@ void print_record(record_t *r){
 
 /**
  * Deallocate memory pointed by r
- * \param r: pointer to record to free
+ *
+ *  \param r: pointer to record to free
  */
 void free_record(record_t *r){
 	if(r == NULL)
