@@ -43,7 +43,7 @@ int verbosity = 0;
 TLS_parameters_t TLS_param;
 
 int main(int argc, char **argv){
-	if(argc == 3 && strcmp(argv[1], "-v") == 0 {
+	if(argc == 3 && strcmp(argv[1], "-v") == 0) {
 		argv[2][0]+=0x01;
 		verbosity = atoi(argv[2]);
 		verbosity--;
