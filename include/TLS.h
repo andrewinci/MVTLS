@@ -150,7 +150,7 @@ handshake_t * make_server_hello_done();
 
 /**
  * Append the handshake h to the handshake_messages field of TLS_param
- *	
+ *
  *	\param TLS_param: connection parameters
  *	\param h: the handshake to append
  */

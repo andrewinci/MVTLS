@@ -418,7 +418,7 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
 	int pubkey_len;
 	unsigned char *pubkey_char = malloc(sizeof(unsigned char)*BN_num_bytes(server_key_ex->pub_key));
 	pubkey_len = BN_bn2bin(server_key_ex->pub_key, pubkey_char);
-	
+
 	// Get hash function from packet
 	hash_algorithm sign_hash_alg = (server_key_ex->sign_hash_alg) & 0x00FF;
 	int sign_type;

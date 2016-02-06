@@ -40,7 +40,7 @@ typedef struct{
  * The sessions are used for connection recovering.
  */
 typedef struct{
-	
+
 	/** Byte stream that specify the session id */
 	unsigned char *session_id;
 
@@ -66,16 +66,16 @@ typedef struct{
  *	Extension are not implemented yet.
  */
 typedef struct{
-	
+
 	/** TLS version */
 	uint16_t TLS_version; 
-	
+
 	/** Random struct: UNIX timestamp, random stream */
 	random_data_t random;
-	
+
 	/** Session struct: session id, session length */
 	session_id_t session_id;
-	
+
 	/** 
 	 *	For the client hello this is list of supported cipher suite 
 	 *	by client. For server hello it contains only one cipher suite.

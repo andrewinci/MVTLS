@@ -34,13 +34,13 @@
  */
 typedef enum{
 	/**SSL 3*/
-	SSL3_0 = 0x0300,	
+	SSL3_0 = 0x0300,
 	/**TLS 1.0*/
-	TLS1_0 = 0x0301, 	
+	TLS1_0 = 0x0301,
 	/**TLS 1.1*/
-	TLS1_1 = 0x0302,	
+	TLS1_1 = 0x0302,
 	/**TLS 1.2*/
-	TLS1_2 = 0x0303		
+	TLS1_2 = 0x0303
 }TLS_version;
 
 /**
