@@ -1,10 +1,13 @@
-//
-//  ClientKeyExchange.c
-//  TLSProject
-//
-//  Created by Darka on 07/02/16.
-//  Copyright © 2016 Darka. All rights reserved.
-//
+/**
+ *	SSL/TLS Project
+ *	\file ClientKeyExchange.c
+ *
+ *	This file contains functions to manage the client key exchange
+ *	and respective structs.
+ *
+ *	\date Created on 03/01/16.
+ *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
+ */
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ClientKeyExchange.h"

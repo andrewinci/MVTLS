@@ -1,11 +1,11 @@
 /**
  *	SSL/TLS Project
- *	\file ServerClientKeyExchange.h
+ *	\file ServerKeyExchange.h
  *
- *	This file contains functions for manage the server/client key exchange
+ *	This file contains functions to manage the server key exchange
  *	and respective structs.
  *
- *	\date Created on 06/12/15.
+ *	\date Created on 03/01/16.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 

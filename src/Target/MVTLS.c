@@ -1,8 +1,8 @@
 /**
  *	SSL/TLS Project
- * 	\file client.c
+ * 	\file MVTLS.c
  *
- *	Emulate a client during a TLS connection.
+ *	Emulate a client or server during a TLS connection.
  *
  *	\date Created on 12/01/16.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
