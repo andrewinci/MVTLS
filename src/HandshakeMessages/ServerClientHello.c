@@ -240,3 +240,91 @@ void free_hello(server_client_hello_t *h){
 	free(h->session_id.session_id);
 	free(h);
 }
+
+            /****************** HANDSHAKE FUNCTIONS **************************/
+/**
+ * Given the client hello message the function makes the server hello.
+ * It chooses a random cipher suite among those provided by the client.
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
+ *
+ *	\param TLS_param: the connection parameters
+ *	\param client_hello: the received client hello.
+ *	\return the hello server handshake message
+ */
+handshake_t * make_server_hello(handshake_parameters_t *TLS_param, server_client_hello_t *client_hello){
+    
+    // Initialize server hello (without SessionID)
+    session_id_t *session= malloc(sizeof(session_id_t));
+    session->session_lenght = 0x00;
+    session->session_id = NULL;
+    server_client_hello_t *server_hello = make_hello(*session);
+    server_hello->TLS_version = TLS1_2;
+    
+    // Choose and set cipher suite
+    srand((int)time(NULL));
+    int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2);
+    cipher_suite_t choosen_suite = get_cipher_suite_by_id(client_hello->cipher_suites[choosen_suite_num].cipher_id);
+    
+    server_hello->cipher_suite_len = 2;
+    
+    server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
+    *(server_hello->cipher_suites) = choosen_suite;
+    
+    // Insert server hello into handshake packet
+    handshake_t *server_hello_h = malloc(sizeof(handshake_t));
+    server_hello_h->type = SERVER_HELLO;
+    server_hello_h->message = NULL;
+    server_hello_h->length = 0;
+    serialize_client_server_hello(server_hello, &(server_hello_h->message), &(server_hello_h->length), SERVER_MODE);
+    
+    // Save parameters
+    TLS_param->cipher_suite = choosen_suite;
+    memcpy(TLS_param->server_random,&(server_hello->random.UNIX_time), 4);
+    memcpy(TLS_param->server_random+4, server_hello->random.random_bytes, 28);
+    
+    // Clean up
+    free_hello(server_hello);
+    free(session);
+    
+    return server_hello_h;
+}
+
+/**
+ * Given an array of cipher suites, make a client hello message.
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
+ *
+ *	\param client_random: return the random set in the client hello
+ *	\param cipher_suite_list: an array of cipher suites to add to the client hello
+ *	\param cipher_suite_len: the number of cipher suites in the list
+ *	\return the client hello handshake message
+ */
+handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
+    
+    // Initialize client hello (without SessionID)
+    session_id_t *session= malloc(sizeof(session_id_t));
+    session->session_lenght = 0x00;
+    session->session_id = NULL;
+    server_client_hello_t *client_hello = make_hello(*session);
+    client_hello->TLS_version = TLS1_2;
+    
+    client_hello->cipher_suite_len = 2*cipher_suite_len;
+    client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*cipher_suite_len);
+    for(int i=0;i<cipher_suite_len;i++)
+        client_hello->cipher_suites[i]=cipher_suite_list[i];
+    
+    // Insert client hello into handshake packet
+    handshake_t *client_hello_h = malloc(sizeof(handshake_t));
+    client_hello_h->type = CLIENT_HELLO;
+    serialize_client_server_hello(client_hello, &(client_hello_h->message), &(client_hello_h->length), CLIENT_MODE);
+    
+    // Save parameters
+    memcpy(client_random,&(client_hello->random.UNIX_time),4);
+    memcpy(client_random+4,client_hello->random.random_bytes,28);
+    
+    // Clean up
+    free(session);
+    free_hello(client_hello);
+    
+    return client_hello_h;
+}
+

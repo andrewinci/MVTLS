@@ -11,6 +11,106 @@
 #include "ServerClientHandshakeProtocol.h"
 
 /**
+ * Append the handshake h to the handshake_messages field of TLS_param
+ *
+ *	\param TLS_param: connection parameters
+ *	\param h: the handshake to append
+ */
+void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
+    
+    // Initialize
+    unsigned char *temp_message = NULL;
+    uint32_t temp_message_len = 0;
+    
+    // Allocate memory
+    serialize_handshake(h, &temp_message, &temp_message_len);
+    if(TLS_param->handshake_messages == NULL)
+        TLS_param->handshake_messages = malloc(TLS_param->handshake_messages_len+temp_message_len);
+    else
+        TLS_param->handshake_messages = realloc(TLS_param->handshake_messages, TLS_param->handshake_messages_len+temp_message_len);
+    
+    // Copy message
+    memcpy(TLS_param->handshake_messages+TLS_param->handshake_messages_len, temp_message, temp_message_len);
+    TLS_param->handshake_messages_len += temp_message_len;
+    
+    // Clean up
+    free(temp_message);
+}
+
+/*** CLIENT ***/
+
+/**
+ * Make the change cipher spec record message. This message is simple and
+ * doesn't require any parameter.
+ *
+ *	\return the change cipher spec record
+ */
+record_t * make_change_cipher_spec() {
+    
+    // Make and send change cipher spec message
+    record_t *change_cipher_spec_message = malloc(sizeof(record_t));
+    change_cipher_spec_message->type = CHANGE_CIPHER_SPEC;
+    change_cipher_spec_message->version = TLS1_2;
+    change_cipher_spec_message->length = 0x01;
+    change_cipher_spec_message->message = malloc(1);
+    *(change_cipher_spec_message->message) = 0x01;
+    
+    return change_cipher_spec_message;
+}
+
+/**
+ * Given the connection parameters compute the finished message.
+ * Note: TLS protocol requires this message to be encrypted.
+ *
+ *	\param TLS_param: the connection parameters
+ *	\return the finished handshake message
+ */
+handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) {
+    
+    // Initialize finished
+    handshake_t *finished_h = malloc(sizeof(handshake_t));
+    finished_h->type = FINISHED;
+    
+    // Compute hashes of handshake messages
+    const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+    unsigned char md_value[EVP_MAX_MD_SIZE];
+    unsigned int md_len;
+    EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
+    EVP_DigestInit_ex(mdctx, hash_function, NULL);
+    EVP_DigestUpdate(mdctx, TLS_param->handshake_messages, TLS_param->handshake_messages_len);
+    EVP_DigestFinal_ex(mdctx, md_value, &md_len);
+    EVP_MD_CTX_destroy(mdctx);
+    
+    // Set finished message
+    unsigned char *finished_message = NULL;
+    int finished_message_len = 12;
+    PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
+    finished_h->length = finished_message_len;
+    finished_h->message = finished_message;
+    
+    return finished_h;
+}
+
+/*** SERVER ***/
+
+/**
+ * Make the server hello done message. This message is simple and
+ * doesn't require any parameter.
+ *
+ *	\return the server hello done handshake message
+ */
+handshake_t * make_server_hello_done() {
+    
+    // Make and insert server done into handshake packet
+    handshake_t *server_hello_done = malloc(sizeof(handshake_t));
+    server_hello_done->type = SERVER_DONE;
+    server_hello_done->length = 0x00;
+    server_hello_done->message = NULL;
+    
+    return server_hello_done;
+}
+
+/**
  * Serialize a handshake into a byte stream
  *
  *	\param h: the handshake to serialize

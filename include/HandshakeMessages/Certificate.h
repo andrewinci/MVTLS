@@ -20,6 +20,7 @@
 #include <openssl/pem.h>
 
 #include "TLSConstants.h"
+#include "HandshakeConstants.h"
 
 #endif
 
@@ -36,6 +37,17 @@ typedef struct{
 	X509 *X509_certificate;
 
 }certificate_message_t;
+
+/**
+ * Make the certificate message for the server.
+ * That message depends on the authentication algorithm hence we require the connection
+ * parameters. The function also sets the certificate in the connection parameters for
+ * further uses.
+ *
+ *	\param TLS_param: connection parameters
+ *	\return the certificate handshake message
+ */
+handshake_t * make_certificate(handshake_parameters_t *TLS_param);
 
 /**
  * Given the certificate file name create a certificate message struct

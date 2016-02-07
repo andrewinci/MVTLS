@@ -15,6 +15,51 @@
 #endif
 
 /**
+ * Make the certificate message for the server.
+ * That message depends on the authentication algorithm hence we require the connection
+ * parameters. The function also sets the certificate in the connection parameters for
+ * further uses.
+ *
+ *	\param TLS_param: connection parameters
+ *	\return the certificate handshake message
+ */
+handshake_t * make_certificate(handshake_parameters_t *TLS_param){
+    
+    // Initialize certificate message
+    certificate_message_t *cert_message = NULL;
+    
+    // Make certificate message
+    switch (TLS_param->cipher_suite.au){
+        case RSA_AU:
+            cert_message = make_certificate_message("../certificates/serverRSA.pem");
+            break;
+        case DSS_AU:
+            cert_message = make_certificate_message("../certificates/serverDSA.pem");
+            break;
+        case ECDSA_AU:
+            cert_message = make_certificate_message("../certificates/serverECDSA.pem");
+            break;
+        default:
+            printf("\nError in make_certificate_message");
+            exit(-1);
+    }
+    
+    // Insert certificate message into handshake packet
+    handshake_t *certificate_h = malloc(sizeof(handshake_t));
+    certificate_h->type = CERTIFICATE;
+    serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
+    
+    // Save parameters
+    TLS_param->server_certificate = cert_message->X509_certificate;
+    TLS_param->server_certificate->references+=1;
+    
+    // Clean up
+    free_certificate_message(cert_message);
+    
+    return certificate_h;
+}
+
+/**
  * Given the certificate file name create a certificate message struct
  * that encapsulate it.
  *

@@ -13,12 +13,10 @@ NC=\033[0m # No Color
 
 # Final objects
 
-clientServer: TLS
+MVTLS: TLS
 	@mkdir -p bin/
-	@printf "${GREEN}** Make server **${NC}\n"
-	$(CC) $(CFLAGS) $(SRCDIR)/Target/server.c $(INC) -o bin/TLSServer $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
-	@printf "${GREEN}** Make client **${NC}\n"
-	$(CC) $(CFLAGS) $(SRCDIR)/Target/client.c $(INC) -o bin/TLSClient $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
+	@printf "${GREEN}** Make MVTLS **${NC}\n"
+	$(CC) $(CFLAGS) $(SRCDIR)/Target/MVTLS.c $(INC) -o bin/MVTLS $(shell find $(BUILDDIR) -name '*.o') $(LFLAGS)  $(OPENSSL)
 
 # Tests
 
@@ -59,7 +57,8 @@ handshakeMessages:
 	@mkdir -p $(BUILDDIR)/HandshakeMessages
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/Certificate.o $(SRCDIR)/HandshakeMessages/Certificate.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientHello.o $(SRCDIR)/HandshakeMessages/ServerClientHello.c
-	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ServerClientKeyExchange.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ServerKeyExchange.o $(SRCDIR)/HandshakeMessages/ServerKeyExchange.c
+	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/HandshakeMessages/ClientKeyExchange.o $(SRCDIR)/HandshakeMessages/ClientKeyExchange.c
 	$(CC) $(CFLAGS) $(INC) -c -o $(BUILDDIR)/TLSConstants.o $(SRCDIR)/TLSConstants.c
 
 recordProtocol: transportProtocol
