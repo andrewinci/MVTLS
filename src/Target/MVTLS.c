@@ -15,10 +15,10 @@
 /** \def USAGE 
  * String with program arguments
  */
-#define USAGE 	"TLSClient: TLS1.2 version handshake\n"\
+#define USAGE 	"MVTLS: TLS1.2 version handshake\n"\
 				"\n"\
 				"Usage:\n"\
-				" TLSClient client/server [args]\n"\
+				" MVTLS [client/server -l --help] [args]\n"\
 				"\n"\
 				"Options: \n"\
 				" Specify cipher suite id (not hex)\n"\
@@ -34,7 +34,7 @@
 				"	-a	--auth_algorithm	(RSA|DSS|ECDSA)\n"\
 				"\n"\
 				" Set verbosity\n"\
-				"	-v				(0 default only handshake name \n"\
+				"	-v				(0 final connection description \n"\
                 "					|1 handshake binary\n"\
                 "					|2 handshake binary and mesages description\n"\
                 "					|3 record bynary and messages description)\n"\
@@ -57,9 +57,22 @@ int main(int argc, char **argv) {
 	authentication_algorithm au = NONE_AU;
 	hash_algorithm ha = NONE_H;
     
+    if(argc == 2 && strcmp(argv[1], "--help") == 0){
+        printf("%s", USAGE);
+        return 0;
+    }
+    
+    if(argc == 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "--list") == 0)){
+        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        printf("Supported cipher suite are the following:\n");
+        for(int i = 0; i<num_added; i++)
+            printf("%s\n", to_send_cipher_suite[i].name);
+        return 0;
+    }
+    
     if(strcmp(argv[1], "server") !=0 && strcmp(argv[1], "client") != 0 ){
         printf("Must set server or client\n");
-        exit(-1);
+        return -1;
     }
     
 	for(int i=2; i<argc; i+=2){
@@ -127,27 +140,16 @@ int main(int argc, char **argv) {
 				return -1;
 			}
 		}
-		else if(strcmp(argv[i], "-v") == 0 ){
-			argv[i+1][0]+=0x01;
-			verbosity = atoi(argv[i+1]);
-			verbosity--;
-		if(verbosity<0 || verbosity>3){
-			printf("Invalid option -v can be only 1 2 or 3\n");
-			printf("Try '--help' for more information.\n");
-			return -1;
-		}
-		}
-		else if(argc == 2 && strcmp(argv[i], "--help") == 0){
-			printf("%s", USAGE);
-			return 0;
-		}
-		else if(argc == 2 && (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0)){
-			int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-			printf("Supported cipher suite are the following:\n");
-			for(int i = 0; i<num_added; i++)
-				printf("%s\n", to_send_cipher_suite[i].name);
-			return 0;
-		}
+        else if(strcmp(argv[i], "-v") == 0 ){
+            argv[i+1][0]+=0x01;
+            verbosity = atoi(argv[i+1]);
+            verbosity--;
+            if(verbosity<0 || verbosity>3){
+                printf("Invalid option -v can be only 1 2 or 3\n");
+                printf("Try '--help' for more information.\n");
+                return -1;
+            }
+        }
 		else{
 			printf("Invalid option '%s'\n",argv[i]);
 			printf("Try '--help' for more information.\n");
