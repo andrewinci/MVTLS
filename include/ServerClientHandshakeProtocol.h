@@ -19,7 +19,7 @@
 #include <string.h>
 
 #include "ServerClientRecordProtocol.h"
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 
 #ifdef MAKEFILE
 #include "HandshakeMessages/ServerClientHello.h"

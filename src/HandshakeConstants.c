@@ -1,6 +1,6 @@
 /**
  *	SSL/TLS Project
- *	\file TLSConstants.c
+ *	\file HandshakeConstants.c
  *
  * 	This file contains a set of constants used in 
  * 	the handshake protocol and function implementation 
@@ -11,7 +11,7 @@
  *
  */
 
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 /** The number of supported cipher suites */
 const int NUM_CIPHER_SUITE = 62;
 

@@ -1,18 +1,17 @@
 /**
  *	SSL/TLS Project
- *	\file Crypto.c
+ *	\file PRF.c
  *
- * 	PRF function and sign/verify function. 
- *	The follow functions wrap openssl library for sign, verify.
+ * 	PRF function.
  * 
  *	\date Created on 27/12/15.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
-#include "Crypto.h"
+#include "PRF.h"
 
 /**
- * Apply the PRF to a secret.
+ * Apply the PRF to a message given the label and seed.
  *
  *	\param hash: the hash to use in the hmac
  *	\param secret: the secret to process

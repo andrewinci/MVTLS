@@ -21,42 +21,30 @@
 
 #include "ServerKeyExchange.h"
 #include "HandshakeConstants.h"
-#include "Crypto.h"
+#include "PRF.h"
 
 #ifdef MAKEFILE
-#include "../TLSConstants.h"
+#include "../HandshakeConstants.h"
 #else
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 #endif
 
 
 #endif /* ClientKeyExchange_h */
 
-
-                     /********** SIGNATURES **************/
 /**
- * Verify the server_key_exchange message for a DHE key exchange.
- *
- *	\param certificate: the certificate to use to verify the signature
- *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex: the server key exchange message to verify.
- *	\param au: the authentication algorithm.
+	/struct client_key_exchange_t
+	Model the client key exchange message of the handshake protocol.
  */
-int verify_DHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au);
-
-/**
- * Verify the server_key_exchange message for a ECDHE key exchange.
- *
- *	\param certificate: the certificate to use to verify the signature
- *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex: the server key exchange message to verify.
- *	\param au: the authentication algorithm.
- */
-int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au);
-
-                                /******* CLIENT KEY EXCHANGE *******/
+typedef struct{
+    
+    /** Key length */
+    uint16_t key_length;
+    
+    /** Key byte stream */
+    unsigned char *key;
+    
+}client_key_exchange_t;
 
 /**
  * Serialize a client key exchange message into a byte stream.

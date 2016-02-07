@@ -19,12 +19,12 @@
 #include <openssl/pem.h>
 
 #include "HandshakeConstants.h"
-#include "Crypto.h"
+#include "PRF.h"
 
 #ifdef MAKEFILE
-#include "../TLSConstants.h"
+#include "../HandshakeConstants.h"
 #else
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 #endif
 
 
@@ -80,20 +80,6 @@ typedef struct{
 }dhe_server_key_exchange_t;
 
 /**
-	/struct client_key_exchange_t
-	Model the client key exchange message of the handshake protocol.
- */
-typedef struct{
-
-	/** Key length */
-	uint16_t key_length;
-
-	/** Key byte stream */
-	unsigned char *key;
-
-}client_key_exchange_t;
-
-/**
 	\def server_key_exchange_t
 	The general server key exchange message. 
 	It can be ECDHE or DHE, for this reason we ask for key exchange algorithm 
@@ -102,7 +88,7 @@ typedef struct{
 typedef void server_key_exchange_t;
 
 #endif
-					/******* SERVER KEY EXCHANGE *******/
+
 /**
  * Serialize a server key exchange message into a byte stream.
  * 
@@ -139,33 +125,3 @@ void print_server_key_exchange(server_key_exchange_t *server_key_exchange, key_e
  *	\param kx: the key exchange method of the handshake
  */
 void free_server_key_exchange(server_key_exchange_t *server_key_ex, key_exchange_algorithm kx);
-
-
-                    /********** SIGNATURES **************/
-
-
-/**
- * Sign the server_key_exchange message for a DHE key exchange.
- * The function chooses an arbitrary hash algorithm for the signature (except MD5, SHA-1).
- * It takes private key in ../certificates/ folder with name serverA.key where A can be RSA, DSS.
- *
- *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex: the server key exchange message to sign.
- *	\param au: the authentication algorithm.
- */
-int sign_DHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, dhe_server_key_exchange_t *server_key_ex, authentication_algorithm au);
-
-
-/**
- * Sign the server_key_exchange message for a ECDHE key exchange.
- * The function chooses an arbitrary hash algorithm for the signature (except MD5, SHA-1).
- * It takes private key in ../certificates/ folder with name serverA.key where A can be RSA, ECDSA.
- *
- *	\param client_random: the random sent by the client in the client hello. Must point to 32 byte stream
- *	\param server_random: the random sent by the server in the server hello. Must point to 32 byte stream
- *	\param server_key_ex: the server key exchange message to sign.
- *	\param au: the authentication algorithm.
- */
-int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server_random, ecdhe_server_key_exchange_t *server_key_ex, authentication_algorithm au);
-

@@ -19,7 +19,6 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-#include "TLSConstants.h"
 #include "HandshakeConstants.h"
 
 #endif

@@ -1,10 +1,9 @@
 /**
  *	SSL/TLS Project
- *	\file Crypto.h
+ *	\file PRF.c
  *
- * 	PRF function and sign/verify function. 
- *	The follow functions wrap openssl library for sign, verify.
- * 
+ * 	PRF function.
+ *
  *	\date Created on 27/12/15.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */

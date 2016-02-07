@@ -18,7 +18,6 @@
 #include <string.h>
 #include <openssl/rand.h>
 
-#include "TLSConstants.h"
 #include "HandshakeConstants.h"
 #endif 
 
