@@ -193,7 +193,7 @@ packet_transport_t *create_packet(char *source, char *destination, unsigned char
 int send_packet(channel_t *ch, packet_transport_t *p){
 
 	if(ch == NULL){
-		printf("Error: no channel is avaible (ch == NULL)");
+		printf("Error: no channel is avaible (ch == NULL)\n");
 		return -1;
 	}
 	if(ch->fd == -1)
@@ -245,7 +245,7 @@ void free_packet(packet_transport_t *p){
 	free(p);
 }
 
-/********* Utilities function for file managing *********/
+/********* Utilities functions for file managing *********/
 
 /**
  * Compute the byte size of a file

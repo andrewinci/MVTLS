@@ -46,16 +46,14 @@ void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
  *	\return the change cipher spec record
  */
 record_t * make_change_cipher_spec() {
-    
-    // Make and send change cipher spec message
-    record_t *change_cipher_spec_message = malloc(sizeof(record_t));
-    change_cipher_spec_message->type = CHANGE_CIPHER_SPEC;
-    change_cipher_spec_message->version = TLS1_2;
-    change_cipher_spec_message->length = 0x01;
-    change_cipher_spec_message->message = malloc(1);
-    *(change_cipher_spec_message->message) = 0x01;
-    
-    return change_cipher_spec_message;
+
+	// Make change cipher spec message
+	unsigned char *message = malloc(sizeof(uint8_t));
+	*message = 0x01;
+	record_t *change_cipher_spec_message = make_record(message, 0x01, CHANGE_CIPHER_SPEC, TLS1_2);
+	free(message);
+
+	return change_cipher_spec_message;
 }
 
 /**
@@ -66,29 +64,29 @@ record_t * make_change_cipher_spec() {
  *	\return the finished handshake message
  */
 handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) {
-    
-    // Initialize finished
-    handshake_t *finished_h = malloc(sizeof(handshake_t));
-    finished_h->type = FINISHED;
-    
-    // Compute hashes of handshake messages
-    const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-    unsigned char md_value[EVP_MAX_MD_SIZE];
-    unsigned int md_len;
-    EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
-    EVP_DigestInit_ex(mdctx, hash_function, NULL);
-    EVP_DigestUpdate(mdctx, TLS_param->handshake_messages, TLS_param->handshake_messages_len);
-    EVP_DigestFinal_ex(mdctx, md_value, &md_len);
-    EVP_MD_CTX_destroy(mdctx);
-    
-    // Set finished message
-    unsigned char *finished_message = NULL;
-    int finished_message_len = 12;
-    PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
-    finished_h->length = finished_message_len;
-    finished_h->message = finished_message;
-    
-    return finished_h;
+
+	// Initialize finished
+	handshake_t *finished_h = malloc(sizeof(handshake_t));
+	finished_h->type = FINISHED;
+
+	// Compute hashes of handshake messages
+	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+	unsigned char md_value[EVP_MAX_MD_SIZE];
+	unsigned int md_len;
+	EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
+	EVP_DigestInit_ex(mdctx, hash_function, NULL);
+	EVP_DigestUpdate(mdctx, TLS_param->handshake_messages, TLS_param->handshake_messages_len);
+	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
+	EVP_MD_CTX_destroy(mdctx);
+
+	// Set finished message
+	unsigned char *finished_message = NULL;
+	int finished_message_len = 12;
+	PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
+	finished_h->length = finished_message_len;
+	finished_h->message = finished_message;
+
+	return finished_h;
 }
 
 /*** SERVER ***/
@@ -100,14 +98,14 @@ handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) {
  *	\return the server hello done handshake message
  */
 handshake_t * make_server_hello_done() {
-    
-    // Make and insert server done into handshake packet
-    handshake_t *server_hello_done = malloc(sizeof(handshake_t));
-    server_hello_done->type = SERVER_DONE;
-    server_hello_done->length = 0x00;
-    server_hello_done->message = NULL;
-    
-    return server_hello_done;
+
+	// Make and insert server done into handshake packet
+	handshake_t *server_hello_done = malloc(sizeof(handshake_t));
+	server_hello_done->type = SERVER_DONE;
+	server_hello_done->length = 0x00;
+	server_hello_done->message = NULL;
+
+	return server_hello_done;
 }
 
 /**
@@ -140,19 +138,19 @@ void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *strea
  *	\return 1 if the send is succeeded, 0 otherwise
  */
 int send_handshake(channel_t *ch, handshake_t *h){
-    record_t *to_send;
-    uint32_t serialized_handshake_len;
-    unsigned char *serialized_handshake;
-    serialize_handshake(h, &serialized_handshake, &serialized_handshake_len);
-    
-    to_send = make_record(serialized_handshake, serialized_handshake_len, HANDSHAKE, TLS1_2);
-    
-    int result = send_record(ch, to_send);
-    
-    free(serialized_handshake);
-    free_record(to_send);
-    
-    return result;
+	record_t *to_send;
+	uint32_t serialized_handshake_len;
+	unsigned char *serialized_handshake;
+	serialize_handshake(h, &serialized_handshake, &serialized_handshake_len);
+
+	to_send = make_record(serialized_handshake, serialized_handshake_len, HANDSHAKE, TLS1_2);
+
+	int result = send_record(ch, to_send);
+
+	free(serialized_handshake);
+	free_record(to_send);
+
+	return result;
 }
 
 /**
@@ -216,20 +214,20 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 		}
         printf("\n");
 	}
-    if(verbosity == 1 || verbosity == 2){
-        unsigned char *message = NULL;
-        uint32_t messageLen = 0;
-        serialize_handshake(h, &message, &messageLen);
-        if(message != NULL){
-            for(int i=0; i<messageLen; i++){
-                if(i%9 == 0)
-                    printf("\n");
-                printf("%02x ", *(message+i));
-            }
-            printf("\n");
-            free(message);
-        }
-    }
+	if(verbosity == 1 || verbosity == 2){
+		unsigned char *message = NULL;
+		uint32_t messageLen = 0;
+		serialize_handshake(h, &message, &messageLen);
+		if(message != NULL){
+			for(int i=0; i<messageLen; i++){
+				if(i%9 == 0)
+					printf("\n");
+				printf("%02x ", *(message+i));
+			}
+			printf("\n");
+			free(message);
+		}
+	}
 	else if (verbosity == 3){
 		record_t *r = malloc(sizeof(record_t));
 		r->type = HANDSHAKE;
@@ -244,7 +242,7 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 /**
  * Dealloc memory of handshake struct
  * 
- *	\param h: the handshake to be freed
+ *	\param h: the handshake to free
  */
 void free_handshake(handshake_t *h){
 	if(h==NULL)

@@ -1,8 +1,7 @@
 /**
  *	SSL/TLS Project
- *	\file TLS.c
- *	This file provide a set of function for the TLS
- *	protocols.
+ *	\file TLS.h
+ *	This file provide a set of function for the TLS protocol.
  *
  *	\date Created on 13/01/16.
  *	\copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
@@ -15,31 +14,28 @@
 #include <time.h>
 #include "ServerClientHandshakeProtocol.h"
 
-
-/** verbosity of the output */
+/** Verbosity of the output */
 extern int verbosity;
 
-/** connection parameters */
+/** Connection parameters */
 extern handshake_parameters_t TLS_param;
 
 #endif
 
-
 /**
- * Do the handshake client side.
+ * Do the handshake - client side.
  *
- *	\param to_send_cipher_suite_len: the number of cipher suite to add in the client hello
- *	\param to_send_cipher_suite: contains the cipher suite chosen for the client hello
+ *	\param to_send_cipher_suite_len: the number of cipher suites to add in the client hello
+ *	\param to_send_cipher_suite: contains the choosen cipher suites for the client hello
  */
 void do_client_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]);
 
-
 /**
- * Do the handshake server side.
+ * Do the handshake - server side.
  */
 void do_server_handshake();
 
 /**
- * Free the tls connection. 
+ * Free the TLS connection parameters. 
  */
 void free_tls_connection();

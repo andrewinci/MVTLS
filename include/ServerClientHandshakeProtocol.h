@@ -67,8 +67,6 @@ handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) ;
 
 /**** SERVER ****/
 
-
-
 /**
  * Make the certificate message for the server.
  * That message depends on the authentication algorithm hence we require the connection
@@ -106,7 +104,7 @@ handshake_t * make_server_hello_done();
  */
 void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h);
 
-    /************ SEND SERIALIZE DE_SERIALIZE **************/
+    /************ SEND, SERIALIZE, DESERIALIZE **************/
 
 /**
 * Send a handshake through a channel
