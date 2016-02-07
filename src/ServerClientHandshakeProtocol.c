@@ -1,6 +1,6 @@
 /**
  *	SSL/TLS Project
- *	\file ServerClientHandshakeProtocol.h
+ *	\file ServerClientHandshakeProtocol.c
  *
  *	This file is used to manage the handshake protocol
  *
@@ -9,35 +9,6 @@
  */
 
 #include "ServerClientHandshakeProtocol.h"
-
-/**
- * Append the handshake h to the handshake_messages field of TLS_param
- *
- *	\param TLS_param: connection parameters
- *	\param h: the handshake to append
- */
-void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
-    
-    // Initialize
-    unsigned char *temp_message = NULL;
-    uint32_t temp_message_len = 0;
-    
-    // Allocate memory
-    serialize_handshake(h, &temp_message, &temp_message_len);
-    if(TLS_param->handshake_messages == NULL)
-        TLS_param->handshake_messages = malloc(TLS_param->handshake_messages_len+temp_message_len);
-    else
-        TLS_param->handshake_messages = realloc(TLS_param->handshake_messages, TLS_param->handshake_messages_len+temp_message_len);
-    
-    // Copy message
-    memcpy(TLS_param->handshake_messages+TLS_param->handshake_messages_len, temp_message, temp_message_len);
-    TLS_param->handshake_messages_len += temp_message_len;
-    
-    // Clean up
-    free(temp_message);
-}
-
-/*** CLIENT ***/
 
 /**
  * Make the change cipher spec record message. This message is simple and
@@ -92,45 +63,31 @@ handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_m
 	return finished_h;
 }
 
-/*** SERVER ***/
-
 /**
- * Make the server hello done message. This message is simple and
- * doesn't require any parameter.
+ * Append the handshake h to the handshake_messages field of TLS_param
  *
- *	\return the server hello done handshake message
+ *	\param TLS_param: connection parameters
+ *	\param h: the handshake to append
  */
-handshake_t * make_server_hello_done() {
+void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
 
-	// Make and insert server done into handshake packet
-	handshake_t *server_hello_done = malloc(sizeof(handshake_t));
-	server_hello_done->type = SERVER_DONE;
-	server_hello_done->length = 0x00;
-	server_hello_done->message = NULL;
+	// Initialize
+	unsigned char *temp_message = NULL;
+	uint32_t temp_message_len = 0;
 
-	return server_hello_done;
-}
+	// Allocate memory
+	serialize_handshake(h, &temp_message, &temp_message_len);
+	if(TLS_param->handshake_messages == NULL)
+		TLS_param->handshake_messages = malloc(TLS_param->handshake_messages_len+temp_message_len);
+	else
+		TLS_param->handshake_messages = realloc(TLS_param->handshake_messages, TLS_param->handshake_messages_len+temp_message_len);
 
-/**
- * Serialize a handshake into a byte stream
- *
- *	\param h: the handshake to serialize
- *	\param stream: a pointer to NULL, it will filled with the serialized handshake
- *	\param streamLen: the length of the serialized message
- */
-void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen){
-	unsigned char *buff = malloc(sizeof(unsigned char)*(h->length+4));
-	*stream = buff;
-	*buff = h->type;
-	buff++;
+	// Copy message
+	memcpy(TLS_param->handshake_messages+TLS_param->handshake_messages_len, temp_message, temp_message_len);
+	TLS_param->handshake_messages_len += temp_message_len;
 
-	uint32_t len = REV32(h->length)>>8;
-	memcpy(buff, &len, 3);
-	buff+=3;
-
-	memcpy(buff, h->message, h->length);
-
-	*streamLen = h->length+4;
+	// Clean up
+	free(temp_message);
 }
 
 /**
@@ -154,6 +111,28 @@ int send_handshake(channel_t *ch, handshake_t *h){
 	free_record(to_send);
 
 	return result;
+}
+
+/**
+ * Serialize a handshake into a byte stream
+ *
+ *	\param h: the handshake to serialize
+ *	\param stream: a pointer to NULL, it will filled with the serialized handshake
+ *	\param streamLen: the length of the serialized message
+ */
+void serialize_handshake(handshake_t *h, unsigned char **stream, uint32_t *streamLen){
+	unsigned char *buff = malloc(sizeof(unsigned char)*(h->length+4));
+	*stream = buff;
+	*buff = h->type;
+	buff++;
+
+	uint32_t len = REV32(h->length)>>8;
+	memcpy(buff, &len, 3);
+	buff+=3;
+
+	memcpy(buff, h->message, h->length);
+
+	*streamLen = h->length+4;
 }
 
 /**
@@ -215,7 +194,7 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx){
 			print_client_key_exchange(client_key_exchange);
 			free_client_key_exchange(client_key_exchange);
 		}
-        printf("\n");
+		printf("\n");
 	}
 	if(verbosity == 1 || verbosity == 2){
 		unsigned char *message = NULL;
@@ -252,4 +231,23 @@ void free_handshake(handshake_t *h){
 		return;
 	free(h->message);
 	free(h);
+}
+
+/*** SERVER ***/
+
+/**
+ * Make the server hello done message. This message is simple and
+ * doesn't require any parameter.
+ *
+ *	\return the server hello done handshake message
+ */
+handshake_t * make_server_hello_done() {
+
+	// Make and insert server done into handshake packet
+	handshake_t *server_hello_done = malloc(sizeof(handshake_t));
+	server_hello_done->type = SERVER_DONE;
+	server_hello_done->length = 0x00;
+	server_hello_done->message = NULL;
+
+	return server_hello_done;
 }

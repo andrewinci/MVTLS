@@ -35,18 +35,6 @@
 
 #endif
 
-
-/**
- * Given the information in TLS_parameter and the key exchange algorithm
- * return the handshake of the client key exchange. That includes to compute the
- * pre-master key. It also computes the master secret and set in TLS_param.
- *
- *	\param TLS_param: the parameters of the connection
- *	\param key_ex_alg: the key exchange algorithm of the handshake
- *	\return the client key exchange handshake message
- */
-handshake_t * make_client_key_exchange(handshake_parameters_t *TLS_param, uint16_t key_ex_alg);
-
 /**
  * Make the change cipher spec record message. This message is simple and
  * doesn't require any parameter.
@@ -65,38 +53,6 @@ record_t * make_change_cipher_spec();
  */
 handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_mode mode);
 
-
-/**** SERVER ****/
-
-/**
- * Make the certificate message for the server.
- * That message depends on the authentication algorithm hence we require the connection
- * parameters. The function also sets the certificate in the connection parameters for
- * further uses.
- *
- *	\param TLS_param: connection parameters
- *	\return the certificate handshake message
- */
-handshake_t * make_certificate(handshake_parameters_t *TLS_param);
-
-/**
- * Make the server key exchange handshake message.
- * The function also sets the message in the connection parameters
- * to compute the master key in the client key exchange message.
- *
- *	\param TLS_param: connection parameters
- *	\return the server key exchange handshake message
- */
-handshake_t * make_server_key_exchange(handshake_parameters_t *TLS_param);
-
-/**
- * Make the server hello done message. This message is simple and
- * doesn't require any parameter.
- *
- *	\return the server hello done handshake message
- */
-handshake_t * make_server_hello_done();
-
 /**
  * Append the handshake h to the handshake_messages field of TLS_param
  *
@@ -104,8 +60,6 @@ handshake_t * make_server_hello_done();
  *	\param h: the handshake to append
  */
 void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h);
-
-    /************ SEND, SERIALIZE, DESERIALIZE **************/
 
 /**
 * Send a handshake through a channel
@@ -149,3 +103,47 @@ void print_handshake(handshake_t *h, int verbosity, key_exchange_algorithm kx);
  *	\param h: the handshake to free
  */
 void free_handshake(handshake_t *h);
+
+/**** SERVER ****/
+
+/**
+ * Make the certificate message for the server.
+ * That message depends on the authentication algorithm hence we require the connection
+ * parameters. The function also sets the certificate in the connection parameters for
+ * further uses.
+ *
+ *	\param TLS_param: connection parameters
+ *	\return the certificate handshake message
+ */
+handshake_t * make_certificate(handshake_parameters_t *TLS_param);
+
+/**
+ * Make the server key exchange handshake message.
+ * The function also sets the message in the connection parameters
+ * to compute the master key in the client key exchange message.
+ *
+ *	\param TLS_param: connection parameters
+ *	\return the server key exchange handshake message
+ */
+handshake_t * make_server_key_exchange(handshake_parameters_t *TLS_param);
+
+/**
+ * Make the server hello done message. This message is simple and
+ * doesn't require any parameter.
+ *
+ *	\return the server hello done handshake message
+ */
+handshake_t * make_server_hello_done();
+
+/**** CLIENT ****/
+
+/**
+ * Given the information in TLS_parameter and the key exchange algorithm
+ * return the handshake of the client key exchange. That includes to compute the
+ * pre-master key. It also computes the master secret and set in TLS_param.
+ *
+ *	\param TLS_param: the parameters of the connection
+ *	\param key_ex_alg: the key exchange algorithm of the handshake
+ *	\return the client key exchange handshake message
+ */
+handshake_t * make_client_key_exchange(handshake_parameters_t *TLS_param, uint16_t key_ex_alg);
