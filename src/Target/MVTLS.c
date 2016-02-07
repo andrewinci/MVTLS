@@ -172,7 +172,31 @@ int main(int argc, char **argv) {
 	}
     
     if(strcmp(argv[1], "server") ==0){
+        printf("*** TLS server is started ***\n");
         do_server_handshake();
     }
-    else do_client_handshake(to_send_cipher_suite_len, to_send_cipher_suite);
+    else{
+        printf("*** TLS client is started ***\n");
+        do_client_handshake(to_send_cipher_suite_len, to_send_cipher_suite);
+    }
+    // Print details about connection
+    printf("\nServer random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.server_random[i]);
+    printf("\nClient random:\n");
+    for(int i=0;i<32;i++)
+        printf("%02x ",TLS_param.client_random[i]);
+    printf("\n");
+    
+    printf("\nCertificate details:\n");
+    printf("%s",TLS_param.server_certificate->name);
+    
+    printf("\nCipher suite: %s\n",TLS_param.cipher_suite.name);
+    
+    printf("\nMaster key: \n");
+    for(int i=0;i<TLS_param.master_secret_len;i++)
+        printf("%02X ",TLS_param.master_secret[i]);
+    printf("\n");
+
+    free_tls_connection();
 }

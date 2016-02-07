@@ -38,3 +38,8 @@ void do_client_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_ci
  * Do the handshake server side.
  */
 void do_server_handshake();
+
+/**
+ * Free the tls connection. 
+ */
+void free_tls_connection();
