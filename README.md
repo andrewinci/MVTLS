@@ -1,5 +1,7 @@
 # Progetto di Advanced Programming of Cryptographic methods
 ##MVTLS TLS 1.2 handshake over file
+The TLS handshake using as channel a file. 
+The software require **openssl**.
 
 Compile with 
 
@@ -20,7 +22,7 @@ You can also...
 + Clean the project with **make clean**
 + Build tests with **make tests**
 
-For re-genearate documentation use Doxygen with **/doc/Doxyfile**. 
+For re-genearate documentation use Doxygen and graphviz with **/doc/Doxyfile**. 
 
 
 
