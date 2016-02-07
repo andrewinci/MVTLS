@@ -60,9 +60,10 @@ record_t * make_change_cipher_spec();
  * Note: TLS protocol requires this message to be encrypted.
  *
  *	\param TLS_param: the connection parameters
+ *  \param mode: specify the message is sent from server or client
  *	\return the finished handshake message
  */
-handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) ;
+handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_mode mode);
 
 
 /**** SERVER ****/

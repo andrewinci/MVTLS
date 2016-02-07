@@ -249,7 +249,7 @@ void onClientPacketReceive(channel_t *channel, packet_transport_t *p){
 
 					if(verbosity!=0)
 						printf("\n>>> Finished\n");
-					handshake_t *finished = make_finished_message(&TLS_param);
+					handshake_t *finished = make_finished_message(&TLS_param,CLIENT_MODE);
 					send_handshake(channel, finished);
 					print_handshake(finished, verbosity, TLS_param.cipher_suite.kx);
 					free_handshake(finished);
@@ -440,7 +440,7 @@ void onServerPacketReceive(channel_t *channel, packet_transport_t *p){
 					// Send Finished
 					if(verbosity>0)
 						printf("\n>>> Finished\n");
-					handshake_t *finished = make_finished_message(&TLS_param);
+					handshake_t *finished = make_finished_message(&TLS_param, SERVER_MODE);
 					send_handshake(channel, finished);
 					print_handshake(finished, verbosity, TLS_param.cipher_suite.kx);
 					free_handshake(finished);

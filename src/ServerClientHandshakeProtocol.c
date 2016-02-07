@@ -63,7 +63,7 @@ record_t * make_change_cipher_spec() {
  *	\param TLS_param: the connection parameters
  *	\return the finished handshake message
  */
-handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) {
+handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_mode mode) {
 
 	// Initialize finished
 	handshake_t *finished_h = malloc(sizeof(handshake_t));
@@ -82,7 +82,10 @@ handshake_t * make_finished_message(handshake_parameters_t *TLS_param ) {
 	// Set finished message
 	unsigned char *finished_message = NULL;
 	int finished_message_len = 12;
-	PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
+    if (mode == SERVER_MODE)
+        PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "server finished", md_value, md_len, finished_message_len, &finished_message);
+    else
+        PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
 	finished_h->length = finished_message_len;
 	finished_h->message = finished_message;
 
