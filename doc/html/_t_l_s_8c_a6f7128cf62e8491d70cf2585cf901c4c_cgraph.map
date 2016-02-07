@@ -1,5 +1,0 @@
-<map id="make_ECDHE_client_key_exchange" name="make_ECDHE_client_key_exchange">
-<area shape="rect" id="node2" href="$_crypto_8c.html#a5de0523f653b00816828961ba5cc990b" title="verify_ECDHE_server\l_key_ex_sign" alt="" coords="229,5,381,46"/>
-<area shape="rect" id="node3" href="$_t_l_s_constants_8c.html#a98e6374e1aa179c023ba0eb8bdf36196" title="get_hash_function" alt="" coords="240,71,371,97"/>
-<area shape="rect" id="node4" href="$_crypto_8c.html#a14bb82638713f9cf8778b58d6d64e33d" title="PRF" alt="" coords="281,121,329,148"/>
-</map>

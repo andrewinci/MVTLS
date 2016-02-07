@@ -1,5 +1,0 @@
-<map id="make_DHE_server_key_exchange" name="make_DHE_server_key_exchange">
-<area shape="rect" id="node2" href="$_crypto_8c.html#aebef13db99f3bbd7e9e2c55df1aa65c9" title="sign_DHE_server_key_ex" alt="" coords="216,31,392,57"/>
-<area shape="rect" id="node3" href="$_crypto_8c.html#a31cb61fd4a97cf2156245c8c240dd102" title="sign_with_RSA" alt="" coords="440,5,552,32"/>
-<area shape="rect" id="node4" href="$_crypto_8c.html#a5c701b627116ed4a23b7aeb18617d550" title="sign_with_DSS" alt="" coords="440,56,552,83"/>
-</map>

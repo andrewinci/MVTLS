@@ -1,7 +1,0 @@
-<map id="free_server_key_exchange" name="free_server_key_exchange">
-<area shape="rect" id="node2" href="$client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="739,56,848,83"/>
-<area shape="rect" id="node4" href="$_server_client_handshake_protocol_8h.html#a17a2f489bf364bdd80fbd20d186f927e" title="print_handshake" alt="" coords="237,31,357,57"/>
-<area shape="rect" id="node3" href="$client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="896,56,947,83"/>
-<area shape="rect" id="node5" href="$client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="405,81,531,108"/>
-<area shape="rect" id="node6" href="$_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="579,132,691,159"/>
-</map>

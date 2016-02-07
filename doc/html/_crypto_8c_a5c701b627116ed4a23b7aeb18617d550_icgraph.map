@@ -1,8 +1,0 @@
-<map id="sign_with_DSS" name="sign_with_DSS">
-<area shape="rect" id="node2" href="$_crypto_8h.html#aebef13db99f3bbd7e9e2c55df1aa65c9" title="sign_DHE_server_key_ex" alt="" coords="165,12,341,39"/>
-<area shape="rect" id="node3" href="$_t_l_s_8c.html#a359e2b0b51c61744f7a70b5888d8c2db" title="make_DHE_server_key\l_exchange" alt="" coords="389,5,552,46"/>
-<area shape="rect" id="node4" href="$_t_l_s_8h.html#a902d940508d7080023ef072b2667a143" title="make_server_key_exchange" alt="" coords="600,12,792,39"/>
-<area shape="rect" id="node5" href="$server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="840,12,965,39"/>
-<area shape="rect" id="node6" href="$server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="1013,12,1123,39"/>
-<area shape="rect" id="node7" href="$server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1171,12,1221,39"/>
-</map>
