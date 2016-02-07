@@ -18,7 +18,7 @@
 extern int verbosity;
 
 /** Connection parameters */
-extern handshake_parameters_t TLS_param;
+extern handshake_parameters_t connection_parameters;
 
 #endif
 

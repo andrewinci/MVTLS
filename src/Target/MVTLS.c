@@ -56,6 +56,18 @@ int main(int argc, char **argv) {
 	key_exchange_algorithm kx = NONE_KX;
 	authentication_algorithm au = NONE_AU;
 	hash_algorithm ha = NONE_H;
+    
+    if(argc == 2 && strcmp(argv[1], "--help") == 0){
+        printf("%s", USAGE);
+        return 0;
+    }
+    if(argc == 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "--list") == 0)){
+        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        printf("Supported cipher suite are the following:\n");
+        for(int i = 0; i<num_added; i++)
+            printf("%s\n", to_send_cipher_suite[i].name);
+        return 0;
+    }
 
 	if(argc<2 || (strcmp(argv[1], "server") !=0 && strcmp(argv[1], "client") != 0)){
 		printf("Must set server or client.\n");
@@ -139,39 +151,13 @@ int main(int argc, char **argv) {
 				return -1;
 			}
 		}
-		else if(argc == 3 && strcmp(argv[i], "--help") == 0){
-			printf("%s", USAGE);
-			return 0;
-		}
-		else if(argc == 3 && (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0)){
-			int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-			printf("Supported cipher suite are the following:\n");
-			for(int i = 0; i<num_added; i++)
-				printf("%s\n", to_send_cipher_suite[i].name);
-			return 0;
-		}
-		else{
+        else{
 			printf("Invalid option '%s'\n",argv[i]);
 			printf("Try '--help' for more information.\n");
 			return -1;
 		}
 	}
-	// If no option is set, load all cipher suite
-	if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
-		to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
 
-		printf("All supported cipher suites are loaded.\n");
-		printf("Try --help for more information.\n");
-	}
-	else if (to_send_cipher_suite_len == 0){
-		int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-		to_send_cipher_suite_len+=num_added;
-		if(to_send_cipher_suite_len == 0){
-			printf("No supported cipher suite with the selected arguments.\n");
-			printf("%s", USAGE);
-			return -1;
-		}
-	}
 
 	if(strcmp(argv[1], "server") == 0){
 		printf("\n*** TLS server is started ***\n");
@@ -179,22 +165,38 @@ int main(int argc, char **argv) {
 	}
 	else if(strcmp(argv[1], "client") == 0){
 		printf("\n*** TLS client is started ***\n");
+        // If no option is set, load all cipher suite
+    if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
+        to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        
+        printf("All supported cipher suites are loaded.\n");
+        printf("Try --help for more information.\n");
+    }
+    else if (to_send_cipher_suite_len == 0){
+        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+        to_send_cipher_suite_len+=num_added;
+        if(to_send_cipher_suite_len == 0){
+            printf("No supported cipher suite with the selected arguments.\n");
+            printf("%s", USAGE);
+            return -1;
+        }
+    }
 		do_client_handshake(to_send_cipher_suite_len, to_send_cipher_suite);
 	}
 
 	// Print details about connection
 	printf("\nServer random:\n");
 	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.server_random[i]);
+		printf("%02x ",connection_parameters.server_random[i]);
 	printf("\nClient random:\n");
 	for(int i=0;i<32;i++)
-		printf("%02x ",TLS_param.client_random[i]);
+		printf("%02x ",connection_parameters.client_random[i]);
 	printf("\nCertificate details:\n");
-	printf("%s",TLS_param.server_certificate->name);
-	printf("\nCipher suite: %s\n",TLS_param.cipher_suite.name);
+	printf("%s",connection_parameters.server_certificate->name);
+	printf("\nCipher suite: %s\n",connection_parameters.cipher_suite.name);
 	printf("\nMaster key: \n");
-	for(int i=0;i<TLS_param.master_secret_len;i++)
-		printf("%02x ",TLS_param.master_secret[i]);
+	for(int i=0;i<connection_parameters.master_secret_len;i++)
+		printf("%02x ",connection_parameters.master_secret[i]);
 	printf("\n");
 
 	// Clean up

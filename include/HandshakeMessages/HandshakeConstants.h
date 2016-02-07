@@ -10,6 +10,7 @@
 #define HandshakeConstants_h
 
 #include "TLSConstants.h"
+
 /** \struct TLS_parameters_t
  *	This struct contains all details about connection.
  *	It also contains data to complete the handshake.
