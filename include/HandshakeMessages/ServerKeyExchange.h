@@ -27,7 +27,6 @@
 #include "HandshakeConstants.h"
 #endif
 
-
 /**
 	\struct ecdhe_server_key_exchange_t
 	Model the ECDHE server key exchange message of the handshake protocol.

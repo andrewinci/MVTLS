@@ -37,13 +37,13 @@
 	Model the client key exchange message of the handshake protocol.
  */
 typedef struct{
-    
-    /** Key length */
-    uint16_t key_length;
-    
-    /** Key byte stream */
-    unsigned char *key;
-    
+
+	/** Key length */
+	uint16_t key_length;
+
+	/** Key byte stream */
+	unsigned char *key;
+
 }client_key_exchange_t;
 
 /**

@@ -98,11 +98,11 @@ typedef struct{
  * It chooses a random cipher suite among those provided by the client.
  * The function also fills the random field using the time stamp and a random generator (OpenSSL)
  *
- *	\param TLS_param: the connection parameters
+ *	\param connection_parameters: the connection parameters
  *	\param client_hello: the received client hello.
  *	\return the hello server handshake message
  */
-handshake_t * make_server_hello(handshake_parameters_t *TLS_param, server_client_hello_t *client_hello);
+handshake_t * make_server_hello(handshake_parameters_t *connection_parameters, server_client_hello_t *client_hello);
 
 /**
  * Given an array of cipher suites, make a client hello message.

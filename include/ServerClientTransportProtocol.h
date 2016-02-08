@@ -34,7 +34,7 @@
 #include <time.h>
 
 /** \def DELAY_TIME 
- *	Time to wait between 2 readings of the file.
+ *	Time to wait between two readings of the file.
  *	Important to do not use too much CPU.
  */
 #define DELAY_TIME 50

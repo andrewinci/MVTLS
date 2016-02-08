@@ -23,10 +23,10 @@
  * Define the different type of record
  */
 typedef enum{
-	HANDSHAKE			= 0x16,
+	HANDSHAKE				= 0x16,
 	CHANGE_CIPHER_SPEC	= 0x14,
-	ALERT				= 0x15,
-	APPLICATION_DATA	= 0x17
+	ALERT						= 0x15,
+	APPLICATION_DATA		= 0x17
 }record_type;
 
 /**

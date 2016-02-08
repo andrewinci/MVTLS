@@ -8,7 +8,6 @@
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
-
 #ifndef Certificate_h
 #define Certificate_h
 
