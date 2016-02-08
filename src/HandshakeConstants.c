@@ -121,7 +121,6 @@ const EVP_MD *get_hash_function(hash_algorithm h){
 /**
  * Fill array[] with all cipher suites that has key exchange kx, 
  * hash algorithm h and authentication algorithm au.
- * 
  *
  *	\param kx: the key exchange algorithm (if NONE_KX the function consider all key exchange algorithms)
  *	\param h: the hash algorithm (if NONE_H the function consider all hash algorithms)

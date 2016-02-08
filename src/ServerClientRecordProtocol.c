@@ -2,7 +2,7 @@
  *	SSL/TLS Project
  *	\file ServerClientRecordProtocol.c
  *	This file is an interface to the record protocol.
- *	Provide function and struct for modelling and manage record messages.
+ *	Provide functions and struct to model and manage record messages.
  *
  *	\date Created on 23/12/15.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.

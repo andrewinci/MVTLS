@@ -12,15 +12,13 @@
  *	message
  *
  *	Both server and client, after reading a message, blank the file
- *	Both server and client cannot write if the file is not blank, they wait
- *
+ *	Both server and client cannot write if the file is not blank
  *
  *	\date Created on 22/12/15.
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
 #include "ServerClientTransportProtocol.h"
-
 
 void free_packet(packet_transport_t *p);
 long long get_file_size(int fd);
@@ -99,8 +97,7 @@ void reader(void *data){
 }
 
 /**
- * Start the channel. We open another thread for the reading
- * and the current thread for writing. From now on (if the operation
+ * Start the channel. From now on (if the operation
  * is succesfull) the client/server read continously from channel.
  * (to STOP use stop())
  *
@@ -127,7 +124,7 @@ int start_listener(channel_t *ch){
 
 /**
  * Stop the reading/writing thread and the channel.
- * Note: the function doesn't free the channel.
+ * Note: the function does not free the channel.
  *
  *  \param ch: channel to stop
  */
@@ -245,7 +242,7 @@ void free_packet(packet_transport_t *p){
 	free(p);
 }
 
-/********* Utilities functions for file managing *********/
+/********* Utility functions for file managing *********/
 
 /**
  * Compute the byte size of a file

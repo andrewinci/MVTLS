@@ -33,14 +33,14 @@
 				" Specify authentication algorithm\n"\
 				"	-a	--auth_algorithm	(RSA|DSS|ECDSA)\n"\
 				"\n"\
+				" Specify hash algorithm\n"\
+				"	-h	--hash_algorithm	(MD5|SHA1|SHA224|SHA256|SHA384|SHA512)\n"\
+				"\n"\
 				" Set verbosity\n"\
 				"	-v				(0 final connection description - default\n"\
 				"					|1 handshake binary\n"\
 				"					|2 handshake binary and messages description\n"\
 				"					|3 record binary and messages description)\n"\
-				"\n"\
-				" Specify hash algorithm\n"\
-				"	-h	--hash_algorithm	(MD5|SHA1|SHA224|SHA256|SHA384|SHA512)\n"\
 				"\n"\
 				" Show supported cipher suites\n"\
 				"	-l	--list\n"\
@@ -56,18 +56,18 @@ int main(int argc, char **argv) {
 	key_exchange_algorithm kx = NONE_KX;
 	authentication_algorithm au = NONE_AU;
 	hash_algorithm ha = NONE_H;
-    
-    if(argc == 2 && strcmp(argv[1], "--help") == 0){
-        printf("%s", USAGE);
-        return 0;
-    }
-    if(argc == 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "--list") == 0)){
-        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-        printf("Supported cipher suite are the following:\n");
-        for(int i = 0; i<num_added; i++)
-            printf("%s\n", to_send_cipher_suite[i].name);
-        return 0;
-    }
+
+	if(argc == 2 && strcmp(argv[1], "--help") == 0){
+		printf("%s", USAGE);
+		return 0;
+	}
+	if(argc == 2 && (strcmp(argv[1], "-l") == 0 || strcmp(argv[1], "--list") == 0)){
+		int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+		printf("Supported cipher suite are the following:\n");
+		for(int i = 0; i<num_added; i++)
+			printf("ID: %05d - name: %s\n", to_send_cipher_suite[i].cipher_id, to_send_cipher_suite[i].name);
+		return 0;
+	}
 
 	if(argc<2 || (strcmp(argv[1], "server") !=0 && strcmp(argv[1], "client") != 0)){
 		printf("Must set server or client.\n");
@@ -158,29 +158,27 @@ int main(int argc, char **argv) {
 		}
 	}
 
-
 	if(strcmp(argv[1], "server") == 0){
 		printf("\n*** TLS server is started ***\n");
 		do_server_handshake();
 	}
 	else if(strcmp(argv[1], "client") == 0){
 		printf("\n*** TLS client is started ***\n");
-        // If no option is set, load all cipher suite
-    if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
-        to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-        
-        printf("All supported cipher suites are loaded.\n");
-        printf("Try --help for more information.\n");
-    }
-    else if (to_send_cipher_suite_len == 0){
-        int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
-        to_send_cipher_suite_len+=num_added;
-        if(to_send_cipher_suite_len == 0){
-            printf("No supported cipher suite with the selected arguments.\n");
-            printf("%s", USAGE);
-            return -1;
-        }
-    }
+		// If no option is set, load all cipher suite
+		if(to_send_cipher_suite_len == 0 && kx == NONE_KX && au == NONE_AU && ha == NONE_H){
+		to_send_cipher_suite_len = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+		printf("All supported cipher suites are loaded.\n");
+		printf("Try --help for more information.\n");
+	}
+	else if (to_send_cipher_suite_len == 0){
+		int num_added = get_cipher_suites(kx, ha, au, to_send_cipher_suite+to_send_cipher_suite_len);
+		to_send_cipher_suite_len+=num_added;
+		if(to_send_cipher_suite_len == 0){
+			printf("No supported cipher suite with the selected arguments.\n");
+			printf("%s", USAGE);
+			return -1;
+		}
+	}
 		do_client_handshake(to_send_cipher_suite_len, to_send_cipher_suite);
 	}
 

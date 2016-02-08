@@ -1,7 +1,7 @@
 /**
  *	SSL/TLS Project
  *	\file TLS.c
- *	This file provide a set of function for the TLS protocol.
+ *	This file provide a set of functions for the TLS protocol.
  *
  *	\date Created on 13/01/16.
  *	\copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
@@ -17,9 +17,8 @@ int verbosity = 0;
 handshake_parameters_t connection_parameters;
 
 /**
- * Compute the master key for RSA using the previous server key exchange stored in TLS_param
- * and the client key exchange. The master key, master key length is stored also in
- * TLS_param.
+ * Compute the master key for RSA using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in connection_parameters.
  *
  *	\param client_key_exchange: the client key exchange sent by client
  */
@@ -58,9 +57,8 @@ void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
 }
 
 /**
- * Compute the master key for DHE using the previous server key exchange stored in TLS_param
- * and the client key exchange. The master key, master key length is stored also in
- * TLS_param.
+ * Compute the master key for DHE using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in connection_parameters.
  *
  *	\param client_key_exchange: the client key exchange sent by client
  */
@@ -95,9 +93,8 @@ void compute_set_master_key_DHE(client_key_exchange_t *client_key_exchange){
 }
 
 /**
- * Compute the master key for ECDHE using the previous server key exchange stored in TLS_param
- * and the client key exchange. The master key, master key length is stored also in 
- * TLS_param.
+ * Compute the master key for ECDHE using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in  connection_parameters.
  *
  *	\param client_key_exchange: the client key exchange sent by client
  */

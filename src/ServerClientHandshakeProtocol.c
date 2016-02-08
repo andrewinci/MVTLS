@@ -31,33 +31,33 @@ record_t * make_change_cipher_spec() {
  * Given the connection parameters compute the finished message.
  * Note: TLS protocol requires this message to be encrypted.
  *
- *	\param TLS_param: the connection parameters
- *	\param mode: specify the message source for set label in PRF
+ *	\param connection_parameters: the connection parameters
+ *	\param mode: specify the message source to set label in PRF
  *	\return the finished handshake message
  */
-handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_mode mode) {
+handshake_t * make_finished_message(handshake_parameters_t *connection_parameters, channel_mode mode){
 
 	// Initialize finished
 	handshake_t *finished_h = malloc(sizeof(handshake_t));
 	finished_h->type = FINISHED;
 
 	// Compute hashes of handshake messages
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters->cipher_suite.hash);
 	unsigned char md_value[EVP_MAX_MD_SIZE];
 	unsigned int md_len;
 	EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
 	EVP_DigestInit_ex(mdctx, hash_function, NULL);
-	EVP_DigestUpdate(mdctx, TLS_param->handshake_messages, TLS_param->handshake_messages_len);
+	EVP_DigestUpdate(mdctx, connection_parameters->handshake_messages, connection_parameters->handshake_messages_len);
 	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
 	EVP_MD_CTX_destroy(mdctx);
 
 	// Set finished message
 	unsigned char *finished_message = NULL;
 	int finished_message_len = 12;
-    if (mode == SERVER_MODE)
-        PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "server finished", md_value, md_len, finished_message_len, &finished_message);
-    else
-        PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
+	if (mode == SERVER_MODE)
+		PRF(hash_function, connection_parameters->master_secret, connection_parameters->master_secret_len, "server finished", md_value, md_len, finished_message_len, &finished_message);
+	else
+		PRF(hash_function, connection_parameters->master_secret, connection_parameters->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
 	finished_h->length = finished_message_len;
 	finished_h->message = finished_message;
 
@@ -65,12 +65,12 @@ handshake_t * make_finished_message(handshake_parameters_t *TLS_param, channel_m
 }
 
 /**
- * Append the handshake h to the handshake_messages field of TLS_param
+ * Append the handshake h to the handshake_messages field of connection_parameters
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\param h: the handshake to append
  */
-void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
+void backup_handshake(handshake_parameters_t *connection_parameters, handshake_t *h){
 
 	// Initialize
 	unsigned char *temp_message = NULL;
@@ -78,14 +78,14 @@ void backup_handshake(handshake_parameters_t *TLS_param, handshake_t *h){
 
 	// Allocate memory
 	serialize_handshake(h, &temp_message, &temp_message_len);
-	if(TLS_param->handshake_messages == NULL)
-		TLS_param->handshake_messages = malloc(TLS_param->handshake_messages_len+temp_message_len);
+	if(connection_parameters->handshake_messages == NULL)
+		connection_parameters->handshake_messages = malloc(connection_parameters->handshake_messages_len+temp_message_len);
 	else
-		TLS_param->handshake_messages = realloc(TLS_param->handshake_messages, TLS_param->handshake_messages_len+temp_message_len);
+		connection_parameters->handshake_messages = realloc(connection_parameters->handshake_messages, connection_parameters->handshake_messages_len+temp_message_len);
 
 	// Copy message
-	memcpy(TLS_param->handshake_messages+TLS_param->handshake_messages_len, temp_message, temp_message_len);
-	TLS_param->handshake_messages_len += temp_message_len;
+	memcpy(connection_parameters->handshake_messages+connection_parameters->handshake_messages_len, temp_message, temp_message_len);
+	connection_parameters->handshake_messages_len += temp_message_len;
 
 	// Clean up
 	free(temp_message);
