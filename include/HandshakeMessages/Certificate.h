@@ -42,10 +42,10 @@ typedef struct{
  * parameters. The function also sets the certificate in the connection parameters for
  * further uses.
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\return the certificate handshake message
  */
-handshake_t * make_certificate(handshake_parameters_t *TLS_param);
+handshake_t * make_certificate(handshake_parameters_t *connection_parameters);
 
 /**
  * Given the certificate file name create a certificate message struct
