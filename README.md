@@ -24,5 +24,8 @@ You can also...
 
 For re-genearate documentation use Doxygen and graphviz with **/doc/Doxyfile**. 
 
+Note: if your OpenSSL installation is not in /usr/local/ssl use:
 
+    export OPENSSLINCLUDE="-Iopenssl_include_path -Lopenssl_lib_path"
+    make
 
