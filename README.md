@@ -1,7 +1,7 @@
 # Progetto di Advanced Programming of Cryptographic methods
 ##MVTLS TLS 1.2 handshake over file
 The TLS handshake using as channel a file. 
-The software require **openssl**.
+The software require **OpenSSL**.
 
 Compile with 
 
@@ -13,7 +13,7 @@ and start running
 then 
     
     MVTLS client
-The documentation is in the **doc** folder in Latex and HTML format. 
+The documentation is in the **doc** folder in HTML format. 
 For more args you can type:
 
     MVTLS --help
