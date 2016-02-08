@@ -193,35 +193,35 @@ int verify_ECDHE_server_key_ex_sign(X509 *certificate, unsigned char *client_ran
  * This function is called from make_client_key_exchange if the key exchange is RSA.
  *
  *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
+ *	\param connection_parameters: the connection parameters
  */
-void make_RSA_client_key_exchange(handshake_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
+void make_RSA_client_key_exchange(handshake_parameters_t *connection_parameters, client_key_exchange_t *client_key_ex){
 
 	// Initialize pre master key
 	int pre_master_key_len = 58;
 	unsigned char *pre_master_key = calloc(pre_master_key_len, 1);
 
-	uint16_t temp = REV16(TLS_param->tls_version);
+	uint16_t temp = REV16(connection_parameters->tls_version);
 	memcpy(pre_master_key, &temp, 2);
 
 	// Copy random
 	RAND_pseudo_bytes(pre_master_key+2, 46);
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
+	memcpy(seed, connection_parameters->client_random, 32);
+	memcpy(seed+32, connection_parameters->server_random, 32);
 
 	// Set hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-	TLS_param->master_secret_len = 48;
+	const EVP_MD *hash_function = get_hash_function(connection_parameters->cipher_suite.hash);
+	connection_parameters->master_secret_len = 48;
 
 	// Compute and set pre master key
-	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, connection_parameters->master_secret_len, &connection_parameters->master_secret);
 
 	// Initialize and set RSA parameters from certificate
 	EVP_PKEY *pubkey = NULL;
 	RSA *rsa = NULL;
 
-	pubkey = X509_get_pubkey(TLS_param->server_certificate);
+	pubkey = X509_get_pubkey(connection_parameters->server_certificate);
 	rsa = EVP_PKEY_get1_RSA(pubkey);
 
 	// Encrypt pre master key
@@ -244,15 +244,15 @@ void make_RSA_client_key_exchange(handshake_parameters_t *TLS_param, client_key_
  * This function is called from make_client_key_exchange if the key exchange is DHE.
  *
  *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
+ *	\param connection_parameters: the connection parameters
  */
-void make_DHE_client_key_exchange(handshake_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
+void make_DHE_client_key_exchange(handshake_parameters_t *connection_parameters, client_key_exchange_t *client_key_ex){
 
 	// Set server key exchange type
-	dhe_server_key_exchange_t *server_key_exchange = (dhe_server_key_exchange_t*)TLS_param->server_key_ex;
+	dhe_server_key_exchange_t *server_key_exchange = (dhe_server_key_exchange_t*)connection_parameters->server_key_ex;
 
 	// Verify signature
-	if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au) == 0){
+	if(verify_DHE_server_key_ex_sign(connection_parameters->server_certificate, connection_parameters->client_random, connection_parameters->server_random, server_key_exchange,connection_parameters->cipher_suite.au) == 0){
 		printf("\nError in make_DHE_client_key_exchange, signature not valid\n");
 		exit(-1);
 	}
@@ -274,15 +274,15 @@ void make_DHE_client_key_exchange(handshake_parameters_t *TLS_param, client_key_
 
 	// Copy random
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
+	memcpy(seed, connection_parameters->client_random, 32);
+	memcpy(seed+32, connection_parameters->server_random, 32);
 
 	// Set hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters->cipher_suite.hash);
 
 	// Initialize and comput pre master key
-	TLS_param->master_secret_len = 48;
-	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+	connection_parameters->master_secret_len = 48;
+	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, connection_parameters->master_secret_len, &connection_parameters->master_secret);
 
 	// Set client key exchange parameters
 	client_key_ex->key_length = BN_num_bytes(dh_key->pub_key);
@@ -299,15 +299,15 @@ void make_DHE_client_key_exchange(handshake_parameters_t *TLS_param, client_key_
  * This function is called from make_client_key_exchange if the key exchange is ECDHE.
  *
  *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
+ *	\param connection_parameters: the connection parameters
  */
-void make_ECDHE_client_key_exchange(handshake_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
+void make_ECDHE_client_key_exchange(handshake_parameters_t *connection_parameters, client_key_exchange_t *client_key_ex){
 
 	// Set server key exchange algorithm
-	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t * )TLS_param->server_key_ex;
+	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t * )connection_parameters->server_key_ex;
 
 	// Verify signature
-	if(verify_ECDHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)<1){
+	if(verify_ECDHE_server_key_ex_sign(connection_parameters->server_certificate, connection_parameters->client_random, connection_parameters->server_random, server_key_exchange,connection_parameters->cipher_suite.au)<1){
 		printf("\nError in make_ECDHE_client_key_exchange, signature not valid\n");
 		exit(-1);
 	}
@@ -335,15 +335,15 @@ void make_ECDHE_client_key_exchange(handshake_parameters_t *TLS_param, client_ke
 
 	// Copy random
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
+	memcpy(seed, connection_parameters->client_random, 32);
+	memcpy(seed+32, connection_parameters->server_random, 32);
 
 	// Get hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters->cipher_suite.hash);
 
 	// Initialize and compute pre master secret
-	TLS_param->master_secret_len = 48;
-	PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
+	connection_parameters->master_secret_len = 48;
+	PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, connection_parameters->master_secret_len, &connection_parameters->master_secret);
 
 	// Compute client key exchange parameters
 	BIGNUM *pub_key = BN_new();
@@ -362,30 +362,30 @@ void make_ECDHE_client_key_exchange(handshake_parameters_t *TLS_param, client_ke
 }
 
 /**
- * Given the information in TLS_parameter and the key exchange algorithm
+ * Given the information in connection_parameterseter and the key exchange algorithm
  * return the handshake of the client key exchange. That includes to compute the
- * pre-master key. It also computes the master secret and set it in TLS_param.
+ * pre-master key. It also computes the master secret and set it in connection_parameters.
  *
- *	\param TLS_param: the parameters of the connection
+ *	\param connection_parameters: the parameters of the connection
  *	\param key_ex_alg: the key exchange algorithm of the handshake
  *	\return the client key exchange handshake message
  */
-handshake_t * make_client_key_exchange(handshake_parameters_t *TLS_param, uint16_t key_ex_alg){
+handshake_t * make_client_key_exchange(handshake_parameters_t *connection_parameters, uint16_t key_ex_alg){
 
 	// Initialize handshake packet and client key exchange message
 	handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
 	client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
 	client_key_exchange_t *client_key_exchange = malloc(sizeof(client_key_exchange_t));
 
-	switch (TLS_param->cipher_suite.kx){
+	switch (connection_parameters->cipher_suite.kx){
 		case RSA_KX:
-			make_RSA_client_key_exchange(TLS_param, client_key_exchange);
+			make_RSA_client_key_exchange(connection_parameters, client_key_exchange);
 			break;
 		case DHE_KX:
-			make_DHE_client_key_exchange(TLS_param, client_key_exchange);
+			make_DHE_client_key_exchange(connection_parameters, client_key_exchange);
 			break;
 		case ECDHE_KX:
-			make_ECDHE_client_key_exchange(TLS_param, client_key_exchange);
+			make_ECDHE_client_key_exchange(connection_parameters, client_key_exchange);
 			break;
 		default:
 			printf("\nError in make_client_key_exchange\n");

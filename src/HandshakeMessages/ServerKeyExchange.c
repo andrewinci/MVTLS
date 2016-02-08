@@ -279,16 +279,16 @@ int sign_ECDHE_server_key_ex(unsigned char *client_random, unsigned char *server
 	return res;
 }
 
-				/******* SERVER KEY EXCHANGE *******/
+			/******* SERVER KEY EXCHANGE *******/
 /**
  * Make the server key exchange for DHE key exchange.
  * It computes the DH parameters and save the message in the
- * connection parameters TLS_param.
+ * connection parameters connection_parameters.
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\return the dhe_server_key_exchange struct
  */
-dhe_server_key_exchange_t * make_DHE_server_key_exchange(handshake_parameters_t *TLS_param){
+dhe_server_key_exchange_t * make_DHE_server_key_exchange(handshake_parameters_t *connection_parameters){
 
 	// Diffie-Hellman server key exchange
 	// Generate ephemeral Diffie-Hellman parameters
@@ -323,11 +323,11 @@ dhe_server_key_exchange_t * make_DHE_server_key_exchange(handshake_parameters_t 
 	server_key_ex->pubKey = BN_dup(privkey->pub_key);
 
 	// Add signature and set hash algorithm
-	sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+	sign_DHE_server_key_ex(connection_parameters->client_random, connection_parameters->server_random, server_key_ex, connection_parameters->cipher_suite.au);
 
 	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
-	TLS_param->private_key = BN_dup(privkey->priv_key);
+	connection_parameters->server_key_ex = server_key_ex;
+	connection_parameters->private_key = BN_dup(privkey->priv_key);
 
 	// Clean up
 	DH_free(privkey);
@@ -338,12 +338,12 @@ dhe_server_key_exchange_t * make_DHE_server_key_exchange(handshake_parameters_t 
 /**
  * Make the server key exchange for ECDHE key exchange.
  * It computes the ECDHE parameters using the secp256k1 curve and save the message in the
- * connection parameters TLS_param.
+ * connection parameters connection_parameters.
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\return the ecdhe_server_key_exchange struct
  */
-ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(handshake_parameters_t *TLS_param){
+ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(handshake_parameters_t *connection_parameters){
 
 	// Elliptic cruve Diffie-Hellman server key exchange
 	// Generate ephemeral Diffie-Hellman parameters
@@ -367,11 +367,11 @@ ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(handshake_parameter
 	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
 
 	// Add signature
-	sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+	sign_ECDHE_server_key_ex(connection_parameters->client_random, connection_parameters->server_random, server_key_ex, connection_parameters->cipher_suite.au);
 
 	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
-	TLS_param->private_key = BN_dup(EC_KEY_get0_private_key(key));
+	connection_parameters->server_key_ex = server_key_ex;
+	connection_parameters->private_key = BN_dup(EC_KEY_get0_private_key(key));
 
 	// Clean up
 	EC_KEY_free(key);
@@ -384,21 +384,21 @@ ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(handshake_parameter
  * The function also sets the message in the connection parameters
  * to compute the master key in the client key exchange message.
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\return the server key exchange handshake message
  */
-handshake_t * make_server_key_exchange(handshake_parameters_t *TLS_param){
+handshake_t * make_server_key_exchange(handshake_parameters_t *connection_parameters){
 
 	// Initialize server key exchange
 	void *server_key_ex = NULL;
 
 	// Make server key exchange packet
-	switch (TLS_param->cipher_suite.kx){
+	switch (connection_parameters->cipher_suite.kx){
 		case DHE_KX:
-			server_key_ex = (dhe_server_key_exchange_t *)make_DHE_server_key_exchange(TLS_param);
+			server_key_ex = (dhe_server_key_exchange_t *)make_DHE_server_key_exchange(connection_parameters);
 			break;
 		case ECDHE_KX:
-			server_key_ex = (ecdhe_server_key_exchange_t *)make_ECDHE_server_key_exchange(TLS_param);
+			server_key_ex = (ecdhe_server_key_exchange_t *)make_ECDHE_server_key_exchange(connection_parameters);
 			break;
 		default:
 			printf("\nError in make_server_key_exchange, key exchange algorithm not recognized\n");
@@ -408,10 +408,10 @@ handshake_t * make_server_key_exchange(handshake_parameters_t *TLS_param){
 	// Insert server key exchange into handshake packet
 	handshake_t *server_key_ex_h = malloc(sizeof(handshake_t));
 	server_key_ex_h->type = SERVER_KEY_EXCHANGE;
-	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, TLS_param->cipher_suite.kx);
+	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, connection_parameters->cipher_suite.kx);
 
 	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
+	connection_parameters->server_key_ex = server_key_ex;
 
 	return server_key_ex_h;
 }

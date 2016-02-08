@@ -20,16 +20,16 @@
  * parameters. The function also sets the certificate in the connection parameters for
  * further uses.
  *
- *	\param TLS_param: connection parameters
+ *	\param connection_parameters: connection parameters
  *	\return the certificate handshake message
  */
-handshake_t * make_certificate(handshake_parameters_t *TLS_param){
+handshake_t * make_certificate(handshake_parameters_t *connection_parameters){
 
 	// Initialize certificate message
 	certificate_message_t *cert_message = NULL;
 
 	// Make certificate message
-	switch (TLS_param->cipher_suite.au){
+	switch (connection_parameters->cipher_suite.au){
 		case RSA_AU:
 			cert_message = make_certificate_message("../certificates/serverRSA.pem");
 			break;
@@ -50,8 +50,8 @@ handshake_t * make_certificate(handshake_parameters_t *TLS_param){
 	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
 
 	// Save parameters
-	TLS_param->server_certificate = cert_message->X509_certificate;
-	TLS_param->server_certificate->references+=1;
+	connection_parameters->server_certificate = cert_message->X509_certificate;
+	connection_parameters->server_certificate->references+=1;
 
 	// Clean up
 	free_certificate_message(cert_message);
