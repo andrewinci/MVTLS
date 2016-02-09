@@ -1,9 +1,7 @@
 /**
  *	SSL/TLS Project
  *	\file TLS.c
- *	This file provide a set of function for the TLS
- *	handshake. The function are used to make TLS message
- *	for both server and client.
+ *	This file provide a set of functions for the TLS protocol.
  *
  *	\date Created on 13/01/16.
  *	\copyright Copyright © 2016 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
@@ -12,580 +10,479 @@
 
 #include "TLS.h"
 
-/**
- * Append the handshake h to the handshake_messages field of TLS_param
- *
- *	\param TLS_param: connection parameters
- *	\param h: the handshake to append
- */
-void backup_handshake(TLS_parameters_t *TLS_param, handshake_t *h){
+/** Verbosity of the output */
+int verbosity = 0;
 
-	// Initialize
-	unsigned char *temp_message = NULL;
-	uint32_t temp_message_len = 0;
-
-	// Allocate memory
-	serialize_handshake(h, &temp_message, &temp_message_len);
-	if(TLS_param->handshake_messages == NULL)
-		TLS_param->handshake_messages = malloc(TLS_param->handshake_messages_len+temp_message_len);
-	else
-		TLS_param->handshake_messages = realloc(TLS_param->handshake_messages, TLS_param->handshake_messages_len+temp_message_len);
-
-	// Copy message
-	memcpy(TLS_param->handshake_messages+TLS_param->handshake_messages_len, temp_message, temp_message_len);
-	TLS_param->handshake_messages_len += temp_message_len;
-
-	// Clean up
-	free(temp_message);
-}
-
-			/*** CLIENT ***/
+/** Connection parameters */
+handshake_parameters_t connection_parameters;
 
 /**
- * Given an array of cipher suites, make a client hello message. 
- * The function also fills the random field using the time stamp and a random generator (OpenSSL)
+ * Compute the master key for RSA using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in connection_parameters.
  *
- *	\param client_random: the random set in the client hello
- *	\param cipher_suite_list: an array of cipher suites to add to the client hello
- *	\param cipher_suite_len: the number of cipher suites in the list
- *	\return the client hello handshake message
+ *	\param client_key_exchange: the client key exchange sent by client
  */
-handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len){
+void compute_set_master_key_RSA(client_key_exchange_t *client_key_exchange) {
+	// Get private key from file
+	RSA *privateKey = NULL;
+	FILE *fp;
 
-	// Initialize client hello (without SessionID)
-	session_id_t *session= malloc(sizeof(session_id_t));
-	session->session_lenght = 0x00;
-	session->session_id = NULL;
-	server_client_hello_t *client_hello = make_hello(*session);
-	client_hello->TLS_version = TLS1_2;
+	if((fp= fopen("../certificates/serverRSA.key", "r")) != NULL){
+		privateKey = PEM_read_RSAPrivateKey(fp, NULL, NULL, NULL);
+		if(privateKey == NULL){
+			printf("\nError in retrieve private key");
+			exit(-1);
+		}
+	}
+	fclose(fp);
 
-	client_hello->cipher_suite_len = 2*cipher_suite_len;
-	client_hello->cipher_suites = malloc(sizeof(cipher_suite_t)*cipher_suite_len);
-	for(int i=0;i<cipher_suite_len;i++)
-		client_hello->cipher_suites[i]=cipher_suite_list[i];
+	// Decrypt pre-master key
+	unsigned char *pre_master_key = malloc(RSA_size(privateKey));
+	if(!RSA_private_decrypt(client_key_exchange->key_length, client_key_exchange->key, pre_master_key, privateKey, RSA_PKCS1_PADDING)){
+		printf("\nError in RSA_private_decrypt\n");
+		exit(-1);
+	}
 
-	// Insert client hello into handshake packet
-	handshake_t *client_hello_h = malloc(sizeof(handshake_t));
-	client_hello_h->type = CLIENT_HELLO;
-	serialize_client_server_hello(client_hello, &(client_hello_h->message), &(client_hello_h->length), CLIENT_MODE);
-
-	// Save parameters
-	memcpy(client_random,&(client_hello->random.UNIX_time),4);
-	memcpy(client_random+4,client_hello->random.random_bytes,28);
-
-	// Clean up
-	free(session);
-	free_hello(client_hello);
-
-	return client_hello_h;
-}
-
-/**
- * Make the client key exchange message for RSA key exchange.
- * This function is called from make_client_key_exchange if the key exchange is RSA.
- *
- *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
- */
-void make_RSA_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
-
-	// Initialize pre master key
-	int pre_master_key_len = 58;
-	unsigned char *pre_master_key = calloc(pre_master_key_len, 1);
-
-	uint16_t temp = REV16(TLS_param->tls_version);
-	memcpy(pre_master_key, &temp, 2);
-
-	// Copy random
-	RAND_pseudo_bytes(pre_master_key+2, 46);
+	// Make master key
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
-
-	// Set hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-	TLS_param->master_secret_len = 48;
-
-	// Compute and set pre master key
-	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
-
-	// Initialize and set RSA parameters from certificate
-	EVP_PKEY *pubkey = NULL;
-	RSA *rsa = NULL;
-
-	pubkey = X509_get_pubkey(TLS_param->server_certificate);
-	rsa = EVP_PKEY_get1_RSA(pubkey);
-
-	// Encrypt pre master key
-	unsigned char *pre_master_key_enc = malloc(sizeof(unsigned char)*256);
-	int pre_master_key_enc_len = 0;
-	pre_master_key_enc_len = RSA_public_encrypt(pre_master_key_len, pre_master_key, pre_master_key_enc, rsa, RSA_PKCS1_PADDING);
-
-	// Set parameters in client key exchange packet
-	client_key_ex->key = pre_master_key_enc;
-	client_key_ex->key_length = pre_master_key_enc_len;
+	memcpy(seed, connection_parameters.client_random, 32);
+	memcpy(seed+32, connection_parameters.server_random, 32);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters.cipher_suite.hash);
+	connection_parameters.master_secret_len = 48;
+	PRF(hash_function, pre_master_key, 48, "master secret", seed, 64, connection_parameters.master_secret_len, &connection_parameters.master_secret);
+	RSA_free(privateKey);
 
 	// Clean up
-	EVP_PKEY_free(pubkey);
-	RSA_free(rsa);
 	free(pre_master_key);
 }
 
 /**
- * Make the client key exchange message for DHE key exchange.
- * This function is called from make_client_key_exchange if the key exchange is DHE.
+ * Compute the master key for DHE using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in connection_parameters.
  *
- *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
+ *	\param client_key_exchange: the client key exchange sent by client
  */
-void make_DHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
+void compute_set_master_key_DHE(client_key_exchange_t *client_key_exchange){
+	DH *privkey = DH_new();
+	dhe_server_key_exchange_t *server_key_exchange = connection_parameters.server_key_ex;
 
-	// Set server key exchange type
-	dhe_server_key_exchange_t *server_key_exchange = (dhe_server_key_exchange_t*)TLS_param->server_key_ex;
+	// Copy parameters
+	privkey->g = BN_dup(server_key_exchange->g);
+	privkey->p = BN_dup(server_key_exchange->p);
+	privkey->priv_key = BN_dup(connection_parameters.private_key);
+	privkey->pub_key = NULL;
+	privkey->pub_key = BN_bin2bn(client_key_exchange->key, client_key_exchange->key_length, NULL);
 
-	// Verify signature
-	if(verify_DHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au) == 0){
-		printf("\nError in make_DHE_client_key_exchange, signature not valid\n");
-		exit(-1);
-	}
-	printf("\nSignature is valid\n");
-
-	// Initialize and set Diffie-Hellman parameters
-	DH *dh_key = DH_new();
-	dh_key->g = BN_dup(server_key_exchange->g);
-	dh_key->p = BN_dup(server_key_exchange->p);
-	if(DH_generate_key(dh_key) != 1){
-		printf("\nError in DH_generate_key\n");
-		exit(-1);
-	}
-
-	// Initialize pre master key
-	unsigned char *pre_master_key = malloc(DH_size(dh_key));
+	// Make pre master key
+	unsigned char *pre_master_key = malloc(DH_size(privkey));
 	int pre_master_key_len = 0;
-	pre_master_key_len = DH_compute_key(pre_master_key, server_key_exchange->pubKey, dh_key);
+	pre_master_key_len = DH_compute_key(pre_master_key, privkey->pub_key, privkey);
 
-	// Copy random
+	// Compute master secret
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
-
-	// Set hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-
-	// Initialize and comput pre master key
-	TLS_param->master_secret_len = 48;
-	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
-
-	// Set client key exchange parameters
-	client_key_ex->key_length = BN_num_bytes(dh_key->pub_key);
-	client_key_ex->key = malloc(sizeof(unsigned char)*client_key_ex->key_length);
-	BN_bn2bin(dh_key->pub_key, client_key_ex->key);
+	memcpy(seed, connection_parameters.client_random, 32);
+	memcpy(seed+32, connection_parameters.server_random, 32);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters.cipher_suite.hash);
+	connection_parameters.master_secret_len = 48;
+	PRF(hash_function, pre_master_key, pre_master_key_len, "master secret", seed, 64, connection_parameters.master_secret_len, &connection_parameters.master_secret);
 
 	// Clean up
-	DH_free(dh_key);
+	BN_clear_free(connection_parameters.private_key);
+	DH_free(privkey);
 	free(pre_master_key);
 }
 
 /**
- * Make the client key exchange message for ECDHE key exchange.
- * This function is called from make_client_key_exchange if the key exchange is ECDHE.
+ * Compute the master key for ECDHE using the previous server key exchange stored in connection_parameters
+ * and the client key exchange. The master key, master key length is stored also in  connection_parameters.
  *
- *	\param client_key_ex: the client key exchange message
- *	\param TLS_param: the connection parameters
+ *	\param client_key_exchange: the client key exchange sent by client
  */
-void make_ECDHE_client_key_exchange(TLS_parameters_t *TLS_param, client_key_exchange_t *client_key_ex){
-
-	// Set server key exchange algorithm
-	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t * )TLS_param->server_key_ex;
-
-	// Verify signature
-	if(verify_ECDHE_server_key_ex_sign(TLS_param->server_certificate, TLS_param->client_random, TLS_param->server_random, server_key_exchange,TLS_param->cipher_suite.au)<1){
-		printf("\nError in make_ECDHE_client_key_exchange, signature not valid\n");
-		exit(-1);
-	}
-	printf("\nSignature is valid\n");
-
-	// Initialize and set elliptic curve Diffie-Hellman parameters
+void compute_set_master_key_ECDHE(client_key_exchange_t *client_key_exchange){
+	ecdhe_server_key_exchange_t *server_key_exchange = (ecdhe_server_key_exchange_t *) connection_parameters.server_key_ex;
 	EC_KEY *key = EC_KEY_new_by_curve_name(server_key_exchange->named_curve);
-	if(EC_KEY_generate_key(key) != 1){
-		printf("\nError in make_ECDHE_client_key_exchange, EC_KEY_generate\n");
-		exit(-1);
-	}
-	EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), server_key_exchange->pub_key, NULL, NULL);
 
-	// Initialize pre master secret
+	// Get public key
+	BIGNUM *pub_key = BN_bin2bn(client_key_exchange->key, client_key_exchange->key_length, NULL);
+	EC_POINT *pub_key_point = EC_POINT_bn2point(EC_KEY_get0_group(key), pub_key, NULL, NULL);
+	EC_KEY_set_public_key(key, pub_key_point);
+	EC_POINT_free(pub_key_point);
+	BN_free(pub_key);
+
+	// Set private key
+	EC_KEY_set_private_key(key, connection_parameters.private_key);
+
 	int field_size, pre_master_len;
 	unsigned char *pre_master;
 
-	// Calculate size of buffer for shared secret
+	// Calculate the size of the buffer for the shared secret
 	field_size = EC_GROUP_get_degree(EC_KEY_get0_group(key));
 	pre_master_len = (field_size+7)/8;
-	// Allocate memory for shared secret
+
+	// Allocate the memory for the shared secret
 	pre_master = malloc(sizeof(unsigned char)*pre_master_len);
-	// Derive shared secret
-	ECDH_compute_key(pre_master, pre_master_len, pub_key_point, key, NULL);
 
-	// Copy random
+	// Derive the shared secret
+	connection_parameters.master_secret_len = ECDH_compute_key(pre_master, pre_master_len, EC_KEY_get0_public_key(key), key, NULL);
+
+	// Compute master secret
 	unsigned char seed[64];
-	memcpy(seed, TLS_param->client_random, 32);
-	memcpy(seed+32, TLS_param->server_random, 32);
-
-	// Get hash function
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-
-	// Initialize and compute pre master secret
-	TLS_param->master_secret_len = 48;
-	PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, TLS_param->master_secret_len, &TLS_param->master_secret);
-
-	// Compute client key exchange parameters
-	BIGNUM *pub_key = BN_new();
-	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, pub_key, NULL);
-
-	// Set client key exchange parameters
-	client_key_ex->key_length = BN_num_bytes(pub_key);
-	client_key_ex->key = malloc(sizeof(unsigned char)*client_key_ex->key_length);
-	BN_bn2bin(pub_key, client_key_ex->key);
+	memcpy(seed, connection_parameters.client_random, 32);
+	memcpy(seed+32, connection_parameters.server_random, 32);
+	const EVP_MD *hash_function = get_hash_function(connection_parameters.cipher_suite.hash);
+	connection_parameters.master_secret_len = 48;
+	PRF(hash_function, pre_master, pre_master_len, "master secret", seed, 64, connection_parameters.master_secret_len, &connection_parameters.master_secret);
 
 	// Clean up
-	BN_free(pub_key);
-	EC_POINT_free(pub_key_point);
+	BN_clear_free(connection_parameters.private_key);
 	EC_KEY_free(key);
 	free(pre_master);
 }
 
 /**
- * Given the information in TLS_parameter and the key exchange algorithm
- * return the handshake of the client key exchange. That includes to compute the 
- * pre-master key. It also computes the master secret and set it in TLS_param.
+ * Function called from transport protocol
+ * when a message is received by the client.
  *
- *	\param TLS_param: the parameters of the connection
- *	\param key_ex_alg: the key exchange algorithm of the handshake
- *	\return the client key exchange handshake message 
+ *	\param channel: the communication channel
+ *	\param p: the received packet
  */
-handshake_t * make_client_key_exchange(TLS_parameters_t *TLS_param, uint16_t key_ex_alg){
+void onClientPacketReceive(channel_t *channel, packet_transport_t *p){
 
-	// Initialize handshake packet and client key exchange message
-	handshake_t *client_key_exchange_h = malloc(sizeof(handshake_t));
-	client_key_exchange_h->type = CLIENT_KEY_EXCHANGE;
-	client_key_exchange_t *client_key_exchange = malloc(sizeof(client_key_exchange_t));
-
-	switch (TLS_param->cipher_suite.kx){
-		case RSA_KX:
-			make_RSA_client_key_exchange(TLS_param, client_key_exchange);
-			break;
-		case DHE_KX:
-			make_DHE_client_key_exchange(TLS_param, client_key_exchange);
-			break;
-		case ECDHE_KX:
-			make_ECDHE_client_key_exchange(TLS_param, client_key_exchange);
-			break;
-		default:
-			printf("\nError in make_client_key_exchange\n");
-			exit(-1);
-	}
-
-	serialize_client_key_exchange(client_key_exchange, &(client_key_exchange_h->message), (&client_key_exchange_h->length));
-
-	// Clean up
-	free_client_key_exchange(client_key_exchange);
-
-	return client_key_exchange_h;
-}
-
-/**
- * Make the change cipher spec record message. This message is simple and 
- * doesn't require any parameter.
- *
- *	\return the change cipher spec record
- */
-record_t * make_change_cipher_spec() {
-
-	// Make and send change cipher spec message
-	record_t *change_cipher_spec_message = malloc(sizeof(record_t));
-	change_cipher_spec_message->type = CHANGE_CIPHER_SPEC;
-	change_cipher_spec_message->version = TLS1_2;
-	change_cipher_spec_message->length = 0x01;
-	change_cipher_spec_message->message = malloc(1);
-	*(change_cipher_spec_message->message) = 0x01;
-
-	return change_cipher_spec_message;
-}
-
-/**
- * Given the connection parameters compute the finished message.
- * Note: TLS protocol requires this message to be encrypted.
- *
- *	\param TLS_param: the connection parameters 
- *	\return the finished handshake message
- */
-handshake_t * make_finished_message(TLS_parameters_t *TLS_param ) {
-
-	// Initialize finished
-	handshake_t *finished_h = malloc(sizeof(handshake_t));
-	finished_h->type = FINISHED;
-
-	// Compute hashes of handshake messages
-	const EVP_MD *hash_function = get_hash_function(TLS_param->cipher_suite.hash);
-	unsigned char md_value[EVP_MAX_MD_SIZE];
-	unsigned int md_len;
-	EVP_MD_CTX *mdctx = EVP_MD_CTX_create();
-	EVP_DigestInit_ex(mdctx, hash_function, NULL);
-	EVP_DigestUpdate(mdctx, TLS_param->handshake_messages, TLS_param->handshake_messages_len);
-	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
-	EVP_MD_CTX_destroy(mdctx);
-
-	// Set finished message
-	unsigned char *finished_message = NULL;
-	int finished_message_len = 12;
-	PRF(hash_function, TLS_param->master_secret, TLS_param->master_secret_len, "client finished", md_value, md_len, finished_message_len, &finished_message);
-	finished_h->length = finished_message_len;
-	finished_h->message = finished_message;
-
-	return finished_h;
-}
-
-			/*** SERVER ***/
-/**
- * Given the client hello message the function makes the server hello.
- * It chooses a random cipher suite among those provided by the client. 
- * The function also fills the random field using the time stamp and a random generator (OpenSSL)
- *
- *	\param TLS_param: the connection parameters
- *	\param client_hello: the received client hello.
- *	\return the hello server handshake message
- */
-handshake_t * make_server_hello(TLS_parameters_t *TLS_param, server_client_hello_t *client_hello){
-
-	// Initialize server hello (without SessionID)
-	session_id_t *session= malloc(sizeof(session_id_t));
-	session->session_lenght = 0x00;
-	session->session_id = NULL;
-	server_client_hello_t *server_hello = make_hello(*session);
-	server_hello->TLS_version = TLS1_2;
-
-	// Choose and set cipher suite
-	srand((int)time(NULL));
-	int choosen_suite_num = rand()%(client_hello->cipher_suite_len/2);
-	cipher_suite_t choosen_suite = get_cipher_suite_by_id(client_hello->cipher_suites[choosen_suite_num].cipher_id);
-
-	server_hello->cipher_suite_len = 2; 
-
-	server_hello->cipher_suites = malloc(sizeof(cipher_suite_t));
-	*(server_hello->cipher_suites) = choosen_suite;
-
-	// Insert server hello into handshake packet
-	handshake_t *server_hello_h = malloc(sizeof(handshake_t));
-	server_hello_h->type = SERVER_HELLO;
-	server_hello_h->message = NULL;
-	server_hello_h->length = 0;
-	serialize_client_server_hello(server_hello, &(server_hello_h->message), &(server_hello_h->length), SERVER_MODE);
-
-	// Save parameters
-	TLS_param->cipher_suite = choosen_suite;
-	memcpy(TLS_param->server_random,&(server_hello->random.UNIX_time), 4);
-	memcpy(TLS_param->server_random+4, server_hello->random.random_bytes, 28);
-
-	// Clean up
-	free_hello(server_hello);
-	free(session);
-
-	return server_hello_h;
-}
-
-/**
- * Make the certificate message for the server.
- * That message depends on the authentication algorithm hence we require the connection
- * parameters. The function also sets the certificate in the connection parameters for
- * further uses.
- *
- *	\param TLS_param: connection parameters
- *	\return the certificate handshake message
- */
-handshake_t * make_certificate(TLS_parameters_t *TLS_param){
-
-	// Initialize certificate message
-	certificate_message_t *cert_message = NULL;
-
-	// Make certificate message
-	switch (TLS_param->cipher_suite.au){
-		case RSA_AU:
-			cert_message = make_certificate_message("../certificates/serverRSA.pem");
-			break;
-		case DSS_AU:
-			cert_message = make_certificate_message("../certificates/serverDSA.pem");
-			break;
-		case ECDSA_AU:
-			cert_message = make_certificate_message("../certificates/serverECDSA.pem");
-			break;
-		default:
-			printf("\nError in make_certificate_message");
-			exit(-1);
-	}
-
-	// Insert certificate message into handshake packet
-	handshake_t *certificate_h = malloc(sizeof(handshake_t));
-	certificate_h->type = CERTIFICATE;
-	serialize_certificate_message(cert_message, &(certificate_h->message), &(certificate_h->length));
-
-	// Save parameters
-	TLS_param->server_certificate = cert_message->X509_certificate;
-	TLS_param->server_certificate->references+=1;
-
-	// Clean up
-	free_certificate_message(cert_message);
-
-	return certificate_h;
-}
-
-/**
- * Make the server key exchange for DHE key exchange. 
- * It computes the DH parameters and save the message in the 
- * connection parameters TLS_param.
- *
- *	\param TLS_param: connection parameters
- *	\return the dhe_server_key_exchange struct
- */
-dhe_server_key_exchange_t * make_DHE_server_key_exchange(TLS_parameters_t *TLS_param){
-
-	// Diffie-Hellman server key exchange
-	// Generate ephemeral Diffie-Hellman parameters
-	DH *privkey;
-	int codes;
-	if((privkey = DH_new()) == NULL){
-		printf("\nError in DH_new\n");
-		exit(-1);
-	}
-	if(DH_generate_parameters_ex(privkey, 512, DH_GENERATOR_2 , NULL) != 1){
-		printf("\nError in DH_generate_parameters\n");
-		exit(-1);
-	}
-	if(DH_check(privkey, &codes) != 1){
-		printf("\nError in DH_check\n");
-		exit(-1);
-	}
-	if(codes != 0){
-		printf("\nDH_check failed\n");
-		exit(-1);
+	// Get record and print
+	record_t *r = deserialize_record(p->message, p->length);
+	if(r->type == CHANGE_CIPHER_SPEC){
+		connection_parameters.previous_state = CHANGE_CIPHER_SPEC;
+		if(verbosity>0){
+			printf("\n<<< Change cipher spec\n");
+			print_record(r);
 		}
-	// Generate the public and private keys pair
-	if(DH_generate_key(privkey) != 1){
-		printf("\nError in DH_generate_key\n");
-		exit(-1);
+
+		free_record(r);
+		free_packet(p);
 	}
+	else if(r->type == HANDSHAKE){
+		handshake_t *h = deserialize_handshake(r->message, r->length);
 
-	// Set server key exchange parameters
-	dhe_server_key_exchange_t *server_key_ex = malloc(sizeof(dhe_server_key_exchange_t));
-	server_key_ex->g = BN_dup(privkey->g);
-	server_key_ex->p = BN_dup(privkey->p);
-	server_key_ex->pubKey = BN_dup(privkey->pub_key);
+		free_record(r);
+		free_packet(p);
 
-	// Add signature and set hash algorithm
-	sign_DHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+		switch (h->type) {
+			case SERVER_HELLO:
+				if(connection_parameters.previous_state == 0x0000){
+					connection_parameters.previous_state = SERVER_HELLO;
+					server_client_hello_t *server_hello = deserialize_client_server_hello(h->message, h->length, SERVER_MODE);
 
-	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
-	TLS_param->private_key = BN_dup(privkey->priv_key);
+					if(verbosity!=0)
+						printf("\n<<< Server Hello\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+
+					// Extract data for next steps
+					connection_parameters.cipher_suite = *server_hello->cipher_suites;
+					connection_parameters.tls_version = server_hello->TLS_version;
+
+					// Save server random
+					memcpy(connection_parameters.server_random,&(server_hello->random.UNIX_time), 4);
+					memcpy(connection_parameters.server_random+4, server_hello->random.random_bytes, 28);
+
+					free_hello(server_hello);
+				}
+				break;
+
+			case CERTIFICATE:
+				if(connection_parameters.previous_state == SERVER_HELLO){
+					connection_parameters.previous_state = CERTIFICATE;
+					backup_handshake(&connection_parameters, h);
+
+					if(verbosity>0)
+						printf("\n<<< Certificate\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+
+					certificate_message_t *certificate_m = deserialize_certificate_message(h->message, h->length);
+					connection_parameters.server_certificate = certificate_m->X509_certificate;
+					connection_parameters.server_certificate->references+=1;
+
+					free_certificate_message(certificate_m);
+				}
+				break;
+
+			case SERVER_KEY_EXCHANGE:
+				if(connection_parameters.previous_state == CERTIFICATE){
+					connection_parameters.previous_state = SERVER_KEY_EXCHANGE;
+
+					if(verbosity>0)
+						printf("\n<<< Server Key Exchange\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+
+					// Save server key exchange parameters
+					connection_parameters.server_key_ex = deserialize_server_key_exchange(h->message, h->length, connection_parameters.cipher_suite.kx);
+					backup_handshake(&connection_parameters, h);
+				}
+				break;
+
+			case SERVER_DONE:
+				if((connection_parameters.previous_state == CERTIFICATE || connection_parameters.previous_state == SERVER_KEY_EXCHANGE)){
+					backup_handshake(&connection_parameters,h);
+
+					if(verbosity>0)
+						printf("\n<<< Server Hello Done\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+
+					// Make client key exchange
+					handshake_t * client_key_exchange = make_client_key_exchange(&connection_parameters, connection_parameters.cipher_suite.kx);
+					backup_handshake(&connection_parameters, client_key_exchange);
+					send_handshake(channel, client_key_exchange);
+					if(verbosity>0)
+						printf("\n>>> Client Key Exchange\n");
+					print_handshake(client_key_exchange, verbosity, connection_parameters.cipher_suite.kx);
+					free_handshake(client_key_exchange);
+
+					if(verbosity>0)
+						printf("\n>>> Change cipher spec\n");
+					record_t* change_cipher_spec = make_change_cipher_spec();
+					send_record(channel, change_cipher_spec);
+					if(verbosity>1)
+						print_record(change_cipher_spec);
+					free_record(change_cipher_spec);
+
+					if(verbosity!=0)
+						printf("\n>>> Finished\n");
+					handshake_t *finished = make_finished_message(&connection_parameters,CLIENT_MODE);
+					send_handshake(channel, finished);
+					print_handshake(finished, verbosity, connection_parameters.cipher_suite.kx);
+					free_handshake(finished);
+				}
+				break;
+
+			case FINISHED:
+				if(connection_parameters.previous_state == CHANGE_CIPHER_SPEC){
+					if(verbosity>0)
+						printf("\n<<< Finished\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+					free_handshake(h);
+					stop_channel(channel);
+					break;
+				}
+
+			default:
+				break;
+		}
+		free_handshake(h);
+	}
+}
+
+/**
+ * Do the handshake - client side.
+ *
+ *	\param to_send_cipher_suite_len: the number of cipher suites to add in the client hello
+ *	\param to_send_cipher_suite: contains the choosen cipher suites for the client hello
+ */
+void do_client_handshake(int to_send_cipher_suite_len, cipher_suite_t to_send_cipher_suite[]) {
+
+	// Setup the channel
+	char *fileName = "TLSchannel.txt";
+	char *channelFrom = "Client";
+	char *channelTo = "Server";
+	channel_t *client2server = create_channel(fileName, channelFrom, channelTo);
+	set_on_receive(client2server, &onClientPacketReceive);
+
+	connection_parameters.previous_state = 0x0000;
+
+	// Make client hello
+	if(verbosity != 0)
+		printf("\n>>> Client hello\n");
+	handshake_t *client_hello = make_client_hello(connection_parameters.client_random, to_send_cipher_suite, to_send_cipher_suite_len);
+	print_handshake(client_hello,verbosity,connection_parameters.cipher_suite.kx);
+
+	send_handshake(client2server, client_hello);
+	backup_handshake(&connection_parameters,client_hello);
+	free_handshake(client_hello);
+
+	// Start channel and listener for new messages
+	start_listener(client2server);
+	wait_channel(client2server);
 
 	// Clean up
-	DH_free(privkey);
-
-	return server_key_ex;
+	free(client2server);
 }
 
 /**
- * Make the server key exchange for ECDHE key exchange. 
- * It computes the ECDHE parameters using the secp256k1 curve and save the message in the 
- * connection parameters TLS_param.
+ * Function called from transport protocol
+ * when a message is received by the server
  *
- *	\param TLS_param: connection parameters
- *	\return the ecdhe_server_key_exchange struct
+ *	\param channel: the communication channel
+ *	\param p: the received packet
  */
-ecdhe_server_key_exchange_t * make_ECDHE_server_key_exchange(TLS_parameters_t *TLS_param){
+void onServerPacketReceive(channel_t *channel, packet_transport_t *p){
 
-	// Elliptic cruve Diffie-Hellman server key exchange
-	// Generate ephemeral Diffie-Hellman parameters
-	EC_KEY *key;
-	uint16_t curve_name = NID_secp256k1;
-	// Create an Elliptic Curve Key object and set it up to use the ANSI X9.62 Prime 256v1 curve
-	if((key = EC_KEY_new_by_curve_name(curve_name)) == NULL){
-		printf("\nError in setting EC parameters\n");
-		exit(-1);
+	// Get record and print
+	record_t *r = deserialize_record(p->message, p->length);
+	if(r->type == CHANGE_CIPHER_SPEC){
+		if(verbosity>1){
+			printf("\n<<< Change CipherSpec\n");
+			print_record(r);
+		}
+		// Clean up
+		free_record(r);
+		free_packet(p);
 	}
-	// Generate the private and public keys
-	if(EC_KEY_generate_key(key) != 1){
-		printf("\nError in generate EC keys\n");
-		exit(-1);
+	else if(r->type == HANDSHAKE){
+		handshake_t *h = deserialize_handshake(r->message, r->length);
+
+		// Clean up
+		free_record(r);
+		free_packet(p);
+
+		switch (h->type) {
+			case CLIENT_HELLO:
+				if(connection_parameters.previous_state == 0x00){
+					connection_parameters.previous_state = CLIENT_HELLO;
+					backup_handshake(&connection_parameters, h);
+					server_client_hello_t *client_hello = deserialize_client_server_hello(h->message, h->length, CLIENT_MODE);
+					if(verbosity>0)
+						printf("\n<<< Client Hello\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+
+					// Save client random
+					memcpy(connection_parameters.client_random, &(client_hello->random.UNIX_time), 4);
+					memcpy(connection_parameters.client_random+4, client_hello->random.random_bytes, 28);
+
+					// Choose a cipher suite and send server hello
+					if(verbosity>0)
+						printf("\n>>> Server Hello\n");
+					handshake_t * server_hello = make_server_hello(&connection_parameters, client_hello);
+					print_handshake(server_hello, verbosity, connection_parameters.cipher_suite.kx);
+					send_handshake(channel, server_hello);
+					backup_handshake(&connection_parameters, server_hello);
+					free_handshake(server_hello);
+					free_hello(client_hello);
+
+					// Retrieve and send certificate
+					if(verbosity>0)
+						printf("\n>>> Certificate\n");
+					handshake_t *certificate = make_certificate(&connection_parameters);
+					print_handshake(certificate, verbosity, connection_parameters.cipher_suite.kx);
+					send_handshake(channel, certificate);
+					backup_handshake(&connection_parameters, certificate);
+					free_handshake(certificate);
+
+					// Make server key exchange (if needed)
+					if(connection_parameters.cipher_suite.kx == DHE_KX || connection_parameters.cipher_suite.kx == ECDHE_KX){
+						handshake_t *server_key_exchange = make_server_key_exchange(&connection_parameters);
+						if(verbosity>0)
+							printf("\n>>> Server key exchange\n");
+						print_handshake(server_key_exchange, verbosity, connection_parameters.cipher_suite.kx);
+						send_handshake(channel, server_key_exchange);
+						backup_handshake(&connection_parameters, server_key_exchange);
+						free_handshake(server_key_exchange);
+					}
+
+					// Make and send server hello done
+					if(verbosity>0)
+						printf("\n>>> Server hello done\n");
+					handshake_t * server_hello_done = make_server_hello_done();
+					print_handshake(server_hello_done, verbosity, connection_parameters.cipher_suite.kx);
+					send_handshake(channel, server_hello_done);
+					backup_handshake(&connection_parameters, server_hello_done);
+					free_handshake(server_hello_done);
+
+				}
+				break;
+
+			case CLIENT_KEY_EXCHANGE:
+				if (connection_parameters.previous_state == CLIENT_HELLO){
+					connection_parameters.previous_state = CLIENT_KEY_EXCHANGE;
+
+					// Compute master key
+					backup_handshake(&connection_parameters, h);
+					if(verbosity>0)
+						printf("\n<<< Client Key Exchange\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+					client_key_exchange_t *client_key_exchange = deserialize_client_key_exchange(h->message, h->length);
+					switch (connection_parameters.cipher_suite.kx) {
+						case RSA_KX:
+							compute_set_master_key_RSA(client_key_exchange);
+							break;
+						case DHE_KX:
+							compute_set_master_key_DHE(client_key_exchange);
+							break;
+						case ECDHE_KX:
+							compute_set_master_key_ECDHE(client_key_exchange);
+							break;
+						default:
+							break;
+					}
+					free_client_key_exchange(client_key_exchange);
+				}
+				break;
+
+			case FINISHED:
+				if (connection_parameters.previous_state == CLIENT_KEY_EXCHANGE){
+					// Receive Finished
+					backup_handshake(&connection_parameters, h);
+
+					if(verbosity>0)
+						printf("\n<<< Finished\n");
+					print_handshake(h, verbosity, connection_parameters.cipher_suite.kx);
+					free_handshake(h);
+
+					// Send ChangeCipherSpec
+					if(verbosity>0)
+						printf("\n>>> Change CipherSpec\n");
+					record_t* change_cipher_spec = make_change_cipher_spec();
+					send_record(channel, change_cipher_spec);
+					if(verbosity>1)
+						print_record(change_cipher_spec);
+					free_record(change_cipher_spec);
+
+					// Send Finished
+					if(verbosity>0)
+						printf("\n>>> Finished\n");
+					handshake_t *finished = make_finished_message(&connection_parameters, SERVER_MODE);
+					send_handshake(channel, finished);
+					print_handshake(finished, verbosity, connection_parameters.cipher_suite.kx);
+					free_handshake(finished);
+
+					stop_channel(channel);
+				}
+				break;
+
+			default:
+				break;
+		}
+
+		free_handshake(h);
 	}
+}
 
-	// Set server key exchange parameters
-	ecdhe_server_key_exchange_t *server_key_ex = malloc(sizeof(ecdhe_server_key_exchange_t));
-	server_key_ex->named_curve = curve_name;
-	server_key_ex->pub_key = BN_new();
-	EC_POINT_point2bn(EC_KEY_get0_group(key), EC_KEY_get0_public_key(key), POINT_CONVERSION_UNCOMPRESSED, server_key_ex->pub_key, NULL);
+/**
+ * Do the handshake - server side.
+ */
+void do_server_handshake() {
+	// Setup the channel
+	char *fileName = "TLSchannel.txt";
+	char *channelFrom = "Server";
+	char *channelTo = "Client";
+	channel_t *server2client = create_channel(fileName, channelFrom, channelTo);
+	set_on_receive(server2client, &onServerPacketReceive);
 
-	// Add signature
-	sign_ECDHE_server_key_ex(TLS_param->client_random, TLS_param->server_random, server_key_ex, TLS_param->cipher_suite.au);
+	connection_parameters.previous_state = 0x00;
 
-	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
-	TLS_param->private_key = BN_dup(EC_KEY_get0_private_key(key));
+	// Start channel and listener for new messages
+	start_listener(server2client);
+	wait_channel(server2client);
 
 	// Clean up
-	EC_KEY_free(key);
-
-	return server_key_ex;
+	free(server2client);
+	CRYPTO_cleanup_all_ex_data();
 }
 
 /**
- * Make the server key exchange handshake message. 
- * The function also sets the message in the connection parameters
- * to compute the master key in the client key exchange message.
- *
- *	\param TLS_param: connection parameters
- *	\return the server key exchange handshake message
+ * Free the TLS connection parameters.
  */
-handshake_t * make_server_key_exchange(TLS_parameters_t *TLS_param){
-
-	// Initialize server key exchange
-	void *server_key_ex = NULL;
-
-	// Make server key exchange packet
-	switch (TLS_param->cipher_suite.kx){
-		case DHE_KX:
-			server_key_ex = (dhe_server_key_exchange_t *)make_DHE_server_key_exchange(TLS_param);
-			break;
-		case ECDHE_KX:
-			server_key_ex = (ecdhe_server_key_exchange_t *)make_ECDHE_server_key_exchange(TLS_param);
-			break;
-		default:
-			printf("\nError in make_server_key_exchange, key exchange algorithm not recognized\n");
-			exit(-1);
-	}
-
-	// Insert server key exchange into handshake packet
-	handshake_t *server_key_ex_h = malloc(sizeof(handshake_t));
-	server_key_ex_h->type = SERVER_KEY_EXCHANGE;
-	serialize_server_key_exchange(server_key_ex, &server_key_ex_h->message, &server_key_ex_h->length, TLS_param->cipher_suite.kx);
-
-	// Save parameters
-	TLS_param->server_key_ex = server_key_ex;
-
-	return server_key_ex_h;
-}
-
-/**
- * Make the server hello done message. This message is simple and 
- * doesn't require any parameter.
- *
- *	\return the server hello done handshake message
- */
-handshake_t * make_server_hello_done() {
-
-	// Make and insert server done into handshake packet
-	handshake_t *server_hello_done = malloc(sizeof(handshake_t));
-	server_hello_done->type = SERVER_DONE;
-	server_hello_done->length = 0x00;
-	server_hello_done->message = NULL;
-
-	return server_hello_done;
+void free_tls_connection(){
+	free(connection_parameters.handshake_messages);
+	free(connection_parameters.master_secret);
+	X509_free(connection_parameters.server_certificate);
+	free_server_key_exchange(connection_parameters.server_key_ex, connection_parameters.cipher_suite.kx);
+	CRYPTO_cleanup_all_ex_data();
 }

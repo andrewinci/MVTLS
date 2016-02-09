@@ -1,7 +1,0 @@
-<map id="make_ECDHE_client_key_exchange" name="make_ECDHE_client_key_exchange">
-<area shape="rect" id="node2" href="$_t_l_s_8h.html#ab3bb4e3f75fb84baa35cd0931381dfe0" title="make_client_key_exchange" alt="" coords="229,12,416,39"/>
-<area shape="rect" id="node3" href="$client_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="464,12,589,39"/>
-<area shape="rect" id="node4" href="$client_8c.html#aed2d0a7b3d9f68efed058f1bc0768e95" title="do_handshake" alt="" coords="797,12,907,39"/>
-<area shape="rect" id="node6" href="$_server_client_transport_protocol_8h.html#a018090dd0ba292fbef485142a080fa59" title="set_on_receive" alt="" coords="637,37,749,64"/>
-<area shape="rect" id="node5" href="$client_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="955,12,1005,39"/>
-</map>

@@ -34,8 +34,8 @@
 #include <time.h>
 
 /** \def DELAY_TIME 
- *	the time to wait between 2 readings of the file.
- *	Important to don't use too much CPU.
+ *	Time to wait between two readings of the file.
+ *	Important to do not use too much CPU.
  */
 #define DELAY_TIME 50
 
@@ -49,7 +49,7 @@ typedef struct{
 	/** Packet destination name, 8 bytes length*/
 	char *destination;
 
-	/** Message to send length*/
+	/** Message length*/
 	uint32_t length;
 
 	/** Message byte stream of lenght lenght*/
@@ -57,8 +57,7 @@ typedef struct{
 }packet_transport_t;
 
 /** \struct channel_t
-* Struct to model and manage a file channel
-* between client and server
+* Struct to model and manage a file channel between client and server
 */
 typedef struct channel_t{
 	/** Channel source name e.g. server*/

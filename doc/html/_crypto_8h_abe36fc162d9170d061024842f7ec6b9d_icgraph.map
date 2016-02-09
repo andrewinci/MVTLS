@@ -1,7 +1,0 @@
-<map id="sign_ECDHE_server_key_ex" name="sign_ECDHE_server_key_ex">
-<area shape="rect" id="node2" href="$_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4" title="make_ECDHE_server_key\l_exchange" alt="" coords="248,5,429,46"/>
-<area shape="rect" id="node3" href="$_t_l_s_8h.html#a902d940508d7080023ef072b2667a143" title="make_server_key_exchange" alt="" coords="477,12,669,39"/>
-<area shape="rect" id="node4" href="$server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="717,12,843,39"/>
-<area shape="rect" id="node5" href="$server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="891,12,1000,39"/>
-<area shape="rect" id="node6" href="$server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1048,12,1099,39"/>
-</map>

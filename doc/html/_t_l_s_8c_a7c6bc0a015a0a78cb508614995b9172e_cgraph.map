@@ -1,5 +1,0 @@
-<map id="make_client_hello" name="make_client_hello">
-<area shape="rect" id="node2" href="$_server_client_hello_8c.html#a095e7c0597d66b5e4eb2097b8f28474a" title="make_hello" alt="" coords="216,5,307,32"/>
-<area shape="rect" id="node3" href="$_server_client_hello_8c.html#a5d76fe55dc16550edc3604fcde33b8d0" title="serialize_client_server\l_hello" alt="" coords="185,57,338,98"/>
-<area shape="rect" id="node4" href="$_server_client_hello_8c.html#aec7721cdc08398302cd7435054202117" title="free_hello" alt="" coords="221,123,301,149"/>
-</map>

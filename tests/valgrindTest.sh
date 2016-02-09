@@ -12,7 +12,7 @@ pause(){
 echo ""
 echo $RED"**** THIS SCRIPT TEST THE ALLOCATION USING VALGRIND ****"
 echo "**** MAKE SURE TO MAKE ALL TESTS BEFORE RUNNING THIS SCRIPT ****"
-echo "**** MAKE SURE TO HAVE valgrind ( love it <3 ) INSTALLED ****"$NC
+echo "**** MAKE SURE TO HAVE Valgrind INSTALLED ****"$NC
 pause
 
 echo ""
@@ -22,19 +22,10 @@ echo "warning due to the OpenSSL implementation. DON'T WORRY ABOUT THAT"$NC
 echo ""
 pause
 cd ../bin
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./TLSServer &
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./TLSClient
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./MVTLS server &
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=../tests/valgrindSuppression.txt ./MVTLS client
 pause
 exit
-
-echo ""
-echo $GREEN"-----TESTING CERTIFICATE SERIALIZE/DESERIALIZE-------"$NC
-echo $RED"NOTE: this test use OpenSSL hence there is some suppressed "
-echo "warning due to the OpenSSL implementation. DON'T WORRY ABOUT THAT"$NC
-echo ""
-pause
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrindSuppression.txt ../bin/testCertificate
-pause
 
 echo ""
 echo $GREEN"-----TESTING BASIC PROTOCOL-------"$NC

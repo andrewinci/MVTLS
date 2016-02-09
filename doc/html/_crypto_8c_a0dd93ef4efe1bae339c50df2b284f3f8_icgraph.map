@@ -1,8 +1,0 @@
-<map id="sign_with_ECDSA" name="sign_with_ECDSA">
-<area shape="rect" id="node2" href="$_crypto_8h.html#abe36fc162d9170d061024842f7ec6b9d" title="sign_ECDHE_server_key_ex" alt="" coords="184,12,379,39"/>
-<area shape="rect" id="node3" href="$_t_l_s_8c.html#ade6994e7ea30d8b5b89b2cd551101db4" title="make_ECDHE_server_key\l_exchange" alt="" coords="427,5,608,46"/>
-<area shape="rect" id="node4" href="$_t_l_s_8h.html#a902d940508d7080023ef072b2667a143" title="make_server_key_exchange" alt="" coords="656,12,848,39"/>
-<area shape="rect" id="node5" href="$server_8c.html#a48f2c3c739d443cf2dd46c01a7136674" title="onPacketReceive" alt="" coords="896,12,1021,39"/>
-<area shape="rect" id="node6" href="$server_8c.html#a92b39c23154f9435d52c1bd2babb4ad9" title="do_handshake" alt="" coords="1069,12,1179,39"/>
-<area shape="rect" id="node7" href="$server_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1227,12,1277,39"/>
-</map>

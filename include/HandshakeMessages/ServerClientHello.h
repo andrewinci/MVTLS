@@ -18,7 +18,7 @@
 #include <string.h>
 #include <openssl/rand.h>
 
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 #endif 
 
 /** 
@@ -93,6 +93,27 @@ typedef struct{
 	 */
 	compression_methods_t compression_methods;
 }server_client_hello_t;
+/**
+ * Given the client hello message the function makes the server hello.
+ * It chooses a random cipher suite among those provided by the client.
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
+ *
+ *	\param connection_parameters: the connection parameters
+ *	\param client_hello: the received client hello.
+ *	\return the hello server handshake message
+ */
+handshake_t * make_server_hello(handshake_parameters_t *connection_parameters, server_client_hello_t *client_hello);
+
+/**
+ * Given an array of cipher suites, make a client hello message.
+ * The function also fills the random field using the time stamp and a random generator (OpenSSL)
+ *
+ *	\param client_random: return the random set in the client hello
+ *	\param cipher_suite_list: an array of cipher suites to add to the client hello
+ *	\param cipher_suite_len: the number of cipher suites in the list
+ *	\return the client hello handshake message
+ */
+handshake_t * make_client_hello(unsigned char *client_random, cipher_suite_t cipher_suite_list[], int cipher_suite_len);
 
 /**
  * Make a client hello message.

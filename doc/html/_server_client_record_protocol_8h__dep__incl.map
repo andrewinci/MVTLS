@@ -1,9 +1,0 @@
-<map id="include/ServerClientRecordProtocol.h" name="include/ServerClientRecordProtocol.h">
-<area shape="rect" id="node2" href="$_server_client_record_protocol_8c.html" title="src/ServerClientRecordProtocol.c" alt="" coords="5,104,224,131"/>
-<area shape="rect" id="node3" href="$_server_client_handshake_protocol_8h.html" title="include/ServerClientHandshake\lProtocol.h" alt="" coords="249,97,457,138"/>
-<area shape="rect" id="node5" href="$_t_l_s_8h.html" title="include/TLS.h" alt="" coords="444,195,548,221"/>
-<area shape="rect" id="node4" href="$_server_client_handshake_protocol_8c.html" title="src/ServerClientHandshake\lProtocol.c" alt="" coords="236,187,420,229"/>
-<area shape="rect" id="node6" href="$client_8c.html" title="src/Target/client.c" alt="" coords="278,277,404,304"/>
-<area shape="rect" id="node7" href="$server_8c.html" title="src/Target/server.c" alt="" coords="429,277,563,304"/>
-<area shape="rect" id="node8" href="$_t_l_s_8c.html" title="src/TLS.c" alt="" coords="587,277,665,304"/>
-</map>

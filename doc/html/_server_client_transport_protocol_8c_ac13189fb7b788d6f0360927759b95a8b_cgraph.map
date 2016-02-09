@@ -1,8 +1,0 @@
-<map id="start_listener" name="start_listener">
-<area shape="rect" id="node2" href="$_server_client_transport_protocol_8c.html#acc975c295cc4a9e275948e333c45598e" title="reader" alt="" coords="153,56,213,83"/>
-<area shape="rect" id="node3" href="$_server_client_transport_protocol_8c.html#a41dd4a03c0fcb9195dac633e86be6877" title="read_all_file" alt="" coords="281,5,375,32"/>
-<area shape="rect" id="node5" href="$_server_client_transport_protocol_8c.html#ad5ca31599ddc0387256db843d883cf32" title="deserialize_packet" alt="" coords="262,56,394,83"/>
-<area shape="rect" id="node7" href="$_server_client_transport_protocol_8c.html#a52cb1d528c2a550d4d440abeb90e1ea7" title="free_packet" alt="" coords="282,107,374,133"/>
-<area shape="rect" id="node4" href="$_server_client_transport_protocol_8c.html#a4355b2213c5d049d51944ea7c5126532" title="get_file_size" alt="" coords="448,5,544,32"/>
-<area shape="rect" id="node6" href="$_server_client_transport_protocol_8c.html#ab900c15a013c9cb71d24f3e7f5479822" title="create_packet" alt="" coords="443,56,549,83"/>
-</map>

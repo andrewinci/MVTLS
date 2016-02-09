@@ -8,7 +8,6 @@
  *	\copyright Copyright © 2015 Alessandro Melloni, Andrea Francesco Vinci. All rights reserved.
  */
 
-
 #ifndef Certificate_h
 #define Certificate_h
 
@@ -19,7 +18,7 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-#include "TLSConstants.h"
+#include "HandshakeConstants.h"
 
 #endif
 
@@ -36,6 +35,17 @@ typedef struct{
 	X509 *X509_certificate;
 
 }certificate_message_t;
+
+/**
+ * Make the certificate message for the server.
+ * That message depends on the authentication algorithm hence we require the connection
+ * parameters. The function also sets the certificate in the connection parameters for
+ * further uses.
+ *
+ *	\param connection_parameters: connection parameters
+ *	\return the certificate handshake message
+ */
+handshake_t * make_certificate(handshake_parameters_t *connection_parameters);
 
 /**
  * Given the certificate file name create a certificate message struct

@@ -50,13 +50,13 @@ typedef struct{
 #endif
 
 /**
- * Make a record starting from message, type and tls version.
+ * Make a record starting from message, type and TLS version.
  *
  *	\param message: the message to incapsulate into the resulting record
  *  \param message_len: the message length
  *  \param r_type: the record type
- *  \param tls_version: the tls version
- *	\return the record that encapsulate h
+ *  \param tls_version: the TLS version
+ *	\return the record that encapsulates h
  */
 record_t *make_record(unsigned char *message, uint16_t message_len, record_type r_type, uint16_t tls_version);
 

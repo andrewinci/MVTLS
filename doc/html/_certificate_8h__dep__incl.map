@@ -1,9 +1,0 @@
-<map id="include/HandshakeMessages/Certificate.h" name="include/HandshakeMessages/Certificate.h">
-<area shape="rect" id="node2" href="$_certificate_8c.html" title="src/HandshakeMessages\l/Certificate.c" alt="" coords="5,97,176,138"/>
-<area shape="rect" id="node3" href="$_server_client_handshake_protocol_8h.html" title="include/ServerClientHandshake\lProtocol.h" alt="" coords="201,97,409,138"/>
-<area shape="rect" id="node4" href="$_server_client_handshake_protocol_8c.html" title="src/ServerClientHandshake\lProtocol.c" alt="" coords="129,187,313,229"/>
-<area shape="rect" id="node5" href="$_t_l_s_8h.html" title="include/TLS.h" alt="" coords="337,195,441,221"/>
-<area shape="rect" id="node6" href="$client_8c.html" title="src/Target/client.c" alt="" coords="171,277,297,304"/>
-<area shape="rect" id="node7" href="$server_8c.html" title="src/Target/server.c" alt="" coords="323,277,456,304"/>
-<area shape="rect" id="node8" href="$_t_l_s_8c.html" title="src/TLS.c" alt="" coords="481,277,559,304"/>
-</map>
